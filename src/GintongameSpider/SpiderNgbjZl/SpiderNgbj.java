@@ -48,18 +48,17 @@ public class SpiderNgbj {
      * @throws ParseException
      */
     public static void grabWeb() throws IOException, SQLException, ParseException {
-        System.setProperty("phantomjs.binary.path", "/Spider/phantomjs-2.1.1-linux-x86_64/bin/phantomjs");
+        System.setProperty("phantomjs.binary.path", "E:/phantomjs-2.1.1-windows/bin/phantomjs.exe");
         WebDriver driver = new PhantomJSDriver();
         int a = 1;
         int b=1;
         String link[] = new String[]{"http://www.niaogebiji.com/portal.php?mod=list&catid=82", "http://www.niaogebiji.com/portal.php?mod=list&catid=83", "http://www.niaogebiji.com/portal.php?mod=list&catid=87", "http://www.niaogebiji.com/portal.php?mod=list&catid=38", "http://www.niaogebiji.com/portal.php?mod=list&catid=80", "http://www.niaogebiji.com/portal.php?mod=list&catid=86", "http://www.niaogebiji.com/portal.php?mod=list&catid=74", "http://www.niaogebiji.com/portal.php?mod=list&catid=76", "http://www.niaogebiji.com/portal.php?mod=list&catid=85"};
         for (int z = 0; z < link.length; z++) {
-            for (int i = 1; i > 0; i++) {
+            for (int i = 3; i > 0; i++) {
                 driver.get(link[z] + "&page=" + i);
                 WebElement webElement = driver.findElement(By.xpath("/html"));
                 Document doc = Jsoup.parse(webElement.getAttribute("outerHTML"));
                 Elements links = doc.select("dt.xs2 a.xi2");
-                System.out.println(doc.outerHtml());
                 for (Element link1 : links) {
                     String childLink = link1.attr("href");
                     driver.get(childLink);
@@ -97,13 +96,13 @@ public class SpiderNgbj {
                 main = (main + "\n" + linktp.text()).replaceAll("null\n", "");
             }
             if (linktp.select("a").attr("href") != null && linktp.select("a").attr("href").length() > 0) {
-                main = main + "\n" + ("http://www.niaogebiji.com/" + linktp.select("a").attr("href"));
+                main = main + "\n" + ("<img src="+"http://www.niaogebiji.com/" + linktp.select("a").attr("href")+">");
             }
         }
         String title = doc.select("div.h.hm h1.ph").text();
         String author = doc.select("div.h.hm p.xg1 a[href=javascript:;]").text();
         String type = doc.select("div.h.hm>a").text();
-        String cover = "http://www.niaogebiji.com/" + doc.select("div[style=width:100%; text-align:center]>img").attr("src");
+        String cover = "<img src="+"http://www.niaogebiji.com/" + doc.select("div[style=width:100%; text-align:center]>img").attr("src")+">";
         String ptime = doc.select("span[style=float: right]").text();
 
         if(b==1) {
