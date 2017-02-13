@@ -1,0 +1,17 @@
+<component name="ArtifactManager">
+  <artifact build-on-make="true" name="text:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/text_jar</output-path>
+    <root id="root">
+      <element id="archive" name="text.jar">
+        <element id="module-output" name="GintongGameSpider" />
+      </element>
+      <element id="library" level="project" name="ant-1.7.1" />
+      <element id="library" level="project" name="phantomjsdriver-1.2.0" />
+      <element id="library" level="project" name="mybatis-3.2.7" />
+      <element id="library" level="project" name="jsoup-1.8.11" />
+      <element id="library" level="project" name="gson-2.7" />
+      <element id="library" level="project" name="classes12" />
+      <element id="library" level="project" name="assertj-core-1.5.0" />
+    </root>
+  </artifact>
+</component>

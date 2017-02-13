@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.gintongame.mapping.BasOrganizeInfoMapper">
+
+    <!--  ��insert����ֻ�ܲ���pro_knowledge��  -->
+    <insert id="insertBatch" parameterType="java.util.ArrayList" useGeneratedKeys="true" >
+        insert into bas_organize_info(oname,ename,shortname,fullname,web,con_way,industry,scale,introduce,address,logo,stime,other,source,url,uuid,type,financing_info,picture,development_history,financing_stage,company_nature,corporate_culture,tag,management_field)
+        values
+        <foreach collection="list" item="item" index="index" open="" close="" separator=",">
+            (#{item.oname},#{item.ename},#{item.shortname},#{item.fullname},#{item.web},#{item.con_way},#{item.industry},#{item.scale},#{item.introduce},#{item.address},#{item.logo},#{item.stime},#{item.other},#{item.source},#{item.url},#{item.uuid},#{item.type},#{item.financing_info},#{item.picture},#{item.development_history},#{item.financing_stage},#{item.company_nature},#{item.corporate_culture},#{item.tag},#{item.management_field})
+        </foreach>
+
+    </insert>
+
+
+        </mapper>
