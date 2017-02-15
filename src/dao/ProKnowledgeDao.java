@@ -10,5 +10,6 @@ import java.util.List;
 public interface ProKnowledgeDao extends BaseDao<List> {
 
     public void insertBatch(List<ProKnowledge> ts);
+    public void insert(ProKnowledge ts);
 
 }

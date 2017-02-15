@@ -13,6 +13,13 @@
 
     </insert>
 
+	<insert id="insert" parameterType="java.lang.String" useGeneratedKeys="true" >
+        insert into pro_knowledge(uuid,author,title,cover,tag,main,ptime,type,url,source)
+        values
+            (#{uuid},#{author},#{title},#{cover},#{tag},#{main},#{ptime},#{type},#{url},#{source})
+
+    </insert>
+	
     <select id="selectList" parameterType="java.lang.String"  resultType="String">
         SELECT main FROM pro_knowledge WHERE ptime BETWEEN #{date} AND DATE_SUB(#{date} , INTERVAL -5 DAY)
     </select>

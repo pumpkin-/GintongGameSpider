@@ -6,11 +6,13 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.phantomjs.PhantomJSDriver;
 
-import java.io.IOException;
+import java.io.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -60,16 +62,20 @@ public class SpiderYfjl {
         PreparedStatement ps10 = (PreparedStatement) con.prepareStatement(insertBugData);
 
 
-        System.setProperty("phantomjs.binary.path", "/GintongameSpider/phantomjs-2.1.1-linux-x86_64/bin/phantomjs");
-        WebDriver driver = new ChromeDriver();
+        System.setProperty("phantomjs.binary.path", "/Spider/phantomjs-2.1.1-linux-x86_64/bin/phantomjs");
+        WebDriver driver = new PhantomJSDriver();
         String dl = null;
+        System.out.println("aaa1");
         driver.get("http://www.yifengjianli.com/base/signin");
+        System.out.println("aaa2");
         driver.findElement(By.id("email")).clear();
         driver.findElement(By.id("email")).sendKeys("35635028@qq.com");
         driver.findElement(By.id("pwd")).clear();
         driver.findElement(By.id("pwd")).sendKeys("123456");
+        System.out.println("aaa3");
         Thread.sleep(2000);
-        driver.findElement(By.className("sign-btn")).click();
+        JavascriptExecutor executor = (org.openqa.selenium.JavascriptExecutor) driver;     //获取选择器script框架
+        executor.executeScript("$('div.in-item.sign-btn button')[0].click()");
         Thread.sleep(5000);
         try {
             WebElement web = driver.findElement(By.className("sign-btn"));
@@ -83,7 +89,10 @@ public class SpiderYfjl {
             driver.findElement(By.id("email")).sendKeys("35635028@qq.com");                      //写入用户名
             driver.findElement(By.id("pwd")).clear();
             driver.findElement(By.id("pwd")).sendKeys("123456");
+            System.out.println("aaa4");
             Thread.sleep(2000);
+            JavascriptExecutor executor2 = (org.openqa.selenium.JavascriptExecutor) driver;     //获取选择器script框架
+            executor2.executeScript("$('div.in-item.sign-btn button')[0].click()");
             driver.findElement(By.className("sign-btn")).click();
             Thread.sleep(5000);
             try {
@@ -128,7 +137,16 @@ public class SpiderYfjl {
         String[] zhanghao=new String[]{"809331777@qq.com","wikw107@163.com","1289121695@qq.com","123@163.com","lijing1317704@163.com","382391215@qq.com"};
         String[] mima=new String[]{"123456","123456","123456","123456","19920725","zhj123"};
         int flag=0;
-        for(int i=4519747;i>4501519;i++) {
+        long counter=4519747;
+        File file=new File("/Spider/SpiderYfjl/counter");
+        FileInputStream input=new FileInputStream(file);
+        InputStreamReader reader=new InputStreamReader(input);
+        BufferedReader buffer=new BufferedReader(reader);
+        String line=null;
+        while((line=buffer.readLine())!=null){
+            counter=Long.parseLong(line);
+        }
+        for(long i=counter;i>4501519;i++) {
             String uuidr = UUID.randomUUID().toString();
             try {
                 String hun = null;
@@ -364,7 +382,13 @@ public class SpiderYfjl {
                 }
                 flag++;
             }
-
+            if(i==counter+1500) {
+                FileOutputStream outputi = new FileOutputStream("/Spider/SpiderYfjl/counter", true);
+                byte[] bt = (i + "\r\n").getBytes();
+                outputi.write(bt, 0, bt.length);
+                driver.quit();
+                System.exit(0);
+            }
         }
           /*  }
             String handle2=driver.getWindowHandle();

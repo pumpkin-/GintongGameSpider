@@ -65,7 +65,7 @@ public class SpiderNgbj {
                     System.out.println("aaa");
                     WebElement webElement1 = driver.findElement(By.xpath("/html"));
                     Document doc1 = Jsoup.parse(webElement1.getAttribute("outerHTML"));
-                    dataClean(doc1,childLink,b);
+                    dataClean(doc1,childLink,b,z);
                     System.out.println(a + "+" + i);
                     a++;
                     System.out.println("------------------------");
@@ -85,11 +85,13 @@ public class SpiderNgbj {
      * @throws IOException
      * @throws ParseException
      */
-    public static List<String> dataClean(Document doc,String childLink,int b) throws SQLException, IOException, ParseException {
+    public static List<String> dataClean(Document doc,String childLink,int b,int z) throws SQLException, IOException, ParseException {
         String kuuid = UUID.randomUUID().toString();
         String puuid = UUID.randomUUID().toString();
         Elements linkstp = doc.select("table.vwtb div");
         String main = null;
+        String type = null;
+        String cover=null;
         List<String> list=new ArrayList<String>();
         for (Element linktp : linkstp) {
             if (linktp.text() != null && linktp.text().length() > 0 && !linktp.text().contains("作者") && !linktp.text().contains("来源") && !linktp.text().contains("转载请") && !linktp.text().contains("微信号") && !linktp.text().contains("公众号")) {
@@ -101,8 +103,28 @@ public class SpiderNgbj {
         }
         String title = doc.select("div.h.hm h1.ph").text();
         String author = doc.select("div.h.hm p.xg1 a[href=javascript:;]").text();
-        String type = doc.select("div.h.hm>a").text();
-        String cover = "<img src="+"http://www.niaogebiji.com/" + doc.select("div[style=width:100%; text-align:center]>img").attr("src")+">";
+       if(z==0){
+           type="APP运营";
+       }else if(z==1){
+           type="新媒体运营";
+       }else if(z==2){
+           type="手游运营";
+       }else if(z==3){
+           type="APP推广";
+       }else if(z==4){
+            type="渠道动态";
+        }else if(z==5){
+           type="手游推广";
+       }else if(z==6){
+           type="投融资";
+       }else if(z==7){
+           type="行业快讯";
+       }else if(z==8){
+           type="手游新闻";
+       }
+        if(doc.select("div[style=width:100%; text-align:center]>img").attr("src")!=null&&doc.select("div[style=width:100%; text-align:center]>img").attr("src").length()>0) {
+            cover = "<img src=" + "http://www.niaogebiji.com/" + doc.select("div[style=width:100%; text-align:center]>img").attr("src") + ">";
+        }
         String ptime = doc.select("span[style=float: right]").text();
 
         if(b==1) {

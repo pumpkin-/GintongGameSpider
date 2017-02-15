@@ -16,4 +16,8 @@ public class PerKnowledgeImpl extends BaseDaoImpl<List> implements PerKnowledgeD
     public void insertBatch(List<PerKnowledge> perknowledges) {
         this.getSqlSession().insert(this.getNs() + "insertBatch", perknowledges);
     }
+
+    public void insert(PerKnowledge perknowledge) {
+        this.getSqlSession().insert(this.getNs() + "insert", perknowledge);
+    }
 }

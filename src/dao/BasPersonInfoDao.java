@@ -9,4 +9,5 @@ import java.util.List;
  */
 public interface BasPersonInfoDao extends BaseDao<List>{
     public void insertBatch(List<BasPersonInfo> ts);
+    public void insert(BasPersonInfo ts);
 }
