@@ -7,6 +7,7 @@ import SpiderUtils.LevenshteinDis;
 import dao.impl.BasPersonInfoImpl;
 import dao.impl.PerKnowledgeImpl;
 import dao.impl.ProKnowledgeImpl;
+import org.apache.commons.lang3.StringUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -31,10 +32,7 @@ import java.util.UUID;
 public class SpiderGameDailyZl {
 
 
-
-
-
-
+    //网页抓取到数据的集合  批量存入数据库
     private static List<ProKnowledge> proKnowledges = new ArrayList<ProKnowledge>();
     private static List<PerKnowledge> perKnowledges = new ArrayList<PerKnowledge>();
     private static List<BasPersonInfo> basPersoninfos = new ArrayList<BasPersonInfo>();
@@ -88,7 +86,7 @@ public class SpiderGameDailyZl {
                 String html1 = web1.getAttribute("outerHTML");
                 Document doc1 = Jsoup.parse(html1);
                 //列表封面
-                String img = "<" + link.select("img").attr("src") + ">";
+                String img = "<img>" + link.select(".thumb").attr("src") + "</img>";
                 System.out.println(img);
 
                 //获取标题
@@ -96,13 +94,20 @@ public class SpiderGameDailyZl {
                 System.out.println(title);
                 //作者
                 String name = doc1.select(".name").text();
+                name=name.trim().substring(3);
                 System.out.println(name);
                 //发布时间
                 int flag = 0;
                 String time = list.get(flag);
                 flag++;
                 //标签
-                String label = doc1.select(".post-bottom a").text();
+                Elements tags = doc1.select(".post-bottom a");
+                String label=",";
+                for(Element  tag:tags){
+                    label+=tag.text();
+                }
+                label=label.substring(1,label.length()).trim();
+                System.out.println(label);
                 //获取正文
                 String main = null;
                 Document texts1 = Jsoup.parse(doc1.select("div.post-con.mobantu").toString().replace("<br>", "nbsp#").replace("&nbsp;", ""));
@@ -110,10 +115,12 @@ public class SpiderGameDailyZl {
                 main = doc1.select("blockquote").text();
                 for (Element text : links3) {
                     if (text.text() != null && text.text().length() > 0) {
-                        main = main + "\r\n" + text.text().replaceAll("nbsp#", "\r\n");
+                        if(StringUtils.isNotEmpty(text.text().replaceAll("nbsp#", "\r\n"))) {
+                            main = main + "\r\n" + "<p>" + text.text().replaceAll("nbsp#", "\r\n")+"</p>";
+                        }
                     }
                     if (!text.select("img").isEmpty()) {
-                        main = main + "\r\n" + text.select("img").attr("src");
+                        main = main + "\r\n" + "<img src="+text.select("img").attr("src")+">";
                     }
                 }
 
@@ -141,6 +148,7 @@ public class SpiderGameDailyZl {
                     pk.setPtime(time2);
                     pk.setTag(label);
                     pk.setMain(main);
+                     pk.setSource("游戏日报");
                     proKnowledges.add(pk);
                     //关系表映射
                     PerKnowledge perk = new PerKnowledge();
@@ -153,6 +161,7 @@ public class SpiderGameDailyZl {
                     perk.setKname(title);
                     perk.setSource(url);
                     perk.setRtype(rtype);
+                     perk.setSource("游戏日报");
                     perKnowledges.add(perk);
                     //人表映射
                     BasPersonInfo bp = new BasPersonInfo();
