@@ -18,6 +18,7 @@
 
 # Intellij
 *.iml
+.idea/*
 .idea/
 out/
 
