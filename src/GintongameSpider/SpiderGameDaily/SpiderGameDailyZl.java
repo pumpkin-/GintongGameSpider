@@ -93,7 +93,7 @@ public class SpiderGameDailyZl {
                 String title = doc1.select("head title").text();
                 System.out.println(title);
                 //作者
-                String name = doc1.select(".name").text();
+                String name = doc1.select(".post-meta span").select(".name").text();
                 name=name.replace("作者：","");
                 System.out.println(name);
                 //发布时间
