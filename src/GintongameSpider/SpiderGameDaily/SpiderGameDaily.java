@@ -122,7 +122,7 @@ public class SpiderGameDaily {
                 }
                 System.out.println(main);
                 //去重复数据
-                if (main != null && main.length() > 0 && !LevenshteinDis.isExist(main, time)) {
+                if (main != null && main.length() > 0 && !LevenshteinDis.isExist(main, time,url)) {
                     //知识表映射
                     ProKnowledge pk = new ProKnowledge();
                     String kuuid = UUID.randomUUID().toString();

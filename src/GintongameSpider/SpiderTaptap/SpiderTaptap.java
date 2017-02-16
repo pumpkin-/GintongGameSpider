@@ -44,7 +44,7 @@ class Spider{
         int b=0;
         String[] tagz=new String[]{"生存","二次元","卡牌","音乐","竞速","策略","设计","up主推荐","休闲","多人","冒险","益智","中文","养成","像素","文字","街机","有毒","放置","恐怖","体育","经营","恋爱","解密","战棋","付费","沙盒","单机游戏","赛车","文字游戏","经营模拟","io","乙女","多人对战","探险","僵尸","开罗","桌面和棋类","模拟经营","射击游戏","格斗","自由","多人联机","独立游戏","跑酷","美少女","塔防","三国","枪战","火柴人","东方","知识问答","推理","联网","第一人称设计","教育","多人在线","虐心","多人合作","武侠","科幻","智力","删档测试","搞笑","魔性","猫","机甲","剧情","像素风","足球","挂机","点击","创意","弹珠","弹幕","技术党"};
         for(int i=0;i<tagz.length;i++){
-            driver.get("https://www.taptap.com/search/tags?kw="+ URLEncoder.encode(tagz[i], "UTF-8"));
+            driver.get("https://www.taptap.com/search/tags?kw=" + URLEncoder.encode(tagz[i], "UTF-8"));
             for(int z=1;z>0;z++){
                 driver.findElement(By.className("btn-lg")).click();
                 Thread.sleep(1000);

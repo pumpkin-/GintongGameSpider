@@ -127,13 +127,13 @@ public class SpiderGameDailyZl {
                     Date time1 = sdf.parse(time+" 00:00:00");
                     String time2=sdf.format(time1);
 
-                if(LevenshteinDis.isExist(main,time2)){
+                if(LevenshteinDis.isExist(main,time2,url)){
                     driver.quit();
                     System.exit(0);
                 }
 
                 //去重复数据
-                 if (main != null && main.length() > 0 && !LevenshteinDis.isExist(main, time)) {
+                 if (main != null && main.length() > 0 && !LevenshteinDis.isExist(main, time,url)) {
                     //知识表映射
                     ProKnowledge pk = new ProKnowledge();
                      String kuuid = UUID.randomUUID().toString();

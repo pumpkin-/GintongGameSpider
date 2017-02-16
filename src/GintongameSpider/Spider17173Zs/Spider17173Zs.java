@@ -62,11 +62,16 @@ public class Spider17173Zs {
             Elements links = doc.select("div.removeItemSign a");
             for (Element link : links) {
                 if (flags != 0) {
+                    Document doclink=null;
                     String childLink = link.attr("href");
-                    Document doclink=Jsoup.connect(childLink).get();
-                    dataClean(doclink,childLink,flag);
+                    try {
+                        doclink = Jsoup.connect(childLink).get();
+                    }catch (Exception e){
+                        continue;
+                    }
+                    dataClean(doclink, childLink, flag);
                 }
-                System.out.println(a+"+"+i);
+                System.out.println(a + "+" + i);
                 flag++;
                 flags++;
                 a++;
@@ -111,36 +116,77 @@ public class Spider17173Zs {
         while(mat.find()){
             tag=(mat.group(0).replace("var _tags = '","").replace("';","")).trim();
         }
-        if(doc.select("div.vr-article-bd p")!=null&&doc.select("div.vr-article-bd p").toString().length()>0) {
-            Elements linksmain = doc.select("div.vr-article-bd p");
-            for (Element linkmain : linksmain) {
-                if (StringUtils.isNoneEmpty(linkmain.text()) && !linkmain.text().contains("专稿")) {
-                    main = (main + "\r\n" + "<p>" + linkmain.text() + "</p>").replace("null\r\n", "");
+
+        if(StringUtils.isEmpty(doc.select("div.vr-final-mod-pagination").toString())) {
+            if (doc.select("div.vr-article-bd p") != null && doc.select("div.vr-article-bd p").toString().length() > 0) {
+                Elements linksmain = doc.select("div.vr-article-bd p");
+                for (Element linkmain : linksmain) {
+                    if (StringUtils.isNoneEmpty(linkmain.text()) && !linkmain.text().contains("专稿")) {
+                        main = (main + "\r\n" + "<p>" + linkmain.text() + "</p>").replace("null\r\n", "");
+                    }
+                    if (StringUtils.isNoneEmpty(linkmain.select("img").attr("src"))) {
+                        main = (main + "\r\n" + "<img src=" + linkmain.select("img").attr("src") + ">").replace("null\r\n", "");
+                    }
                 }
-                if (StringUtils.isNoneEmpty(linkmain.select("img").attr("src"))) {
-                    main = (main + "\r\n" + "<img src=" + linkmain.select("img").attr("src") + ">").replace("null\r\n", "");
+            } else {
+                Elements linksmain = doc.select("div.gb-final-mod-article.gb-final-mod-article-p2em p");
+                for (Element linkmain : linksmain) {
+                    if (StringUtils.isNoneEmpty(linkmain.text()) && !linkmain.text().contains("专稿")) {
+                        main = (main + "\r\n" + "<p>" + linkmain.text() + "</p>").replace("null\r\n", "");
+                    }
+                    if (StringUtils.isNoneEmpty(linkmain.select("img").attr("src"))) {
+                        main = (main + "\r\n" + "<img src=" + linkmain.select("a").attr("href") + ">").replace("null\r\n", "");
+                    }
                 }
             }
         }else{
-            Elements linksmain = doc.select("div.gb-final-mod-article.gb-final-mod-article-p2em p");
-            for (Element linkmain : linksmain) {
-                if (StringUtils.isNoneEmpty(linkmain.text()) && !linkmain.text().contains("专稿")) {
-                    main = (main + "\r\n" + "<p>" + linkmain.text() + "</p>").replace("null\r\n", "");
+            if (doc.select("div.vr-article-bd p") != null && doc.select("div.vr-article-bd p").toString().length() > 0) {
+                Elements linksmain = doc.select("div.vr-article-bd p");
+                for (Element linkmain : linksmain) {
+                    if (StringUtils.isNoneEmpty(linkmain.text()) && !linkmain.text().contains("专稿")) {
+                        main = (main + "\r\n" + "<p>" + linkmain.text() + "</p>").replace("null\r\n", "");
+                    }
+                    if (StringUtils.isNoneEmpty(linkmain.select("img").attr("src"))) {
+                        main = (main + "\r\n" + "<img src=" + linkmain.select("img").attr("src") + ">").replace("null\r\n", "");
+                    }
                 }
-                if (StringUtils.isNoneEmpty(linkmain.select("img").attr("src"))) {
-                    main = (main + "\r\n" + "<img src=" + linkmain.select("a").attr("href") + ">").replace("null\r\n", "");
+            } else {
+                Elements linksmain = doc.select("div.gb-final-mod-article.gb-final-mod-article-p2em p");
+                for (Element linkmain : linksmain) {
+                    if (StringUtils.isNoneEmpty(linkmain.text()) && !linkmain.text().contains("专稿")) {
+                        main = (main + "\r\n" + "<p>" + linkmain.text() + "</p>").replace("null\r\n", "");
+                    }
+                    if (StringUtils.isNoneEmpty(linkmain.select("img").attr("src"))) {
+                        main = (main + "\r\n" + "<img src=" + linkmain.select("a").attr("href") + ">").replace("null\r\n", "");
+                    }
+                }
+            }
+            Elements linkschild=doc.select("div.vr-final-mod-pagination li.next");
+            for(Element linkchild:linkschild) {
+                Document docchild=Jsoup.connect(linkchild.attr("href")).get();
+                if (doc.select("div.vr-article-bd p") != null && doc.select("div.vr-article-bd p").toString().length() > 0) {
+                    Elements linksmain = doc.select("div.vr-article-bd p");
+                    for (Element linkmain : linksmain) {
+                        if (StringUtils.isNoneEmpty(linkmain.text()) && !linkmain.text().contains("专稿")) {
+                            main = (main + "\r\n" + "<p>" + linkmain.text() + "</p>").replace("null\r\n", "");
+                        }
+                        if (StringUtils.isNoneEmpty(linkmain.select("img").attr("src"))) {
+                            main = (main + "\r\n" + "<img src=" + linkmain.select("img").attr("src") + ">").replace("null\r\n", "");
+                        }
+                    }
+                } else {
+                    Elements linksmain = doc.select("div.gb-final-mod-article.gb-final-mod-article-p2em p");
+                    for (Element linkmain : linksmain) {
+                        if (StringUtils.isNoneEmpty(linkmain.text()) && !linkmain.text().contains("专稿")) {
+                            main = (main + "\r\n" + "<p>" + linkmain.text() + "</p>").replace("null\r\n", "");
+                        }
+                        if (StringUtils.isNoneEmpty(linkmain.select("img").attr("src"))) {
+                            main = (main + "\r\n" + "<img src=" + linkmain.select("a").attr("href") + ">").replace("null\r\n", "");
+                        }
+                    }
                 }
             }
         }
-        FileOutputStream output=new FileOutputStream("C:\\Users\\lenovo\\Desktop\\a.txt",true);
-        try {
-            byte bt[] = (type+"\r\n").getBytes();
-            output.write(bt,0,bt.length);
-        }catch (Exception e){
-            System.out.println("yy");
-        }
-        System.out.println(type);
-        System.out.println(url);
         //storeToDatebase(title, ptime, type, tag, author, main, puuid, kuuid, url);
     }
 
