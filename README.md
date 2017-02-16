@@ -1,6 +1,8 @@
 # GintongGameSpider
 
-需安装：1.8jdk环境，inter idea，sourcetree
+需安装：
+
+1.8jdk环境，inter idea，sourcetree
 1、安装1.8版本jdk，并且配置环境变量。
 http://jingyan.baidu.com/article/f96699bb8b38e0894e3c1bef.html
 
