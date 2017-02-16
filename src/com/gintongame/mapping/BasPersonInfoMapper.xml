@@ -19,4 +19,8 @@
             (#{uuid},#{name},#{enname},#{age},#{alias},#{hometown},#{country},#{nation},#{con_way},#{sex},#{id_number},#{birthday},#{household_register},#{liveplace},#{marital_status},#{employment},#{diploma},#{work_years},#{child_status},#{live_photo},#{occu_photo},#{art_photo},#{ptag},#{p_desc},#{source},#{url},#{type},#{advantage})
     </insert>
 
+    <select id="selectList" parameterType="java.lang.String"  resultType="String">
+        SELECT name FROM bas_person_info WHERE source=#{source}
+    </select>
+
         </mapper>

@@ -35,9 +35,7 @@ public class test{
 
         int p=12;
         for(int i=p;i<100;i++){
-            System.out.println(i);
+            System.out.println(p);
         }
-
-
     }
 }
