@@ -27,7 +27,8 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * Created by 123 on 2017/2/15.
+ * 游戏日报爬虫 增量
+ * Created by 丁全彬  on 2017/2/15.
  */
 public class SpiderGameDailyZl {
 
@@ -38,10 +39,6 @@ public class SpiderGameDailyZl {
     private static List<BasPersonInfo> basPersoninfos = new ArrayList<BasPersonInfo>();
 
     public static void main(String args[]){
-
-
-
-
 
         try{
             Spiser();
@@ -139,8 +136,8 @@ public class SpiderGameDailyZl {
                  if (main != null && main.length() > 0 && !LevenshteinDis.isExist(main, time)) {
                     //知识表映射
                     ProKnowledge pk = new ProKnowledge();
-                    String id = UUID.randomUUID().toString();
-                    pk.setUuid(id);
+                     String kuuid = UUID.randomUUID().toString();
+                    pk.setUuid(kuuid);
                     pk.setUrl(url);
                     pk.setCover(img);
                     pk.setTitle(title);
@@ -152,7 +149,6 @@ public class SpiderGameDailyZl {
                     proKnowledges.add(pk);
                     //关系表映射
                     PerKnowledge perk = new PerKnowledge();
-                    String kuuid = UUID.randomUUID().toString();
                     String puuid = UUID.randomUUID().toString();
                     String rtype = "原作者";
                     perk.setKuuid(kuuid);
@@ -165,9 +161,7 @@ public class SpiderGameDailyZl {
                     perKnowledges.add(perk);
                     //人表映射
                     BasPersonInfo bp = new BasPersonInfo();
-                    String rid = UUID.randomUUID().toString();
-                    String id_number = UUID.randomUUID().toString();
-                    bp.setUuid(rid);
+                    bp.setUuid(puuid);
                     bp.setName(name);
                     bp.setSource("游戏日报");
                     bp.setUrl(url);
