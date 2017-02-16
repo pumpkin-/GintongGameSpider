@@ -36,14 +36,14 @@ public class SpiderGameDaily {
 
     public static void main(String args[]){
        try{
-           Spiser();
+           Spider();
        }catch(Exception e){
            e.printStackTrace();
        }
 
     }
 
-    public static void Spiser() throws InterruptedException, IOException, ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException {
+    public static void Spider() throws InterruptedException, IOException, ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException {
 
 
         //加载驱动，创建链接
@@ -86,9 +86,10 @@ public class SpiderGameDaily {
                 String title = doc1.select("head title").text();
                 System.out.println(title);
                 //作者
-                String name = doc1.select(".name").text();
-                name=name.trim().substring(3);
+                String name = doc1.select(".post-meta span").select(".name").text();
+                name=name.replace("作者：","");
                 System.out.println(name);
+
                 //发布时间
                 int flag = 0;
                 String time = list.get(flag);
@@ -171,8 +172,10 @@ public class SpiderGameDaily {
                     basPersoninfos.clear();
                 }
 
+
             }
             //存入数据库
+
 
             System.out.println("循环一次");
 
@@ -183,6 +186,7 @@ public class SpiderGameDaily {
         driver.quit();
         //退出程序
         System.exit(0);
+
     }
 
 
