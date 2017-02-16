@@ -1,5 +1,10 @@
 package SpiderUtils;
 
+import JavaBean.BasPersonInfo;
+import JavaBean.BugData;
+import JavaBean.ProKnowledge;
+import dao.impl.BasPersonInfoImpl;
+import dao.impl.BugDataImpl;
 import dao.impl.ProKnowledgeImpl;
 
 import java.io.UnsupportedEncodingException;
@@ -11,22 +16,45 @@ import java.util.*;
  */
 public class LevenshteinDis {
 
-    public static boolean isExist(String aticle, String date) {
+    public static boolean isExist(String aticle, String date,String url) {
         ProKnowledgeImpl pro=new ProKnowledgeImpl();
         //System.out.println(pro.selectList(dateformat.format(date).toString()));
-        List<String> list=pro.selectList(date);
+        List<ProKnowledge> list=pro.selectList(date);
+        if (list == null || list.size() == 0) {
+            return false;
+        }
+        String essay;
+        for(int x=0;x<list.size();x++){
+            essay= list.get(x).getMain();
+            double dis = getSimilarity(essay, aticle);
+            if (dis > 0.9) {
+                BugData bugData=new BugData();
+                bugData.setKey(list.get(x).getUrl());
+                bugData.setValue(url);
+                BugDataImpl bugDataimpl = new BugDataImpl();
+                bugDataimpl.insert(bugData);
+                System.out.println("--------------This data should be delete------------------");
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static boolean NameisExist(String source,String name) {
+        BasPersonInfoImpl per=new BasPersonInfoImpl();
+        //System.out.println(pro.selectList(dateformat.format(date).toString()));
+        List<String> list=per.selectList(source);
         if (list == null || list.size() == 0) {
             return false;
         }
         String essay;
         for(int x=0;x<list.size();x++){
             essay= list.get(x);
-            double dis = getSimilarity(essay, aticle);
+            double dis = getSimilarity(essay, name);
             if (dis > 0.9) {
                 System.out.println("--------------This data should be delete------------------");
                 return true;
             }
-            System.out.println(dis);
         }
         return false;
     }
@@ -84,10 +112,8 @@ public class LevenshteinDis {
     }
 
     public static double getSimilarity(String doc1, String doc2) {
-        System.out.println("aaa");
         if (doc1 != null && doc1.trim().length() > 0 && doc2 != null
                 && doc2.trim().length() > 0) {
-            System.out.println("bbb");
             Map<Integer, int[]> AlgorithmMap = new HashMap<Integer, int[]>();
 
             //将两个字符串中的中文字符以及出现的总数封装到，AlgorithmMap中

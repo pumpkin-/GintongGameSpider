@@ -3,9 +3,8 @@
 
 <mapper namespace="com.gintongame.mapping.BugDataMapper">
 
-    <!--  该insert函数只能插入pro_knowledge表  -->
-    <insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="true" >
-        insert into bug_data(uuid,key,value,exception)
+    <insert id="insert" parameterType="java.lang.String" useGeneratedKeys="true" >
+        insert into bug_data(uuid,`key`,`value`,`exception`)
         values
             (#{uuid},#{key},#{value},#{exception})
 

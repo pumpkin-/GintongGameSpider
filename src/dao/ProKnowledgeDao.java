@@ -1,6 +1,7 @@
 package dao;
 
 import JavaBean.ProKnowledge;
+import dao.impl.ProKnowledgeImpl;
 
 import java.util.List;
 
@@ -10,6 +11,7 @@ import java.util.List;
 public interface ProKnowledgeDao extends BaseDao<List> {
 
     public void insertBatch(List<ProKnowledge> ts);
-    public void insert(ProKnowledge ts);
+    public void insert(ProKnowledge ts) throws ProKnowledgeImpl.FormatEexception;
+    public List<ProKnowledge> selectList(String ts);
 
 }

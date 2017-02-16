@@ -126,7 +126,7 @@ public class SpiderNgbjZl {
                     SimpleDateFormat time1=new SimpleDateFormat("yyyy-MM-dd");
                     Date date=time.parse(text.get(1));
                     String timeto=time1.format(date);
-                    if(text.get(0)!=null&&text.get(0).length()> 0 &&!LevenshteinDis.isExist(text.get(0), timeto)) {
+                    if(text.get(0)!=null&&text.get(0).length()> 0 &&!LevenshteinDis.isExist(text.get(0), timeto,childLink)) {
                         b=1;
                         dataClean(doc1, childLink, b,z);
                     }else{
@@ -150,7 +150,7 @@ public class SpiderNgbjZl {
         SimpleDateFormat time1=new SimpleDateFormat("yyyy-MM-dd");
         Date date=time.parse(ptime);
         String timeto=time1.format(date);
-        if(main!=null&&main.length()>0&&!LevenshteinDis.isExist(main,timeto)){
+        if(main!=null&&main.length()>0&&!LevenshteinDis.isExist(main,timeto,url)){
             ProKnowledge proKnow=new ProKnowledge();
             proKnow.setUuid(kuuid);
             proKnow.setAuthor(author);

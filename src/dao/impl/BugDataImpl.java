@@ -10,7 +10,7 @@ import java.util.List;
  */
 public class BugDataImpl extends BaseDaoImpl<List> implements BugDataDao{
     public BugDataImpl(){
-        this.setNs("com.gintongame.mapping.BugData.");
+        this.setNs("com.gintongame.mapping.BugDataMapper.");
     }
 
     @Override

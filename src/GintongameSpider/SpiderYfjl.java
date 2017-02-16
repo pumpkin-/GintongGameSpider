@@ -382,10 +382,10 @@ public class SpiderYfjl {
                 }
                 flag++;
             }
-            if(i==counter+1500) {
-                FileOutputStream outputi = new FileOutputStream("/Spider/SpiderYfjl/counter", true);
-                byte[] bt = (i + "\r\n").getBytes();
-                outputi.write(bt, 0, bt.length);
+            FileOutputStream outputi = new FileOutputStream("/Spider/SpiderYfjl/counter", true);
+            byte[] bt = (i + "\r\n").getBytes();
+            outputi.write(bt, 0, bt.length);
+            if(i==counter+200) {
                 driver.quit();
                 System.exit(0);
             }

@@ -3,7 +3,6 @@
 
 <mapper namespace="com.gintongame.mapping.BasOrganizeInfoMapper">
 
-    <!--  ��insert����ֻ�ܲ���pro_knowledge��  -->
     <insert id="insertBatch" parameterType="java.util.ArrayList" useGeneratedKeys="true" >
         insert into bas_organize_info(oname,ename,shortname,fullname,web,con_way,industry,scale,introduce,address,logo,stime,other,source,url,uuid,type,financing_info,picture,development_history,financing_stage,company_nature,corporate_culture,tag,management_field)
         values

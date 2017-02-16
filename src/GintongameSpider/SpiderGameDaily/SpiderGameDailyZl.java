@@ -107,10 +107,20 @@ public class SpiderGameDailyZl {
                 if (LevenshteinDis.isExist(main, time2)) {
                     break;
 
+<<<<<<< HEAD
                 }
 
                 //去重复数据
                 if (main != null && main.length() > 0 && !LevenshteinDis.isExist(main, time)) {
+=======
+                if(LevenshteinDis.isExist(main,time2,url)){
+                    driver.quit();
+                    System.exit(0);
+                }
+
+                //去重复数据
+                 if (main != null && main.length() > 0 && !LevenshteinDis.isExist(main, time,url)) {
+>>>>>>> edb8050d82f99cd0195fc7dfc4aefda3508584e8
                     //知识表映射
                     ProKnowledge pk = new ProKnowledge();
                     String kuuid = UUID.randomUUID().toString();

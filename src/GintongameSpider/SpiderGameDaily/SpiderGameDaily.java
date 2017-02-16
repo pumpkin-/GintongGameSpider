@@ -205,6 +205,49 @@ public class SpiderGameDaily {
 
 
                     }
+<<<<<<< HEAD
+=======
+                    if (!text.select("img").isEmpty()) {
+                        main = main + "\r\n" + "<img src="+text.select("img").attr("src")+">";
+                    }
+                }
+                System.out.println(main);
+                //去重复数据
+                if (main != null && main.length() > 0 && !LevenshteinDis.isExist(main, time,url)) {
+                    //知识表映射
+                    ProKnowledge pk = new ProKnowledge();
+                    String kuuid = UUID.randomUUID().toString();
+                    pk.setUuid(kuuid);
+                    pk.setUrl(url);
+                    pk.setCover(img);
+                    pk.setTitle(title);
+                    pk.setAuthor(name);
+                    pk.setPtime(time);
+                    pk.setTag(label);
+                    pk.setMain(main);
+                    proKnowledges.add(pk);
+                    pk.setSource("游戏日报");
+                    //关系表映射
+                    PerKnowledge perk = new PerKnowledge();
+                    String puuid = UUID.randomUUID().toString();
+                    String rtype = "原作者";
+                    perk.setKuuid(kuuid);
+                    perk.setPuuid(puuid);
+                    perk.setName(name);
+                    perk.setKname(title);
+                    perk.setSource(url);
+                    perk.setRtype(rtype);
+                    perk.setSource("游戏日报");
+                    perKnowledges.add(perk);
+                    //人表映射
+                    BasPersonInfo bp = new BasPersonInfo();
+                    bp.setUuid(puuid);
+                    bp.setName(name);
+                    bp.setSource("游戏日报");
+                    bp.setUrl(url);
+                    basPersoninfos.add(bp);
+                }
+>>>>>>> edb8050d82f99cd0195fc7dfc4aefda3508584e8
 
                 }
 

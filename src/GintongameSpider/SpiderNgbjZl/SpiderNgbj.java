@@ -139,7 +139,7 @@ public class SpiderNgbj {
         SimpleDateFormat time1=new SimpleDateFormat("yyyy-MM-dd");
         Date date=time.parse(ptime);
         String timeto=time1.format(date);
-        if(main!=null&&main.length()>0&&!LevenshteinDis.isExist(main,timeto)){
+        if(main!=null&&main.length()>0&&!LevenshteinDis.isExist(main,timeto,url)){
             ProKnowledge proKnow=new ProKnowledge();
             proKnow.setUuid(kuuid);
             proKnow.setAuthor(author);

@@ -1,7 +1,9 @@
 package dao.impl;
 
 import JavaBean.BasPersonInfo;
+import SpiderUtils.LevenshteinDis;
 import dao.BasPersonInfoDao;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
 
@@ -14,10 +16,16 @@ public class BasPersonInfoImpl extends BaseDaoImpl<List> implements BasPersonInf
     }
 
     public void insertBatch(List<BasPersonInfo> basperinsos) {
-        this.getSqlSession().insert(this.getNs() + "insertBatch", basperinsos);
+            this.getSqlSession().insert(this.getNs() + "insertBatch", basperinsos);
+
     }
 
     public void insert(BasPersonInfo basperinso) {
         this.getSqlSession().insert(this.getNs() + "insert", basperinso);
+    }
+
+    @Override
+    public List<String> selectList(String str) {
+        return this.getSqlSession().selectList(getNs() + "selectList", str);
     }
 }
