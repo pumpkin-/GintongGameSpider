@@ -16,7 +16,7 @@ import java.util.*;
  */
 public class LevenshteinDis {
 
-    public static boolean isExist(String aticle, String date,String url) {
+    public static boolean isExist(String aticle, String date,String url,String kuuid) {
         ProKnowledgeImpl pro=new ProKnowledgeImpl();
         //System.out.println(pro.selectList(dateformat.format(date).toString()));
         List<ProKnowledge> list=pro.selectList(date);
@@ -29,8 +29,9 @@ public class LevenshteinDis {
             double dis = getSimilarity(essay, aticle);
             if (dis > 0.9) {
                 BugData bugData=new BugData();
-                bugData.setKey(list.get(x).getUrl());
-                bugData.setValue(url);
+                bugData.setKey(list.get(x).getMain());
+                bugData.setValue(aticle);
+                bugData.setUuid(kuuid);
                 BugDataImpl bugDataimpl = new BugDataImpl();
                 bugDataimpl.insert(bugData);
                 System.out.println("--------------This data should be delete------------------");

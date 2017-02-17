@@ -1,9 +1,8 @@
-package GintongameSpider.Spider17173Zs;
+package SpiderUtils;
 
 import JavaBean.BasPersonInfo;
 import JavaBean.PerKnowledge;
 import JavaBean.ProKnowledge;
-import SpiderUtils.SpiderContant;
 import dao.impl.BasPersonInfoImpl;
 import dao.impl.PerKnowledgeImpl;
 import dao.impl.ProKnowledgeImpl;
@@ -25,9 +24,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Created by lenovo on 2017/2/15.
+ * Created by lenovo on 2017/2/17.
  */
-public class Spider17173ZsZl {
+public class BaseKnowledgeSpider {
+
     private static List<ProKnowledge> proKnowledgeList=new ArrayList<ProKnowledge>();
     private static List<BasPersonInfo> basPersonInfoList=new ArrayList<BasPersonInfo>();
     private static List<PerKnowledge> perKnowledgeList=new ArrayList<PerKnowledge>();
@@ -253,4 +253,5 @@ public class Spider17173ZsZl {
         basPersonInfoList.clear();
         perKnowledgeList.clear();
     }
+
 }

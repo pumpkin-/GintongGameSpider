@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<BasKnowledgeSpiderPattern>
+
+    <spider>
+        <url>http://news.17173.com/content/02172017/001041522_1.shtml</url>
+        <title>h1.article-tit.forsetLink3</title>
+        <type>div.crumb.forsetLink1 a[target=_blank]</type>
+    </spider>
+
+
+    <spider>
+        <title>div.vr-article-bd p</title>
+        <author forTimes = 'true'>div.vr-article-bd p</author>
+    </spider>
+
+</BasKnowledgeSpiderPattern>

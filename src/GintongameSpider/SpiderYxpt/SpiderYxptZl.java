@@ -25,6 +25,7 @@ public class SpiderYxptZl {
     private static List<BasPersonInfo> basPersonInfoList=new ArrayList<BasPersonInfo>();
     private static List<PerKnowledge> perKnowledgeList=new ArrayList<PerKnowledge>();
     private static List<String> authorlist=new ArrayList<String>();
+    private static int fg=0;
 
     public static void main(String args[]) throws IOException, ProKnowledgeImpl.FormatEexception {
         grabWeb();
@@ -124,7 +125,7 @@ public class SpiderYxptZl {
 
 
         ProKnowledgeImpl proknowimpl=new ProKnowledgeImpl();
-        if(!proknowimpl.insertBatchAutoDedup(proKnowledgeList)){
+        if(proknowimpl.insertBatchAutoDedup(proKnowledgeList).get(2).equals("false")) {
             System.exit(0);
         }
         BasPersonInfoImpl basperimpl=new BasPersonInfoImpl();

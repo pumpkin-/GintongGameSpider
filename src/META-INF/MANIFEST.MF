@@ -15,5 +15,5 @@ Class-Path: classes12.jar db2java.jar mysql.jar Opta.jar SQL Server 20
  rializer-2.7.1.jar webbit-0.4.14.jar xalan-2.7.1.jar xercesImpl-2.11.
  0.jar xml-apis-1.4.01.jar phantomjsdriver-1.2.1.jar gson-2.7.jar jsou
  p-1.8.1.jar mybatis-3.2.7.jar
-Main-Class: GintongameSpider.SpiderYxpt.SpiderYxptZl
+Main-Class: GintongameSpider.Spider17173Zs.Spider17173ZsZl
 
