@@ -105,7 +105,7 @@ public class SpiderYxdg {
     public static void storeToDatebase(String title,String ptime,String type,String cover,String tag,String author,String main,String puuid,String kuuid,String url,String authorurl) throws ProKnowledgeImpl.FormatEexception {
         ProKnowledge proKnowledge=new ProKnowledge();
         proKnowledge.setTitle(title);
-        proKnowledge.setPtime(ptime+" 00:00:00");
+        proKnowledge.setPtime(ptime);
         proKnowledge.setType(type);
         proKnowledge.setCover(cover);
         proKnowledge.setTag(tag);

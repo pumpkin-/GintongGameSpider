@@ -16,7 +16,6 @@
         insert into per_knowledge(name,kname,rtype,rgrade,rp_desc,puuid,kuuid,source)
         values
             (#{name},#{kname},#{rtype},#{rgrade},#{rp_desc},#{puuid},#{kuuid},#{source})
-        
 
     </insert>
 	

@@ -96,4 +96,8 @@ public class ProKnowledgeImpl extends BaseDaoImpl<List> implements ProKnowledgeD
     public List<ProKnowledge> selectList(String str) {
         return this.getSqlSession().selectList(getNs() + "selectList", str);
     }
+
+    public List<ProKnowledge> select(){
+        return this.getSqlSession().selectList(getNs() + "select");
+    }
 }

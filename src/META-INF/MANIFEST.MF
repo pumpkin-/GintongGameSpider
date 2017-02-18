@@ -1,19 +1,20 @@
 Manifest-Version: 1.0
-Class-Path: classes12.jar db2java.jar mysql.jar Opta.jar SQL Server 20
- 00 JDBC.jar cglib-nodep-2.1_3.jar commons-codec-1.9.jar commons-colle
- ctions-3.2.1.jar commons-exec-1.1.jar commons-io-2.4.jar commons-lang
- 3-3.3.2.jar commons-logging-1.1.3.jar cssparser-0.9.14.jar gson-2.3.j
- ar guava-18.0.jar htmlunit-2.15.jar htmlunit-core-js-2.15.jar httpcli
- ent-4.3.4.jar httpcore-4.3.2.jar httpmime-4.3.3.jar jetty-http-8.1.15
- .v20140411.jar jetty-io-8.1.15.v20140411.jar jetty-util-8.1.15.v20140
- 411.jar jetty-websocket-8.1.15.v20140411.jar jna-3.4.0.jar nekohtml-1
- .9.21.jar netty-3.5.2.Final.jar platform-3.4.0.jar sac-1.3.jar seleni
- um-api-2.44.0.jar selenium-chrome-driver-2.44.0.jar selenium-firefox-
- driver-2.44.0.jar selenium-htmlunit-driver-2.44.0.jar selenium-ie-dri
- ver-2.44.0.jar selenium-java-2.44.0.jar selenium-remote-driver-2.44.0
- .jar selenium-safari-driver-2.44.0.jar selenium-support-2.44.0.jar se
- rializer-2.7.1.jar webbit-0.4.14.jar xalan-2.7.1.jar xercesImpl-2.11.
- 0.jar xml-apis-1.4.01.jar phantomjsdriver-1.2.1.jar gson-2.7.jar jsou
- p-1.8.1.jar mybatis-3.2.7.jar
-Main-Class: GintongameSpider.Spider17173Zs.Spider17173ZsZl
+Class-Path: gson-2.7.jar jsoup-1.8.1.jar mybatis-3.2.7.jar cglib-nodep
+ -2.1_3.jar commons-codec-1.9.jar commons-collections-3.2.1.jar common
+ s-exec-1.1.jar commons-io-2.4.jar commons-lang3-3.3.2.jar commons-log
+ ging-1.1.3.jar cssparser-0.9.14.jar gson-2.3.jar guava-18.0.jar htmlu
+ nit-2.15.jar htmlunit-core-js-2.15.jar httpclient-4.3.4.jar httpcore-
+ 4.3.2.jar httpmime-4.3.3.jar jetty-http-8.1.15.v20140411.jar jetty-io
+ -8.1.15.v20140411.jar jetty-util-8.1.15.v20140411.jar jetty-websocket
+ -8.1.15.v20140411.jar jna-3.4.0.jar nekohtml-1.9.21.jar netty-3.5.2.F
+ inal.jar platform-3.4.0.jar sac-1.3.jar selenium-api-2.44.0.jar selen
+ ium-chrome-driver-2.44.0.jar selenium-firefox-driver-2.44.0.jar selen
+ ium-htmlunit-driver-2.44.0.jar selenium-ie-driver-2.44.0.jar selenium
+ -java-2.44.0.jar selenium-remote-driver-2.44.0.jar selenium-safari-dr
+ iver-2.44.0.jar selenium-support-2.44.0.jar serializer-2.7.1.jar webb
+ it-0.4.14.jar xalan-2.7.1.jar xercesImpl-2.11.0.jar xml-apis-1.4.01.j
+ ar phantomjsdriver-1.2.1.jar dom4j-1.6.1.jar jaxen-1.1-beta-7.jar sit
+ emesh-2.2.1.jar classes12.jar db2java.jar mysql.jar Opta.jar SQL Serv
+ er 2000 JDBC.jar
+Main-Class: GintongameSpider.SpiderNgbjZl.SpiderNgbjZl
 

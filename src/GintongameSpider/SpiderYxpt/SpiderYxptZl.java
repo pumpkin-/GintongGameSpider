@@ -76,7 +76,7 @@ public class SpiderYxptZl {
         }
         String author=authorlist.get(flag);
         if(doc.select("div.cover img").attr("src")!=null&&doc.select("div.cover img").attr("src").length()>0) {
-            cover = "<img src=" + doc.select("div.cover img").attr("src") + ">";
+            cover = "<img src=\"" + doc.select("div.cover img").attr("src") + "\">";
         }
         Elements linkstag=doc.select("div.tag>div.pull-left>a.btn.btn-default");
         for(Element linktag:linkstag){
@@ -88,7 +88,7 @@ public class SpiderYxptZl {
                 main=(main+"\r\n"+linkmain.text()).replace("null\r\n", "");
             }
             if(linkmain.select("img").attr("src")!=null&&linkmain.select("img").attr("src").length()>0){
-                main=(main+"\r\n"+"<img src="+linkmain.select("img").attr("src")+">").replace("null\r\n","");
+                main=(main+"\r\n"+"<img src=\""+linkmain.select("img").attr("src")+"\">").replace("null\r\n","");
             }
         }
         storeToDatebase(title,ptime,type,cover,tag,author,main,puuid,kuuid,url);

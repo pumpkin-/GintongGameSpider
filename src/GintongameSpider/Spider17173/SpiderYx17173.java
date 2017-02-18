@@ -121,7 +121,7 @@ public class SpiderYx17173 {
                 }catch (Exception e19){
                     ticai=null;
                 }
-                String yunyingshang = doc3.select("ul.test-info-list a").attr("title");
+                String yunyingshang = doc3.select("ul.SpiderUtils.test-info-list a").attr("title");
                 try {
                     moshi = doc3.select("span.con").get(6).select("a").attr("title");
                 }catch (Exception e20){

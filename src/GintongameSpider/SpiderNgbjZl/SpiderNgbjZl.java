@@ -61,7 +61,7 @@ public class SpiderNgbjZl {
                 main = (main + "\n" + linktp.text()).replaceAll("null\n", "");
             }
             if (linktp.select("a").attr("href") != null && linktp.select("a").attr("href").length() > 0) {
-                main = main + "\n" + ("<img src="+"http://www.niaogebiji.com/" + linktp.select("a").attr("href")+">");
+                main = main + "\n" + ("<img src=\""+"http://www.niaogebiji.com/" + linktp.select("a").attr("href")+"\">");
             }
         }
         String title = doc.select("div.h.hm h1.ph").text();
@@ -86,7 +86,7 @@ public class SpiderNgbjZl {
             type="手游新闻";
         }
         if(doc.select("div[style=width:100%; text-align:center]>img").attr("src")!=null&&doc.select("div[style=width:100%; text-align:center]>img").attr("src").length()>0) {
-            cover = "<img src=" + "http://www.niaogebiji.com/" + doc.select("div[style=width:100%; text-align:center]>img").attr("src") + ">";
+            cover = "<img src=\"" + "http://www.niaogebiji.com/" + doc.select("div[style=width:100%; text-align:center]>img").attr("src") + "\">";
         }
         String ptime = doc.select("span[style=float: right]").text();
 

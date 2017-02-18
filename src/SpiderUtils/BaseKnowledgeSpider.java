@@ -7,6 +7,9 @@ import dao.impl.BasPersonInfoImpl;
 import dao.impl.PerKnowledgeImpl;
 import dao.impl.ProKnowledgeImpl;
 import org.apache.commons.lang3.StringUtils;
+import org.dom4j.Attribute;
+import org.dom4j.DocumentException;
+import org.dom4j.io.SAXReader;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -17,6 +20,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.phantomjs.PhantomJSDriver;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -28,13 +32,40 @@ import java.util.regex.Pattern;
  */
 public class BaseKnowledgeSpider {
 
+    static List<org.dom4j.Element> books;
+
     private static List<ProKnowledge> proKnowledgeList=new ArrayList<ProKnowledge>();
     private static List<BasPersonInfo> basPersonInfoList=new ArrayList<BasPersonInfo>();
     private static List<PerKnowledge> perKnowledgeList=new ArrayList<PerKnowledge>();
     private static List<String> ptimeList=new ArrayList<String>();
     private static List<String> authorList=new ArrayList<String>();
     private static int fg=0;
-    public static void main(String args[]) throws IOException, ProKnowledgeImpl.FormatEexception {
+    public static void main(String args[]) throws IOException, ProKnowledgeImpl.FormatEexception, DocumentException {
+
+          /* System.setProperty("phantomjs.binary.path", "E:\\phantomjs-2.1.1-windows\\bin\\phantomjs.exe");
+        WebDriver driver = new PhantomJSDriver();
+        driver.get("http://www.gamelook.com.cn/2017/01/279393");
+        WebElement web=driver.findElement(By.xpath("/html"));
+        String html=web.getAttribute("outerHTML");*/
+        // InputStream inputStream=new FileInputStream(new File("SpiderUtils/BasKnowledgePattern.xml"));
+        InputStream inputStream=test.class.getResourceAsStream("/SpiderUtils/BasKnowledgePattern.xml");
+        SAXReader sax=new SAXReader();
+        org.dom4j.Document doc=sax.read(inputStream);
+        org.dom4j.Element root = doc.getRootElement();//获取根元素
+        List<org.dom4j.Element> childElements = root.elements();//获取当前元素下的全部子元素
+        Attribute leaderAttr =root. attribute("title");
+
+        for (org.dom4j.Element child : childElements) {//循环输出全部book的相关信息
+            ;
+            books = child.elements();
+            for (org.dom4j.Element book : books) {
+                String name = book.getName();//获取当前元素名
+                String text = book.getText();//获取当前元素值
+                System.out.println(name + ":" + text);
+            }
+        }
+
+
         grabWeb();
     }
 

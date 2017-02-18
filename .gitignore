@@ -21,6 +21,7 @@
 .idea/*
 .idea/
 out/
+MANIFEST.MF
 
 #helloworld
 #helloworld

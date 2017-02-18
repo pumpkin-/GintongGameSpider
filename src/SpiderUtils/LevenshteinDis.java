@@ -27,7 +27,7 @@ public class LevenshteinDis {
         for(int x=0;x<list.size();x++){
             essay= list.get(x).getMain();
             double dis = getSimilarity(essay, aticle);
-            if (dis > 0.9) {
+            if (dis > 0.95) {
                 BugData bugData=new BugData();
                 bugData.setKey(list.get(x).getMain());
                 bugData.setValue(aticle);

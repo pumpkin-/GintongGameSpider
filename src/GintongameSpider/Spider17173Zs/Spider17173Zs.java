@@ -47,7 +47,7 @@ public class Spider17173Zs {
         System.setProperty("phantomjs.binary.path", "E:\\phantomjs-2.1.1-windows\\bin\\phantomjs.exe");
         WebDriver driver = new PhantomJSDriver();
         int a=1;
-        for(int i=118;i<=3008;i++) {
+        for(int i=429;i<=3008;i++) {
             driver.get("http://search.17173.com/jsp/newslist.jsp?expression=newsChannel%3A10009%20AND%20(newsKind%3A10161)%20AND%20newsClass%3A1&highLights=newsTitle,newsContent&pageNo="+i);
             WebElement web = driver.findElement(By.xpath("/html"));
             int flag = 1;
@@ -72,7 +72,11 @@ public class Spider17173Zs {
                     }catch (Exception e){
                         continue;
                     }
-                    dataClean(doclink, childLink, flag);
+                    try {
+                        dataClean(doclink, childLink, flag);
+                    }catch (Exception e1){
+                        System.out.println("yichang");
+                    }
                 }
                 System.out.println(a + "+" + i);
                 flag++;

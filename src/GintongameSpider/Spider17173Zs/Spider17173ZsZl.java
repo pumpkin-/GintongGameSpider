@@ -118,7 +118,7 @@ public class Spider17173ZsZl {
                         main = (main + "\r\n" + "<p>" + linkmain.text() + "</p>").replace("null\r\n", "");
                     }
                     if (StringUtils.isNoneEmpty(linkmain.select("img").attr("src"))) {
-                        main = (main + "\r\n" + "<img src=" + linkmain.select("img").attr("src") + ">").replace("null\r\n", "");
+                        main = (main + "\r\n" + "<img src=\"" + linkmain.select("img").attr("src") + "\">").replace("null\r\n", "");
                     }
                 }
             } else {
@@ -128,7 +128,7 @@ public class Spider17173ZsZl {
                         main = (main + "\r\n" + "<p>" + linkmain.text() + "</p>").replace("null\r\n", "");
                     }
                     if (StringUtils.isNoneEmpty(linkmain.select("img").attr("src"))) {
-                        main = (main + "\r\n" + "<img src=" + linkmain.select("a").attr("href") + ">").replace("null\r\n", "");
+                        main = (main + "\r\n" + "<img src=\"" + linkmain.select("a").attr("href") + "\">").replace("null\r\n", "");
                     }
                 }
             }
@@ -140,7 +140,7 @@ public class Spider17173ZsZl {
                         main = (main + "\r\n" + "<p>" + linkmain.text() + "</p>").replace("null\r\n", "");
                     }
                     if (StringUtils.isNoneEmpty(linkmain.select("img").attr("src"))) {
-                        main = (main + "\r\n" + "<img src=" + linkmain.select("img").attr("src") + ">").replace("null\r\n", "");
+                        main = (main + "\r\n" + "<img src=\"" + linkmain.select("img").attr("src") + "\">").replace("null\r\n", "");
                     }
                 }
             } else {
@@ -150,7 +150,7 @@ public class Spider17173ZsZl {
                         main = (main + "\r\n" + "<p>" + linkmain.text() + "</p>").replace("null\r\n", "");
                     }
                     if (StringUtils.isNoneEmpty(linkmain.select("img").attr("src"))) {
-                        main = (main + "\r\n" + "<img src=" + linkmain.select("a").attr("href") + ">").replace("null\r\n", "");
+                        main = (main + "\r\n" + "<img src=\"" + linkmain.select("a").attr("href") + "\">").replace("null\r\n", "");
                     }
                 }
             }
@@ -164,7 +164,7 @@ public class Spider17173ZsZl {
                             main = (main + "\r\n" + "<p>" + linkmain.text() + "</p>").replace("null\r\n", "");
                         }
                         if (StringUtils.isNoneEmpty(linkmain.select("img").attr("src"))) {
-                            main = (main + "\r\n" + "<img src=" + linkmain.select("img").attr("src") + ">").replace("null\r\n", "");
+                            main = (main + "\r\n" + "<img src=\"" + linkmain.select("img").attr("src") + "\">").replace("null\r\n", "");
                         }
                     }
                 } else {
@@ -174,7 +174,7 @@ public class Spider17173ZsZl {
                             main = (main + "\r\n" + "<p>" + linkmain.text() + "</p>").replace("null\r\n", "");
                         }
                         if (StringUtils.isNoneEmpty(linkmain.select("img").attr("src"))) {
-                            main = (main + "\r\n" + "<img src=" + linkmain.select("a").attr("href") + ">").replace("null\r\n", "");
+                            main = (main + "\r\n" + "<img src=\"" + linkmain.select("a").attr("href") + "\">").replace("null\r\n", "");
                         }
                     }
                 }

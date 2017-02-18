@@ -1,16 +1,35 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <BasKnowledgeSpiderPattern>
 
-    <spider>
-        <url>http://news.17173.com/content/02172017/001041522_1.shtml</url>
-        <title>h1.article-tit.forsetLink3</title>
-        <type>div.crumb.forsetLink1 a[target=_blank]</type>
-    </spider>
+    <spider1>
+        <title>//h1[@class='entry-title']/text()</title>
+        <author>//span[@class='meta-author']/a/text()</author>
+        <cover>//h1[@class='entry-title']/text()</cover>>
+        <ptime timeFormat="yyyy MM dd">//span[@class='meta-date']/text()</ptime>>
+        <tag>//div[@id='entry-tags']/a/text()</tag>>
+        <main>//div[@class='entry entry-content']/p</main>>
+        <mainpic>//img/@src</mainpic>>
+        <type>//span[@class='meta-cat']/a/text()</type>>
+        <source>游戏大观</source>
+        <childLink>//div[@class='entry-thumb']/a/@href</childLink>>
+        <next>$('div.pagenavi.clear a')[$('div.pagenavi.clear a').length-1].click()</next>>
+        <nextflag>//div[@class='pagenavi clear']/a[10]</nextflag>>
+        <urls>
+            <url>
+                http://www.gamelook.com.cn/category/news
+            </url>
+            <url>
+                http://www.gamelook.com.cn/category/%E6%B8%B8%E6%88%8F%E8%BF%90%E8%90%A5
+            </url>>
+        </urls>>
+
+    </spider1>
 
 
-    <spider>
+
+    <spider2>
         <title>div.vr-article-bd p</title>
         <author forTimes = 'true'>div.vr-article-bd p</author>
-    </spider>
+    </spider2>
 
 </BasKnowledgeSpiderPattern>
