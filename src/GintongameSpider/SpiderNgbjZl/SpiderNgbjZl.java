@@ -61,7 +61,7 @@ public class SpiderNgbjZl {
                 main = (main + "\n" + linktp.text()).replaceAll("null\n", "");
             }
             if (linktp.select("a").attr("href") != null && linktp.select("a").attr("href").length() > 0) {
-                main = main + "\n" + ("<img src="+"http://www.niaogebiji.com/" + linktp.select("a").attr("href")+">");
+                main = main + "\n" + ("<img src=\""+"http://www.niaogebiji.com/" + linktp.select("a").attr("href")+"\">");
             }
         }
         String title = doc.select("div.h.hm h1.ph").text();
@@ -86,7 +86,7 @@ public class SpiderNgbjZl {
             type="手游新闻";
         }
         if(doc.select("div[style=width:100%; text-align:center]>img").attr("src")!=null&&doc.select("div[style=width:100%; text-align:center]>img").attr("src").length()>0) {
-            cover = "<img src=" + "http://www.niaogebiji.com/" + doc.select("div[style=width:100%; text-align:center]>img").attr("src") + ">";
+            cover = "<img src=\"" + "http://www.niaogebiji.com/" + doc.select("div[style=width:100%; text-align:center]>img").attr("src") + "\">";
         }
         String ptime = doc.select("span[style=float: right]").text();
 
@@ -95,6 +95,7 @@ public class SpiderNgbjZl {
         }
         list.add(main);
         list.add(ptime);
+        list.add(kuuid);
         return list;
     }
 
@@ -126,7 +127,7 @@ public class SpiderNgbjZl {
                     SimpleDateFormat time1=new SimpleDateFormat("yyyy-MM-dd");
                     Date date=time.parse(text.get(1));
                     String timeto=time1.format(date);
-                    if(text.get(0)!=null&&text.get(0).length()> 0 &&!LevenshteinDis.isExist(text.get(0), timeto,childLink)) {
+                    if(text.get(0)!=null&&text.get(0).length()> 0 &&!LevenshteinDis.isExist(text.get(0), timeto,childLink,text.get(2))) {
                         b=1;
                         dataClean(doc1, childLink, b,z);
                     }else{
@@ -150,7 +151,7 @@ public class SpiderNgbjZl {
         SimpleDateFormat time1=new SimpleDateFormat("yyyy-MM-dd");
         Date date=time.parse(ptime);
         String timeto=time1.format(date);
-        if(main!=null&&main.length()>0&&!LevenshteinDis.isExist(main,timeto,url)){
+        if(main!=null&&main.length()>0&&!LevenshteinDis.isExist(main,timeto,url,kuuid)){
             ProKnowledge proKnow=new ProKnowledge();
             proKnow.setUuid(kuuid);
             proKnow.setAuthor(author);

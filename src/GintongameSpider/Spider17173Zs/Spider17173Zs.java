@@ -35,6 +35,9 @@ public class Spider17173Zs {
     private static List<PerKnowledge> perKnowledgeList=new ArrayList<PerKnowledge>();
     private static List<String> ptimeList=new ArrayList<String>();
     private static List<String> authorList=new ArrayList<String>();
+    private static ProKnowledgeImpl proknowimpl = new ProKnowledgeImpl();
+    private static PerKnowledgeImpl perknowimpl = new PerKnowledgeImpl();
+    private static BasPersonInfoImpl basperimpl = new BasPersonInfoImpl();
 
     public static void main(String args[]) throws IOException, ProKnowledgeImpl.FormatEexception {
         grabWeb();
@@ -44,7 +47,7 @@ public class Spider17173Zs {
         System.setProperty("phantomjs.binary.path", "E:\\phantomjs-2.1.1-windows\\bin\\phantomjs.exe");
         WebDriver driver = new PhantomJSDriver();
         int a=1;
-        for(int i=1;i<=3008;i++) {
+        for(int i=429;i<=3008;i++) {
             driver.get("http://search.17173.com/jsp/newslist.jsp?expression=newsChannel%3A10009%20AND%20(newsKind%3A10161)%20AND%20newsClass%3A1&highLights=newsTitle,newsContent&pageNo="+i);
             WebElement web = driver.findElement(By.xpath("/html"));
             int flag = 1;
@@ -69,7 +72,11 @@ public class Spider17173Zs {
                     }catch (Exception e){
                         continue;
                     }
-                    dataClean(doclink, childLink, flag);
+                    try {
+                        dataClean(doclink, childLink, flag);
+                    }catch (Exception e1){
+                        System.out.println("yichang");
+                    }
                 }
                 System.out.println(a + "+" + i);
                 flag++;
@@ -89,6 +96,8 @@ public class Spider17173Zs {
         String title=null;
         String puuid= UUID.randomUUID().toString();
         String kuuid=UUID.randomUUID().toString();
+        String ptime=ptimeList.get(flag);
+        String author=authorList.get(flag);
         try {
             type=doc.select("div.crumb.forsetLink1 a[target=_blank]").get(1).text();
         }catch (Exception e1){
@@ -107,9 +116,7 @@ public class Spider17173Zs {
         }else{
             title=doc.select("span.gb-final-cur").text();
         }
-        String author=authorList.get(flag);
         String test=doc.select("span.tag.forsetLink3 script").toString();
-        String ptime=ptimeList.get(flag);
 
         Pattern pat=Pattern.compile(".*var _tags.*",Pattern.CASE_INSENSITIVE);
         Matcher mat=pat.matcher(test);
@@ -121,7 +128,7 @@ public class Spider17173Zs {
             if (doc.select("div.vr-article-bd p") != null && doc.select("div.vr-article-bd p").toString().length() > 0) {
                 Elements linksmain = doc.select("div.vr-article-bd p");
                 for (Element linkmain : linksmain) {
-                    if (StringUtils.isNoneEmpty(linkmain.text()) && !linkmain.text().contains("专稿")) {
+                    if (StringUtils.isNoneEmpty(linkmain.text()) && !linkmain.text().contains("专稿")&& !linkmain.text().contains("转载")) {
                         main = (main + "\r\n" + "<p>" + linkmain.text() + "</p>").replace("null\r\n", "");
                     }
                     if (StringUtils.isNoneEmpty(linkmain.select("img").attr("src"))) {
@@ -131,7 +138,7 @@ public class Spider17173Zs {
             } else {
                 Elements linksmain = doc.select("div.gb-final-mod-article.gb-final-mod-article-p2em p");
                 for (Element linkmain : linksmain) {
-                    if (StringUtils.isNoneEmpty(linkmain.text()) && !linkmain.text().contains("专稿")) {
+                    if (StringUtils.isNoneEmpty(linkmain.text()) && !linkmain.text().contains("专稿")&& !linkmain.text().contains("转载")) {
                         main = (main + "\r\n" + "<p>" + linkmain.text() + "</p>").replace("null\r\n", "");
                     }
                     if (StringUtils.isNoneEmpty(linkmain.select("img").attr("src"))) {
@@ -143,7 +150,7 @@ public class Spider17173Zs {
             if (doc.select("div.vr-article-bd p") != null && doc.select("div.vr-article-bd p").toString().length() > 0) {
                 Elements linksmain = doc.select("div.vr-article-bd p");
                 for (Element linkmain : linksmain) {
-                    if (StringUtils.isNoneEmpty(linkmain.text()) && !linkmain.text().contains("专稿")) {
+                    if (StringUtils.isNoneEmpty(linkmain.text()) && !linkmain.text().contains("专稿")&& !linkmain.text().contains("转载")) {
                         main = (main + "\r\n" + "<p>" + linkmain.text() + "</p>").replace("null\r\n", "");
                     }
                     if (StringUtils.isNoneEmpty(linkmain.select("img").attr("src"))) {
@@ -153,7 +160,7 @@ public class Spider17173Zs {
             } else {
                 Elements linksmain = doc.select("div.gb-final-mod-article.gb-final-mod-article-p2em p");
                 for (Element linkmain : linksmain) {
-                    if (StringUtils.isNoneEmpty(linkmain.text()) && !linkmain.text().contains("专稿")) {
+                    if (StringUtils.isNoneEmpty(linkmain.text()) && !linkmain.text().contains("专稿")&& !linkmain.text().contains("转载")) {
                         main = (main + "\r\n" + "<p>" + linkmain.text() + "</p>").replace("null\r\n", "");
                     }
                     if (StringUtils.isNoneEmpty(linkmain.select("img").attr("src"))) {
@@ -161,13 +168,13 @@ public class Spider17173Zs {
                     }
                 }
             }
-            Elements linkschild=doc.select("div.vr-final-mod-pagination li.next");
+            Elements linkschild=doc.select("div.vr-final-mod-pagination li a.page-next");
             for(Element linkchild:linkschild) {
                 Document docchild=Jsoup.connect(linkchild.attr("href")).get();
-                if (doc.select("div.vr-article-bd p") != null && doc.select("div.vr-article-bd p").toString().length() > 0) {
-                    Elements linksmain = doc.select("div.vr-article-bd p");
+                if (docchild.select("div.vr-article-bd p") != null && docchild.select("div.vr-article-bd p").toString().length() > 0) {
+                    Elements linksmain = docchild.select("div.vr-article-bd p");
                     for (Element linkmain : linksmain) {
-                        if (StringUtils.isNoneEmpty(linkmain.text()) && !linkmain.text().contains("专稿")) {
+                        if (StringUtils.isNoneEmpty(linkmain.text()) && !linkmain.text().contains("专稿")&& !linkmain.text().contains("转载")) {
                             main = (main + "\r\n" + "<p>" + linkmain.text() + "</p>").replace("null\r\n", "");
                         }
                         if (StringUtils.isNoneEmpty(linkmain.select("img").attr("src"))) {
@@ -175,9 +182,9 @@ public class Spider17173Zs {
                         }
                     }
                 } else {
-                    Elements linksmain = doc.select("div.gb-final-mod-article.gb-final-mod-article-p2em p");
+                    Elements linksmain = docchild.select("div.gb-final-mod-article.gb-final-mod-article-p2em p");
                     for (Element linkmain : linksmain) {
-                        if (StringUtils.isNoneEmpty(linkmain.text()) && !linkmain.text().contains("专稿")) {
+                        if (StringUtils.isNoneEmpty(linkmain.text()) && !linkmain.text().contains("专稿")&& !linkmain.text().contains("转载")) {
                             main = (main + "\r\n" + "<p>" + linkmain.text() + "</p>").replace("null\r\n", "");
                         }
                         if (StringUtils.isNoneEmpty(linkmain.select("img").attr("src"))) {
@@ -187,7 +194,36 @@ public class Spider17173Zs {
                 }
             }
         }
-        //storeToDatebase(title, ptime, type, tag, author, main, puuid, kuuid, url);
+        if(type.equals("产业新闻")){
+            type="行业动态";
+        }else if(type.equals("大陆新闻")){
+            type="大陆";
+        }else if(type.equals("全球新闻")){
+            type="全球";
+        }else if(type.equals("手机端-综合推荐")){
+            type="手游新闻";
+        }else if(type.equals("产业综述")||type.equals("新闻语录")||type.equals("玩家新闻")||type.equals("社会新闻")||type.equals("话题新闻")||type.equals("评论文章")||type.equals("独家策划")||type.equals("综合资讯")||type.equals("头条新闻")){
+            type="行业动态";
+        }else if(type.equals("财务报告")){
+            type="财报";
+        }else if(type.equals("新网游动态")){
+            type="网游新闻";
+        }else if(type.equals("人物")){
+            type="人物专栏";
+        }else if(type.equals("游戏探索")||type.contains("最新消息")){
+            type="产品相关新闻";
+        }else if(type.equals("产业数据")){
+            type="数字报告";
+        }else if(type.equals("网游大观")){
+            type="网游新闻";
+        }else if(type.equals("网博会最新新闻")){
+            type="活动展会";
+        }else if(type.equals("17173专访")){
+            type="任务专访";
+        }else if(type.equals("活动资讯")){
+            type="活动展会";
+        }
+        storeToDatebase(title, ptime, type, tag, author, main, puuid, kuuid, url);
     }
 
     public static void storeToDatebase(String title,String ptime,String type,String tag,String author,String main,String puuid,String kuuid,String url) throws ProKnowledgeImpl.FormatEexception {
@@ -220,12 +256,9 @@ public class Spider17173Zs {
         basPersonInfoList.add(basPerson);
 
         if((proKnowledgeList.size()>0&&proKnowledgeList.size()% SpiderContant.insertBatchContant==0)) {
-            ProKnowledgeImpl proknowimpl = new ProKnowledgeImpl();
-            proknowimpl.insertBatchAutoDedup(proKnowledgeList);
-            BasPersonInfoImpl basperimpl = new BasPersonInfoImpl();
-            basperimpl.insertBatch(basPersonInfoList);
-            PerKnowledgeImpl perknowimpl = new PerKnowledgeImpl();
-            perknowimpl.insertBatch(perKnowledgeList);
+            if(proknowimpl.insertBatchAutoDedup(proKnowledgeList).get(1).equals("true")) {
+                perknowimpl.insertBatch(perKnowledgeList);
+            }
             proKnowledgeList.clear();
             basPersonInfoList.clear();
             perKnowledgeList.clear();
