@@ -45,7 +45,7 @@ public class test {
         System.out.println("作者：" + title.getText());//获取元素值
         System.out.println("出版社："+urls.getText());*/
 
-     // SpiderUtils.getElements("windows","spider1");
+      SpiderUtils.getElements("windows","spider1");
 
 
        /* org.jsoup.nodes.Document doc=Jsoup.connect("http://news.17173.com/content/02172017/144428249.shtml").get();
@@ -53,7 +53,7 @@ public class test {
         System.out.println(doc.outerHtml());
         System.out.println(jx.selOne("//html"));*/
 
-        ProKnowledgeImpl proKnowledge=new ProKnowledgeImpl();
+       /* ProKnowledgeImpl proKnowledge=new ProKnowledgeImpl();
         List<ProKnowledge> list=proKnowledge.select();
         for(ProKnowledge li:list){
             try {
@@ -62,6 +62,6 @@ public class test {
             }catch (Exception e){
                 System.out.println("null");
             }
-        }
+        }*/
     }
 }

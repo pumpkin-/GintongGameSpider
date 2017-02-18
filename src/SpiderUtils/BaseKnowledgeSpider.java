@@ -273,7 +273,7 @@ public class BaseKnowledgeSpider {
         basPersonInfoList.add(basPerson);
 
         ProKnowledgeImpl proknowimpl = new ProKnowledgeImpl();
-        if(proknowimpl.insertBatchAutoDedup(proKnowledgeList).get(2).equals("false")) {
+        if(proknowimpl.insertBatchAutoDedup(proKnowledgeList,basPersonInfoList,perKnowledgeList).get(2).equals("false")) {
             System.exit(0);
         }
         BasPersonInfoImpl basperimpl = new BasPersonInfoImpl();

@@ -15,6 +15,7 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -26,6 +27,9 @@ public class SpiderYxptZl {
     private static List<PerKnowledge> perKnowledgeList=new ArrayList<PerKnowledge>();
     private static List<String> authorlist=new ArrayList<String>();
     private static int fg=0;
+    private static ProKnowledgeImpl proknowimpl = new ProKnowledgeImpl();
+    private static PerKnowledgeImpl perknowimpl = new PerKnowledgeImpl();
+    private static BasPersonInfoImpl basperimpl = new BasPersonInfoImpl();
 
     public static void main(String args[]) throws IOException, ProKnowledgeImpl.FormatEexception {
         grabWeb();
@@ -124,14 +128,15 @@ public class SpiderYxptZl {
         basPersonInfoList.add(basPerson);
 
 
-        ProKnowledgeImpl proknowimpl=new ProKnowledgeImpl();
-        if(proknowimpl.insertBatchAutoDedup(proKnowledgeList).get(2).equals("false")) {
+
+        Map map=proknowimpl.insertBatchAutoDedup(proKnowledgeList,basPersonInfoList,perKnowledgeList);
+        if(((List<String>)map.get(2)).get(0).equals("false")) {
             System.exit(0);
         }
-        BasPersonInfoImpl basperimpl=new BasPersonInfoImpl();
-        basperimpl.insertBatch(basPersonInfoList);
-        PerKnowledgeImpl perknowimpl=new PerKnowledgeImpl();
-        perknowimpl.insertBatch(perKnowledgeList);
+        if(((List<Integer>) map.get(4)).get(0)!=0) {
+            basperimpl.insertBatch(basPersonInfoList);
+            perknowimpl.insertBatch(perKnowledgeList);
+        }
         proKnowledgeList.clear();
         basPersonInfoList.clear();
         perKnowledgeList.clear();

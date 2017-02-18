@@ -4,7 +4,7 @@
     <spider1>
         <title>//h1[@class='entry-title']/text()</title>
         <author>//span[@class='meta-author']/a/text()</author>
-        <cover>//h1[@class='entry-title']/text()</cover>>
+        <cover>//div[@class='entry-thumb']/img/@src</cover>>
         <ptime timeFormat="yyyy MM dd">//span[@class='meta-date']/text()</ptime>>
         <tag>//div[@id='entry-tags']/a/text()</tag>>
         <main>//div[@class='entry entry-content']/p</main>>
