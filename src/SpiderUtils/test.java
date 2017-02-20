@@ -51,6 +51,8 @@ public class test {
 
 
 
+
+
      SpiderUtils.getElements("windows","spiderYmxk");
        System.setProperty("webdriver.chrome.driver",SpiderContant.chromeWindowsPath );
         WebDriver driver=new ChromeDriver();
@@ -61,5 +63,7 @@ public class test {
         System.out.println(doc.outerHtml());
         System.out.println("错误修改");
 
+
+
+     }
     }
-}
