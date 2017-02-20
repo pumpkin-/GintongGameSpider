@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <BasKnowledgeSpiderPattern>
 
-    <spiderYxdg>
+    <!--游戏大观抓取-->
+    <spider>
         <title>//h1[@class='entry-title']/text()</title>
         <author>//span[@class='meta-author']/a/text()</author>
         <authorurl></authorurl>>
@@ -12,6 +13,8 @@
         <mainpic>//img/@src</mainpic>>
         <type>//span[@class='meta-cat']/a/text()</type>>
         <source>游戏大观</source>
+        <childnext></childnext>>
+        <childnextflag></childnextflag>>
         <childLink>//div[@class='entry-thumb']/a/@href</childLink>>
         <next>$('div.pagenavi.clear a')[$('div.pagenavi.clear a').length-1].click()</next>>
         <nextflag>//div[@class='pagenavi clear']/a[10]</nextflag>>
@@ -24,11 +27,11 @@
             </url>>
         </urls>>
 
-    </spiderYxdg>
+    </spider>
 
 
-
-    <spiderYxgc>
+<!--游戏观察抓取-->
+    <spider>
         <title>//div[@class='detail_cont']/h1[@class='tit']/text()</title>
         <author></author>
         <authorurl></authorurl>>
@@ -39,6 +42,8 @@
         <mainpic>//img/@src</mainpic>>
         <type>//div[@class='s_1 on']/p/a[@class='on']/text()</type>>
         <source>游戏观察</source>
+        <childnext></childnext>>
+        <childnextflag></childnextflag>>
         <childLink Mosaic="http://www.youxiguancha.com">//div[@class='inf clearfix']/div[@class='inf_c']/h2/a/@href</childLink>>
         <next>$('div.page_manu a.pageNext')[0].click()</next>>
         <nextflag>//div[@class='page_manu']/a[@class='pageNext']</nextflag>>
@@ -48,28 +53,56 @@
             </url>
         </urls>>
 
-    </spiderYxgc>
+    </spider>
 
-    <spiderSfw>
+
+    <!--上方网抓取-->
+    <spider>
         <title>//div[@class='side']/h1[@class='h1title']/text()</title>
         <author></author>
         <authorurl></authorurl>>
-        <cover>//div[@class='content']/center/img/@src</cover>>
-        <ptime timeFormat="yyyy MM dd HH mm">//div[@class='fl']/text()</ptime>>
+        <cover>//table[@class='margin12']/tbody/tr/td/a/img/@src</cover>>
+        <ptime timeFormat="yyyy MM dd HH mm">//div[@class='intro']/div[@class='fl']/text()</ptime>>
         <tag>//div[@class='tagshare']/table/tbody/tr/td/a[@class='tag']/text()</tag>>
         <main>//div[@class='content']/p</main>>
         <mainpic>//img/@src</mainpic>>
         <type>//div[@class='url']/a/text()</type>>
         <source>上方网</source>
+        <childnext></childnext>>
+        <childnextflag></childnextflag>>
         <childLink Mosaic="">//div[@class='rl fontblue']/a/@href</childLink>>
         <next>$('div.listpage a')[$('div.listpage a').length-2].click()</next>>
-        <nextflag>//div[@class='page_manu']/a[@class='pageNext']</nextflag>>
+        <nextflag>//div[@class='listpage']/a[text()*='下一页']</nextflag>>
         <urls>
             <url>
-                http://www.youxiguancha.com/news/
+                http://www.sfw.cn/kuaixun/p/1
             </url>
         </urls>>
 
-    </spiderSfw>
+    </spider>
 
+
+    <spiderYmxk>
+        <title>//div[@class='Mid2L_tit']/h1/text()</title>
+        <author></author>
+        <authorurl></authorurl>>
+        <cover>//div[@class='img']/a/img/@src</cover>>
+        <ptime timeFormat="yyyy MM dd HH mm ss">//div[@class='detail']/text()</ptime>>
+        <tag>//div[@class='RelevantR']/ul[@class='Relevantlike']/li[@class='txt']/a/text()</tag>>
+        <main>//div[@class='Mid2L_con']/p</main>>
+        <mainpic>//a/@href</mainpic>>
+        <type>//div[@class='Mid2L_crumb']/a[@target='_self']/text()</type>>
+        <source>游民星空</source>
+        <childLink Mosaic="">//div[@class='img']/a/@href</childLink>>
+        <childnext>$('div.page_css a')[$('div.page_css a').length-1].click()</childnext>>
+        <childnextflag>//div[@class='page_css']</childnextflag>>
+        <next>$('span.pagecss a.p1.nexe').click()</next>>
+        <nextflag>//span[@class='pagecss']/a[text()*='下一页']</nextflag>>
+        <urls>
+            <url>
+                http://www.gamersky.com/news/
+            </url>
+        </urls>>
+
+    </spiderYmxk>
 </BasKnowledgeSpiderPattern>

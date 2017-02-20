@@ -103,7 +103,7 @@ public class LevenshteinDis {
             }
         }
         //System.out.println("字符串\"" + str1 + "\"与\"" + str2 + "\"的比较");
-        System.out.println("差异步骤：" + dif[len1][len2]);
+        //System.out.println("差异步骤：" + dif[len1][len2]);
         // 计算相似度
         float similarity = 1 - (float) dif[len1][len2]
                 / Math.max(str1.length(), str2.length());
