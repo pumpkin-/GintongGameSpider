@@ -26,6 +26,8 @@ public class LevenshteinDis {
         String essay;
         for(int x=0;x<list.size();x++){
             essay= list.get(x).getMain();
+
+            //修改为错误代码
             double dis = levenshtein(essay, aticle);
             if (dis > 0.95) {
                 BugData bugData=new BugData();
@@ -41,7 +43,13 @@ public class LevenshteinDis {
         return false;
     }
 
-    public static boolean NameisExist(String source,String name) {
+    /**
+     * 判断作者是否重复
+     * @param source
+     * @param name
+     * @return
+     */
+    public static boolean nameIsExist(String source, String name) {
         BasPersonInfoImpl per=new BasPersonInfoImpl();
         //System.out.println(pro.selectList(dateformat.format(date).toString()));
         List<String> list=per.selectList(source);
