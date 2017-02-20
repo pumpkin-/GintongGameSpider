@@ -29,7 +29,7 @@ import java.util.Objects;
 public class test {
     static List<org.dom4j.Element> books;
     public static void main(String[] args) throws ParserConfigurationException, XpathSyntaxErrorException, SpiderUtils.FormatEexception, DocumentException, IOException, ProKnowledgeImpl.FormatEexception, InterruptedException, ParseException {
-       /* FileInputStream inputStream=new FileInputStream(test.class.getClassLoader().getResource("SpiderUtils/BasKnowledgePattern.xml").getFile());
+        FileInputStream inputStream=new FileInputStream(test.class.getClassLoader().getResource("SpiderUtils/BasKnowledgePattern.xml").getFile());
         System.out.println(test.class.getClassLoader().getResource("SpiderUtils/BasKnowledgePattern.xml").getFile().toString());
         SAXReader sax=new SAXReader();
         org.dom4j.Document doc=sax.read(inputStream);
@@ -45,7 +45,7 @@ public class test {
         Element publisher = book2.element("publisher");
         System.out.println("作者：" + title.getText());//获取元素值
         System.out.println("出版社："+urls.getText());
-        System.out.println();*/
+        System.out.println();
 
 
 
@@ -55,8 +55,9 @@ public class test {
         WebDriver driver=new ChromeDriver();
         driver.get("http://www.sfw.cn/kuaixun/p/4957");
         WebElement webElement=driver.findElement(By.xpath("/html"));
-        org.jsoup.nodes.Document doc=Jsoup.parse(webElement.getAttribute("outerHTML"));
-        System.out.println(doc.outerHtml());
+        org.jsoup.nodes.Document document=Jsoup.parse(webElement.getAttribute("outerHTML"));
+        System.out.print("演示merge错误");
+        System.out.println(document.outerHtml());
 
 
     }
