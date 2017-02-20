@@ -38,6 +38,7 @@ public class test {
         Element type = book2.element("type");//根据元素名获取子元素
         Element title = book2.element("title");
         Element urls = book2.element("urls");
+         System.out.println("错误修改");
         List<Element> list=urls.elements();
         for(Element ele:list){
             System.out.println(ele.getText().trim());
@@ -51,14 +52,14 @@ public class test {
 
 
      SpiderUtils.getElements("windows","spiderYmxk");
-       /*System.setProperty("webdriver.chrome.driver",SpiderContant.chromeWindowsPath );
+       System.setProperty("webdriver.chrome.driver",SpiderContant.chromeWindowsPath );
         WebDriver driver=new ChromeDriver();
         driver.get("http://www.gamersky.com/news/201702/870428.shtml");
         WebElement webElement=driver.findElement(By.xpath("/html"));
         org.jsoup.nodes.Document doc=Jsoup.parse(webElement.getAttribute("outerHTML"));
         JXDocument jxDocument=new JXDocument(doc);
-        System.out.println(doc.outerHtml());*/
-
+        System.out.println(doc.outerHtml());
+        System.out.println("错误修改");
 
     }
 }

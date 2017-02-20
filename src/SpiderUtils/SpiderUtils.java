@@ -261,6 +261,8 @@ public class SpiderUtils {
 
                         if(StringUtils.isNotEmpty(jxDocumentChild.selOne(childnextflagi.getText()).toString())) {
                             for(int x=1;x>0;x++) {
+                                baseKnowledge.setWebElement(baseKnowledge.getDriver().findElement(By.xpath("/html")));
+                                JXDocument jxDocumentmain =new JXDocument(Jsoup.parse(baseKnowledge.getWebElement().getAttribute("outerHTML")));
                                 List<JXNode> mainlist = jxDocumentChild.selN(maini.getText());
                                 for (JXNode objmain : mainlist) {
                                     if (StringUtils.isNotEmpty(objmain.getElement().text())) {
@@ -270,6 +272,7 @@ public class SpiderUtils {
                                         main = (main + "\r\n<img src=\"" + objmain.sel(mainipic.getText()).get(0) + "\">");
                                     }
                                 }
+                                System.out.println(jxDocumentChild.selOne(childnextflagi.getText()).toString());
                                 if(StringUtils.isEmpty(jxDocumentChild.selOne(childnextflagi.getText()).toString())){
                                     break;
                                 }

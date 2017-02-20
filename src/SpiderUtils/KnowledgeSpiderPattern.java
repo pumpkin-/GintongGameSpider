@@ -229,7 +229,7 @@ public class KnowledgeSpiderPattern {
 
 
 
-        if(flag.equals("windows")) {
+       /* if(flag.equals("windows")) {
             if ((proKnowledgeList.size() > 0 && proKnowledgeList.size() % SpiderContant.insertBatchContant == 0)) {
                 if (proknowimpl.insertBatchAutoDedup(proKnowledgeList).get(1).equals("true")) {
                     basperimpl.insertBatch(basPersonInfoList);
@@ -250,7 +250,7 @@ public class KnowledgeSpiderPattern {
             perKnowledgeList.clear();
         }else{
             throw new FormatEexception("You have to choose windows or linux");
-        }
+        }*/
     }
 
 }

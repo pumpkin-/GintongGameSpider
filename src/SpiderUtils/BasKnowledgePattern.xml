@@ -95,7 +95,7 @@
         <source>游民星空</source>
         <childLink Mosaic="">//div[@class='img']/a/@href</childLink>>
         <childnext>$('div.page_css a')[$('div.page_css a').length-1].click()</childnext>>
-        <childnextflag>//div[@class='page_css']</childnextflag>>
+        <childnextflag>//div[@class='page_css']/a[text()*='下一页']</childnextflag>>
         <next>$('span.pagecss a.p1.nexe').click()</next>>
         <nextflag>//span[@class='pagecss']/a[text()*='下一页']</nextflag>>
         <urls>
