@@ -1,10 +1,13 @@
 package dao.impl;
 
+import JavaBean.BasPersonInfo;
 import JavaBean.BugData;
+import JavaBean.PerKnowledge;
 import SpiderUtils.LevenshteinDis;
 import dao.ProKnowledgeDao;
 import JavaBean.ProKnowledge;
 import org.apache.commons.lang3.StringUtils;
+import org.w3c.dom.ls.LSException;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
@@ -41,11 +44,13 @@ public class ProKnowledgeImpl extends BaseDaoImpl<List> implements ProKnowledgeD
     }
 
 
-    public Map<Integer,String> insertBatchAutoDedup(List<ProKnowledge> proKnowledges) throws FormatEexception {
+
+    public Map<Integer,List> insertBatchAutoDedup(List<ProKnowledge> proKnowledges,List<BasPersonInfo> basPersonInfos,List<PerKnowledge> perKnowledges) throws FormatEexception {
+        List<Integer> flaglist=new ArrayList<Integer>();
+        List<String> bznlist=new ArrayList<String>();
         int flag=0;
         String bzn="true";
-        String bln="true";
-        Map<Integer,String> map=new TreeMap<Integer, String>();
+        Map<Integer,List> map=new TreeMap<Integer, List>();
         for(int i=0;i<proKnowledges.size();i++){
             SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             try {
@@ -56,12 +61,24 @@ public class ProKnowledgeImpl extends BaseDaoImpl<List> implements ProKnowledgeD
             if(StringUtils.isEmpty(proKnowledges.get(i).getMain())){
                 System.out.println("this is the null");
                 proKnowledges.remove(i);
+                if(basPersonInfos.size()>0) {
+                    basPersonInfos.remove(i);
+                }
+                if(perKnowledges.size()>0) {
+                    perKnowledges.remove(i);
+                }
                 i=i-1;
             }else if (StringUtils.isNotEmpty(proKnowledges.get(i).getMain()) && LevenshteinDis.isExist(proKnowledges.get(i).getMain(), proKnowledges.get(i).getPtime(),proKnowledges.get(i).getUrl(),proKnowledges.get(i).getUuid())) {
                 proKnowledges.remove(i);
+                if(basPersonInfos.size()>0) {
+                    basPersonInfos.remove(i);
+                }
+                if(perKnowledges.size()>0) {
+                    perKnowledges.remove(i);
+                }
                 i=i-1;
                 fg=fg+1;
-                bln="false";
+
                 if(fg%5==0){
                     bzn="false";
                 }
@@ -70,11 +87,15 @@ public class ProKnowledgeImpl extends BaseDaoImpl<List> implements ProKnowledgeD
             }
             flag=i+1;
         }
+        flaglist.add(flag);
+        bznlist.add(bzn);
+        map.put(1,basPersonInfos);
+        map.put(3,perKnowledges);
+        map.put(4,flaglist);
+        map.put(2,bznlist);
         if(flag!=0) {
             this.getSqlSession().insert(this.getNs() + "insertBatch", proKnowledges);
         }
-        map.put(1,bln);
-        map.put(2,bzn);
         return map;
     }
 
@@ -91,6 +112,7 @@ public class ProKnowledgeImpl extends BaseDaoImpl<List> implements ProKnowledgeD
 
 
     }
+
 
 
     public List<ProKnowledge> selectList(String str) {

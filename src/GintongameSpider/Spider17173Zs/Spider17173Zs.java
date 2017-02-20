@@ -20,9 +20,7 @@ import org.openqa.selenium.phantomjs.PhantomJSDriver;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -256,8 +254,10 @@ public class Spider17173Zs {
         basPersonInfoList.add(basPerson);
 
         if((proKnowledgeList.size()>0&&proKnowledgeList.size()% SpiderContant.insertBatchContant==0)) {
-            if(proknowimpl.insertBatchAutoDedup(proKnowledgeList).get(1).equals("true")) {
-                perknowimpl.insertBatch(perKnowledgeList);
+            Map map=proknowimpl.insertBatchAutoDedup(proKnowledgeList, basPersonInfoList, perKnowledgeList);
+            if(((List<Integer>) map.get(4)).get(0)!=0) {
+                basperimpl.insertBatch((List<BasPersonInfo>) map.get(1));
+                perknowimpl.insertBatch((List<PerKnowledge>) map.get(3));
             }
             proKnowledgeList.clear();
             basPersonInfoList.clear();

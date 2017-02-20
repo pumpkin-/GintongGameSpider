@@ -16,5 +16,5 @@ Class-Path: gson-2.7.jar jsoup-1.8.1.jar mybatis-3.2.7.jar cglib-nodep
  ar phantomjsdriver-1.2.1.jar dom4j-1.6.1.jar jaxen-1.1-beta-7.jar sit
  emesh-2.2.1.jar classes12.jar db2java.jar mysql.jar Opta.jar SQL Serv
  er 2000 JDBC.jar
-Main-Class: GintongameSpider.SpiderNgbjZl.SpiderNgbjZl
+Main-Class: GintongameSpider.SpiderYxpt.SpiderYxptZl
 

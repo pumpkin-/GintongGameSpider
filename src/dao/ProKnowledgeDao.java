@@ -1,5 +1,7 @@
 package dao;
 
+import JavaBean.BasPersonInfo;
+import JavaBean.PerKnowledge;
 import JavaBean.ProKnowledge;
 import dao.impl.ProKnowledgeImpl;
 
@@ -13,7 +15,7 @@ public interface ProKnowledgeDao extends BaseDao<List> {
 
     public void insertBatch(List<ProKnowledge> ts);
     public void insert(ProKnowledge ts) throws ProKnowledgeImpl.FormatEexception;
-    public Map<Integer,String> insertBatchAutoDedup(List<ProKnowledge> proKnowledges) throws ProKnowledgeImpl.FormatEexception;
+    public Map<Integer,List> insertBatchAutoDedup(List<ProKnowledge> proKnowledges,List<BasPersonInfo> basPersonInfos,List<PerKnowledge> perKnowledges) throws ProKnowledgeImpl.FormatEexception;
     public List<ProKnowledge> selectList(String ts);
     public List<ProKnowledge> select();
 }

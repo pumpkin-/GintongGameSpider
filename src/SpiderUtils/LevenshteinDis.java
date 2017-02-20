@@ -26,6 +26,7 @@ public class LevenshteinDis {
         String essay;
         for(int x=0;x<list.size();x++){
             essay= list.get(x).getMain();
+
             //修改为错误代码
             double dis = levenshtein(essay, aticle);
             if (dis > 0.95) {
@@ -58,7 +59,7 @@ public class LevenshteinDis {
         String essay;
         for(int x=0;x<list.size();x++){
             essay= list.get(x);
-            double dis = getSimilarity(essay, name);
+            double dis = levenshtein(essay, name);
             if (dis > 0.9) {
                 System.out.println("--------------This data should be delete------------------");
                 return true;
