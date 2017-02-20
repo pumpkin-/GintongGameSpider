@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <BasKnowledgeSpiderPattern>
 
-    <spider1>
+    <spiderYxdg>
         <title>//h1[@class='entry-title']/text()</title>
         <author>//span[@class='meta-author']/a/text()</author>
-        <cover>//div[@class='entry-thumb']/img/@src</cover>>
+        <authorurl></authorurl>>
+        <cover>//div[@class='entry-thumb']/a/img/@src</cover>>
         <ptime timeFormat="yyyy MM dd">//span[@class='meta-date']/text()</ptime>>
         <tag>//div[@id='entry-tags']/a/text()</tag>>
         <main>//div[@class='entry entry-content']/p</main>>
@@ -23,13 +24,52 @@
             </url>>
         </urls>>
 
-    </spider1>
+    </spiderYxdg>
 
 
 
-    <spider2>
-        <title>div.vr-article-bd p</title>
-        <author forTimes = 'true'>div.vr-article-bd p</author>
-    </spider2>
+    <spiderYxgc>
+        <title>//div[@class='detail_cont']/h1[@class='tit']/text()</title>
+        <author></author>
+        <authorurl></authorurl>>
+        <cover>//div[@class='inf clearfix']/a[@class='img_box']/img/@src</cover>>
+        <ptime timeFormat="yyyy MM dd HH mm">//div[@class='info']/em[1]/text()</ptime>>
+        <tag></tag>>
+        <main>//div[@class='detail_c']/p</main>>
+        <mainpic>//img/@src</mainpic>>
+        <type>//div[@class='s_1 on']/p/a[@class='on']/text()</type>>
+        <source>游戏观察</source>
+        <childLink Mosaic="http://www.youxiguancha.com">//div[@class='inf clearfix']/div[@class='inf_c']/h2/a/@href</childLink>>
+        <next>$('div.page_manu a.pageNext')[0].click()</next>>
+        <nextflag>//div[@class='page_manu']/a[@class='pageNext']</nextflag>>
+        <urls>
+            <url>
+                http://www.youxiguancha.com/news/
+            </url>
+        </urls>>
+
+    </spiderYxgc>
+
+    <spiderSfw>
+        <title>//div[@class='side']/h1[@class='h1title']/text()</title>
+        <author></author>
+        <authorurl></authorurl>>
+        <cover>//div[@class='content']/center/img/@src</cover>>
+        <ptime timeFormat="yyyy MM dd HH mm">//div[@class='fl']/text()</ptime>>
+        <tag>//div[@class='tagshare']/table/tbody/tr/td/a[@class='tag']/text()</tag>>
+        <main>//div[@class='content']/p</main>>
+        <mainpic>//img/@src</mainpic>>
+        <type>//div[@class='url']/a/text()</type>>
+        <source>上方网</source>
+        <childLink Mosaic="">//div[@class='rl fontblue']/a/@href</childLink>>
+        <next>$('div.listpage a')[$('div.listpage a').length-2].click()</next>>
+        <nextflag>//div[@class='page_manu']/a[@class='pageNext']</nextflag>>
+        <urls>
+            <url>
+                http://www.youxiguancha.com/news/
+            </url>
+        </urls>>
+
+    </spiderSfw>
 
 </BasKnowledgeSpiderPattern>

@@ -87,17 +87,16 @@ public class SpiderUtils {
         Element ptimei = childElement.element("ptime");
         Element typei = childElement.element("type");
         Element sourcei = childElement.element("source");
+        Element authorurli = childElement.element("authorurl");
 
 
-        String tag = null;
-        String main = null;
-        String type = null;
         String author=null;
         String title=null;
         String cover=null;
         String ptimetest=null;
         String ptime=null;
-
+        String authorurl=null;
+        String Mosaic=null;
 
         int a=1;
         for(Element ele:classifiedlist){
@@ -122,58 +121,105 @@ public class SpiderUtils {
                 List<Object> coverlist=null;
                 List<Object> ptimetestlist=null;
                 List<Object> ptimelist=new ArrayList<Object>();
-                if(jxDocument.selN(authori.getText()).size()>0){
-                    authorlist = jxDocument.sel(authori.getText());
+                List<Object> authorurllist=null;
+                if(StringUtils.isNotEmpty(authorurli.getText())) {
+                    if (jxDocument.selN(authorurli.getText()).size() > 0) {
+                        authorurllist = jxDocument.sel(authorurli.getText());
+                    }
                 }
-                if(jxDocument.selN(titlei.getText()).size()>0){
-                    titlelist = jxDocument.sel(titlei.getText());
+                if(StringUtils.isNotEmpty(authori.getText())) {
+                    if (jxDocument.selN(authori.getText()).size() > 0) {
+                        authorlist = jxDocument.sel(authori.getText());
+                    }
                 }
-                if(jxDocument.selN(coveri.getText()).size()>0){
-                    coverlist = jxDocument.sel(coveri.getText());
+                if(StringUtils.isNotEmpty(titlei.getText())) {
+                    if (jxDocument.selN(titlei.getText()).size() > 0) {
+                        titlelist = jxDocument.sel(titlei.getText());
+                    }
                 }
-                if(jxDocument.selN(ptimei.getText()).size()>0){
-                    ptimetestlist = jxDocument.sel(ptimei.getText());
-                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat(ptimei.attributeValue("timeFormat"));
-                    for(int size=0;size<ptimetestlist.size();size++) {
-                        Date date = simpleDateFormat.parse((String) ptimetestlist.get(size).toString().replaceAll("\\D", " ").trim());
-                        ptimelist.add(simpleDateFormatchange.format(date));
+                if(StringUtils.isNotEmpty(coveri.getText())) {
+                    if (jxDocument.selN(coveri.getText()).size() > 0) {
+                        coverlist = jxDocument.sel(coveri.getText());
+                    }
+                }
+                if(StringUtils.isNotEmpty(ptimei.getText())) {
+                    if (jxDocument.selN(ptimei.getText()).size() > 0) {
+                        ptimetestlist = jxDocument.sel(ptimei.getText());
+                        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(ptimei.attributeValue("timeFormat"));
+                        for (int size = 0; size < ptimetestlist.size(); size++) {
+                            Date date = simpleDateFormat.parse((String) ptimetestlist.get(size).toString().replaceAll("\\D", " ").trim());
+                            ptimelist.add(simpleDateFormatchange.format(date));
+                        }
                     }
                 }
 
 
                 for (Object obj : childlist) {
-                    //try {
+                    try {
+                        String tag = null;
+                        String main = null;
+                        String type = null;
+                        String child=null;
+                        if(StringUtils.isNotEmpty(childLink.attributeValue("Mosaic"))) {
+                            child = childLink.attributeValue("Mosaic") + obj;
+                        }else{
+                            child= (String) obj;
+                        }
                         int fg=0;
-                        baseKnowledge.getDriver().get((String) obj);
+                        baseKnowledge.getDriver().get((String) child);
                         baseKnowledge.setWebElement(baseKnowledge.getDriver().findElement(By.xpath("/html")));
                         JXDocument jxDocumentChild = new JXDocument(Jsoup.parse(baseKnowledge.getWebElement().getAttribute("outerHTML")));
                         String puuid = UUID.randomUUID().toString();
                         String kuuid = UUID.randomUUID().toString();
 
 
-
-                        if(jxDocument.selN(authori.getText()).size()<=0){
-                            author = (String) jxDocumentChild.selOne(authori.getText());
+                        if(StringUtils.isNotEmpty(authori.getText())) {
+                            if (jxDocument.selN(authori.getText()).size() <= 0) {
+                                author = (String) jxDocumentChild.selOne(authori.getText());
+                            } else {
+                                author = (String) authorlist.get(fg);
+                            }
                         }else{
-                            author= (String) authorlist.get(fg);
+                            author=null;
                         }
-                        if(jxDocument.selN(titlei.getText()).size()<=0){
-                            title = (String) jxDocumentChild.selOne(titlei.getText());
+                        if(StringUtils.isNotEmpty(authorurli.getText())) {
+                            if (jxDocument.selN(authorurli.getText()).size() <= 0) {
+                                authorurl = (String) jxDocumentChild.selOne(authorurli.getText());
+                            } else {
+                                authorurl = (String) authorurllist.get(fg);
+                            }
                         }else{
-                            title=(String) titlelist.get(fg);
+                            authorurl= (String) child;
                         }
-                        if(jxDocument.selN(coveri.getText()).size()<=0){
-                            cover = "<img src=\"" + jxDocumentChild.selOne(coveri.getText()) + "\">";
+                        if(StringUtils.isNotEmpty(titlei.getText())) {
+                            if (jxDocument.selN(titlei.getText()).size() <= 0) {
+                                title = (String) jxDocumentChild.selOne(titlei.getText());
+                            } else {
+                                title = (String) titlelist.get(fg);
+                            }
                         }else{
-                            cover=(String) coverlist.get(fg);
+                            title=null;
                         }
-                        if(jxDocument.selN(ptimei.getText()).size()<=0){
-                            ptimetest = jxDocumentChild.selOne(ptimei.getText()).toString().replaceAll("\\D", " ").trim();
-                            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(ptimei.attributeValue("timeFormat"));
-                            Date date = simpleDateFormat.parse(ptimetest);
-                            ptime = simpleDateFormatchange.format(date);
+                        if(StringUtils.isNotEmpty(coveri.getText())) {
+                            if (jxDocument.selN(coveri.getText()).size() <= 0) {
+                                cover = "<img src=\"" + jxDocumentChild.selOne(coveri.getText()) + "\">";
+                            } else {
+                                cover = (String) "<img src=\"" + coverlist.get(fg) + "\">";
+                            }
                         }else{
-                            ptime= (String) ptimelist.get(fg);
+                            cover=null;
+                        }
+                        if(StringUtils.isNotEmpty(ptimei.getText())) {
+                            if (jxDocument.selN(ptimei.getText()).size() <= 0) {
+                                ptimetest = jxDocumentChild.selOne(ptimei.getText()).toString().replaceAll("\\D", " ").trim();
+                                SimpleDateFormat simpleDateFormat = new SimpleDateFormat(ptimei.attributeValue("timeFormat"));
+                                Date date = simpleDateFormat.parse(ptimetest);
+                                ptime = simpleDateFormatchange.format(date);
+                            } else {
+                                ptime = (String) ptimelist.get(fg);
+                            }
+                        }else{
+                            ptime=null;
                         }
 
                         String source = sourcei.getText();
@@ -186,16 +232,22 @@ public class SpiderUtils {
                         System.out.println(ptime);
                         System.out.println(source);
 
-
-                        List<Object> typelist = jxDocumentChild.sel(typei.getText());
-                        for (Object objtype : typelist) {
-                            type = (type + "," + objtype).replace("null,", "");
+                        if(StringUtils.isNotEmpty(typei.getText())) {
+                            List<Object> typelist = jxDocumentChild.sel(typei.getText());
+                            for (Object objtype : typelist) {
+                                type = (type + "," + objtype).replace("null,", "");
+                            }
+                        }else{
+                            type=null;
                         }
-                        List<Object> taglist = jxDocumentChild.sel(tagi.getText());
-                        for (Object objtag : taglist) {
-                            tag = (tag + "," + objtag).replace("null,", "");
+                        if(StringUtils.isNotEmpty(tagi.getText())) {
+                            List<Object> taglist = jxDocumentChild.sel(tagi.getText());
+                            for (Object objtag : taglist) {
+                                tag = (tag + "," + objtag).replace("null,", "");
+                            }
+                        }else{
+                            tag=null;
                         }
-
 
                         List<JXNode> mainlist = jxDocumentChild.selN(maini.getText());
                         for (JXNode objmain : mainlist) {
@@ -211,16 +263,16 @@ public class SpiderUtils {
                         System.out.println(main);
                         System.out.println(tag);
                         System.out.println(type);
-                        dataClean(title, ptime, type, cover, tag, author, main, puuid, kuuid, (String) obj, source);
+                        dataClean(title, ptime, type, cover, tag, author, main, puuid, kuuid, (String) child, source,authorurl);
                         System.out.println(a + "+" + i);
                         a++;
                         fg++;
                         System.out.println("---------------------------------");
-                    /*}catch (Exception e){
+                    }catch (Exception e){
                         System.out.println("exception");
-                    }*/
+                    }
                 }
-                storeToDatebase(flag);
+                storeToDatebase(flag,author);
                 String handle2 = baseKnowledge.getDriver().getWindowHandle();
                 baseKnowledge.getDriver().close();
                 Thread.sleep(2000);
@@ -249,7 +301,7 @@ public class SpiderUtils {
         }
     }
 
-    public static void dataClean(String title,String ptime,String type,String cover,String tag,String author,String main,String puuid,String kuuid,String url,String source) throws ProKnowledgeImpl.FormatEexception, FormatEexception {
+    public static void dataClean(String title,String ptime,String type,String cover,String tag,String author,String main,String puuid,String kuuid,String url,String source,String authorurl) throws ProKnowledgeImpl.FormatEexception, FormatEexception {
         ProKnowledge proKnowledge = new ProKnowledge();
         proKnowledge.setTitle(title);
         proKnowledge.setPtime(ptime);
@@ -263,29 +315,30 @@ public class SpiderUtils {
         proKnowledge.setUuid(kuuid);
         proKnowledgeList.add(proKnowledge);
 
-        PerKnowledge perKnow = new PerKnowledge();
-        perKnow.setName(author);
-        perKnow.setKname(title);
-        perKnow.setRtype("原作者");
-        perKnow.setPuuid(puuid);
-        perKnow.setKuuid(kuuid);
-        perKnow.setSource(source);
-        perKnowledgeList.add(perKnow);
+        if(StringUtils.isNotEmpty(author)) {
+            PerKnowledge perKnow = new PerKnowledge();
+            perKnow.setName(author);
+            perKnow.setKname(title);
+            perKnow.setRtype("原作者");
+            perKnow.setPuuid(puuid);
+            perKnow.setKuuid(kuuid);
+            perKnow.setSource(source);
+            perKnowledgeList.add(perKnow);
 
-        BasPersonInfo basPerson = new BasPersonInfo();
-        basPerson.setUuid(puuid);
-        basPerson.setName(author);
-        basPerson.setSource(source);
-        basPerson.setUrl(url);
-        basPersonInfoList.add(basPerson);
-
+            BasPersonInfo basPerson = new BasPersonInfo();
+            basPerson.setUuid(puuid);
+            basPerson.setName(author);
+            basPerson.setSource(source);
+            basPerson.setUrl(authorurl);
+            basPersonInfoList.add(basPerson);
+        }
 
     }
 
-    public static void storeToDatebase(String flag) throws FormatEexception, ProKnowledgeImpl.FormatEexception {
+    public static void storeToDatebase(String flag,String author) throws FormatEexception, ProKnowledgeImpl.FormatEexception {
         if (flag.equals("windows")) {
             Map map = proknowimpl.insertBatchAutoDedup(proKnowledgeList, basPersonInfoList, perKnowledgeList);
-            if (((List<Integer>) map.get(4)).get(0) != 0) {
+            if (((List<Integer>) map.get(4)).get(0) != 0&&StringUtils.isNotEmpty(author)) {
                 basperimpl.insertBatch((List<BasPersonInfo>) map.get(1));
                 perknowimpl.insertBatch((List<PerKnowledge>) map.get(3));
             }
@@ -297,7 +350,7 @@ public class SpiderUtils {
             if (((List<String>) map.get(2)).get(0).equals("false")) {
                 System.exit(0);
             }
-            if (((List<Integer>) map.get(4)).get(0) != 0) {
+            if (((List<Integer>) map.get(4)).get(0) != 0&&StringUtils.isNotEmpty(author)) {
                 basperimpl.insertBatch(basPersonInfoList);
                 perknowimpl.insertBatch(perKnowledgeList);
             }

@@ -61,13 +61,21 @@ public class ProKnowledgeImpl extends BaseDaoImpl<List> implements ProKnowledgeD
             if(StringUtils.isEmpty(proKnowledges.get(i).getMain())){
                 System.out.println("this is the null");
                 proKnowledges.remove(i);
-                basPersonInfos.remove(i);
-                perKnowledges.remove(i);
+                if(basPersonInfos.size()>0) {
+                    basPersonInfos.remove(i);
+                }
+                if(perKnowledges.size()>0) {
+                    perKnowledges.remove(i);
+                }
                 i=i-1;
             }else if (StringUtils.isNotEmpty(proKnowledges.get(i).getMain()) && LevenshteinDis.isExist(proKnowledges.get(i).getMain(), proKnowledges.get(i).getPtime(),proKnowledges.get(i).getUrl(),proKnowledges.get(i).getUuid())) {
                 proKnowledges.remove(i);
-                basPersonInfos.remove(i);
-                perKnowledges.remove(i);
+                if(basPersonInfos.size()>0) {
+                    basPersonInfos.remove(i);
+                }
+                if(perKnowledges.size()>0) {
+                    perKnowledges.remove(i);
+                }
                 i=i-1;
                 fg=fg+1;
 
