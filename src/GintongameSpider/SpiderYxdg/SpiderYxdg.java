@@ -20,6 +20,7 @@ import org.openqa.selenium.phantomjs.PhantomJSDriver;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -80,7 +81,7 @@ public class SpiderYxdg {
         System.out.println(url);
         String kuuid= UUID.randomUUID().toString();
         String puuid=UUID.randomUUID().toString();
-        String cover="<img src="+coverlist.get(flag)+">";
+        String cover="<img src=\""+coverlist.get(flag)+"\">";
         String title=doc.select("h1.entry-title").text();
         String author=doc.select("span.meta-author a").text();
         String authorurl=doc.select("span.meta-author a").attr("href");
@@ -92,7 +93,7 @@ public class SpiderYxdg {
                 main=(main+"\r\n<p>"+linkmain.text()+"</p>").replace("null\r\n","");
             }
             if(StringUtils.isNotEmpty(linkmain.select("img").attr("src"))){
-                main=(main+"\r\n<img src="+linkmain.select("img").attr("src")+">");
+                main=(main+"\r\n<img src=\""+linkmain.select("img").attr("src")+"\">");
             }
         }
         Elements linkstag=doc.select("div#entry-tags a");
@@ -134,9 +135,10 @@ public class SpiderYxdg {
         basPersonInfoList.add(basPerson);
 
         if((proKnowledgeList.size()>0&&proKnowledgeList.size()% SpiderContant.insertBatchContant==0)) {
-            if(proknowimpl.insertBatchAutoDedup(proKnowledgeList).get(1).equals("true")){
-                basperimpl.insertBatch(basPersonInfoList);
-                perknowimpl.insertBatch(perKnowledgeList);
+            Map map=proknowimpl.insertBatchAutoDedup(proKnowledgeList, basPersonInfoList, perKnowledgeList);
+            if(((List<Integer>) map.get(4)).get(0)!=0) {
+                basperimpl.insertBatch((List<BasPersonInfo>) map.get(1));
+                perknowimpl.insertBatch((List<PerKnowledge>) map.get(3));
             }
             proKnowledgeList.clear();
             basPersonInfoList.clear();

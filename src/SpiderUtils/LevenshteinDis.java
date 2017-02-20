@@ -26,7 +26,9 @@ public class LevenshteinDis {
         String essay;
         for(int x=0;x<list.size();x++){
             essay= list.get(x).getMain();
-            double dis = getSimilarity(essay, aticle);
+
+            //修改为错误代码
+            double dis = levenshtein(essay, aticle);
             if (dis > 0.95) {
                 BugData bugData=new BugData();
                 bugData.setKey(list.get(x).getMain());
@@ -41,7 +43,13 @@ public class LevenshteinDis {
         return false;
     }
 
-    public static boolean NameisExist(String source,String name) {
+    /**
+     * 判断作者是否重复
+     * @param source
+     * @param name
+     * @return
+     */
+    public static boolean nameIsExist(String source, String name) {
         BasPersonInfoImpl per=new BasPersonInfoImpl();
         //System.out.println(pro.selectList(dateformat.format(date).toString()));
         List<String> list=per.selectList(source);
@@ -51,7 +59,7 @@ public class LevenshteinDis {
         String essay;
         for(int x=0;x<list.size();x++){
             essay= list.get(x);
-            double dis = getSimilarity(essay, name);
+            double dis = levenshtein(essay, name);
             if (dis > 0.9) {
                 System.out.println("--------------This data should be delete------------------");
                 return true;
@@ -95,7 +103,7 @@ public class LevenshteinDis {
             }
         }
         //System.out.println("字符串\"" + str1 + "\"与\"" + str2 + "\"的比较");
-        System.out.println("差异步骤：" + dif[len1][len2]);
+        //System.out.println("差异步骤：" + dif[len1][len2]);
         // 计算相似度
         float similarity = 1 - (float) dif[len1][len2]
                 / Math.max(str1.length(), str2.length());

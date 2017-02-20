@@ -20,6 +20,7 @@ import org.openqa.selenium.phantomjs.PhantomJSDriver;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -32,6 +33,9 @@ public class SpiderYxdgZl {
     private static List<String> coverlist=new ArrayList<String>();
     private static String[] link=new String[]{"http://www.gamelook.com.cn/category/news","http://www.gamelook.com.cn/category/%E6%B8%B8%E6%88%8F%E8%BF%90%E8%90%A5","http://www.gamelook.com.cn/category/%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91","http://www.gamelook.com.cn/category/%E4%BA%BA%E5%8A%9B%E8%B5%84%E6%BA%90","http://www.gamelook.com.cn/category/%E7%BD%91%E9%A1%B5%E6%B8%B8%E6%88%8F-2","http://www.gamelook.com.cn/category/%E2%98%85%E6%89%8B%E6%9C%BA%E6%B8%B8%E6%88%8F","http://www.gamelook.com.cn/category/%E8%B5%84%E6%9C%AC%E5%B8%82%E5%9C%BA%E5%88%9B%E4%B8%9A","http://www.gamelook.com.cn/category/%E6%8A%95%E8%B5%84%E5%88%9B%E4%B8%9A","http://www.gamelook.com.cn/category/wiixboxps3","http://www.gamelook.com.cn/category/%E8%A7%82%E7%82%B9%E5%88%86%E6%9E%90%E8%AF%84%E6%B5%8B","http://www.gamelook.com.cn/category/%E8%B5%84%E6%9C%AC%E5%B8%82%E5%9C%BA","http://www.gamelook.com.cn/category/vrar%E6%B8%B8%E6%88%8F"};
     private static int fg=0;
+    private static ProKnowledgeImpl proknowimpl = new ProKnowledgeImpl();
+    private static PerKnowledgeImpl perknowimpl = new PerKnowledgeImpl();
+    private static BasPersonInfoImpl basperimpl = new BasPersonInfoImpl();
 
     public static void main(String args[]) throws IOException, ProKnowledgeImpl.FormatEexception {
         grabWeb();
@@ -42,7 +46,6 @@ public class SpiderYxdgZl {
         WebDriver driver = new PhantomJSDriver();
         int a=1;
         for(int z=0;z<link.length;z++){
-            boolean fg=true;
             for(int i=1;i>0;i++){
                 driver.get(link[z]+"/page/"+i);
                 WebElement web=driver.findElement(By.xpath("/html"));
@@ -60,28 +63,25 @@ public class SpiderYxdgZl {
                     WebElement webElement=driver.findElement(By.xpath("/html"));
                     String childHtml=webElement.getAttribute("outerHTML");
                     Document childDoc=Jsoup.parse(childHtml);
-                    fg=dataClean(flag,childDoc,childLink);
+                    dataClean(flag, childDoc, childLink);
                     System.out.println(a + "+" + i+"+"+z);
                     a++;
                     flag++;
                     System.out.println("---------------------------------");
-                    if(!fg){
-                        break;
-                    }
                 }
-                if(Integer.parseInt(doc.select("div.pagenavi.clear a.current").text())==Integer.parseInt(doc.select("div.pagenavi.clear span").text().split("/",2)[1].trim())||!fg){
+                if(Integer.parseInt(doc.select("div.pagenavi.clear a.current").text())==Integer.parseInt(doc.select("div.pagenavi.clear span").text().split("/",2)[1].trim())){
                     break;
                 }
             }
         }
     }
 
-    public static boolean dataClean(int flag,Document doc,String url) throws IOException, ProKnowledgeImpl.FormatEexception {
+    public static void dataClean(int flag,Document doc,String url) throws IOException, ProKnowledgeImpl.FormatEexception {
         String main=null;
         String tag=null;
         String kuuid= UUID.randomUUID().toString();
         String puuid=UUID.randomUUID().toString();
-        String cover="<img src="+coverlist.get(flag)+">";
+        String cover="<img src=\""+coverlist.get(flag)+"\">";
         String title=doc.select("h1.entry-title").text();
         String author=doc.select("span.meta-author a").text();
         String authorurl=doc.select("span.meta-author a").attr("href");
@@ -93,17 +93,17 @@ public class SpiderYxdgZl {
                 main=(main+"\r\n<p>"+linkmain.text()+"</p>").replace("null\r\n","");
             }
             if(StringUtils.isNotEmpty(linkmain.select("img").attr("src"))){
-                main=(main+"\r\n<img src="+linkmain.select("img").attr("src")+">");
+                main=(main+"\r\n<img src=\""+linkmain.select("img").attr("src")+"\">");
             }
         }
         Elements linkstag=doc.select("div#entry-tags a");
         for(Element linktag:linkstag){
             tag=(tag+","+linktag.text()).replace("null,","");
         }
-        return storeToDatebase(title,ptime,type,cover,tag,author,main,puuid,kuuid,url,authorurl);
+        storeToDatebase(title,ptime,type,cover,tag,author,main,puuid,kuuid,url,authorurl);
     }
 
-    public static boolean storeToDatebase(String title,String ptime,String type,String cover,String tag,String author,String main,String puuid,String kuuid,String url,String authorurl) throws ProKnowledgeImpl.FormatEexception {
+    public static void storeToDatebase(String title,String ptime,String type,String cover,String tag,String author,String main,String puuid,String kuuid,String url,String authorurl) throws ProKnowledgeImpl.FormatEexception {
         ProKnowledge proKnowledge=new ProKnowledge();
         proKnowledge.setTitle(title);
         proKnowledge.setPtime(ptime+" 00:00:00");
@@ -135,17 +135,16 @@ public class SpiderYxdgZl {
         basPersonInfoList.add(basPerson);
 
 
-        ProKnowledgeImpl proknowimpl = new ProKnowledgeImpl();
-        if(proknowimpl.insertBatchAutoDedup(proKnowledgeList).get(2).equals("false")){
-            return false;
+        Map map=proknowimpl.insertBatchAutoDedup(proKnowledgeList,basPersonInfoList,perKnowledgeList);
+        if(((List<String>)map.get(2)).get(0).equals("false")) {
+            System.exit(0);
         }
-        BasPersonInfoImpl basperimpl = new BasPersonInfoImpl();
-        basperimpl.insertBatch(basPersonInfoList);
-        PerKnowledgeImpl perknowimpl = new PerKnowledgeImpl();
-        perknowimpl.insertBatch(perKnowledgeList);
+        if(((List<Integer>) map.get(4)).get(0)!=0) {
+            basperimpl.insertBatch(basPersonInfoList);
+            perknowimpl.insertBatch(perKnowledgeList);
+        }
         proKnowledgeList.clear();
         basPersonInfoList.clear();
         perKnowledgeList.clear();
-        return true;
     }
 }

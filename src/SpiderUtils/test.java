@@ -15,6 +15,7 @@ import org.jsoup.select.Elements;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.phantomjs.PhantomJSDriver;
 import org.xml.sax.SAXException;
 
@@ -28,7 +29,7 @@ import java.util.Objects;
 public class test {
     static List<org.dom4j.Element> books;
     public static void main(String[] args) throws ParserConfigurationException, XpathSyntaxErrorException, SpiderUtils.FormatEexception, DocumentException, IOException, ProKnowledgeImpl.FormatEexception, InterruptedException, ParseException {
-        /*FileInputStream inputStream=new FileInputStream(test.class.getClassLoader().getResource("SpiderUtils/BasKnowledgePattern.xml").getFile());
+       /* FileInputStream inputStream=new FileInputStream(test.class.getClassLoader().getResource("SpiderUtils/BasKnowledgePattern.xml").getFile());
         System.out.println(test.class.getClassLoader().getResource("SpiderUtils/BasKnowledgePattern.xml").getFile().toString());
         SAXReader sax=new SAXReader();
         org.dom4j.Document doc=sax.read(inputStream);
@@ -37,31 +38,32 @@ public class test {
         Element type = book2.element("type");//根据元素名获取子元素
         Element title = book2.element("title");
         Element urls = book2.element("urls");
+         System.out.println("错误修改");
         List<Element> list=urls.elements();
         for(Element ele:list){
             System.out.println(ele.getText().trim());
         }
         Element publisher = book2.element("publisher");
         System.out.println("作者：" + title.getText());//获取元素值
-        System.out.println("出版社："+urls.getText());*/
+        System.out.println("出版社："+urls.getText());
+        System.out.println();*/
 
-     // SpiderUtils.getElements("windows","spider1");
 
 
-       /* org.jsoup.nodes.Document doc=Jsoup.connect("http://news.17173.com/content/02172017/144428249.shtml").get();
-        JXDocument jx=new JXDocument(doc);
+
+
+
+     SpiderUtils.getElements("windows","spiderYmxk");
+       System.setProperty("webdriver.chrome.driver",SpiderContant.chromeWindowsPath );
+        WebDriver driver=new ChromeDriver();
+        driver.get("http://www.gamersky.com/news/201702/870428.shtml");
+        WebElement webElement=driver.findElement(By.xpath("/html"));
+        org.jsoup.nodes.Document doc=Jsoup.parse(webElement.getAttribute("outerHTML"));
+        JXDocument jxDocument=new JXDocument(doc);
         System.out.println(doc.outerHtml());
-        System.out.println(jx.selOne("//html"));*/
+        System.out.println("错误修改");
 
-        ProKnowledgeImpl proKnowledge=new ProKnowledgeImpl();
-        List<ProKnowledge> list=proKnowledge.select();
-        for(ProKnowledge li:list){
-            try {
-                System.out.println(li.getMain().replace("<img src=","<img src=\"").replace(">","\">"));
-              //  System.out.println(li.getCover());
-            }catch (Exception e){
-                System.out.println("null");
-            }
-        }
+
+
+     }
     }
-}
