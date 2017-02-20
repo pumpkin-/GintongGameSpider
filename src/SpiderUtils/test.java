@@ -50,13 +50,14 @@ public class test {
 
 
 
-      //SpiderUtils.getElements("windows","spiderYxgc");
-        System.setProperty("webdriver.chrome.driver",SpiderContant.chromeWindowsPath );
+     SpiderUtils.getElements("windows","spiderYmxk");
+       /*System.setProperty("webdriver.chrome.driver",SpiderContant.chromeWindowsPath );
         WebDriver driver=new ChromeDriver();
-        driver.get("http://www.sfw.cn/kuaixun/p/4957");
+        driver.get("http://www.gamersky.com/news/201702/870428.shtml");
         WebElement webElement=driver.findElement(By.xpath("/html"));
         org.jsoup.nodes.Document doc=Jsoup.parse(webElement.getAttribute("outerHTML"));
-        System.out.println(doc.outerHtml());
+        JXDocument jxDocument=new JXDocument(doc);
+        System.out.println(doc.outerHtml());*/
 
 
     }

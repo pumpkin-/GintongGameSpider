@@ -88,6 +88,8 @@ public class SpiderUtils {
         Element typei = childElement.element("type");
         Element sourcei = childElement.element("source");
         Element authorurli = childElement.element("authorurl");
+        Element childnexti=childElement.element("childnext");
+        Element childnextflagi=childElement.element("childnextflag");
 
 
         String author=null;
@@ -175,9 +177,9 @@ public class SpiderUtils {
 
                         if(StringUtils.isNotEmpty(authori.getText())) {
                             if (jxDocument.selN(authori.getText()).size() <= 0) {
-                                author = (String) jxDocumentChild.selOne(authori.getText());
+                                author = (String) jxDocumentChild.selOne(authori.getText()).toString().replace("作者：","");
                             } else {
-                                author = (String) authorlist.get(fg);
+                                author = (String) authorlist.get(fg).toString().replace("作者：","");
                             }
                         }else{
                             author=null;
@@ -202,9 +204,17 @@ public class SpiderUtils {
                         }
                         if(StringUtils.isNotEmpty(coveri.getText())) {
                             if (jxDocument.selN(coveri.getText()).size() <= 0) {
-                                cover = "<img src=\"" + jxDocumentChild.selOne(coveri.getText()) + "\">";
+                                if(StringUtils.isNotEmpty((String) jxDocumentChild.selOne(coveri.getText()))) {
+                                    cover = "<img src=\"" + jxDocumentChild.selOne(coveri.getText()) + "\">";
+                                }else{
+                                    cover=null;
+                                }
                             } else {
-                                cover = (String) "<img src=\"" + coverlist.get(fg) + "\">";
+                                if(StringUtils.isNotEmpty((String) coverlist.get(fg))) {
+                                    cover = (String) "<img src=\"" + coverlist.get(fg) + "\">";
+                                }else{
+                                    cover=null;
+                                }
                             }
                         }else{
                             cover=null;
@@ -249,13 +259,22 @@ public class SpiderUtils {
                             tag=null;
                         }
 
-                        List<JXNode> mainlist = jxDocumentChild.selN(maini.getText());
-                        for (JXNode objmain : mainlist) {
-                            if (StringUtils.isNotEmpty(objmain.getElement().text())) {
-                                main = (main + "\r\n<p>" + objmain.getElement().text() + "</p>").replace("null\r\n", "");
-                            }
-                            if (objmain.sel(mainipic.getText()).size() > 0) {
-                                main = (main + "\r\n<img src=\"" + objmain.sel(mainipic.getText()).get(0) + "\">");
+                        if(StringUtils.isNotEmpty(jxDocumentChild.selOne(childnextflagi.getText()).toString())) {
+                            for(int x=1;x>0;x++) {
+                                List<JXNode> mainlist = jxDocumentChild.selN(maini.getText());
+                                for (JXNode objmain : mainlist) {
+                                    if (StringUtils.isNotEmpty(objmain.getElement().text())) {
+                                        main = (main + "\r\n<p>" + objmain.getElement().text() + "</p>").replace("null\r\n", "").replace(Jsoup.parse("&nbsp;").text(), "");
+                                    }
+                                    if (objmain.sel(mainipic.getText()).size() > 0) {
+                                        main = (main + "\r\n<img src=\"" + objmain.sel(mainipic.getText()).get(0) + "\">");
+                                    }
+                                }
+                                if(StringUtils.isEmpty(jxDocumentChild.selOne(childnextflagi.getText()).toString())){
+                                    break;
+                                }
+                                JavascriptExecutor executorChildnext = (JavascriptExecutor) baseKnowledge.getDriver();
+                                executorChildnext.executeScript(childnexti.getText());
                             }
                         }
 
