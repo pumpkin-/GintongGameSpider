@@ -1,13 +1,12 @@
 package GintongameSpider.SpiderAmuseAmusement;
 
-import JavaBean.BasOrganizeInfo;
-import JavaBean.BasPersonInfo;
-import JavaBean.BasProGameInfo;
-import JavaBean.OrgProduct;
+import JavaBean.*;
 import dao.ProGameInfoDao;
 import dao.impl.BasOrganizeInfoImpl;
 import dao.impl.OrgProductDaoImpl;
 import dao.impl.ProGameInfoDaoImpl;
+
+import dao.impl.ProGameTypeDaoImpl;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -360,6 +359,12 @@ public class SpiderAmuseAmusement {
                 pgi.setLanguage(map.get("language"));
                 ProGameInfoDaoImpl insert=new ProGameInfoDaoImpl();
                 insert.insertGame(pgi);
+                //游戏类型表
+                ProGameType pgt= new ProGameType();
+                pgt.setGtype(map.get("type"));
+                pgt.setUuid(uuid);
+                ProGameTypeDaoImpl impl=new ProGameTypeDaoImpl();
+                impl.insertType(pgt);
                 //清空集合
                 map.clear();
             };
@@ -427,6 +432,12 @@ public class SpiderAmuseAmusement {
                 op.setPr_uuid(uuid);
                 OrgProductDaoImpl oimp =new OrgProductDaoImpl();
                 oimp.insertOPDuct(op);
+                ProGameType pgt= new ProGameType();
+                //游戏类型入库
+                pgt.setGtype(map.get("type"));
+                pgt.setUuid(uuid);
+                ProGameTypeDaoImpl impl=new ProGameTypeDaoImpl();
+                impl.insertType(pgt);
                 //清空集合
                 map.clear();
             };
@@ -479,6 +490,7 @@ public class SpiderAmuseAmusement {
                 pgi.setGamespy(map.get("frame"));;
                 ProGameInfoDaoImpl insert=new ProGameInfoDaoImpl();
                 insert.insertGame(pgi);
+                //组织表入库
                 BasOrganizeInfo bai = new BasOrganizeInfo();
                 String ouuid=UUID.randomUUID().toString();
                 bai.setUuid(ouuid);
@@ -496,6 +508,13 @@ public class SpiderAmuseAmusement {
                 op.setPr_uuid(uuid);
                 OrgProductDaoImpl oimp =new OrgProductDaoImpl();
                 oimp.insertOPDuct(op);
+                //游戏类型入库
+                ProGameType pgt= new ProGameType();
+                pgt.setGtype(map.get("type"));
+                pgt.setUuid(uuid);
+                ProGameTypeDaoImpl impl=new ProGameTypeDaoImpl();
+                impl.insertType(pgt);
+
                 //清空集合
                 map.clear();
             };

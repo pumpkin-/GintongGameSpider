@@ -8,11 +8,11 @@ import dao.OrgProductDao;
  */
 public class OrgProductDaoImpl extends BaseDaoImpl implements OrgProductDao{
     public OrgProductDaoImpl() {
-        this.setNs("com.gintongame.mapping.OrgProduct");
+        this.setNs("com.gintongame.mapping.OrgProductMapper.");
     }
 
     @Override
-    public void insertOPDuct(OrgProduct bin) {
-        this.getSqlSession().insert(this.getNs() + "insertOPDuct", bin);
+    public void insertOPDuct(OrgProduct ts) {
+        this.getSqlSession().insert(this.getNs() + "insertOPDuct", ts);
     }
 }
