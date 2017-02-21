@@ -27,6 +27,25 @@ public class BasOrganizeInfo {
     private String corporate_culture;
     private String tag;
     private String management_field;
+    private String scale;
+    private String introduce;
+    private String item;
+
+    public String getIntroduce() {
+        return introduce;
+    }
+
+    public void setIntroduce(String introduce) {
+        this.introduce = introduce;
+    }
+
+    public String getScale() {
+        return scale;
+    }
+
+    public void setScale(String scale) {
+        this.scale = scale;
+    }
 
     public String getOname() {
         return oname;

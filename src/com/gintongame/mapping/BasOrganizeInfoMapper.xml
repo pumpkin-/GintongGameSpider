@@ -11,6 +11,12 @@
         </foreach>
 
     </insert>
+    <insert id="insertSingle" parameterType="JavaBean.BasOrganizeInfo"  useGeneratedKeys="true">
+        insert into bas_organize_info(oname,ename,shortname,fullname,web,con_way,industry,scale,introduce,address,logo,stime,other,source,url,uuid,financing_info,picture,development_history,financing_stage,company_nature,corporate_culture,tag,management_field)
+        values
+        (#{oname},#{ename},#{shortname},#{fullname},#{web},#{con_way},#{industry},#{scale},#{introduce},#{address},#{logo},#{stime},#{other},#{source},#{url},#{uuid},#{financing_info},#{picture},#{item.development_history},#{item.financing_stage},#{item.company_nature},#{item.corporate_culture},#{item.tag},#{item.management_field})
+
+    </insert>
 
 
         </mapper>
