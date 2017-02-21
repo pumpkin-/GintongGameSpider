@@ -1,5 +1,6 @@
 package dao.impl;
 
+import JavaBean.ProGameType;
 import Mybatis.MybatisUtils;
 import dao.BaseDao;
 import org.apache.ibatis.io.Resources;
@@ -58,4 +59,5 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T> {
     public int find(Serializable entity) {
         return this.getSqlSession().selectOne(ns + "find", entity);
     }
+
 }
