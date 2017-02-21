@@ -14,8 +14,10 @@ import org.jsoup.select.Elements;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.phantomjs.PhantomJSDriver;
 
+import javax.swing.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -458,7 +460,6 @@ public class SpiderAmuseAmusement {
 
         System.setProperty("phantomjs.binary.path", "C://Users//123//Desktop//aaa//phantomjs-2.1.1-windows//bin//phantomjs.exe");
         WebDriver driver = new PhantomJSDriver();
-
         Map<String,String>map=new HashMap<String, String>();
         String urls;
         String pagingPath;
