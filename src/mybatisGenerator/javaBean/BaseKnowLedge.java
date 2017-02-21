@@ -1,4 +1,4 @@
-package JavaBean;
+package mybatisGenerator.javaBean;
 
 import org.dom4j.Element;
 import org.jsoup.nodes.Document;
