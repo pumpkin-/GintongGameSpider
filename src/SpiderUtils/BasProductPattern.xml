@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<BasProductPattern>
+    <!--爬取游戏产品信息-->
+
+    <!--爬取安智市场-->
+    <spider>
+        <!--ContentPath-->
+        <contentPath>http://www.anzhi.com</contentPath>
+        <!--图标-->
+        <logo>//div[@class='detail_icon']/img/@src</logo>
+        <!--名称-->
+        <pname>//div[@class='detail_description']/div[@class='detail_line']/h3/text()</pname>
+        <!--版本-->
+        <pversion>//span[@class='app_detail_version']/text()</pversion>
+        <!--时间-->
+        <ptime formatStr="yyyy年MM月dd">//ul[@id='detail_line_ul']/li[3]/text()</ptime>
+        <!--大小-->
+        <size>//ul[@id='detail_line_ul']/li[4]/span/text()</size>
+        <!--系统-->
+        <system>//ul[@id='detail_line_ul']/li[5]/text()</system>
+        <!--资费-->
+        <charges>//ul[@id='detail_line_ul']/li[6]/span/text()</charges>
+        <!--作者-->
+        <author>//ul[@id='detail_line_ul']/li[7]/text()</author>
+        <!--介绍-->
+        <introduction>//div[@class='app_detail_infor']/p/text()</introduction>
+        <!--截图urls-->
+        <screenShoots>//div[@class='section-body']/div/ul/li/img/@src</screenShoots>
+        <!--起始页面-->
+        <urls>
+            <url>
+                http://www.anzhi.com/sort_21_1_hot.html
+            </url>
+        </urls>>
+
+        <!--详情页url-->
+        <detailurl>//span[@class='app_name']/a/@href</detailurl>
+        <!--下一页-->
+        <nextpage>//a[@class='next']/@href</nextpage>
+    </spider>
+
+
+
+</BasProductPattern>
