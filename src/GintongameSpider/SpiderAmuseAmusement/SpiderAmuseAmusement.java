@@ -1,8 +1,12 @@
 package GintongameSpider.SpiderAmuseAmusement;
 
+import JavaBean.BasOrganizeInfo;
 import JavaBean.BasPersonInfo;
 import JavaBean.BasProGameInfo;
+import JavaBean.OrgProduct;
 import dao.ProGameInfoDao;
+import dao.impl.BasOrganizeInfoImpl;
+import dao.impl.OrgProductDaoImpl;
 import dao.impl.ProGameInfoDaoImpl;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -66,7 +70,7 @@ public class SpiderAmuseAmusement {
         //游戏的链接
         map.put("url", url);
         //游戏图片，
-        String img="<img src=\""+div.select("img").attr("src")+"\">";
+        String img=div.select("img").attr("src");
         System.out.println("游戏图片："+img);
         map.put("img",img);
         // 游戏名称，
@@ -116,7 +120,7 @@ public class SpiderAmuseAmusement {
         int i=0;
         for(Element elm:screenshotDiv){
             if(elm!=null&&elm.attr("src")!=""){
-                screenshot+="<img src=\""+elm.attr("src")+"\">"+",";
+                screenshot+=elm.attr("src")+",";
             }
             break;
         }
@@ -141,7 +145,7 @@ public class SpiderAmuseAmusement {
         //游戏的链接
         map.put("url", url);
         //游戏图片，
-        String img="<img src=\""+div.select("img").attr("src")+"\">";
+        String img=div.select("img").attr("src");
        // System.out.println("游戏图片："+img);
         map.put("img",img);
         // 游戏名称，
@@ -185,11 +189,11 @@ public class SpiderAmuseAmusement {
         int i=0;
         for(Element elm:screenshotDiv){
             if(i!=2){
-                screenshot+="<img src=\""+elm.attr("src")+"\">"+",";
+                screenshot+=elm.attr("src")+",";
                 i++;
                 continue;
             }
-            screenshot+="<img src=\""+elm.attr("ssrc")+"\">"+",";
+            screenshot+=elm.attr("ssrc")+",";
 
         }
         screenshot=screenshot.substring(0,screenshot.length()-2);
@@ -221,7 +225,7 @@ public class SpiderAmuseAmusement {
         //游戏的链接
         map.put("url", url);
         //游戏图片，
-        String img="<img src=\""+div.select("img").attr("src")+"\">";
+        String img=div.select("img").attr("src");
         // System.out.println("游戏图片："+img);
         map.put("img",img);
         // 游戏名称，
@@ -279,11 +283,11 @@ public class SpiderAmuseAmusement {
         int i=0;
         for(Element elm:screenshotDiv){
             if(i!=2){
-                screenshot+="<img src=\""+elm.attr("src")+"\">"+",";
+                screenshot+=elm.attr("src")+",";
                 i++;
                 continue;
             }
-            screenshot+="<img src=\""+elm.attr("ssrc")+"\">"+",";
+            screenshot+=elm.attr("ssrc")+",";
 
         }
         screenshot=screenshot.substring(0,screenshot.length()-2);
@@ -307,13 +311,13 @@ public class SpiderAmuseAmusement {
 
     public static void main(String args[]) {
         //手游l
-        gameHand("http://www.doyo.cn/shouji/list",429);
+        //gameHand("http://www.doyo.cn/shouji/list",429);
         //单机
-        // gameinFormation("http://www.doyo.cn/danji/list",557);
+        gameinFormation("http://www.doyo.cn/danji/list",557);
         //网游
-        //onlineAndPage("http://www.doyo.cn/wangluo/list",19);
+        onlineAndPage("http://www.doyo.cn/wangluo/list",19);
         //页游
-        //onlineAndPage("http://www.doyo.cn/wangye/list",23);
+        onlineAndPage("http://www.doyo.cn/wangye/list",23);
     }
     /*
     手游
@@ -337,6 +341,7 @@ public class SpiderAmuseAmusement {
                 //抓取每个游戏的数据
                 map=gameDataHand(map, driver, urls);
                 //存入数据库
+                //产品信息表入库
                 BasProGameInfo pgi=new BasProGameInfo();
                 String uuid=UUID.randomUUID().toString();
                 pgi.setUuid(uuid);
@@ -404,6 +409,24 @@ public class SpiderAmuseAmusement {
                 pgi.setLanguage(map.get("language"));
                 ProGameInfoDaoImpl insert=new ProGameInfoDaoImpl();
                 insert.insertGame(pgi);
+                //组织入库
+                BasOrganizeInfo bai = new BasOrganizeInfo();
+                String ouuid=UUID.randomUUID().toString();
+                bai.setUuid(ouuid);
+                bai.setOname(map.get("factory"));
+                bai.setUrl(map.get("url"));
+                bai.setSource("逗游");
+                BasOrganizeInfoImpl imp=new BasOrganizeInfoImpl();
+                imp.insertSingle(bai);
+                //组织与产品入库
+                OrgProduct op=new OrgProduct();
+                op.setOname(map.get("factory"));
+                op.setPname(map.get("gamename"));
+                op.setSource("逗游");
+                op.setOuuid(ouuid);
+                op.setPr_uuid(uuid);
+                OrgProductDaoImpl oimp =new OrgProductDaoImpl();
+                oimp.insertOPDuct(op);
                 //清空集合
                 map.clear();
             };
@@ -456,6 +479,23 @@ public class SpiderAmuseAmusement {
                 pgi.setGamespy(map.get("frame"));;
                 ProGameInfoDaoImpl insert=new ProGameInfoDaoImpl();
                 insert.insertGame(pgi);
+                BasOrganizeInfo bai = new BasOrganizeInfo();
+                String ouuid=UUID.randomUUID().toString();
+                bai.setUuid(ouuid);
+                bai.setOname(map.get("factory"));
+                bai.setUrl(map.get("url"));
+                bai.setSource("逗游");
+                BasOrganizeInfoImpl imp=new BasOrganizeInfoImpl();
+                imp.insertSingle(bai);
+                //组织与产品入库
+                OrgProduct op=new OrgProduct();
+                op.setOname(map.get("factory"));
+                op.setPname(map.get("gamename"));
+                op.setSource("逗游");
+                op.setOuuid(ouuid);
+                op.setPr_uuid(uuid);
+                OrgProductDaoImpl oimp =new OrgProductDaoImpl();
+                oimp.insertOPDuct(op);
                 //清空集合
                 map.clear();
             };

@@ -2,11 +2,11 @@
 <>
 
     <!--游戏大观抓取-->
-    <spider>
+    <spiderYxdg>
         <title>//h1[@class='entry-title']/text()</title>
         <author>//span[@class='meta-author']/a/text()</author>
         <authorurl></authorurl>>
-        <cover>//div[@class='entry-thumb']/a/img/@src</cover>>
+        <cover>//div[@class='entry entry-content']/p/img[1]/@src</cover>>
         <ptime timeFormat="yyyy MM dd">//span[@class='meta-date']/text()</ptime>>
         <tag>//div[@id='entry-tags']/a/text()</tag>>
         <main>//div[@class='entry entry-content']/p</main>>
@@ -17,7 +17,7 @@
         <childnextflag></childnextflag>>
         <childLink>//div[@class='entry-thumb']/a/@href</childLink>>
         <next>$('div.pagenavi.clear a')[$('div.pagenavi.clear a').length-1].click()</next>>
-        <nextflag>//div[@class='pagenavi clear']/a[10]</nextflag>>
+        <nextflag>//div[@class='pagenavi clear']/a[text()*='Next']</nextflag>>
         <urls>
             <url>
                 http://www.gamelook.com.cn/category/news
@@ -25,13 +25,43 @@
             <url>
                 http://www.gamelook.com.cn/category/%E6%B8%B8%E6%88%8F%E8%BF%90%E8%90%A5
             </url>>
+            <url>
+                http://www.gamelook.com.cn/category/%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91
+            </url>>
+            <url>
+                http://www.gamelook.com.cn/category/%E4%BA%BA%E5%8A%9B%E8%B5%84%E6%BA%90
+            </url>>
+            <url>
+                http://www.gamelook.com.cn/category/%E7%BD%91%E9%A1%B5%E6%B8%B8%E6%88%8F-2
+            </url>>
+            <url>
+                http://www.gamelook.com.cn/category/%E2%98%85%E6%89%8B%E6%9C%BA%E6%B8%B8%E6%88%8F
+            </url>>
+            <url>
+                http://www.gamelook.com.cn/category/%E8%B5%84%E6%9C%AC%E5%B8%82%E5%9C%BA%E5%88%9B%E4%B8%9A
+            </url>>
+            <url>
+                http://www.gamelook.com.cn/category/%E6%8A%95%E8%B5%84%E5%88%9B%E4%B8%9A
+            </url>>
+            <url>
+                http://www.gamelook.com.cn/category/wiixboxps3
+            </url>>
+            <url>
+                http://www.gamelook.com.cn/category/%E8%A7%82%E7%82%B9%E5%88%86%E6%9E%90%E8%AF%84%E6%B5%8B
+            </url>>
+            <url>
+                http://www.gamelook.com.cn/category/%E8%B5%84%E6%9C%AC%E5%B8%82%E5%9C%BA
+            </url>>
+            <url>
+                http://www.gamelook.com.cn/category/vrar%E6%B8%B8%E6%88%8F
+            </url>>
         </urls>>
 
-    </spider>
+    </spiderYxdg>
 
 
 <!--游戏观察抓取-->
-    <spider>
+    <spiderYxgc>
         <title>//div[@class='detail_cont']/h1[@class='tit']/text()</title>
         <author></author>
         <authorurl></authorurl>>
@@ -53,7 +83,7 @@
             </url>
         </urls>>
 
-    </spider>
+    </spiderYxgc>
 
 
     <!--上方网抓取-->
@@ -82,18 +112,19 @@
     </spider>
 
 
+<!--游民星空抓取-->
     <spiderYmxk>
         <title>//div[@class='Mid2L_tit']/h1/text()</title>
         <author></author>
         <authorurl></authorurl>>
         <cover>//div[@class='img']/a/img/@src</cover>>
-        <ptime timeFormat="yyyy MM dd HH mm ss">//div[@class='detail']/text()</ptime>>
+        <ptime timeFormat="yyyy MM dd HH mm">//div[@class='tem']/div[@class='time']/text()</ptime>>
         <tag>//div[@class='RelevantR']/ul[@class='Relevantlike']/li[@class='txt']/a/text()</tag>>
         <main>//div[@class='Mid2L_con']/p</main>>
         <mainpic>//a/@href</mainpic>>
         <type>//div[@class='Mid2L_crumb']/a[@target='_self']/text()</type>>
         <source>游民星空</source>
-        <childLink Mosaic="">//div[@class='img']/a/@href</childLink>>
+        <childLink Mosaic="">//div[@class='Mid2L_con block']/ul[@class='pictxt contentpaging block']/li/div[@class='img']/a/@href|//div[@class='Mid2L_con block']/ul[@class='pictxt contentpaging']/li/div[@class='img']/a/@href</childLink>>
         <childnext>$('div.page_css a')[$('div.page_css a').length-1].click()</childnext>>
         <childnextflag>//div[@class='page_css']/a[text()*='下一页']</childnextflag>>
         <next>$('span.pagecss a.p1.nexe').click()</next>>
@@ -105,4 +136,29 @@
         </urls>>
 
     </spiderYmxk>
+
+
+    <spiderDwyx>
+        <title>//div[@class='article']/h1/text()|//div[@class='newsDetail-header']/h1/text()</title>
+        <author>//div[@class='info']/span[@class='author']/text()</author>
+        <authorurl></authorurl>>
+        <cover>//div[@class='img-wrap']/img/@src</cover>>
+        <ptime timeFormat="yyyy MM dd HH mm ss">//div[@class='article']/address/span[1]/text()|//div[@class='newsDetail-header__info']/span/span[1]/em/text()</ptime>>
+        <tag></tag>>
+        <main>//div[@class='newsCon__content']/p|//div[@id='text']/p</main>>
+        <mainpic>//img/@href</mainpic>>
+        <type>//div[@class='mod-crumbs-s3']/a[2]/text()|//div[@class='newgame-header']/address/a[2]/text()</type>>
+        <source>多玩游戏</source>
+        <childLink Mosaic="http://www.duowan.com">//div[@class='ui-tab__panel']dl[@class='day-item']/dd/div[@class='item-fl']/a/@href</childLink>>
+        <childnext></childnext>>
+        <childnextflag></childnextflag>>
+        <next>$('#pageNum > span:nth-child(12) > a').click()</next>>
+        <nextflag>//*[@id="pageNum"]/span[last()]/a/text()*='下一页'</nextflag>>
+        <urls>
+            <url>
+                http://www.duowan.com/news/
+            </url>
+        </urls>>
+
+    </spiderDwyx>
 </BasKnowledgeSpiderPattern>

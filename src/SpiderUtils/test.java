@@ -3,16 +3,20 @@ package SpiderUtils;
 import JavaBean.ProKnowledge;
 import cn.wanghaomiao.xpath.exception.XpathSyntaxErrorException;
 import cn.wanghaomiao.xpath.model.JXDocument;
+import cn.wanghaomiao.xpath.model.JXNode;
 import dao.impl.ProKnowledgeImpl;
+import org.apache.commons.lang3.StringUtils;
 import org.dom4j.Attribute;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 import org.dom4j.tree.AbstractAttribute;
+import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.select.Elements;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -21,6 +25,8 @@ import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.*;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.text.ParseException;
 import java.util.Iterator;
 import java.util.List;
@@ -50,20 +56,19 @@ public class test {
 
 
 
-
-
-
-     SpiderUtils.getElements("windows","spiderYmxk");
-       System.setProperty("webdriver.chrome.driver",SpiderContant.chromeWindowsPath );
+      //  SpiderUtils.getElements("windows","spiderYxgc");
+    /* System.setProperty("webdriver.chrome.driver",SpiderContant.chromeWindowsPath );
         WebDriver driver=new ChromeDriver();
-        driver.get("http://www.gamersky.com/news/201702/870428.shtml");
+        driver.get("http://www.youxiguancha.com/news/");
+        JavascriptExecutor executorChildnext = (JavascriptExecutor) driver;
+        executorChildnext.executeScript("$('span.pagecss a.p1.nexe').click()");
         WebElement webElement=driver.findElement(By.xpath("/html"));
         org.jsoup.nodes.Document doc=Jsoup.parse(webElement.getAttribute("outerHTML"));
         JXDocument jxDocument=new JXDocument(doc);
-        System.out.println(doc.outerHtml());
-        System.out.println("错误修改");
 
+        System.out.println(jxDocument.sel("//div[@class='inf clearfix']/a[@class='img_box']/img/@src"));*/
 
+System.out.println("helloworld");
 
      }
     }
