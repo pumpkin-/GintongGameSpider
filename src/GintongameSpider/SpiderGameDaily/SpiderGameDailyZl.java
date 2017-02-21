@@ -103,7 +103,7 @@ public class SpiderGameDailyZl {
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 Date time1 = sdf.parse(time + " 00:00:00");
                 String time2 = sdf.format(time1);
-                
+
                 String kuuid = UUID.randomUUID().toString();
                 if (LevenshteinDis.isExist(main, time2, url, kuuid)) {
                     break;

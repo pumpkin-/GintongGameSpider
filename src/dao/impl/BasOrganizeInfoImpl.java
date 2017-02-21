@@ -10,11 +10,16 @@ import java.util.List;
  */
 public class BasOrganizeInfoImpl extends BaseDaoImpl<List> implements BasOrganizeInfoDao {
     public BasOrganizeInfoImpl(){
-        this.setNs("com.gintongame.mapping.BasPersonInfoMapper.");
+        this.setNs("com.gintongame.mapping.BasOrganizeInfoMapper.");
     }
 
 
     public void insertBatch(List<BasOrganizeInfo> basorganizeinfos) {
         this.getSqlSession().insert(this.getNs() + "insertBatch", basorganizeinfos);
+}
+
+    @Override
+    public void insertSingle(BasOrganizeInfo ts) {
+        this.getSqlSession().insert(this.getNs() + "insertSingle", ts);
     }
 }

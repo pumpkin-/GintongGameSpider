@@ -20,6 +20,7 @@
         <mapper resource="com/gintongame/mapping/BasOrganizeInfoMapper.xml"/>
         <mapper resource="com/gintongame/mapping/BugDataMapper.xml"/>
         <mapper resource="com/gintongame/mapping/ProGameInfoMapper.xml"/>
+        <mapper resource="com/gintongame/mapping/OrgProduct.xml"/>
 
 
     </mappers>

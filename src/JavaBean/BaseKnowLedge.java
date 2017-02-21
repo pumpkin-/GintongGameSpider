@@ -74,7 +74,7 @@ public class BaseKnowLedge {
     private Elements elements;
     private InputStream inputStream;
     private org.dom4j.Document docsax;
-    private org.dom4j.Element root;
+    private Element root;
 
 
 }
