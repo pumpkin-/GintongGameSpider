@@ -15,6 +15,7 @@ import org.jsoup.select.Elements;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.phantomjs.PhantomJSDriver;
 
 import java.io.IOException;
@@ -22,6 +23,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by lenovo on 2017/2/16.
@@ -41,11 +44,11 @@ public class SpiderYxdg {
     }
 
     public static void grabWeb() throws IOException, ProKnowledgeImpl.FormatEexception {
-        System.setProperty("phantomjs.binary.path", "E:\\phantomjs-2.1.1-windows\\bin\\phantomjs.exe");
-        WebDriver driver = new PhantomJSDriver();
+        System.setProperty("webdriver.chrome.driver", SpiderContant.chromeWindowsPath);
+        WebDriver driver = new ChromeDriver();
         int a=1;
         for(int z=0;z<link.length;z++){
-            for(int i=1;i>0;i++){
+            for(int i=18;i>0;i++){
                 driver.get(link[z] + "/page/" + i);
                 WebElement web=driver.findElement(By.xpath("/html"));
                 String html=web.getAttribute("outerHTML");
@@ -53,7 +56,11 @@ public class SpiderYxdg {
                 int flag=0;
                 Elements linkscover=doc.select("div.entry-thumb img");
                 for(Element linkcover:linkscover){
-                    coverlist.add(linkcover.attr("src"));
+                    Pattern pat=Pattern.compile("(?<=\\?src=).+\\.jpg");
+                    Matcher mat=pat.matcher(linkcover.attr("src"));
+                    while(mat.find()) {
+                        coverlist.add(mat.group(0));
+                    }
                 }
                 Elements links=doc.select("div.entry-thumb a");
                 for(Element link:links){
@@ -81,7 +88,8 @@ public class SpiderYxdg {
         System.out.println(url);
         String kuuid= UUID.randomUUID().toString();
         String puuid=UUID.randomUUID().toString();
-        String cover="<img src=\""+coverlist.get(flag)+"\">";
+        String cover=coverlist.get(flag);
+        System.out.println(cover);
         String title=doc.select("h1.entry-title").text();
         String author=doc.select("span.meta-author a").text();
         String authorurl=doc.select("span.meta-author a").attr("href");

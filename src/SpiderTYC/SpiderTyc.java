@@ -1,4 +1,4 @@
-package GintongameSpider;
+package SpiderTYC;
 
 import com.gargoylesoftware.htmlunit.NicelyResynchronizingAjaxController;
 import com.gargoylesoftware.htmlunit.TextPage;

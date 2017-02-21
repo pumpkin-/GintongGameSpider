@@ -34,12 +34,6 @@ import java.util.*;
  */
 public class SpiderUtils {
 
-
-    public static void main(String args[]) throws FormatEexception, InterruptedException, ParserConfigurationException, ParseException, ProKnowledgeImpl.FormatEexception, FileNotFoundException, DocumentException, XpathSyntaxErrorException {
-        SpiderUtils.getElements("windows","spiderYxdg");
-    }
-
-
     private static BugDataImpl bugDataimpl = new BugDataImpl();
     private static BaseKnowLedge baseKnowledge=new BaseKnowLedge();
     private static SAXReader sax=new SAXReader();
@@ -73,6 +67,13 @@ public class SpiderUtils {
         }
     }
 
+
+    public static void getData(){
+
+    }
+
+
+
     public static void getElements(String flag,String element) throws FormatEexception, DocumentException, ParserConfigurationException, XpathSyntaxErrorException, FileNotFoundException, ProKnowledgeImpl.FormatEexception, InterruptedException, ParseException {
         baseKnowledge.setInputStream(new FileInputStream(SpiderUtils.class.getClassLoader().getResource("SpiderUtils/BasKnowledgePattern.xml").getFile()));
         baseKnowledge.setDocsax(sax.read(baseKnowledge.getInputStream()));
@@ -98,18 +99,19 @@ public class SpiderUtils {
         Element childnextflagi=childElement.element("childnextflag");
 
 
-        String author=null;
-        String title=null;
-        String cover=null;
-        String ptimetest=null;
-        String ptime=null;
-        String authorurl=null;
-        String Mosaic=null;
+
 
         int a=1;
         for(Element ele:classifiedlist){
             SpiderUtils.getDocument(flag, ele.getText().trim());
             for(int i=1;i>0;i++) {
+                String author=null;
+                String title=null;
+                String cover=null;
+                String ptimetest=null;
+                String ptime=null;
+                String authorurl=null;
+                String Mosaic=null;
                 int fg=0;
                 baseKnowledge.setWebElement(baseKnowledge.getDriver().findElement(By.xpath("/html")));
                 JXDocument jxDocument =new JXDocument(Jsoup.parse(baseKnowledge.getWebElement().getAttribute("outerHTML")));
