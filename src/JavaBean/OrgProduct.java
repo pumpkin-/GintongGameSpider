@@ -1,5 +1,6 @@
 package JavaBean;
 
+
 /**
  * 组织与产品表
  * Created 丁全彬 123 on 2017/2/21.
