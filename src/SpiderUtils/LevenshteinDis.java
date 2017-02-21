@@ -30,12 +30,7 @@ public class LevenshteinDis {
             //修改为错误代码
             double dis = levenshtein(essay, aticle);
             if (dis > 0.95) {
-                BugData bugData=new BugData();
-                bugData.setKey(list.get(x).getMain());
-                bugData.setValue(aticle);
-                bugData.setUuid(kuuid);
-                BugDataImpl bugDataimpl = new BugDataImpl();
-                bugDataimpl.insert(bugData);
+                SpiderUtils.storeBugdata(essay,aticle,kuuid);
                 System.out.println("--------------This data should be delete------------------");
                 return true;
             }
@@ -69,7 +64,7 @@ public class LevenshteinDis {
     }
 
     /**
-     *
+     *  编译距离算法
      * @param str1
      * @param str2
      * @return
@@ -120,6 +115,12 @@ public class LevenshteinDis {
         return min;
     }
 
+    /**
+     * 余弦距离算法
+     * @param doc1
+     * @param doc2
+     * @return
+     */
     public static double getSimilarity(String doc1, String doc2) {
         if (doc1 != null && doc1.trim().length() > 0 && doc2 != null
                 && doc2.trim().length() > 0) {

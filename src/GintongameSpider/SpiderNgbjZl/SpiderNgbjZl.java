@@ -86,7 +86,7 @@ public class SpiderNgbjZl {
             type="手游新闻";
         }
         if(doc.select("div[style=width:100%; text-align:center]>img").attr("src")!=null&&doc.select("div[style=width:100%; text-align:center]>img").attr("src").length()>0) {
-            cover = "<img src=\"" + "http://www.niaogebiji.com/" + doc.select("div[style=width:100%; text-align:center]>img").attr("src") + "\">";
+            cover = "http://www.niaogebiji.com/" + doc.select("div[style=width:100%; text-align:center]>img").attr("src");
         }
         String ptime = doc.select("span[style=float: right]").text();
 
