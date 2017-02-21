@@ -48,7 +48,7 @@ public class SpiderYxdg {
         WebDriver driver = new ChromeDriver();
         int a=1;
         for(int z=0;z<link.length;z++){
-            for(int i=18;i>0;i++){
+            for(int i=30;i>0;i++){
                 driver.get(link[z] + "/page/" + i);
                 WebElement web=driver.findElement(By.xpath("/html"));
                 String html=web.getAttribute("outerHTML");
@@ -63,17 +63,21 @@ public class SpiderYxdg {
                     }
                 }
                 Elements links=doc.select("div.entry-thumb a");
-                for(Element link:links){
-                    String childLink=link.attr("href");
-                    driver.get(childLink);
-                    WebElement webElement=driver.findElement(By.xpath("/html"));
-                    String childHtml=webElement.getAttribute("outerHTML");
-                    Document childDoc=Jsoup.parse(childHtml);
-                    dataClean(flag,childDoc,childLink);
-                    System.out.println(a + "+" + i);
-                    a++;
-                    flag++;
-                    System.out.println("---------------------------------");
+                for(Element link:links) {
+                    try {
+                        String childLink = link.attr("href");
+                        driver.get(childLink);
+                        WebElement webElement = driver.findElement(By.xpath("/html"));
+                        String childHtml = webElement.getAttribute("outerHTML");
+                        Document childDoc = Jsoup.parse(childHtml);
+                        dataClean(flag, childDoc, childLink);
+                        System.out.println(a + "+" + i);
+                        a++;
+                        flag++;
+                        System.out.println("---------------------------------");
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
                 }
                 if(Integer.parseInt(doc.select("div.pagenavi.clear a.current").text())==Integer.parseInt(doc.select("div.pagenavi.clear span").text().split("/",2)[1].trim())){
                     break;

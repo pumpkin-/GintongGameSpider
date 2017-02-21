@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.gintongame.mapping.BasOrganizeInfoMapper">
-    <resultMap id="BaseResultMap" type="mybatisGenerator.javaBean.BasOrganizeInfo" >
+    <resultMap id="BaseResultMap" type="javaBean.BasOrganizeInfo" >
         <result column="oname" property="oname" jdbcType="VARCHAR" />
         <result column="ename" property="ename" jdbcType="VARCHAR" />
         <result column="shortname" property="shortname" jdbcType="VARCHAR" />
@@ -24,7 +24,7 @@
         <result column="company_nature" property="companyNature" jdbcType="VARCHAR" />
         <result column="management_field" property="managementField" jdbcType="VARCHAR" />
     </resultMap>
-    <resultMap id="ResultMapWithBLOBs" type="mybatisGenerator.javaBean.BasOrganizeInfoWithBLOBs" extends="BaseResultMap" >
+    <resultMap id="ResultMapWithBLOBs" type="javaBean.BasOrganizeInfo" extends="BaseResultMap" >
         <result column="introduce" property="introduce" jdbcType="LONGVARCHAR" />
         <result column="picture" property="picture" jdbcType="LONGVARCHAR" />
         <result column="development_history" property="developmentHistory" jdbcType="LONGVARCHAR" />
