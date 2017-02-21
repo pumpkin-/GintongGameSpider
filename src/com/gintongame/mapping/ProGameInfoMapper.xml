@@ -3,10 +3,7 @@
 
 
 <mapper namespace="com.gintongame.mapping.ProGameInfoMapper">
-    <select id="selectGame" parameterType="java.lang.String" resultType="List">
-        SELECT gname FROM pro_game_info
-        WHERE gname=#{gname}
-    </select>
+
 
     <insert id="insertGame" parameterType="JavaBean.BasProGameInfo" useGeneratedKeys="true" >
         insert into pro_game_info
