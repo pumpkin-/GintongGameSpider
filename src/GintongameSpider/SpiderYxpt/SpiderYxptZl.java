@@ -80,7 +80,7 @@ public class SpiderYxptZl {
         }
         String author=authorlist.get(flag);
         if(doc.select("div.cover img").attr("src")!=null&&doc.select("div.cover img").attr("src").length()>0) {
-            cover = "<img src=\"" + doc.select("div.cover img").attr("src") + "\">";
+            cover =  doc.select("div.cover img").attr("src");
         }
         Elements linkstag=doc.select("div.tag>div.pull-left>a.btn.btn-default");
         for(Element linktag:linkstag){
