@@ -1,7 +1,10 @@
 package SpiderUtils;
 
+import JavaBean.BasProGameInfo;
 import cn.wanghaomiao.xpath.exception.XpathSyntaxErrorException;
 import cn.wanghaomiao.xpath.model.JXDocument;
+import dao.ProGameInfoDao;
+import dao.impl.ProGameInfoDaoImpl;
 import org.apache.commons.lang3.StringUtils;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
@@ -36,6 +39,11 @@ public class SpiderProduct {
             System.out.println(url);
             pool.submit(new Spider(map,url));
         }
+//        // 停止加入新的线程
+//        pool.shutdown();
+//        while (!pool.isTerminated()) {
+//            // 如果所有线程执行完成,那么挑出该循环.
+//        }
     }
     /**
      * 获取配置文件中要爬取的信息
@@ -47,11 +55,13 @@ public class SpiderProduct {
         try{
             SAXReader reader = new SAXReader();
             //获取配置文档dom树
-            Document dom=reader.read(SpiderProduct.class.getClassLoader().getResource("SpiderAZ/BasProductPattern.xml").getPath());
+            Document dom=reader.read(SpiderProduct.class.getClassLoader().getResource("SpiderUtils/BasProductPattern.xml").getPath());
             //获取目标配置节点
             Node target=dom.selectSingleNode("//"+targetNode);
             //获取起始url
             List urls=target.selectNodes("//url");
+            //获取网站源名称
+            String source=target.selectSingleNode("//source").getText();
             //获取ContentPath
             String contentPath=target.selectSingleNode("//contentPath").getText();
             //图标
@@ -60,6 +70,8 @@ public class SpiderProduct {
             String pname=target.selectSingleNode("//pname").getText();
             //版本
             String pversion=target.selectSingleNode("//pversion").getText();
+            //分类
+            String sort=target.selectSingleNode("//sort").getText();
             //时间
             String ptime=target.selectSingleNode("//ptime").getText();
             //时间格式化字符串
@@ -83,10 +95,12 @@ public class SpiderProduct {
 
             Map<String, Object>map=new HashMap();
             map.put("urls",urls);
+            map.put("source",source);
             map.put("contentPath",contentPath);
             map.put("logo",logo);
             map.put("pname",pname);
             map.put("pversion",pversion);
+            map.put("sort",sort);
             map.put("ptime",ptime);
             map.put("formatStr",formatStr);
             map.put("size",size);
@@ -105,7 +119,7 @@ public class SpiderProduct {
     }
 }
 
-//爬虫类
+//爬虫内部线程类
 class Spider implements Runnable{
     private Map<String, Object> map=null;
     private String startUrl;
@@ -113,6 +127,7 @@ class Spider implements Runnable{
         this.map=map;
         this.startUrl=startUrl;
     }
+    //线程执行内容
     public void run() {
         JXDocument doc=null;
         org.jsoup.nodes.Document document=null;
@@ -128,9 +143,12 @@ class Spider implements Runnable{
             List<String>detailUrls=getDetailUrls(doc,map.get("detailurl").toString());
             for(String detailUrl:detailUrls){
                 try{
-                    org.jsoup.nodes.Document document1=Jsoup.connect(map.get("contentPath").toString()+detailUrl).get();
+                    org.jsoup.nodes.Document document1=Jsoup.connect(map.get("contentPath").toString()+detailUrl)
+                            .userAgent("Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; .NET CLR 2.0.50727)")
+                            .get();
                     //解析详情页面并且存储进数据库
                     parsePage(new JXDocument(document1),map);
+                    System.out.println(Thread.currentThread().getName());
                 }catch(IOException e){
                         e.printStackTrace();
                 }
@@ -138,10 +156,20 @@ class Spider implements Runnable{
             String next=null;
             //进入下一页
             try{
-                next=map.get("contentPath").toString()+doc.sel(map.get("nextpage").toString()).get(0).toString();
-                doc=new JXDocument(Jsoup.connect(next).get());
+                String nextUrl=null;
+                try {
+                    //若获取下一页失败，则停止当前线程
+                    nextUrl = doc.sel(map.get("nextpage").toString()).get(0).toString();
+                }catch (Exception e){
+                    return;
+                }
+                next=map.get("contentPath").toString()+nextUrl;
+                org.jsoup.nodes.Document nextdocument=Jsoup.connect(next)
+                        .userAgent("Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; .NET CLR 2.0.50727)")
+                        .get();
+                doc=new JXDocument(nextdocument);
             }catch(Exception e){
-                break;
+                System.err.println(Thread.currentThread().getName()+"进入下一页错误");
             }
         }
     }
@@ -151,7 +179,7 @@ class Spider implements Runnable{
     /**
      * 获取每页列表中的详情页的url
      */
-    public static List<String>getDetailUrls(JXDocument document, String detailurl){
+    public  List<String>getDetailUrls(JXDocument document, String detailurl){
         List<Object>urllist= null;
         try {
             urllist = document.sel(detailurl);
@@ -171,102 +199,150 @@ class Spider implements Runnable{
      *
      * @param document
      */
-    public static void parsePage(JXDocument document, Map map){
-            String image=null;
-            String name=null;
-            String version=null;
-            Date time=null;
-            String size=null;
-            String sys=null;
-            String charges=null;
-            String author=null;
-            String introduction=null;
-            String screenShots=null;
-            try{
-            //图标
+    public  void parsePage(JXDocument document, Map map){
+        String logo=null;
+        String name=null;
+        String version=null;
+        String time=null;
+        String size=null;
+        String sys=null;
+        String charges=null;
+        String author=null;
+        String introduction=null;
+        String screenShots=null;
+        String sort=null;
+        String source=null;
+        //创建数据库表对象
+        BasProGameInfo gameInfo=new BasProGameInfo();
+        try{
+            //源网站名称
+            if(StringUtils.isNoneEmpty(map.get("source").toString())){
+                source=map.get("source").toString();
+                System.out.println(source);
+                gameInfo.setSource(source);
+            }
+            //图标logo
             if(StringUtils.isNoneEmpty(map.get("logo").toString())){
-            String imageStr=map.get("contentPath").toString()+document.sel(map.get("logo").toString()).get(0).toString();
-            image=Jsoup.connect(imageStr).ignoreContentType(true).get().location();
-            System.out.println(image);
+                String imageStr=map.get("contentPath").toString()+document.sel(map.get("logo").toString()).get(0).toString();
+                logo=Jsoup.connect(imageStr).ignoreContentType(true).get().location();
+                System.out.println(logo);
+                gameInfo.setLogo(logo);
             }
-            //名称
+            //名称gname
             if(StringUtils.isNoneEmpty(map.get("pname").toString())){
-            name=document.sel(map.get("pname").toString()).get(0).toString();
-            System.out.println(name);
+                name=document.sel(map.get("pname").toString()).get(0).toString();
+                System.out.println(name);
+                gameInfo.setGname(name);
             }
-            //版本
+            //版本version
             if(StringUtils.isNoneEmpty(map.get("pversion").toString())){
-            version=document.sel(map.get("pversion").toString()).get(0).toString();
-            System.out.println(version);
+                version=document.sel(map.get("pversion").toString()).get(0).toString();
+                version=version.substring(1,version.lastIndexOf(")"));
+                System.out.println(version);
+                gameInfo.setVersion(version);
             }
-            //时间
+            //分类(网络类型)
+            if(StringUtils.isNoneEmpty(map.get("sort").toString())){
+                sort=document.sel(map.get("sort").toString()).get(0).toString().split("\\：")[1];
+                System.out.println(sort);
+                gameInfo.setNetwork_type(getNetType(sort));
+            }
+            //setWeb_update_time
             if(StringUtils.isNoneEmpty(map.get("ptime").toString())){
-            String timeStr=document.sel(map.get("ptime").toString()).get(0).toString().split("\\：")[1];
-            time=timeFormat(timeStr,map.get("formatStr").toString());
-            System.out.println(time);
+                String timeStr=document.sel(map.get("ptime").toString()).get(0).toString().split("\\：")[1];
+                time=timeFormat(timeStr,map.get("formatStr").toString());
+                System.out.println(time);
+                gameInfo.setWeb_update_time(time);
             }
-            //大小
+            //大小gamesize
             if(StringUtils.isNoneEmpty(map.get("size").toString())){
-            size=document.sel(map.get("size").toString()).get(0).toString().split("\\：")[1];
-            System.out.println(size);
+                size=document.sel(map.get("size").toString()).get(0).toString().split("\\：")[1];
+                System.out.println(size);
+                gameInfo.setGame_size(size);
             }
-            //系统
-            if(StringUtils.isNoneEmpty(map.get("system").toString())){
-            sys=document.sel(map.get("system").toString()).get(0).toString().split("\\：")[1];
-            System.out.println(sys);
-            }
-            //资费
+//            //系统
+//            if(StringUtils.isNoneEmpty(map.get("system").toString())){
+//                sys=document.sel(map.get("system").toString()).get(0).toString().split("\\：")[1];
+//                System.out.println(sys);
+//            }
+            //资费charge_mode
             if(StringUtils.isNoneEmpty(map.get("charges").toString())){
-            charges=document.sel(map.get("charges").toString()).get(0).toString().split("\\：")[1];
-            System.out.println(charges);
+                charges=document.sel(map.get("charges").toString()).get(0).toString().split("\\：")[1];
+                System.out.println(charges);
+                gameInfo.setCharge_mode(charges);
             }
-            //作者
+            //游戏研发公司（作者）develop_com
             if(StringUtils.isNoneEmpty(map.get("author").toString())){
-            author=document.sel(map.get("author").toString()).get(0).toString().split("\\：")[1];
-            System.out.println(author);
+                author=document.sel(map.get("author").toString()).get(0).toString().split("\\：")[1];
+                System.out.println(author);
+                gameInfo.setDevelop_com(author);
             }
 
-            //简介
+            //简介g_desc
             if(StringUtils.isNoneEmpty(map.get("introduction").toString())){
-            introduction=document.sel(map.get("introduction").toString()).get(0).toString();
-            System.out.println(introduction);
+                introduction=document.sel(map.get("introduction").toString()).get(0).toString();
+                System.out.println(introduction);
+                gameInfo.setG_desc(introduction);
             }
+            //游戏截图picture
             if(StringUtils.isNoneEmpty(map.get("screenShoots").toString())){
-            List<Object>liEles=document.sel(map.get("screenShoots").toString());
-            //多个游戏截图用“,”分隔连接为一个StringBuffer
-            StringBuffer screenBuffer=new StringBuffer();
-            for(Object ele:liEles){
-            String screenShotStr=map.get("contentPath").toString()+ele.toString();
-            String screenShot=Jsoup.connect(screenShotStr).ignoreContentType(true).get().location();
-            screenBuffer.append(screenShot+",");
-            }
-            screenShots=screenBuffer.toString();
-            System.out.println(screenShots);
+                List<Object>liEles=document.sel(map.get("screenShoots").toString());
+                //多个游戏截图用“,”分隔连接为一个StringBuffer
+                StringBuffer screenBuffer=new StringBuffer();
+                for(Object ele:liEles){
+                    String screenShotStr=map.get("contentPath").toString()+ele.toString();
+                    String screenShot=Jsoup.connect(screenShotStr)
+                            .ignoreContentType(true)
+                            .userAgent("Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; .NET CLR 2.0.50727)")
+                            .timeout(1500)
+                            .get().location();
+                    screenBuffer.append(screenShot+",");
+                }
+                screenShots=screenBuffer.toString();
+                System.out.println(screenShots);
+                gameInfo.setPicture(screenShots);
             }
             System.out.println("----------------------------------------------------------------------");
             //存入数据库
-    //            storeToDataBase(imageStr,name,version,time,size,
-    //                sys,charges,author,introduction,screenShots);
-            }catch(Exception e){
+            storeToDataBase(gameInfo);
+        }catch(Exception e){
             e.printStackTrace();
-            }
-            }
+        }
+    }
 
     /**
      *将数据存入mysql数据库中
      */
-    public static void storeToDataBase(String image,String name,String version,Date time,String size,
-            String sys,String charges,String author,String introduction,String screenShot){
-
-            }
+    public void storeToDataBase(BasProGameInfo gameInfo){
+        //网站源链接
+        gameInfo.setUrl(startUrl);
+        //uuid
+        gameInfo.setUuid(UUID.randomUUID().toString());
+        //用dao层接口插入数据库
+        ProGameInfoDao dao=new ProGameInfoDaoImpl();
+        dao.insertGame(gameInfo);
+    }
 
     /**
      * 将时间字符串格式化为Date类型
      */
-    public static Date timeFormat(String time,String formatStr)throws ParseException{
-            SimpleDateFormat format=new SimpleDateFormat(formatStr);
-            Date date=format.parse(time);
+    public  String timeFormat(String time,String formatStr)throws ParseException{
+            SimpleDateFormat parse=new SimpleDateFormat(formatStr);
+            SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd");
+            Date dateTemp=parse.parse(time);
+            String date=format.format(dateTemp);
             return date;
+    }
+
+    /**
+     * 通过游戏分类字段获取对应的游戏的网络类型
+     */
+    public String getNetType(String sort){
+        if(sort.equals("网络游戏")||sort=="网络游戏"){
+            return "2";
+        }else{
+            return "0";
+        }
     }
 }
 
