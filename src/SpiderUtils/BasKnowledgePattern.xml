@@ -66,7 +66,7 @@
         <title>//div[@class='detail_cont']/h1[@class='tit']/text()</title>
         <author></author>
         <authorurl></authorurl>>
-        <cover>//div[@class='inf clearfix']/a[@class='img_box']/img/@src</cover>>
+        <cover Mosaic="">//div[@class='inf clearfix']/a[@class='img_box']/img/@src</cover>>
         <ptime timeFormat="yyyy MM dd HH mm">//div[@class='info']/em[1]/text()</ptime>>
         <tag></tag>>
         <main>//div[@class='detail_c']/p</main>>

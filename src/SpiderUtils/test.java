@@ -56,20 +56,19 @@ public class test {
 
 
 
-        SpiderUtils.getElements("windows","spiderYxgc",31);
+        //SpiderUtils.getElements("windows","spiderYxgc",31);
 
 
-
-    /* System.setProperty("webdriver.chrome.driver",SpiderContant.chromeWindowsPath );
+     /*System.setProperty("webdriver.chrome.driver",SpiderContant.chromeWindowsPath );
         WebDriver driver=new ChromeDriver();
-        driver.get("http://www.youxiguancha.com/news/");
-        JavascriptExecutor executorChildnext = (JavascriptExecutor) driver;
+        driver.get("http://www.mofang.com/news");
+       *JavascriptExecutor executorChildnext = (JavascriptExecutor) driver;
         executorChildnext.executeScript("$('span.pagecss a.p1.nexe').click()");
         WebElement webElement=driver.findElement(By.xpath("/html"));
         org.jsoup.nodes.Document doc=Jsoup.parse(webElement.getAttribute("outerHTML"));
         JXDocument jxDocument=new JXDocument(doc);
 
-        System.out.println(jxDocument.sel("//div[@class='inf clearfix']/a[@class='img_box']/img/@src"));*/
+        System.out.println(jxDocument.sel("//dd[@class='public-tabs-title']/a/@href"));*/
 
 
 

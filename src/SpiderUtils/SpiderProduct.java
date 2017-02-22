@@ -104,8 +104,10 @@ public class SpiderProduct {
             //画面方式
             String screenMode=target.selectSingleNode("//"+targetNode+"/screenMode").getText();
 
+
             //将上面读到的配置文件中的xpath信息返回main方法
             Map<String, Object>map=new HashMap<>();
+
             map.put("urls",urls);
             map.put("source",source);
             map.put("contentPath",contentPath);
@@ -204,7 +206,7 @@ class Spider implements Runnable{
             e.printStackTrace();
         }
         //存储每页中列表上跳转到详情页的链接
-        List<String>detailUrls=new ArrayList<>();
+        List<String>detailUrls=new ArrayList();
         for(Object detailUrl:urllist){
             detailUrls.add((String)detailUrl);
         }
