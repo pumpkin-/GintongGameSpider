@@ -3,59 +3,63 @@ package JavaBean;
 import java.util.Date;
 
 public class ProGameInfo {
-    private String gname;
+    private String gname;//游戏名
 
-    private String gename;
+    private String gename;//游戏英文名
 
-    private String logo;
+    private String logo;//产品logo
 
-    private String version;
+    private String version;//游戏版本
 
-    private String language;
+    private String language;//语言
 
-    private Byte networkType;
+    private Byte networkType;//0未知，1不需要联网，2需要联网
 
-    private String suitableAge;
+    private String suitableAge;//适合年龄
 
-    private String issueArea;
+    private String issueArea;//发行区域
 
-    private String publisher;
+    private String publisher;//发行商
 
-    private String gstyle;
+    private String gstyle;//游戏风格
 
-    private String gtags;
+    private String gtags;//标签
 
-    private String viewpoint;
+    private String viewpoint;//游戏视角
 
-    private String engine;
+    private String engine;//游戏引擎
 
-    private String grade;
+    private String grade;//游戏品级
 
-    private String dpprogress;
+    private String dpprogress;//研发进度
 
-    private String gtheme;
+    private String gtheme;//游戏题材
 
-    private String scale;
+    private String scale;//产品团队规模
 
-    private String pdemand;
+    private String pdemand;//产品需求
 
-    private String price;
+    private String price;//价格
 
-    private String chargeMode;
+    private String chargeMode;//付费方式
 
-    private String developCom;
+    private String developCom;//研发公司
 
-    private Date ptime;
+    private Date ptime;//出版出售时间
 
-    private Date betaTime;
+    private Date betaTime;//初测公司
 
-    private Date testTime;
+    private Date testTime;//内侧时间
 
-    private Date betatestTime;
+    private Date betatestTime;//封测时间
 
-    private Date setTime;
+    private Date setTime;//立项时间
 
-    private String web;
+    private String web;//游戏官网
+
+    private String gDesc;//游戏介绍
+
+    private String picture;//游戏截图
 
     private String url;
 
@@ -63,17 +67,17 @@ public class ProGameInfo {
 
     private String uuid;
 
-    private String gamespy;
+    private String gamespy;//游戏界面2D
 
-    private String operator;
+    private String operator;//运营商
 
-    private String filmsTime;
+    private String filmsTime;//资料发布时间
 
-    private String gameSize;
+    private String gameSize;//游戏大小
 
-    private String webUpdateTime;
+    private String webUpdateTime;//网站更新时间
 
-    private String downloadLink;
+    private String downloadLink;//下载链接
 
     public String getGname() {
         return gname;
@@ -111,6 +115,14 @@ public class ProGameInfo {
         return language;
     }
 
+    public String getPicture() {
+        return picture;
+    }
+
+    public void setPicture(String picture) {
+        this.picture = picture;
+    }
+
     public void setLanguage(String language) {
         this.language = language == null ? null : language.trim();
     }
@@ -129,6 +141,14 @@ public class ProGameInfo {
 
     public void setSuitableAge(String suitableAge) {
         this.suitableAge = suitableAge == null ? null : suitableAge.trim();
+    }
+
+    public String getgDesc() {
+        return gDesc;
+    }
+
+    public void setgDesc(String gDesc) {
+        this.gDesc = gDesc;
     }
 
     public String getIssueArea() {
