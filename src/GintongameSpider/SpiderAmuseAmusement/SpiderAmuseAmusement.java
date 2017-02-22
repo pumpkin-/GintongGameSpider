@@ -124,7 +124,7 @@ public class SpiderAmuseAmusement {
             break;
         }
         if(screenshot!=""){
-            screenshot=screenshot.substring(0,screenshot.length()-2);
+            screenshot=screenshot.substring(0,screenshot.length()-1);
         }
         map.put("screenshot",screenshot);
 
@@ -195,7 +195,7 @@ public class SpiderAmuseAmusement {
             screenshot+=elm.attr("ssrc")+",";
 
         }
-        screenshot=screenshot.substring(0,screenshot.length()-2);
+        screenshot=screenshot.substring(0,screenshot.length()-1);
         map.put("screenshot",screenshot);
         System.out.println("游戏截图：" + screenshot);
         // 简介，
@@ -289,7 +289,7 @@ public class SpiderAmuseAmusement {
             screenshot+=elm.attr("ssrc")+",";
 
         }
-        screenshot=screenshot.substring(0,screenshot.length()-2);
+        screenshot=screenshot.substring(0,screenshot.length()-1);
         map.put("screenshot",screenshot);
         System.out.println("游戏截图：" + screenshot);
         // 简介，
@@ -310,7 +310,7 @@ public class SpiderAmuseAmusement {
 
     public static void main(String args[]) {
         //手游l
-        //gameHand("http://www.doyo.cn/shouji/list",429);
+        gameHand("http://www.doyo.cn/shouji/list",429);
         //单机
         gameinFormation("http://www.doyo.cn/danji/list",557);
         //网游
@@ -358,6 +358,7 @@ public class SpiderAmuseAmusement {
                 pgi.setPtime(map.get("listed"));
                 pgi.setLanguage(map.get("language"));
                 ProGameInfoDaoImpl insert=new ProGameInfoDaoImpl();
+                pgi.setNetwork_type("0");
                 insert.insertGame(pgi);
                 //游戏类型表
                 ProGameType pgt= new ProGameType();
@@ -412,6 +413,7 @@ public class SpiderAmuseAmusement {
                 pgi.setGamespy(map.get("frame"));
                 pgi.setPtime(map.get("listed"));
                 pgi.setLanguage(map.get("language"));
+                pgi.setNetwork_type("0");
                 ProGameInfoDaoImpl insert=new ProGameInfoDaoImpl();
                 insert.insertGame(pgi);
                 //组织入库
@@ -456,6 +458,7 @@ public class SpiderAmuseAmusement {
 
         System.setProperty("phantomjs.binary.path", "C://Users//123//Desktop//aaa//phantomjs-2.1.1-windows//bin//phantomjs.exe");
         WebDriver driver = new PhantomJSDriver();
+
         Map<String,String>map=new HashMap<String, String>();
         String urls;
         String pagingPath;
@@ -488,6 +491,7 @@ public class SpiderAmuseAmusement {
                 pgi.setUrl(map.get("url"));
                 pgi.setSource("逗游");
                 pgi.setGamespy(map.get("frame"));;
+                pgi.setNetwork_type("0");
                 ProGameInfoDaoImpl insert=new ProGameInfoDaoImpl();
                 insert.insertGame(pgi);
                 //组织表入库

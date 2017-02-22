@@ -1,37 +1,28 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<BasKnowledgeSpiderPattern>
+<?xml version="1.0" encoding="GBK"?>
 
-<!--游戏观察抓取-->
-    <spiderYxgc>
-        <uuid></uuid>>
-        <knowledge>
-            <website>
-                <title>//div[@class='detail_cont']/h1[@class='tit']/text()</title>
-                <author></author>
-                <authorurl></authorurl>>
-                <cover>//div[@class='inf clearfix']/a[@class='img_box']/img/@src</cover>>
-                <ptime timeFormat="yyyy MM dd HH mm">//div[@class='info']/em[1]/text()</ptime>>
-                <tag></tag>>
-                <main>//div[@class='detail_c']/p</main>>
-                <mainpic>//img/@src</mainpic>>
-                <type>//div[@class='s_1 on']/p/a[@class='on']/text()</type>>
-                <source>游戏观察</source>
-                <childnext></childnext>>
-                <childnextflag></childnextflag>>
-                <childLink Mosaic="http://www.youxiguancha.com">//div[@class='inf clearfix']/div[@class='inf_c']/h2/a/@href</childLink>>
-                <next>$('div.page_manu a.pageNext')[0].click()</next>>
-                <nextflag>//div[@class='page_manu']/a[@class='pageNext']</nextflag>>
-                <urls>
-                    <url>
-                        http://www.youxiguancha.com/news/
-                    </url>
-                </urls>>
-            </website>>
-        </knowledge>>
-
-    </spiderYxgc>
-
-
-
-
+<BasKnowledgeSpiderPattern> 
+  <!--游戏观察抓取-->  
+  <spiderYxgc> 
+    <uuid/>&gt;
+    <knowledge> 
+      <website> 
+        <title>//div[@class='detail_cont']/h1[@class='tit']/text()</title>  
+        <author>bbb</author>  
+        <authorurl/>&gt;
+        <cover>//div[@class='inf clearfix']/a[@class='img_box']/img/@src</cover>&gt;
+        <ptime timeFormat="yyyy MM dd HH mm">//div[@class='info']/em[1]/text()</ptime>&gt;
+        <tag/>&gt;
+        <main>//div[@class='detail_c']/p</main>&gt;
+        <mainpic>//img/@src</mainpic>&gt;
+        <type>//div[@class='s_1 on']/p/a[@class='on']/text()</type>&gt;
+        <source>游戏观察</source>  
+        <childnext/>&gt;
+        <childnextflag/>&gt;
+        <childLink Mosaic="http://www.youxiguancha.com">//div[@class='inf clearfix']/div[@class='inf_c']/h2/a/@href</childLink>&gt;
+        <next>aaaaaaaaaa</next>&gt;
+        <nextflag>//div[@class='page_manu']/a[@class='pageNext']</nextflag>&gt;
+        <url>http://www.youxiguancha.com/news/</url> 
+      </website>&gt;
+    </knowledge>&gt;
+  </spiderYxgc> 
 </BasKnowledgeSpiderPattern>

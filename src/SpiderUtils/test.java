@@ -56,7 +56,8 @@ public class test {
 
 
 
-      //  SpiderUtils.getElements("windows","spiderYxgc");
+        SpiderUtils.getElements("windows","spiderYxgc");
+
     /* System.setProperty("webdriver.chrome.driver",SpiderContant.chromeWindowsPath );
         WebDriver driver=new ChromeDriver();
         driver.get("http://www.youxiguancha.com/news/");
@@ -68,7 +69,7 @@ public class test {
 
         System.out.println(jxDocument.sel("//div[@class='inf clearfix']/a[@class='img_box']/img/@src"));*/
 
-System.out.println("helloworld");
+
 
      }
     }
