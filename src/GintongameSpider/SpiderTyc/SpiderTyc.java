@@ -1,5 +1,6 @@
 package GintongameSpider.SpiderTyc;
 
+import JavaBean.BasOrganizeInfo;
 import SpiderUtils.SpiderContant;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -13,6 +14,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import javax.lang.model.element.Element;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 
 /**
@@ -20,13 +22,16 @@ import java.util.List;
  */
 public class SpiderTyc {
     public static void main(String [] args) throws InterruptedException {
-
+            //公司网址
+            String url="http://www.tianyancha.com/company/150041670";
             System.setProperty("webdriver.chrome.driver", SpiderContant.chromeWindowsPath);
             WebDriver driver = new ChromeDriver();
-            driver.get("http://www.tianyancha.com/company/150041670");
+            driver.get(url);
             Thread.sleep(2000);
             WebElement webElement = driver.findElement(By.xpath("/html"));
             Document doc = Jsoup.parse(webElement.getAttribute("outerHTML"));
+            //所对应的UUID
+            String uuid=UUID.randomUUID().toString();
             //System.out.println(doc.outerHtml());
             //组织名
             String oname = doc.select("div.company_info_text p.ng-binding").text();
@@ -152,6 +157,22 @@ public class SpiderTyc {
                 //股东投资金额
                 String partnerComMoney=partner.select("p.f13.ptten span.c2.ng-binding").text();
                 System.out.println("人物股东信息:---->"+partnerComNameUrl+"-"+partnerComName+"-"+partnerComPer+"-"+partnerIndustry+"-"+partnerState+"-"+partnerComMoney);
+
+                BasOrganizeInfo basOrgan=new BasOrganizeInfo();
+                basOrgan.setOname(oname);
+                basOrgan.setCon_way(con_way);
+                basOrgan.setAddress(address);
+                basOrgan.setWeb(web);
+                basOrgan.setIndustry(industry);
+                basOrgan.setStime(ztime);
+                basOrgan.setUuid(uuid);
+                basOrgan.setManagement_field(businessScope);
+                basOrgan.setSource("天眼查");
+                basOrgan.setType("0");
+                basOrgan.setUrl(url);
+
+
+
             }
         }
 
