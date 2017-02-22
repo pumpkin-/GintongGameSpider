@@ -14,20 +14,22 @@
         <!--详情页-->
         <ptime timeFormat="yyyy MM dd HH mm">//div[@class='arc-con-title']/p[@class='arc-title-crumbs']/span[@class='arc-crumbs-date']/text()</ptime>>
        <!--列表页-->
-        <tag>//div[@class='public-tabs-con']/dd[@class='public-tabs-keywords']/a/text()</tag>>
+        <tag>//dd[@class='public-tabs-keywords']</tag>>
         <!--详情页-->
-        <main>//div[@class='arc-article-detail']/p/text()</main>>
+        <main>//div[@class='arc-article-detail']/p</main>>
         <!--详情页-->
-        <mainpic>//div[@class='arc-article-detail']/img/@src</mainpic>>
+        <mainpic>//img/@src</mainpic>>
         <!--列表页-->
         <type>//div[@class='public-tabs-con']/dd[@class='public-tabs-keywords']/a/text()</type>>
         <source>魔方</source>
         <childnext></childnext>>
         <childnextflag></childnextflag>
         <!--列表页-->
-        <childLink Mosaic="http://www.youxiguancha.com">//div[@class='public-tabs-con']/dt[@class='public-tabs-pic']/a[1]/@href</childLink>>
+        <childLink Mosaic="">//dd[@class='public-tabs-title']/a/@href</childLink>>
         <next></next>>
         <nextflag></nextflag>>
+        <more>document.getElementsByClassName('public-more public-mb20');</more>>
+        <moreflag>//a[class='public-more public-mb20']</moreflag>>
         <urls>
             <url>
                 http://www.mofang.com/news
