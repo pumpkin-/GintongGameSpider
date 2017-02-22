@@ -15,6 +15,7 @@
         <ptime timeFormat="yyyy MM dd HH mm">//div[@class='arc-con-title']/p[@class='arc-title-crumbs']/span[@class='arc-crumbs-date']/text()</ptime>>
        <!--列表页-->
         <tag>//dd[@class='public-tabs-keywords']</tag>>
+
         <!--详情页-->
         <main>//div[@class='arc-article-detail']/p</main>>
         <!--详情页-->
@@ -25,11 +26,13 @@
         <childnext></childnext>>
         <childnextflag></childnextflag>
         <!--列表页-->
+
         <childLink Mosaic="">//dd[@class='public-tabs-title']/a/@href</childLink>>
         <next></next>>
         <nextflag></nextflag>>
         <more>document.getElementsByClassName('public-more public-mb20');</more>>
         <moreflag>//a[class='public-more public-mb20']</moreflag>>
+
         <urls>
             <url>
                 http://www.mofang.com/news

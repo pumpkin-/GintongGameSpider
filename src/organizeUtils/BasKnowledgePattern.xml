@@ -9,7 +9,7 @@
         <title>//div[@class='newscon']/h1/text()</title>  
         <author/>  
         <authorurl/>&gt;
-        <cover>//div[@class='info_con']/p/img/@src</cover>&gt;
+        <cover Mosaic="http://www.beizhouwenhua.com">//div[@class='info_con']/p/img/@src</cover>&gt;
         <ptime timeFormat="yyyyy MM dd H mm ss">//div[@class='info_txt']/text()</ptime>&gt;
         <tag/>&gt;
         <main>//div[@class='info_con']/p</main>&gt;
