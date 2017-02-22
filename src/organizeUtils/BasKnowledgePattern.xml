@@ -1,41 +1,30 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<BasKnowledgeSpiderPattern>
+<?xml version="1.0" encoding="GBK"?>
 
-<!--娓告垙瑙傚療鎶撳彇-->
-    <spiderYxgc>
-        <uuid></uuid>>
-        <urls type="">
-            <url>
-                <title></title>
-                <author></author>
-                <authorurl></authorurl>>
-                <cover></cover>>
-                <ptime timeFormat="yyyy MM dd HH mm"></ptime>>
-                <tag></tag>>
-                <main></main>>
-                <mainpic></mainpic>>
-                <type></type>>
-                <source></source>
-                <childnext></childnext>>
-                <childnextflag></childnextflag>>
-                <childLink Mosaic="http://www.youxiguancha.com"></childLink>>
-                <next></next>>
-                <nextflag></nextflag>>
-            </url>>
-            <url>
-
-            </url>>
-        </urls>>
-        <urls type="">
-            <url>
-
-            </url>>
-
-        </urls>
-
-    </spiderYxgc>
-
-
-
-
+<BasKnowledgeSpiderPattern> 
+  <!--游戏观察抓取-->  
+  <spiderJzwh> 
+    <uuid/>&gt;
+    <knowledge> 
+      <website> 
+        <title>//div[@class='newscon']/h1/text()</title>  
+        <author/>  
+        <authorurl/>&gt;
+        <cover Mosaic="http://www.beizhouwenhua.com">//div[@class='info_con']/p/img/@src</cover>&gt;
+        <ptime timeFormat="yyyyy MM dd H mm ss">//div[@class='info_txt']/text()</ptime>&gt;
+        <tag/>&gt;
+        <main>//div[@class='info_con']/p</main>&gt;
+        <mainpic Mosaic="http://www.beizhouwenhua.com">//img/@src</mainpic>&gt;
+        <type/>&gt;
+        <source>游戏观察</source>  
+        <childnext/>&gt;
+        <childnextflag/>&gt;
+        <childLink Mosaic="http://www.beizhouwenhua.com">//ul[@class='new_list_ul']/li/a/@href</childLink>&gt;
+        <next/>&gt;
+        <nextflag/>&gt;
+        <more/>&gt;
+        <moreflag/>&gt;
+        <url>http://www.beizhouwenhua.com/article/</url> 
+      </website>&gt;
+    </knowledge>&gt;
+  </spiderJzwh> 
 </BasKnowledgeSpiderPattern>

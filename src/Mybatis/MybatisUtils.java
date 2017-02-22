@@ -1,16 +1,11 @@
 package Mybatis;
 
-import dao.impl.ProKnowledgeImpl;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
-import JavaBean.ProKnowledge;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by lenovo on 2017/2/9.

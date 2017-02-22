@@ -66,11 +66,11 @@
         <title>//div[@class='detail_cont']/h1[@class='tit']/text()</title>
         <author></author>
         <authorurl></authorurl>>
-        <cover>//div[@class='inf clearfix']/a[@class='img_box']/img/@src</cover>>
+        <cover Mosaic="">//div[@class='inf clearfix']/a[@class='img_box']/img/@src</cover>>
         <ptime timeFormat="yyyy MM dd HH mm">//div[@class='info']/em[1]/text()</ptime>>
         <tag></tag>>
         <main>//div[@class='detail_c']/p</main>>
-        <mainpic>//img/@src</mainpic>>
+        <mainpic Mosaic="">//img/@src</mainpic>>
         <type>//div[@class='s_1 on']/p/a[@class='on']/text()</type>>
         <source>游戏观察</source>
         <childnext></childnext>>
@@ -78,6 +78,8 @@
         <childLink Mosaic="http://www.youxiguancha.com">//div[@class='inf clearfix']/div[@class='inf_c']/h2/a/@href</childLink>>
         <next>$('div.page_manu a.pageNext')[0].click()</next>>
         <nextflag>//div[@class='page_manu']/a[@class='pageNext']</nextflag>>
+        <more></more>>
+        <moreflag></moreflag>>
         <urls>
             <url>
                 http://www.youxiguancha.com/news/
