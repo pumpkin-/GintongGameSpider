@@ -12,6 +12,8 @@
         <pname>//div[@class='detail_description']/div[@class='detail_line']/h3/text()</pname>
         <!--版本-->
         <pversion>//span[@class='app_detail_version']/text()</pversion>
+        <!--游戏类型-->
+        <gametype></gametype>
         <!--分类-->
         <sort>//ul[@id='detail_line_ul']/li[1]/text()</sort>
         <!--时间-->
@@ -22,6 +24,18 @@
         <system>//ul[@id='detail_line_ul']/li[5]/text()</system>
         <!--资费-->
         <charges>//ul[@id='detail_line_ul']/li[6]/span/text()</charges>
+        <!--游戏状态-->
+        <gamestate></gamestate>
+        <!--画面风格-->
+        <pictureStryle></pictureStryle>
+        <!--战斗方式-->
+        <fightingmode></fightingmode>
+        <!--画面方式-->
+        <screenMode></screenMode>
+        <!--开服总数-->
+        <totalServer></totalServer>
+        <!--游戏题材-->
+        <gtheme></gtheme>
         <!--作者-->
         <author>//ul[@id='detail_line_ul']/li[7]/text()</author>
         <!--介绍-->
@@ -93,6 +107,10 @@
         <gametype>//ul[@class='clearfix']/li[2]/p/em/text()</gametype>
         <!--资费-->
         <charges></charges>
+        <!--开服总数-->
+        <totalServer></totalServer>
+        <!--游戏题材-->
+        <gtheme></gtheme>
         <!--作者-->
         <author>//ul[@class='clearfix']/li[3]/p/em/text()</author>
         <!--游戏状态-->
@@ -143,8 +161,22 @@
         <system></system>
         <!--资费-->
         <charges></charges>
-        <!--作者-->
+        <!--游戏类型-->
+        <gametype>//ul[@class='clearfix']/li[3]/p/em/text()</gametype>
+        <!--游戏状态-->
+        <gamestate>//ul[@class='clearfix']/li[5]/p/em/text()</gamestate>
+        <!--画面风格-->
+        <pictureStryle>//ul[@class='clearfix']/li[6]/p/em/text()</pictureStryle>
+        <!--战斗方式-->
+        <fightingmode>//ul[@class='clearfix']/li[7]/p/em/text()</fightingmode>
+        <!--画面方式-->
+        <screenMode>//ul[@class='clearfix']/li[8]/p/em/text()</screenMode>
+        <!--作者(开发公司)-->
         <author>//ul[@class='clearfix']/li[1]/p/em/text()</author>
+        <!--开服总数-->
+        <totalServer>//ul[@class='clearfix']/li[2]/p/em/text()</totalServer>
+        <!--游戏题材-->
+        <gtheme>//ul[@class='clearfix']/li[4]/p/em/text()</gtheme>
         <!--介绍-->
         <introduction>//div[@class='inf']/p/text()</introduction>
         <!--截图urls-->

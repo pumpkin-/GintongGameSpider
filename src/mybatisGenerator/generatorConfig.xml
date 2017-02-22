@@ -55,26 +55,26 @@
 		<!--</table>-->
 
 
-        <table schema="" tableName="com_executive_info" >
+        <table schema="" tableName="bas_business_info" >
             <ignoreColumn column="id"/>
             <ignoreColumn column="ctime"/>
             <ignoreColumn column="atime"/>
         </table>
-        <table schema="" tableName="com_investment_info" >
-            <ignoreColumn column="id"/>
-            <ignoreColumn column="ctime"/>
-            <ignoreColumn column="atime"/>
-        </table>
-        <table schema="" tableName="com_shareholder" >
-            <ignoreColumn column="id"/>
-            <ignoreColumn column="ctime"/>
-            <ignoreColumn column="atime"/>
-        </table>
-        <table schema="" tableName="com_shareholder_team" >
-            <ignoreColumn column="id"/>
-            <ignoreColumn column="ctime"/>
-            <ignoreColumn column="atime"/>
-        </table>
+        <!--<table schema="" tableName="com_investment_info" >-->
+            <!--<ignoreColumn column="id"/>-->
+            <!--<ignoreColumn column="ctime"/>-->
+            <!--<ignoreColumn column="atime"/>-->
+        <!--</table>-->
+        <!--<table schema="" tableName="com_shareholder" >-->
+            <!--<ignoreColumn column="id"/>-->
+            <!--<ignoreColumn column="ctime"/>-->
+            <!--<ignoreColumn column="atime"/>-->
+        <!--</table>-->
+        <!--<table schema="" tableName="com_shareholder_team" >-->
+            <!--<ignoreColumn column="id"/>-->
+            <!--<ignoreColumn column="ctime"/>-->
+            <!--<ignoreColumn column="atime"/>-->
+        <!--</table>-->
 
         <!--<table schema="" tableName="bas_person_info">-->
             <!--<ignoreColumn column="id"/>-->

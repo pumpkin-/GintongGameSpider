@@ -2,10 +2,15 @@ package SpiderUtils;
 
 import JavaBean.BasProGameInfo;
 import JavaBean.ProGamePlatform;
+import JavaBean.ProGameType;
 import cn.wanghaomiao.xpath.exception.XpathSyntaxErrorException;
 import cn.wanghaomiao.xpath.model.JXDocument;
 import dao.ProGameInfoDao;
+import dao.ProGamePlatformDao;
+import dao.ProGameTypeDao;
 import dao.impl.ProGameInfoDaoImpl;
+import dao.impl.ProGamePlatformDaoImpl;
+import dao.impl.ProGameTypeDaoImpl;
 import org.apache.commons.lang3.StringUtils;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
@@ -30,7 +35,7 @@ public class SpiderProduct {
 
     public static void main(String[] args) throws FileNotFoundException, XpathSyntaxErrorException {
         //调用下面的方法获取配置文件中的信息,此处参数为配置文件中二级标签名
-        Map<String, Object> map = getElement("spiderYXGCsy");
+        Map<String, Object> map = getElement("spiderYXGCyy");
         //创建线程池
         ExecutorService pool= Executors.newFixedThreadPool(5);
         List urlNodes= (List) map.get("urls");
@@ -103,6 +108,10 @@ public class SpiderProduct {
             String fightingMode=target.selectSingleNode("//"+targetNode+"/fightingmode").getText();
             //画面方式
             String screenMode=target.selectSingleNode("//"+targetNode+"/screenMode").getText();
+            //游戏题材
+            String gtheme=target.selectSingleNode("//"+targetNode+"/gtheme").getText();
+            //开服总数
+            String totalServer=target.selectSingleNode("//"+targetNode+"/totalServer").getText();
 
 
             //将上面读到的配置文件中的xpath信息返回main方法
@@ -130,6 +139,8 @@ public class SpiderProduct {
             map.put("pictureStryle",pictureStryle);
             map.put("fightingMode",fightingMode);
             map.put("screenMode",screenMode);
+            map.put("totalServer",totalServer);
+            map.put("gtheme",gtheme);
             return map;
         }catch(DocumentException e){
             System.out.println("配置文件获取错误！");
@@ -236,9 +247,12 @@ class Spider implements Runnable{
         String pictureStryle=null;
         String fightingMode=null;
         String screenMode=null;
+        String gtheme=null;
+        String totalServer=null;
         //创建数据库表对象
         BasProGameInfo gameInfo=new BasProGameInfo();
         ProGamePlatform platform=new ProGamePlatform();
+        ProGameType proGameType=new ProGameType();
         try{
             //源网站名称
             if(StringUtils.isNoneEmpty(map.get("source").toString())){
@@ -291,11 +305,15 @@ class Spider implements Runnable{
                 System.out.println(size);
                 gameInfo.setGame_size(size);
             }
-//            //系统
-//            if(StringUtils.isNoneEmpty(map.get("system").toString())){
-//                sys=document.sel(map.get("system").toString()).get(0).toString().split("\\：")[1];
-//                System.out.println(sys);
-//            }
+            //操作系统
+            if(StringUtils.isNoneEmpty(map.get("system").toString())){
+                sys=document.sel(map.get("system").toString()).get(0).toString();
+                if(map.get("source").toString()=="安智市场"||"安智市场".equals(map.get("source").toString())) {
+                    sys=sys.split("\\：")[1];
+                }
+                System.out.println(sys);
+                platform.setPlatform(sys);
+            }
             //资费charge_mode
             if(StringUtils.isNotEmpty(map.get("charges").toString())){
                 charges=document.sel(map.get("charges").toString()).get(0).toString().split("\\：")[1];
@@ -323,11 +341,12 @@ class Spider implements Runnable{
                 gameType=document.sel(map.get("gameType").toString()).get(0).toString();
                 System.out.println(gameType);
             }
-            //游戏状态
+            //游戏状态(研发进度)
             if(StringUtils.isNotEmpty(map.get("gameState").toString())){
                 gameState=document.sel(map.get("gameState").toString()).get(0).toString();
                 System.out.println(gameState);
                 gameInfo.setDpprogress(gameState);
+                platform.setDpprogress(gameState);
             }
             //画面风格
             if(StringUtils.isNotEmpty(map.get("pictureStryle").toString())){
@@ -345,7 +364,19 @@ class Spider implements Runnable{
             if(StringUtils.isNotEmpty(map.get("fightingMode").toString())){
                 fightingMode=document.sel(map.get("fightingMode").toString()).get(0).toString();
                 System.out.println(fightingMode);
-                gameInfo.setG_desc(introduction);
+                proGameType.setGtype(gameType+","+fightingMode);
+            }
+            //游戏题材
+            if(StringUtils.isNotEmpty(map.get("gtheme").toString())){
+                gtheme=document.sel(map.get("gtheme").toString()).get(0).toString();
+                System.out.println(gtheme);
+                gameInfo.setGtheme(gtheme);
+            }
+            //开服总数
+            if(StringUtils.isNotEmpty(map.get("totalServer").toString())){
+                totalServer=document.sel(map.get("totalServer").toString()).get(0).toString();
+                System.out.println(totalServer);
+//                proGameType.setGtype(gameType+","+fightingMode);
             }
             //游戏截图picture
             if(StringUtils.isNotEmpty(map.get("screenShoots").toString())){
@@ -371,7 +402,7 @@ class Spider implements Runnable{
             }
             System.out.println("----------------------------------------------------------------------");
             //存入数据库
-            storeToDataBase(gameInfo);
+            storeToDataBase(gameInfo,proGameType,platform);
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -398,14 +429,26 @@ class Spider implements Runnable{
     /**
      *将数据存入mysql数据库中
      */
-    public void storeToDataBase(BasProGameInfo gameInfo){
+    public void storeToDataBase(BasProGameInfo gameInfo,ProGameType gameType,ProGamePlatform platform){
         //网站源链接
         gameInfo.setUrl(startUrl);
+        String uuid=UUID.randomUUID().toString();
         //uuid
-        gameInfo.setUuid(UUID.randomUUID().toString());
+        gameInfo.setUuid(uuid);
         //用dao层接口插入数据库
-        ProGameInfoDao dao=new ProGameInfoDaoImpl();
-        dao.insertGame(gameInfo);
+        ProGameInfoDao infoDao=new ProGameInfoDaoImpl();
+        infoDao.insertGame(gameInfo);
+
+        //插入游戏类型
+        ProGameTypeDao typeDao=new ProGameTypeDaoImpl();
+        gameType.setUuid(uuid);
+        typeDao.insertType(gameType);
+
+        //插入游戏平台（研发公司）
+        platform.setUuid(uuid);
+        ProGamePlatformDao platformDao=new ProGamePlatformDaoImpl();
+        platformDao.insertPlatform(platform);
+
     }
 
     /**
