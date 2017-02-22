@@ -1,5 +1,6 @@
 package organizeUtils;
 
+import JavaBean.BaseKnowLedge;
 import JavaBean.OrganizeConfigure;
 import SpiderUtils.LevenshteinDis;
 import SpiderUtils.SpiderUtils;
@@ -21,9 +22,7 @@ import java.util.List;
  * Created by lenovo on 2017/2/21.
  */
 public class organizeUtils {
-    public static void getElement(String flag,String element) throws IOException, DocumentException, SpiderUtils.FormatEexception, InterruptedException, XpathSyntaxErrorException, ProKnowledgeImpl.FormatEexception, ParseException {
-
-
+    public static void getElement(String flag,String element,int page) throws IOException, DocumentException, SpiderUtils.FormatEexception, InterruptedException, XpathSyntaxErrorException, ProKnowledgeImpl.FormatEexception, ParseException {
         SAXReader saxReader = new SAXReader();
         InputStream fileInputStream=new FileInputStream("C:\\Users\\lenovo\\Desktop\\GintongGameSpider\\src\\organizeUtils\\BasKnowledgePattern.xml");
         Document docsax=saxReader.read(fileInputStream);
@@ -45,8 +44,14 @@ public class organizeUtils {
         Element authorurli = website.element("authorurl");
         Element childnexti=website.element("childnext");
         Element childnextflagi=website.element("childnextflag");
+        Element morei=website.element("more");
+        Element moreflag=website.element("moreflag");
         Element url=website.element("url");
+
         OrganizeConfigure organizeConfigure=new OrganizeConfigure();
+        organizeConfigure.setPage(page);
+        organizeConfigure.setMore(morei);
+        organizeConfigure.setMoreflag(moreflag);
         organizeConfigure.setChildLink(childLink);
         organizeConfigure.setNext(next);
         organizeConfigure.setNextflagi(nextflagi);
@@ -75,9 +80,15 @@ public class organizeUtils {
         writer.close();
         SpiderUtils.getDocument(flag, url.getText());
         SpiderUtils.getData(organizeConfigure);
+       // SpiderU.getDriver().close();
+        System.exit(0);
     }
 
-    public static void main(String args[]) throws IOException, DocumentException, SAXException {
+    public static void main(String args[]) throws Exception {
+        getElement("windows","spiderJzwh",0);
 
     }
+
+
+
 }

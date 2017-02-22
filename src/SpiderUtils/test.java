@@ -56,7 +56,9 @@ public class test {
 
 
 
-        SpiderUtils.getElements("windows","spiderYxgc");
+        SpiderUtils.getElements("windows","spiderYxgc",31);
+
+
 
     /* System.setProperty("webdriver.chrome.driver",SpiderContant.chromeWindowsPath );
         WebDriver driver=new ChromeDriver();

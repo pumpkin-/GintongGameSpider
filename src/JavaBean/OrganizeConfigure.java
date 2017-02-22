@@ -23,6 +23,35 @@ public class OrganizeConfigure {
     private Element childnexti;
     private Element childnextflagi;
     private Element url;
+    private int page=0;
+
+    public int getPage() {
+        return page;
+    }
+
+    public void setPage(int page) {
+        this.page = page;
+    }
+
+    public Element getMore() {
+        return more;
+    }
+
+    public void setMore(Element more) {
+        this.more = more;
+    }
+
+    public Element getMoreflag() {
+        return moreflag;
+    }
+
+    public void setMoreflag(Element moreflag) {
+        this.moreflag = moreflag;
+    }
+
+    private Element more;
+    private Element moreflag;
+
 
     public String getFlag() {
         return flag;

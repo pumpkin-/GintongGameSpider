@@ -72,9 +72,28 @@ public class SpiderUtils {
 
     public static void getData(OrganizeConfigure organizeConfigure) throws XpathSyntaxErrorException, ParseException, InterruptedException, FormatEexception, ProKnowledgeImpl.FormatEexception {
         for(int i=1;i>0;i++) {
-            for(int page=1;page<=22;page++){
-                JavascriptExecutor executornext = (JavascriptExecutor) baseKnowledge.getDriver();
-                executornext.executeScript(organizeConfigure.getNext().getText());
+            if(organizeConfigure.getPage()!=0) {
+                for (int pag = 1; pag < organizeConfigure.getPage(); pag++) {
+                    JavascriptExecutor executornext = (JavascriptExecutor) baseKnowledge.getDriver();
+                    executornext.executeScript(organizeConfigure.getNext().getText());
+                }
+            }
+            JavascriptExecutor executorRoller = (JavascriptExecutor) baseKnowledge.getDriver();
+            executorRoller.executeScript("$(window).scrollTop(30000)");
+            baseKnowledge.setWebElement(baseKnowledge.getDriver().findElement(By.xpath("/html")));
+            JXDocument jxDocument =new JXDocument(Jsoup.parse(baseKnowledge.getWebElement().getAttribute("outerHTML")));
+            if(StringUtils.isNotEmpty(organizeConfigure.getMore().getText())){
+                for(int more=1;more>0;more++) {
+                    JavascriptExecutor executormore = (JavascriptExecutor) baseKnowledge.getDriver();
+                    executormore.executeScript(organizeConfigure.getNext().getText());
+                    baseKnowledge.setWebElement(baseKnowledge.getDriver().findElement(By.xpath("/html")));
+                    JXDocument jxDocumentnow =new JXDocument(Jsoup.parse(baseKnowledge.getWebElement().getAttribute("outerHTML")));
+                    if(jxDocumentnow.selOne(organizeConfigure.getMoreflag().getText())==null){
+                        break;
+                    }else if(StringUtils.isEmpty(jxDocumentnow.selOne(organizeConfigure.getMoreflag().getText()).toString())){
+                        break;
+                    }
+                }
             }
             String author=null;
             String title=null;
@@ -83,9 +102,9 @@ public class SpiderUtils {
             String ptime=null;
             String authorurl=null;
             String Mosaic=null;
+            String tag=null;
+            String type = null;
             int fg=0;
-            baseKnowledge.setWebElement(baseKnowledge.getDriver().findElement(By.xpath("/html")));
-            JXDocument jxDocument =new JXDocument(Jsoup.parse(baseKnowledge.getWebElement().getAttribute("outerHTML")));
             JavascriptExecutor executor = (JavascriptExecutor) baseKnowledge.getDriver();
             executor.executeScript("window.open('" + "https://www.baidu.com/" + "')");
             String handle = baseKnowledge.getDriver().getWindowHandle();
@@ -104,6 +123,19 @@ public class SpiderUtils {
             List<Object> ptimetestlist=null;
             List<Object> ptimelist=new ArrayList<Object>();
             List<Object> authorurllist=null;
+            List<Object> tagslist=null;
+            List<Object> typeslist=null;
+
+            if(StringUtils.isNotEmpty(organizeConfigure.getTagi().getText())) {
+                if (jxDocument.selN(organizeConfigure.getTagi().getText()).size() > 0){
+                    tagslist = jxDocument.sel(organizeConfigure.getTagi().getText());
+                }
+            }
+            if(StringUtils.isNotEmpty(organizeConfigure.getTypei().getText())) {
+                if (jxDocument.selN(organizeConfigure.getTypei().getText()).size() > 0){
+                    typeslist = jxDocument.sel(organizeConfigure.getTypei().getText());
+                }
+            }
             if(StringUtils.isNotEmpty(organizeConfigure.getAuthorurli().getText())) {
                 if (jxDocument.selN(organizeConfigure.getAuthorurli().getText()).size() > 0) {
                     authorurllist = jxDocument.sel(organizeConfigure.getAuthorurli().getText());
@@ -138,9 +170,7 @@ public class SpiderUtils {
 
             for (Object obj : childlist) {
                 try {
-                    String tag = null;
                     String main = null;
-                    String type = null;
                     String child=null;
                     if(StringUtils.isNotEmpty(organizeConfigure.getChildLink().attributeValue("Mosaic"))) {
                         if(obj.toString().substring(0,4).equals("http")) {
@@ -187,7 +217,7 @@ public class SpiderUtils {
                     }
                     if(StringUtils.isNotEmpty(organizeConfigure.getCoveri().getText())) {
                         if (jxDocument.selN(organizeConfigure.getCoveri().getText()).size() <= 0) {
-                            if(StringUtils.isNotEmpty((String) jxDocumentChild.selOne(organizeConfigure.getCoveri().getText()))) {
+                            if(jxDocumentChild.selOne(organizeConfigure.getCoveri().getText())!=null&&StringUtils.isNotEmpty(jxDocumentChild.selOne(organizeConfigure.getCoveri().getText()).toString())) {
                                 cover = (String) jxDocumentChild.selOne(organizeConfigure.getCoveri().getText());
                             }else{
                                 cover=null;
@@ -226,17 +256,48 @@ public class SpiderUtils {
                     System.out.println(source);
 
                     if(StringUtils.isNotEmpty(organizeConfigure.getTypei().getText())) {
-                        List<Object> typelist = jxDocumentChild.sel(organizeConfigure.getTypei().getText());
-                        for (Object objtype : typelist) {
-                            type = (type + "," + objtype).replace("null,", "");
+                        if (jxDocument.selN(organizeConfigure.getTypei().getText()).size() <= 0) {
+                            if(jxDocumentChild.selOne(organizeConfigure.getTypei().getText())!=null&&StringUtils.isNotEmpty(jxDocumentChild.selOne(organizeConfigure.getTypei().getText()).toString())) {
+                                List<Object> typelist = jxDocumentChild.sel(organizeConfigure.getTypei().getText());
+                                for (Object objtype : typelist) {
+                                    type = (type + "," + objtype).replace("null,", "");
+                                }
+                            }else{
+                                type=null;
+                            }
+                        } else {
+                            if(StringUtils.isNotEmpty(typeslist.get(fg).toString())) {
+                                List<Object> typelist= (List<Object>) typeslist.get(fg);
+                                for (Object objtag : typelist) {
+                                    type = (tag + "," + objtag).replace("null,", "");
+                                }
+                            }else{
+                                type=null;
+                            }
                         }
                     }else{
                         type=null;
                     }
+
                     if(StringUtils.isNotEmpty(organizeConfigure.getTagi().getText())) {
-                        List<Object> taglist = jxDocumentChild.sel(organizeConfigure.getTagi().getText());
-                        for (Object objtag : taglist) {
-                            tag = (tag + "," + objtag).replace("null,", "");
+                        if (jxDocument.selN(organizeConfigure.getTagi().getText()).size() <= 0) {
+                            if(jxDocumentChild.selOne(organizeConfigure.getTagi().getText())!=null&&StringUtils.isNotEmpty(jxDocumentChild.selOne(organizeConfigure.getTypei().getText()).toString())) {
+                                List<Object> taglist = jxDocumentChild.sel(organizeConfigure.getTagi().getText());
+                                for (Object objtag : taglist) {
+                                    tag = (tag + "," + objtag).replace("null,", "");
+                                }
+                            }else{
+                                tag=null;
+                            }
+                        } else {
+                            if(StringUtils.isNotEmpty(tagslist.get(fg).toString())) {
+                                List<Object> taglist= (List<Object>) tagslist.get(fg);
+                                for (Object objtag : taglist) {
+                                    tag = (tag + "," + objtag).replace("null,", "");
+                                }
+                            }else{
+                                tag=null;
+                            }
                         }
                     }else{
                         tag=null;
@@ -251,10 +312,16 @@ public class SpiderUtils {
                                     main = (main + "\r\n<p>" + objmain.getElement().text() + "</p>").replace("null\r\n", "").replace(Jsoup.parse("&nbsp;").text(), "");
                                 }
                                 if (objmain.sel(organizeConfigure.getMainipic().getText()).size() > 0) {
-                                    main = (main + "\r\n<img src=\"" + objmain.sel(organizeConfigure.getMainipic().getText()).get(0) + "\">");
+                                    if(StringUtils.isNotEmpty(organizeConfigure.getMainipic().attributeValue("Mosaic"))){
+                                        main=(main + "\r\n<img src=\"" + organizeConfigure.getMainipic().attributeValue("Mosaic")+objmain.sel(organizeConfigure.getMainipic().getText()).get(0) + "\">");
+                                    }else {
+                                        main = (main + "\r\n<img src=\"" + objmain.sel(organizeConfigure.getMainipic().getText()).get(0) + "\">");
+                                    }
                                 }
                             }
                             if(jxDocumentmain.selOne(organizeConfigure.getChildnextflagi().getText())==null){
+                                break;
+                            }else if(StringUtils.isEmpty(jxDocumentmain.selOne(organizeConfigure.getChildnextflagi().getText()).toString())){
                                 break;
                             }
                             JavascriptExecutor executorChildnext = (JavascriptExecutor) baseKnowledge.getDriver();
@@ -267,7 +334,11 @@ public class SpiderUtils {
                                 main = (main + "\r\n<p>" + objmain.getElement().text() + "</p>").replace("null\r\n", "").replace(Jsoup.parse("&nbsp;").text(), "");
                             }
                             if (objmain.sel(organizeConfigure.getMainipic().getText()).size() > 0) {
-                                main = (main + "\r\n<img src=\"" + objmain.sel(organizeConfigure.getMainipic().getText()).get(0) + "\">");
+                                if(StringUtils.isNotEmpty(organizeConfigure.getMainipic().attributeValue("Mosaic"))){
+                                    main=(main + "\r\n<img src=\"" + organizeConfigure.getMainipic().attributeValue("Mosaic")+objmain.sel(organizeConfigure.getMainipic().getText()).get(0) + "\">");
+                                }else {
+                                    main = (main + "\r\n<img src=\"" + objmain.sel(organizeConfigure.getMainipic().getText()).get(0) + "\">");
+                                }
                             }
                         }
                     }
@@ -284,10 +355,8 @@ public class SpiderUtils {
                 }catch (Exception e){
                     e.printStackTrace();
                 }
-                System.out.println(obj);
             }
             storeToDatebase(organizeConfigure.getFlag(),author);
-            System.out.println("111");
             String handle2 = baseKnowledge.getDriver().getWindowHandle();
             baseKnowledge.getDriver().close();
             Thread.sleep(2000);
@@ -298,7 +367,11 @@ public class SpiderUtils {
                 baseKnowledge.getDriver().switchTo().window(handles);
             }
 
-            if(jxDocument.selOne(organizeConfigure.getNextflagi().getText())==null){
+            if(StringUtils.isEmpty(organizeConfigure.getNextflagi().getText())){
+                break;
+            }else if(jxDocument.selOne(organizeConfigure.getNextflagi().getText())==null){
+                break;
+            }else if(StringUtils.isEmpty(jxDocument.selOne(organizeConfigure.getNextflagi().getText()).toString())){
                 break;
             }
             JavascriptExecutor executornext = (JavascriptExecutor) baseKnowledge.getDriver();
@@ -317,7 +390,7 @@ public class SpiderUtils {
 
 
 
-    public static void getElements(String flag,String element) throws FormatEexception, DocumentException, ParserConfigurationException, XpathSyntaxErrorException, IOException, ProKnowledgeImpl.FormatEexception, InterruptedException, ParseException {
+    public static void getElements(String flag,String element,int page) throws FormatEexception, DocumentException, ParserConfigurationException, XpathSyntaxErrorException, IOException, ProKnowledgeImpl.FormatEexception, InterruptedException, ParseException {
         InputStream inputStream=new FileInputStream(SpiderUtils.class.getClassLoader().getResource("SpiderUtils/BasKnowledgePattern.xml").getFile());
         baseKnowledge.setDocsax(sax.read(inputStream));
         baseKnowledge.setRoot(baseKnowledge.getDocsax().getRootElement());//获取根元素
@@ -340,7 +413,13 @@ public class SpiderUtils {
         Element authorurli = childElement.element("authorurl");
         Element childnexti=childElement.element("childnext");
         Element childnextflagi=childElement.element("childnextflag");
+        Element morei=childElement.element("more");
+        Element moreflag=childElement.element("moreflag");
+
         OrganizeConfigure organizeConfigure=new OrganizeConfigure();
+        organizeConfigure.setPage(page);
+        organizeConfigure.setMore(morei);
+        organizeConfigure.setMoreflag(moreflag);
         organizeConfigure.setChildLink(childLink);
         organizeConfigure.setNext(next);
         organizeConfigure.setNextflagi(nextflagi);
@@ -366,6 +445,8 @@ public class SpiderUtils {
             getData(organizeConfigure);
         }
         inputStream.close();
+        baseKnowledge.getDriver().close();
+        System.exit(0);
     }
 
     public static void getElementsAdd(String flag) throws ProKnowledgeImpl.FormatEexception, FormatEexception, InterruptedException, XpathSyntaxErrorException, ParseException, FileNotFoundException, DocumentException {
