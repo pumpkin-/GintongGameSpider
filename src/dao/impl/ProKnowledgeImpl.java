@@ -93,6 +93,7 @@ public class ProKnowledgeImpl extends BaseDaoImpl<List> implements ProKnowledgeD
         map.put(3,perKnowledges);
         map.put(4,flaglist);
         map.put(2,bznlist);
+        map.put(5,proKnowledges);
         if(flag!=0) {
             this.getSqlSession().insert(this.getNs() + "insertBatch", proKnowledges);
         }

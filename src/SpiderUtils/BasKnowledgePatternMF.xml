@@ -14,11 +14,9 @@
         <!--详情页-->
         <ptime timeFormat="yyyy MM dd HH mm">//div[@class='arc-con-title']/p[@class='arc-title-crumbs']/span[@class='arc-crumbs-date']/text()</ptime>>
        <!--列表页-->
-<<<<<<< HEAD
+
         <tag>//dd[@class='public-tabs-keywords']/allText()</tag>>
-=======
-        <tag>//div[@class='public-tabs-con']/dd[@class='public-tabs-keywords']/a/text()</tag>>
->>>>>>> 525a970a4687831620dbf8f339b2c8ab4f4fe365
+
         <!--详情页-->
         <main>//div[@class='arc-article-detail']/p/text()</main>>
         <!--详情页-->
@@ -29,17 +27,13 @@
         <childnext></childnext>>
         <childnextflag></childnextflag>
         <!--列表页-->
-<<<<<<< HEAD
+
         <childLink Mosaic="">//dd[@class='public-tabs-title']/a/@href</childLink>>
         <next></next>>
         <nextflag></nextflag>>
         <more></more>>
         <moreflag></moreflag>>
-=======
-        <childLink Mosaic="http://www.youxiguancha.com">//div[@class='public-tabs-con']/dt[@class='public-tabs-pic']/a[1]/@href</childLink>>
-        <next></next>>
-        <nextflag></nextflag>>
->>>>>>> 525a970a4687831620dbf8f339b2c8ab4f4fe365
+
         <urls>
             <url>
                 http://www.mofang.com/news
