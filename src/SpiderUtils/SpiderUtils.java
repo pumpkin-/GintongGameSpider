@@ -80,18 +80,17 @@ public class SpiderUtils {
                 }
             }
             JavascriptExecutor executorRoller = (JavascriptExecutor) baseKnowledge.getDriver();
-            executorRoller.executeScript("$(window).scrollTop(30000)");
+           // executorRoller.executeScript("$(window).scrollTop(30000)");
             baseKnowledge.setWebElement(baseKnowledge.getDriver().findElement(By.xpath("/html")));
             JXDocument jxDocument =new JXDocument(Jsoup.parse(baseKnowledge.getWebElement().getAttribute("outerHTML")));
             if(StringUtils.isNotEmpty(organizeConfigure.getMore().getText())){
                 for(int more=1;more>0;more++) {
                     JavascriptExecutor executormore = (JavascriptExecutor) baseKnowledge.getDriver();
                     executormore.executeScript(organizeConfigure.getMore().getText());
+                    Thread.sleep(1000);
                     baseKnowledge.setWebElement(baseKnowledge.getDriver().findElement(By.xpath("/html")));
                     JXDocument jxDocumentnow =new JXDocument(Jsoup.parse(baseKnowledge.getWebElement().getAttribute("outerHTML")));
                     if(jxDocumentnow.selOne(organizeConfigure.getMoreflag().getText())==null){
-                        break;
-                    }else if(StringUtils.isEmpty(jxDocumentnow.selOne(organizeConfigure.getMoreflag().getText()).toString())){
                         break;
                     }
                 }

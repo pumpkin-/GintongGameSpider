@@ -67,20 +67,24 @@ public class test {
 
 
 
-        SpiderUtils.getElements("windows","spiderYmxk",0,"no");
+       // SpiderUtils.getElements("windows","spiderYmxk",0,"no");
 
 
 
      /*System.setProperty("webdriver.chrome.driver",SpiderContant.chromeWindowsPath );
         WebDriver driver=new ChromeDriver();
-        driver.get("http://www.mofang.com/news");
-       *JavascriptExecutor executorChildnext = (JavascriptExecutor) driver;
-        executorChildnext.executeScript("$('span.pagecss a.p1.nexe').click()");
+        driver.get("http://play.163.com/");
         WebElement webElement=driver.findElement(By.xpath("/html"));
         org.jsoup.nodes.Document doc=Jsoup.parse(webElement.getAttribute("outerHTML"));
         JXDocument jxDocument=new JXDocument(doc);
+        for(int x=0;x<=99;x++) {
+            JavascriptExecutor executormore = (JavascriptExecutor) driver;
+            executormore.executeScript("$('#CollistMore').click()");
+            Thread.sleep(1000);
+            System.out.println(jxDocument.selOne("//div[@class='m-collistfoot']/a[@id='CollistMore']"));
+        }*/
 
-        System.out.println(jxDocument.sel("//dd[@class='public-tabs-title']/a/@href"));*/
+
 
 
 
