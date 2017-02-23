@@ -33,8 +33,12 @@
         <next></next>>
         <nextflag></nextflag>>
 
+        <more>$('.public-more').click()</more>>
 
-        <more>document.getElementsByClassName('public-more public-mb20');</more>>
+
+
+
+
         <moreflag>//a[class='public-more public-mb20']</moreflag>>
 
 

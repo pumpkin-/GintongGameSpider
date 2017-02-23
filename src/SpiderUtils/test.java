@@ -78,6 +78,7 @@ public class test {
 
 
 
+
      /*System.setProperty("webdriver.chrome.driver",SpiderContant.chromeWindowsPath );
         WebDriver driver=new ChromeDriver();
         driver.get("http://www.mofang.com/news");
