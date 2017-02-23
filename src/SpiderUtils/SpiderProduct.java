@@ -119,10 +119,6 @@ public class SpiderProduct {
 
             //将上面读到的配置文件中的xpath信息返回main方法
             Map<String, Object>map=new HashMap();
-<<<<<<< HEAD
-=======
-
->>>>>>> f1e0d612e0b37b284c747475d02a2e7bbf1dff38
 
             map.put("urls",urls);
             map.put("source",source);

@@ -4,9 +4,10 @@ import JavaBean.ProKnowledge;
 import cn.wanghaomiao.xpath.exception.XpathSyntaxErrorException;
 import cn.wanghaomiao.xpath.model.JXDocument;
 import cn.wanghaomiao.xpath.model.JXNode;
-import com.alibaba.fastjson.JSONException;
-import com.alibaba.fastjson.JSONObject;
+import com.gargoylesoftware.htmlunit.activex.javascript.msxml.XMLSerializer;
 import dao.impl.ProKnowledgeImpl;
+import net.sf.json.JSON;
+import net.sf.json.JSONObject;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -35,6 +36,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.phantomjs.PhantomJSDriver;
 import org.xml.sax.SAXException;
 
+import javax.xml.crypto.dsig.XMLSignature;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.*;
 import java.net.*;
@@ -43,6 +45,7 @@ import java.text.ParseException;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
+import java.util.logging.XMLFormatter;
 
 public class test {
     static List<org.dom4j.Element> books;
@@ -67,7 +70,12 @@ public class test {
         System.out.println();*/
 
 
-        SpiderUtils.getElements("windows","spiderYmxk",0,"no");
+        SpiderUtils.getElements("windows","spiderYxgc",0,"no");
+
+        /*org.jsoup.nodes.Document doc=Jsoup.connect("http://www.youxiguancha.com/news/").get();
+        JXDocument jxDocument=new JXDocument(doc);
+        System.out.println(jxDocument.sel("//div[@class='s_1 on']/p/a[@class='on']/text()"));*/
+
 
 
      /*System.setProperty("webdriver.chrome.driver",SpiderContant.chromeWindowsPath );
@@ -82,6 +90,11 @@ public class test {
         System.out.println(jxDocument.sel("//dd[@class='public-tabs-title']/a/@href"));*/
 
 
+        /*Connection.Response res=Jsoup.connect("http://www.appgame.com/archives/620651.html").ignoreContentType(true).execute();
+        String body = res.body();
+        JSONObject json = new JSONObject(true);
+        //JSON json1= com.sun.org
+        System.out.println(body);*/
 
     }
 

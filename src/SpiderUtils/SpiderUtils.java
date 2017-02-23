@@ -191,7 +191,7 @@ public class SpiderUtils {
 
 
                     if(StringUtils.isNotEmpty(organizeConfigure.getAuthori().getText())) {
-                        if (jxDocument.selN(organizeConfigure.getAuthori().getText()).size() <= 0) {
+                        if (jxDocument.selN(organizeConfigure.getAuthori().getText()).size() <= 1) {
                             author = (String) jxDocumentChild.selOne(organizeConfigure.getAuthori().getText()).toString().replace("作者：", "").replace("频道作者：","");
                         } else {
                             author = (String) authorlist.get(fg).toString().replace("作者：","").replace("频道作者：","");
@@ -200,7 +200,7 @@ public class SpiderUtils {
                         author=null;
                     }
                     if(StringUtils.isNotEmpty(organizeConfigure.getAuthorurli().getText())) {
-                        if (jxDocument.selN(organizeConfigure.getAuthorurli().getText()).size() <= 0) {
+                        if (jxDocument.selN(organizeConfigure.getAuthorurli().getText()).size() <= 1) {
                             authorurl = (String) jxDocumentChild.selOne(organizeConfigure.getAuthorurli().getText());
                         } else {
                             authorurl = (String) authorurllist.get(fg);
@@ -209,7 +209,7 @@ public class SpiderUtils {
                         authorurl= (String) child;
                     }
                     if(StringUtils.isNotEmpty(organizeConfigure.getTitlei().getText())) {
-                        if (jxDocument.selN(organizeConfigure.getTitlei().getText()).size() <= 0) {
+                        if (jxDocument.selN(organizeConfigure.getTitlei().getText()).size() <= 1) {
                             title = (String) jxDocumentChild.selOne(organizeConfigure.getTitlei().getText());
                         } else {
                             title = (String) titlelist.get(fg);
@@ -218,7 +218,7 @@ public class SpiderUtils {
                         title=null;
                     }
                     if(StringUtils.isNotEmpty(organizeConfigure.getCoveri().getText())) {
-                        if (jxDocument.selN(organizeConfigure.getCoveri().getText()).size() <= 0) {
+                        if (jxDocument.selN(organizeConfigure.getCoveri().getText()).size() <= 1) {
                             if(StringUtils.isNotEmpty(organizeConfigure.getCoveri().attributeValue("Mosaic"))) {
                                 cover = (String) organizeConfigure.getCoveri().attributeValue("Mosaic")+jxDocumentChild.selOne(organizeConfigure.getCoveri().getText());
                             }else{
@@ -235,7 +235,7 @@ public class SpiderUtils {
                         cover=null;
                     }
                     if(StringUtils.isNotEmpty(organizeConfigure.getPtimei().getText())) {
-                        if (jxDocument.selN(organizeConfigure.getPtimei().getText()).size() <= 0) {
+                        if (jxDocument.selN(organizeConfigure.getPtimei().getText()).size() <= 1) {
                             ptimetest = jxDocumentChild.selOne(organizeConfigure.getPtimei().getText()).toString().replaceAll("\\D", " ").trim();
                             SimpleDateFormat simpleDateFormat = new SimpleDateFormat(organizeConfigure.getPtimei().attributeValue("timeFormat"));
                             Date date = simpleDateFormat.parse(ptimetest);
@@ -258,20 +258,21 @@ public class SpiderUtils {
                     System.out.println(source);
 
                     if(StringUtils.isNotEmpty(organizeConfigure.getTypei().getText())) {
-                        if (jxDocument.selN(organizeConfigure.getTypei().getText()).size() <= 0) {
+                        if (jxDocument.selN(organizeConfigure.getTypei().getText()).size() <= 1) {
                             List<Object> typelist = jxDocumentChild.sel(organizeConfigure.getTypei().getText());
                             for (Object objtype : typelist) {
                                 type = (type + "," + objtype).replace("null,", "");
                             }
                         } else {
-                            type = (tag + "," + typeslist.get(fg)).replace("null,", "").replace(" ", ",");
+                            System.out.println(typeslist);
+                            type = (type + "," + typeslist.get(fg)).replace("null,", "").replace(" ", ",");
                         }
                     }else{
                         type=null;
                     }
 
                     if(StringUtils.isNotEmpty(organizeConfigure.getTagi().getText())) {
-                        if (jxDocument.selN(organizeConfigure.getTagi().getText()).size() <= 0) {
+                        if (jxDocument.selN(organizeConfigure.getTagi().getText()).size() <= 1) {
                             List<Object> taglist = jxDocumentChild.sel(organizeConfigure.getTagi().getText());
                             for (Object objtag : taglist) {
                                 tag = (tag + "," + objtag).replace("null,", "");
