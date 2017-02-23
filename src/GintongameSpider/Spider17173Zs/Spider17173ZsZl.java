@@ -3,7 +3,6 @@ package GintongameSpider.Spider17173Zs;
 import JavaBean.BasPersonInfo;
 import JavaBean.PerKnowledge;
 import JavaBean.ProKnowledge;
-import SpiderUtils.SpiderContant;
 import dao.impl.BasPersonInfoImpl;
 import dao.impl.PerKnowledgeImpl;
 import dao.impl.ProKnowledgeImpl;
