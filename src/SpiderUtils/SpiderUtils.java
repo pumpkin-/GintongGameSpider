@@ -46,6 +46,7 @@ public class SpiderUtils {
     private static PerKnowledgeImpl perknowimpl = new PerKnowledgeImpl();
     private static SimpleDateFormat simpleDateFormatchange=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     private static int a=1;
+    private static JXDocument jxDocument;
 
     public static class FormatEexception extends Exception
     {
@@ -78,19 +79,19 @@ public class SpiderUtils {
                     executornext.executeScript(organizeConfigure.getNext().getText());
                 }
             }
-            JavascriptExecutor executorRoller = (JavascriptExecutor) baseKnowledge.getDriver();
-            executorRoller.executeScript("$(window).scrollTop(30000)");
+            /*JavascriptExecutor executorRoller = (JavascriptExecutor) baseKnowledge.getDriver();
+            executorRoller.executeScript("$(window).scrollTop(30000)");*/
             baseKnowledge.setWebElement(baseKnowledge.getDriver().findElement(By.xpath("/html")));
-            JXDocument jxDocument =new JXDocument(Jsoup.parse(baseKnowledge.getWebElement().getAttribute("outerHTML")));
+            jxDocument =new JXDocument(Jsoup.parse(baseKnowledge.getWebElement().getAttribute("outerHTML")));
             if(StringUtils.isNotEmpty(organizeConfigure.getMore().getText())){
                 for(int more=1;more>0;more++) {
                     JavascriptExecutor executormore = (JavascriptExecutor) baseKnowledge.getDriver();
                     executormore.executeScript(organizeConfigure.getNext().getText());
                     baseKnowledge.setWebElement(baseKnowledge.getDriver().findElement(By.xpath("/html")));
-                    JXDocument jxDocumentnow =new JXDocument(Jsoup.parse(baseKnowledge.getWebElement().getAttribute("outerHTML")));
-                    if(jxDocumentnow.selOne(organizeConfigure.getMoreflag().getText())==null){
+                    jxDocument =new JXDocument(Jsoup.parse(baseKnowledge.getWebElement().getAttribute("outerHTML")));
+                    if(jxDocument.selOne(organizeConfigure.getMoreflag().getText())==null){
                         break;
-                    }else if(StringUtils.isEmpty(jxDocumentnow.selOne(organizeConfigure.getMoreflag().getText()).toString())){
+                    }else if(StringUtils.isEmpty(jxDocument.selOne(organizeConfigure.getMoreflag().getText()).toString())){
                         break;
                     }
                 }
@@ -217,16 +218,16 @@ public class SpiderUtils {
                     }
                     if(StringUtils.isNotEmpty(organizeConfigure.getCoveri().getText())) {
                         if (jxDocument.selN(organizeConfigure.getCoveri().getText()).size() <= 0) {
-                            if(jxDocumentChild.selOne(organizeConfigure.getCoveri().getText())!=null&&StringUtils.isNotEmpty(jxDocumentChild.selOne(organizeConfigure.getCoveri().getText()).toString())) {
-                                cover = (String) jxDocumentChild.selOne(organizeConfigure.getCoveri().getText());
+                            if(StringUtils.isNotEmpty(organizeConfigure.getCoveri().attributeValue("Mosaic"))) {
+                                cover = (String) organizeConfigure.getCoveri().attributeValue("Mosaic")+jxDocumentChild.selOne(organizeConfigure.getCoveri().getText());
                             }else{
-                                cover=null;
+                                cover= (String) jxDocumentChild.selOne(organizeConfigure.getCoveri().getText());
                             }
                         } else {
-                            if(StringUtils.isNotEmpty((String) coverlist.get(fg))) {
-                                cover = (String) coverlist.get(fg) ;
+                            if(StringUtils.isNotEmpty(organizeConfigure.getCoveri().attributeValue("Mosaic"))) {
+                                cover = organizeConfigure.getCoveri().attributeValue("Mosaic")+coverlist.get(fg).toString();
                             }else{
-                                cover=null;
+                                cover=coverlist.get(fg).toString();
                             }
                         }
                     }else{
@@ -257,23 +258,12 @@ public class SpiderUtils {
 
                     if(StringUtils.isNotEmpty(organizeConfigure.getTypei().getText())) {
                         if (jxDocument.selN(organizeConfigure.getTypei().getText()).size() <= 0) {
-                            if(jxDocumentChild.selOne(organizeConfigure.getTypei().getText())!=null&&StringUtils.isNotEmpty(jxDocumentChild.selOne(organizeConfigure.getTypei().getText()).toString())) {
-                                List<Object> typelist = jxDocumentChild.sel(organizeConfigure.getTypei().getText());
-                                for (Object objtype : typelist) {
-                                    type = (type + "," + objtype).replace("null,", "");
-                                }
-                            }else{
-                                type=null;
+                            List<Object> typelist = jxDocumentChild.sel(organizeConfigure.getTypei().getText());
+                            for (Object objtype : typelist) {
+                                type = (type + "," + objtype).replace("null,", "");
                             }
                         } else {
-                            if(StringUtils.isNotEmpty(typeslist.get(fg).toString())) {
-                                List<Object> typelist= (List<Object>) typeslist.get(fg);
-                                for (Object objtag : typelist) {
-                                    type = (tag + "," + objtag).replace("null,", "");
-                                }
-                            }else{
-                                type=null;
-                            }
+                            type = (tag + "," + typeslist.get(fg)).replace("null,", "").replace(" ", ",");
                         }
                     }else{
                         type=null;
@@ -281,23 +271,12 @@ public class SpiderUtils {
 
                     if(StringUtils.isNotEmpty(organizeConfigure.getTagi().getText())) {
                         if (jxDocument.selN(organizeConfigure.getTagi().getText()).size() <= 0) {
-                            if(jxDocumentChild.selOne(organizeConfigure.getTagi().getText())!=null&&StringUtils.isNotEmpty(jxDocumentChild.selOne(organizeConfigure.getTypei().getText()).toString())) {
-                                List<Object> taglist = jxDocumentChild.sel(organizeConfigure.getTagi().getText());
-                                for (Object objtag : taglist) {
-                                    tag = (tag + "," + objtag).replace("null,", "");
-                                }
-                            }else{
-                                tag=null;
+                            List<Object> taglist = jxDocumentChild.sel(organizeConfigure.getTagi().getText());
+                            for (Object objtag : taglist) {
+                                tag = (tag + "," + objtag).replace("null,", "");
                             }
                         } else {
-                            if(StringUtils.isNotEmpty(tagslist.get(fg).toString())) {
-                                List<Object> taglist= (List<Object>) tagslist.get(fg);
-                                for (Object objtag : taglist) {
-                                    tag = (tag + "," + objtag).replace("null,", "");
-                                }
-                            }else{
-                                tag=null;
-                            }
+                            tag = (tag + "," + tagslist.get(fg)).replace("null,", "").replace(" ",",");
                         }
                     }else{
                         tag=null;
@@ -356,7 +335,7 @@ public class SpiderUtils {
                     e.printStackTrace();
                 }
             }
-            storeToDatebase(organizeConfigure.getFlag(),author);
+            storeToDatebase(organizeConfigure.getFlag(), author);
             String handle2 = baseKnowledge.getDriver().getWindowHandle();
             baseKnowledge.getDriver().close();
             Thread.sleep(2000);
