@@ -15,6 +15,8 @@
         <source>游戏大观</source>
         <childnext></childnext>>
         <childnextflag></childnextflag>>
+        <more></more>>
+        <moreflag></moreflag>>
         <childLink>//div[@class='entry-thumb']/a/@href</childLink>>
         <next>$('div.pagenavi.clear a')[$('div.pagenavi.clear a').length-1].click()</next>>
         <nextflag>//div[@class='pagenavi clear']/a[text()*='Next']</nextflag>>
@@ -98,11 +100,13 @@
         <ptime timeFormat="yyyy MM dd HH mm">//div[@class='intro']/div[@class='fl']/text()</ptime>>
         <tag>//div[@class='tagshare']/table/tbody/tr/td/a[@class='tag']/text()</tag>>
         <main>//div[@class='content']/p</main>>
-        <mainpic>//img/@src</mainpic>>
+        <mainpic Mosaic="">//img/@src</mainpic>>
         <type>//div[@class='url']/a/text()</type>>
         <source>上方网</source>
         <childnext></childnext>>
         <childnextflag></childnextflag>>
+        <more></more>>
+        <moreflag></moreflag>>
         <childLink Mosaic="">//div[@class='rl fontblue']/a/@href</childLink>>
         <next>$('div.listpage a')[$('div.listpage a').length-2].click()</next>>
         <nextflag>//div[@class='listpage']/a[text()*='下一页']</nextflag>>
@@ -127,6 +131,8 @@
         <mainpic>//a/@href</mainpic>>
         <type>//div[@class='Mid2L_crumb']/a[@target='_self']/text()</type>>
         <source>游民星空</source>
+        <more></more>>
+        <moreflag></moreflag>>
         <childLink Mosaic="">//div[@class='Mid2L_con block']/ul[@class='pictxt contentpaging block']/li/div[@class='img']/a/@href|//div[@class='Mid2L_con block']/ul[@class='pictxt contentpaging']/li/div[@class='img']/a/@href</childLink>>
         <childnext>$('div.page_css a')[$('div.page_css a').length-1].click()</childnext>>
         <childnextflag>//div[@class='page_css']/a[text()*='下一页']</childnextflag>>
@@ -149,12 +155,14 @@
         <ptime timeFormat="yyyy MM dd HH mm ss">//div[@class='article']/address/span[1]/text()|//div[@class='newsDetail-header__info']/span/span[1]/em/text()</ptime>>
         <tag></tag>>
         <main>//div[@class='newsCon__content']/p|//div[@id='text']/p</main>>
-        <mainpic>//img/@href</mainpic>>
+        <mainpic Mosaic="">//img/@href</mainpic>>
         <type>//div[@class='mod-crumbs-s3']/a[2]/text()|//div[@class='newgame-header']/address/a[2]/text()</type>>
         <source>多玩游戏</source>
         <childLink Mosaic="http://www.duowan.com">//div[@class='ui-tab__panel']dl[@class='day-item']/dd/div[@class='item-fl']/a/@href</childLink>>
         <childnext></childnext>>
         <childnextflag></childnextflag>>
+        <more></more>>
+        <moreflag></moreflag>>
         <next>$('#pageNum > span:nth-child(12) > a').click()</next>>
         <nextflag>//*[@id="pageNum"]/span[last()]/a/text()*='下一页'</nextflag>>
         <urls>

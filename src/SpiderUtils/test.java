@@ -6,6 +6,16 @@ import cn.wanghaomiao.xpath.model.JXDocument;
 import cn.wanghaomiao.xpath.model.JXNode;
 import dao.impl.ProKnowledgeImpl;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
 import org.dom4j.Attribute;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
@@ -25,8 +35,8 @@ import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.*;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
+import java.net.*;
+import java.nio.charset.Charset;
 import java.text.ParseException;
 import java.util.Iterator;
 import java.util.List;
@@ -56,7 +66,9 @@ public class test {
 
 
 
-        SpiderUtils.getElements("windows","spiderYmxk",0);
+
+        SpiderUtils.getElements("windows","spiderYmxk",0,"no");
+
 
 
      /*System.setProperty("webdriver.chrome.driver",SpiderContant.chromeWindowsPath );
@@ -72,5 +84,6 @@ public class test {
 
 
 
-     }
     }
+
+}

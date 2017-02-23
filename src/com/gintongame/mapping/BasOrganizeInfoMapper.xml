@@ -15,7 +15,7 @@
     <insert id="insertSingle" parameterType="JavaBean.BasOrganizeInfo"  useGeneratedKeys="true">
         insert into bas_organize_info(oname,ename,shortname,fullname,web,con_way,industry,scale,introduce,address,logo,stime,other,source,url,uuid,financing_info,picture,development_history,financing_stage,company_nature,corporate_culture,tag,management_field)
         values
-        (#{oname},#{ename},#{shortname},#{fullname},#{web},#{con_way},#{industry},#{scale},#{introduce},#{address},#{logo},#{stime},#{other},#{source},#{url},#{uuid},#{financing_info},#{picture},#{item.development_history},#{item.financing_stage},#{item.company_nature},#{item.corporate_culture},#{item.tag},#{item.management_field})
+        (#{oname},#{ename},#{shortname},#{fullname},#{web},#{con_way},#{industry},#{scale},#{introduce},#{address},#{logo},#{stime},#{other},#{source},#{url},#{uuid},#{financing_info},#{picture},#{development_history},#{financing_stage},#{company_nature},#{corporate_culture},#{tag},#{management_field})
 
     </insert>
 
@@ -41,5 +41,8 @@
         #{tag,jdbcType=LONGVARCHAR})
     </insert>
 
+    <select id="selectList" parameterType="java.lang.String"  resultType="JavaBean.BasOrganizeInfo">
+        select * from bas_organize_info where uuid=#{uuid}
+    </select>
 
 </mapper>
