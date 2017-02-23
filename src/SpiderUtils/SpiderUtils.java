@@ -71,7 +71,7 @@ public class SpiderUtils {
     }
 
 
-    public static List<ProKnowledge> getData(OrganizeConfigure organizeConfigure) throws XpathSyntaxErrorException, ParseException, InterruptedException, FormatEexception, ProKnowledgeImpl.FormatEexception {
+    public static List<ProKnowledge> getData(OrganizeConfigure organizeConfigure,String orgflag) throws XpathSyntaxErrorException, ParseException, InterruptedException, FormatEexception, ProKnowledgeImpl.FormatEexception {
         List<ProKnowledge> test=new ArrayList<ProKnowledge>();
         for(int i=1;i>0;i++) {
             if(organizeConfigure.getPage()!=0) {
@@ -336,7 +336,7 @@ public class SpiderUtils {
                     e.printStackTrace();
                 }
             }
-            test=storeToDatebase(organizeConfigure.getFlag(), author);
+            test=storeToDatebase(organizeConfigure.getFlag(), author,orgflag);
             String handle2 = baseKnowledge.getDriver().getWindowHandle();
             baseKnowledge.getDriver().close();
             Thread.sleep(2000);
@@ -371,7 +371,7 @@ public class SpiderUtils {
 
 
 
-    public static void getElements(String flag,String element,int page) throws FormatEexception, DocumentException, ParserConfigurationException, XpathSyntaxErrorException, IOException, ProKnowledgeImpl.FormatEexception, InterruptedException, ParseException {
+    public static void getElements(String flag,String element,int page,String orgflag) throws FormatEexception, DocumentException, ParserConfigurationException, XpathSyntaxErrorException, IOException, ProKnowledgeImpl.FormatEexception, InterruptedException, ParseException {
         InputStream inputStream=new FileInputStream(SpiderUtils.class.getClassLoader().getResource("SpiderUtils/BasKnowledgePattern.xml").getFile());
         baseKnowledge.setDocsax(sax.read(inputStream));
         baseKnowledge.setRoot(baseKnowledge.getDocsax().getRootElement());//获取根元素
@@ -423,24 +423,24 @@ public class SpiderUtils {
         int a=1;
         for(Element ele:classifiedlist){
             SpiderUtils.getDocument(flag, ele.getText().trim());
-            getData(organizeConfigure);
+            getData(organizeConfigure,orgflag);
         }
         inputStream.close();
         baseKnowledge.getDriver().close();
         System.exit(0);
     }
 
-    public static void getElementsAdd(String flag) throws ProKnowledgeImpl.FormatEexception, FormatEexception, InterruptedException, XpathSyntaxErrorException, ParseException, FileNotFoundException, DocumentException {
+    public static void getElementsAdd(String flag,int page,String orgflag) throws ProKnowledgeImpl.FormatEexception, FormatEexception, InterruptedException, XpathSyntaxErrorException, ParseException, FileNotFoundException, DocumentException {
         baseKnowledge.setInputStream(new FileInputStream(SpiderUtils.class.getClassLoader().getResource("SpiderUtils/BasKnowledgePattern.xml").getFile()));
         baseKnowledge.setDocsax(sax.read(baseKnowledge.getInputStream()));
         baseKnowledge.setRoot(baseKnowledge.getDocsax().getRootElement());//获取根元素
         List<Element> childElements = baseKnowledge.getRoot().elements("spider");
         for(Element childElement:childElements) {
-            Element classifiedLink = childElement.element("urls");
-            List<Element> classifiedlist = classifiedLink.elements();
-            Element childLink = childElement.element("childLink");
-            Element next = childElement.element("next");
-            Element nextflagi = childElement.element("nextflag");
+            Element classifiedLink=childElement.element("urls");
+            List<Element> classifiedlist=classifiedLink.elements();
+            Element childLink=childElement.element("childLink");
+            Element next=childElement.element("next");
+            Element nextflagi=childElement.element("nextflag");
 
             Element authori = childElement.element("author");
             Element titlei = childElement.element("title");
@@ -452,11 +452,15 @@ public class SpiderUtils {
             Element typei = childElement.element("type");
             Element sourcei = childElement.element("source");
             Element authorurli = childElement.element("authorurl");
-            Element childnexti = childElement.element("childnext");
-            Element childnextflagi = childElement.element("childnextflag");
-
+            Element childnexti=childElement.element("childnext");
+            Element childnextflagi=childElement.element("childnextflag");
+            Element morei=childElement.element("more");
+            Element moreflag=childElement.element("moreflag");
 
             OrganizeConfigure organizeConfigure=new OrganizeConfigure();
+            organizeConfigure.setPage(page);
+            organizeConfigure.setMore(morei);
+            organizeConfigure.setMoreflag(moreflag);
             organizeConfigure.setChildLink(childLink);
             organizeConfigure.setNext(next);
             organizeConfigure.setNextflagi(nextflagi);
@@ -475,7 +479,7 @@ public class SpiderUtils {
             organizeConfigure.setFlag(flag);
             for (Element ele : classifiedlist) {
                 SpiderUtils.getDocument(flag, ele.getText().trim());
-                getData(organizeConfigure);
+                getData(organizeConfigure,orgflag);
             }
         }
     }
@@ -516,7 +520,7 @@ public class SpiderUtils {
 
     }
 
-    public static List storeToDatebase(String flag,String author) throws FormatEexception, ProKnowledgeImpl.FormatEexception {
+    public static List storeToDatebase(String flag,String author,String orgflag) throws FormatEexception, ProKnowledgeImpl.FormatEexception {
         List<ProKnowledge> proKnowledgeListq=new ArrayList<ProKnowledge>();
         if (flag.equals("windows")) {
             Map map = proknowimpl.insertBatchAutoDedup(proKnowledgeList, basPersonInfoList, perKnowledgeList);
@@ -525,8 +529,9 @@ public class SpiderUtils {
                 basperimpl.insertBatch((List<BasPersonInfo>) map.get(1));
                 perknowimpl.insertBatch((List<PerKnowledge>) map.get(3));
             }
-            if()
-            proKnowledgeList.clear();
+            if(orgflag.equals("no")) {
+                proKnowledgeList.clear();
+            }
             basPersonInfoList.clear();
             perKnowledgeList.clear();
         } else if (flag.equals("linux")) {

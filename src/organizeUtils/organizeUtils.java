@@ -30,7 +30,7 @@ public class organizeUtils {
     private static OrgKnowledgeImpl orgKnowledgeimpl=new OrgKnowledgeImpl();
     private static List<ProKnowledge> proKnowledgeList=new ArrayList<ProKnowledge>();
 
-    public static void getElement(String flag,String element,int page) throws IOException, DocumentException, SpiderUtils.FormatEexception, InterruptedException, XpathSyntaxErrorException, ProKnowledgeImpl.FormatEexception, ParseException {
+    public static void getElement(String flag,String element,int page,String orgflag) throws IOException, DocumentException, SpiderUtils.FormatEexception, InterruptedException, XpathSyntaxErrorException, ProKnowledgeImpl.FormatEexception, ParseException {
         SAXReader saxReader = new SAXReader();
         InputStream fileInputStream=new FileInputStream("C:\\Users\\lenovo\\Desktop\\GintongGameSpider\\src\\organizeUtils\\BasKnowledgePattern.xml");
         Document docsax=saxReader.read(fileInputStream);
@@ -92,10 +92,9 @@ public class organizeUtils {
 
         for(Element ele:classifiedlist){
             SpiderUtils.getDocument(flag, ele.getText().trim());
-            proKnowledgeList=SpiderUtils.getData(organizeConfigure);
-            System.out.println(proKnowledgeList);
-            storeOrg(uuidi.getText(),onamei.getText(),proKnowledgeList);
+            proKnowledgeList=SpiderUtils.getData(organizeConfigure,orgflag);
         }
+        storeOrg(uuidi.getText(),onamei.getText(),proKnowledgeList);
         SpiderUtils.baseKnowledge.getDriver().close();
         System.exit(0);
     }
@@ -111,7 +110,7 @@ public class organizeUtils {
             for(int x=0;x<proKnowledgeListq.size();x++) {
                 OrgKnowledge orgKnowledge = new OrgKnowledge();
                 orgKnowledge.setOname(oname);
-                orgKnowledge.setOname(ouuid);
+                orgKnowledge.setOuuid(ouuid);
                 orgKnowledge.setKuuid(proKnowledgeListq.get(x).getUuid());
                 orgKnowledge.setTitle(proKnowledgeListq.get(x).getTitle());
                 orgKnowledgeimpl.insert(orgKnowledge);

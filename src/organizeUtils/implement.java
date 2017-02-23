@@ -7,6 +7,6 @@ import SpiderUtils.SpiderUtils;
  */
 public class implement {
     public static void main(String args[]) throws Exception {
-        organizeUtils.getElement("windows", "spiderJzwh", 0);
+        organizeUtils.getElement("windows", "spiderJzwh", 0,"yes");
     }
 }

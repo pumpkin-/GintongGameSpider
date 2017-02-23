@@ -14,7 +14,7 @@ import java.text.ParseException;
 public class SpiderMF {
     public static void main(String[] args)  {
         try {
-            SpiderUtils.getElements("windows", "spiderMf", 0);
+            SpiderUtils.getElements("windows", "spiderMf", 0,"no");
         }catch (Exception e){
             e.printStackTrace();
         }
