@@ -30,7 +30,7 @@
         <childLink Mosaic="">//dd[@class='public-tabs-title']/a/@href</childLink>>
         <next></next>>
         <nextflag></nextflag>>
-        <more>document.getElementsByClassName('public-more public-mb20');</more>>
+        <more>$('.public-more').click()</more>>
         <moreflag>//a[class='public-more public-mb20']</moreflag>>
 
         <urls>

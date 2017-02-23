@@ -48,7 +48,7 @@ public class BaseKnowledgeSpider {
         WebElement web=driver.findElement(By.xpath("/html"));
         String html=web.getAttribute("outerHTML");*/
         // InputStream inputStream=new FileInputStream(new File("SpiderUtils/BasKnowledgePattern.xml"));
-        InputStream inputStream=test.class.getResourceAsStream("/SpiderUtils/BasKnowledgePattern.xml");
+        InputStream inputStream=test.class.getResourceAsStream("/SpiderUtils/BasKnowledgePatternMF.xml");
         SAXReader sax=new SAXReader();
         org.dom4j.Document doc=sax.read(inputStream);
         org.dom4j.Element root = doc.getRootElement();//获取根元素
