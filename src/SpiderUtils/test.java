@@ -4,8 +4,21 @@ import JavaBean.ProKnowledge;
 import cn.wanghaomiao.xpath.exception.XpathSyntaxErrorException;
 import cn.wanghaomiao.xpath.model.JXDocument;
 import cn.wanghaomiao.xpath.model.JXNode;
+import com.gargoylesoftware.htmlunit.activex.javascript.msxml.XMLSerializer;
 import dao.impl.ProKnowledgeImpl;
+import net.sf.json.JSON;
+import net.sf.json.JSONObject;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
 import org.dom4j.Attribute;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
@@ -23,14 +36,16 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.phantomjs.PhantomJSDriver;
 import org.xml.sax.SAXException;
 
+import javax.xml.crypto.dsig.XMLSignature;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.*;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
+import java.net.*;
+import java.nio.charset.Charset;
 import java.text.ParseException;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
+import java.util.logging.XMLFormatter;
 
 public class test {
     static List<org.dom4j.Element> books;
@@ -55,20 +70,36 @@ public class test {
         System.out.println();*/
 
 
+        //SpiderUtils.getElements("windows","spiderYxgc",0,"no");
 
-      //  SpiderUtils.getElements("windows","spiderYxgc");
-    /* System.setProperty("webdriver.chrome.driver",SpiderContant.chromeWindowsPath );
+        /*System.setProperty("webdriver.chrome.driver",SpiderContant.chromeWindowsPath );
         WebDriver driver=new ChromeDriver();
-        driver.get("http://www.youxiguancha.com/news/");
-        JavascriptExecutor executorChildnext = (JavascriptExecutor) driver;
+        driver.get("http://www.appgame.com/archives/620775.html");
+        WebElement webElement=driver.findElement(By.xpath("/html"));
+        org.jsoup.nodes.Document doc=Jsoup.parse(webElement.getAttribute("outerHTML"));
+        JXDocument jxDocument=new JXDocument(doc);
+        System.out.println(doc.outerHtml());
+        System.out.println(jxDocument.selOne("//div[@class='appgame-video-state']/text()"));*/
+        SpiderUtils.getElements("windows","spiderRwt",0,"no");
+
+     /*System.setProperty("webdriver.chrome.driver",SpiderContant.chromeWindowsPath );
+        WebDriver driver=new ChromeDriver();
+        driver.get("http://www.mofang.com/news");
+       JavascriptExecutor executorChildnext = (JavascriptExecutor) driver;
         executorChildnext.executeScript("$('span.pagecss a.p1.nexe').click()");
         WebElement webElement=driver.findElement(By.xpath("/html"));
         org.jsoup.nodes.Document doc=Jsoup.parse(webElement.getAttribute("outerHTML"));
         JXDocument jxDocument=new JXDocument(doc);
 
-        System.out.println(jxDocument.sel("//div[@class='inf clearfix']/a[@class='img_box']/img/@src"));*/
+        System.out.println(jxDocument.sel("//dd[@class='public-tabs-title']/a/@href"));*/
 
-System.out.println("helloworld");
 
-     }
+        /*Connection.Response res=Jsoup.connect("http://www.appgame.com/archives/620651.html").ignoreContentType(true).execute();
+        String body = res.body();
+        JSONObject json = new JSONObject(true);
+        //JSON json1= com.sun.org
+        System.out.println(body);*/
+
     }
+
+}

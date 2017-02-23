@@ -10,6 +10,8 @@ import dao.impl.ProKnowledgeImpl;
 import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by lenovo on 2017/2/10.
@@ -28,9 +30,9 @@ public class LevenshteinDis {
             essay= list.get(x).getMain();
 
             //修改为错误代码
-            double dis = levenshtein(essay, aticle);
+            double dis = getSimilarity(essay, aticle);
             if (dis > 0.95) {
-                SpiderUtils.storeBugdata(essay,aticle,kuuid);
+                SpiderUtils.storeBugdata(essay, aticle, kuuid);
                 System.out.println("--------------This data should be delete------------------");
                 return true;
             }
@@ -117,13 +119,20 @@ public class LevenshteinDis {
 
     /**
      * 余弦距离算法
-     * @param doc1
-     * @param doc2
+     * @param tmpdoc1
+     * @param tmpdoc2
      * @return
      */
-    public static double getSimilarity(String doc1, String doc2) {
-        if (doc1 != null && doc1.trim().length() > 0 && doc2 != null
-                && doc2.trim().length() > 0) {
+    public static double getSimilarity(String tmpdoc1, String tmpdoc2) {
+        //对文本进行预处理, 去除图片的影响
+        String regEx = "(?<=src=).+\\.";
+        Pattern p = Pattern.compile(regEx);
+       // String  doc1 = p.matcher(tmpdoc1).replaceAll("");
+        String  doc1 =  tmpdoc1.replaceAll(regEx, "");
+        String doc2 = p.matcher(tmpdoc2).replaceAll("");
+
+        if (doc1 != null && doc1.length() > 0 && doc2 != null
+                && doc2.length() > 0) {
             Map<Integer, int[]> AlgorithmMap = new HashMap<Integer, int[]>();
 
             //将两个字符串中的中文字符以及出现的总数封装到，AlgorithmMap中

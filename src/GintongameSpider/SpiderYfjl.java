@@ -451,5 +451,6 @@ public class SpiderYfjl {
             }
         }*/
         driver.close();
+        System.gc();
     }
 }

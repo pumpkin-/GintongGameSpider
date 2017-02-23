@@ -1,10 +1,6 @@
 package mybatisGenerator;
 
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-
 public class GeneratorSqlmap {
 
 	/*public void generator() throws Exception{
@@ -21,7 +17,7 @@ public class GeneratorSqlmap {
 				callback, warnings);
 		myBatisGenerator.generate(null);
 
-	} 
+	}
 	public static void main(String[] args) throws Exception {
 		try {
 			GeneratorSqlmap generatorSqlmap = new GeneratorSqlmap();
@@ -29,7 +25,7 @@ public class GeneratorSqlmap {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 	}*/
 
 }
