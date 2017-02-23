@@ -263,7 +263,6 @@ public class SpiderUtils {
                                 type = (type + "," + objtype).replace("null,", "");
                             }
                         } else {
-                            System.out.println(typeslist);
                             type = (type + "," + typeslist.get(fg)).replace("null,", "").replace(" ", ",");
                         }
                     }else{

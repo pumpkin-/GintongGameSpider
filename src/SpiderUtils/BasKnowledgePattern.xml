@@ -172,4 +172,30 @@
         </urls>>
 
     </spiderDwyx>
+
+    <spiderRwt>
+        <title>//h1[@class='appgame-video-title']/text()|//h1[@class='appgame-single-title']/text()</title>
+        <author>//div[@class='appgame-article-state']/a/text()|//div[@class='appgame-video-state']/a/text()</author>
+        <authorurl>//div[@class='appgame-article-state']/a/@href|//div[@class='appgame-video-state']/a/@href</authorurl>>
+        <cover>//div[@class='appgame-item-section']/a/strong/i/@data-original</cover>>
+        <ptime timeFormat="yyyy MM dd HH mm">//div[@class='appgame-video-state']/text()|//div[@class='appgame-article-state']/text()</ptime>>
+        <tag></tag>>
+        <main>//div[@class='appgame-single-video']/p|//div[@class='appgame-primary']/p</main>>
+        <mainpic Mosaic="">//img/@src</mainpic>>
+        <type></type>>
+        <source>任玩堂</source>
+        <childnext></childnext>>
+        <childnextflag></childnextflag>>
+        <more></more>>
+        <moreflag></moreflag>>
+        <childLink Mosaic="">//h1[@class='appgame-item-title']/a/@href</childLink>>
+        <next>$('div.nav-next a')[0].click()</next>>
+        <nextflag>//div[@class='nav-next']/a</nextflag>>
+        <urls>
+            <url>
+                http://www.appgame.com/archives/category/apple-news
+            </url>
+        </urls>>
+
+    </spiderRwt>
 </BasKnowledgeSpiderPattern>
