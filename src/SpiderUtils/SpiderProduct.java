@@ -81,7 +81,7 @@ public class SpiderProduct {
             //下一页
             String nextpage=target.selectSingleNode("//nextpage").getText();
 
-            Map<String, Object>map=new HashMap<>();
+            Map<String, Object>map=new HashMap();
             map.put("urls",urls);
             map.put("contentPath",contentPath);
             map.put("logo",logo);
@@ -159,7 +159,7 @@ class Spider implements Runnable{
             e.printStackTrace();
         }
         //存储每页中列表上跳转到详情页的链接
-        List<String>detailUrls=new ArrayList<>();
+        List<String>detailUrls=new ArrayList();
         for(Object detailUrl:urllist){
             detailUrls.add((String)detailUrl);
         }

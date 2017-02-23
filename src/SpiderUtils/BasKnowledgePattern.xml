@@ -162,4 +162,31 @@
         </urls>>
 
     </spiderDwyx>
+
+    <!-- 触乐抓取  -->
+    <spiderChuapp>
+        <title>//div[@class='article']/h1/text()</title>
+        <author>//div[@class='fn-clear']/span[@class='author_dom']/text()</author>
+        <authorurl></authorurl>>
+        <!-- 封面图片-->
+        <cover>//div[@class='item']/img/@src</cover>>
+        <ptime timeFormat="yyyy MM dd HH mm ss">//div[@class='item']/span[@class='author_dom']/em/text()</ptime>>
+        <tag></tag>>
+        <!--正文-->
+        <main>//div[@class='the-content']/p</main>>
+        <!--正文图片-->
+        <mainpic>//img/@href</mainpic>>
+        <type></type>>
+        <source>触乐</source>
+        <childLink Mosaic=" http://www.chuapp.com/">//div[@class='item']/a/@href</childLink>>
+        <childnext></childnext>>
+        <childnextflag></childnextflag>>
+        <next></next>>
+        <nextflag></nextflag>>
+        <urls>
+            <url>
+                http://www.chuapp.com/
+            </url>
+        </urls>>
+    </spiderChuapp>
 </BasKnowledgeSpiderPattern>
