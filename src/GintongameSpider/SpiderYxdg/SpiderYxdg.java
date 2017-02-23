@@ -48,7 +48,7 @@ public class SpiderYxdg {
         WebDriver driver = new ChromeDriver();
         int a=1;
         for(int z=0;z<link.length;z++){
-            for(int i=120;i>0;i++){
+            for(int i=270;i>0;i++){
                 driver.get(link[z] + "/page/" + i);
                 WebElement web=driver.findElement(By.xpath("/html"));
                 String html=web.getAttribute("outerHTML");

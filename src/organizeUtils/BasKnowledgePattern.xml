@@ -4,6 +4,7 @@
   <!--游戏观察抓取-->  
   <spiderJzwh> 
     <uuid/>&gt;
+    <oname>北舟</oname>>
     <knowledge> 
       <website> 
         <title>//div[@class='newscon']/h1/text()</title>  
@@ -23,7 +24,11 @@
         <nextflag/>&gt;
         <more/>&gt;
         <moreflag/>&gt;
-        <url>http://www.beizhouwenhua.com/article/</url> 
+        <urls>
+          <url>
+            http://www.beizhouwenhua.com/article/
+          </url>
+        </urls>>
       </website>&gt;
     </knowledge>&gt;
   </spiderJzwh> 
