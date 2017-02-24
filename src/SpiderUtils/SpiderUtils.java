@@ -79,11 +79,14 @@ public class SpiderUtils {
                     executornext.executeScript(organizeConfigure.getNext().getText());
                 }
             }
-            JavascriptExecutor executorRoller = (JavascriptExecutor) baseKnowledge.getDriver();
-            executorRoller.executeScript("$(window).scrollTop(30000)");
+//            JavascriptExecutor executorRoller = (JavascriptExecutor) baseKnowledge.getDriver();
+//            executorRoller.executeScript("$(window).scrollTop(30000)");
             baseKnowledge.setWebElement(baseKnowledge.getDriver().findElement(By.xpath("/html")));
             JXDocument jxDocument =new JXDocument(Jsoup.parse(baseKnowledge.getWebElement().getAttribute("outerHTML")));
-            if(StringUtils.isNotEmpty(organizeConfigure.getMore().getText())){
+            if(organizeConfigure.getMore() == null) {
+                System.out.println("如果您想抓取更多页面， 请在配置文件中配置<more>标签");
+            }
+            if(organizeConfigure.getMore() != null && StringUtils.isNotEmpty(organizeConfigure.getMore().getText())){
                 for(int more=1;more>0;more++) {
                     JavascriptExecutor executormore = (JavascriptExecutor) baseKnowledge.getDriver();
                     executormore.executeScript(organizeConfigure.getMore().getText());
@@ -277,10 +280,8 @@ public class SpiderUtils {
                             }
                         } else {
                             if(StringUtils.isNotEmpty(tagslist.get(fg).toString())) {
-                                List<Object> taglist= (List<Object>) tagslist.get(fg);
-                                for (Object objtag : taglist) {
-                                    tag = (tag + "," + objtag).replace("null,", "");
-                                }
+                                tag= tagslist.get(fg).toString().replace(" ",",");
+
                             }else{
                                 tag=null;
                             }

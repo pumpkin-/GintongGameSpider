@@ -6,8 +6,6 @@ import cn.wanghaomiao.xpath.model.JXDocument;
 import cn.wanghaomiao.xpath.model.JXNode;
 import com.gargoylesoftware.htmlunit.activex.javascript.msxml.XMLSerializer;
 import dao.impl.ProKnowledgeImpl;
-import net.sf.json.JSON;
-import net.sf.json.JSONObject;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -47,11 +45,11 @@ import java.util.List;
 import java.util.Objects;
 import java.util.logging.XMLFormatter;
 
-public class test {
+public class Test {
     static List<org.dom4j.Element> books;
     public static void main(String[] args) throws ParserConfigurationException, XpathSyntaxErrorException, SpiderUtils.FormatEexception, DocumentException, IOException, ProKnowledgeImpl.FormatEexception, InterruptedException, ParseException {
-       /* FileInputStream inputStream=new FileInputStream(test.class.getClassLoader().getResource("SpiderUtils/BasKnowledgePattern.xml").getFile());
-        System.out.println(test.class.getClassLoader().getResource("SpiderUtils/BasKnowledgePattern.xml").getFile().toString());
+       /* FileInputStream inputStream=new FileInputStream(Test.class.getClassLoader().getResource("SpiderUtils/BasKnowledgePattern.xml").getFile());
+        System.out.println(Test.class.getClassLoader().getResource("SpiderUtils/BasKnowledgePattern.xml").getFile().toString());
         SAXReader sax=new SAXReader();
         org.dom4j.Document doc=sax.read(inputStream);
         org.dom4j.Element root = doc.getRootElement();//获取根元素
@@ -70,28 +68,21 @@ public class test {
         System.out.println();*/
 
 
-        //SpiderUtils.getElements("windows","spiderYxgc",0,"no");
+       SpiderUtils.getElements("windows","spiderChuapp",0,"no");
 
-        /*System.setProperty("webdriver.chrome.driver",SpiderContant.chromeWindowsPath );
-        WebDriver driver=new ChromeDriver();
-        driver.get("http://www.appgame.com/archives/620775.html");
-        WebElement webElement=driver.findElement(By.xpath("/html"));
-        org.jsoup.nodes.Document doc=Jsoup.parse(webElement.getAttribute("outerHTML"));
-        JXDocument jxDocument=new JXDocument(doc);
-        System.out.println(doc.outerHtml());
-        System.out.println(jxDocument.selOne("//div[@class='appgame-video-state']/text()"));*/
-        SpiderUtils.getElements("windows","spiderRwt",0,"no");
+//        System.setProperty("webdriver.chrome.driver",SpiderContant.chromeWindowsPath );
+//        WebDriver driver=new ChromeDriver();
+//        driver.get("http://xin.bufan.com/article/130772.html");
+//        WebElement webElement=driver.findElement(By.xpath("/html"));
+//        org.jsoup.nodes.Document doc=Jsoup.parse(webElement.getAttribute("outerHTML"));
+//     JXDocument jxDocument=new JXDocument(doc);
+//       System.out.println(doc.outerHtml());
+//       System.out.println(jxDocument.selOne("//div[@class='appgame-video-state']/text()"));
+//        SpiderUtils.getElements("windows", "spiderChuapp", 0, "no");
 
-     /*System.setProperty("webdriver.chrome.driver",SpiderContant.chromeWindowsPath );
-        WebDriver driver=new ChromeDriver();
-        driver.get("http://www.mofang.com/news");
-       JavascriptExecutor executorChildnext = (JavascriptExecutor) driver;
-        executorChildnext.executeScript("$('span.pagecss a.p1.nexe').click()");
-        WebElement webElement=driver.findElement(By.xpath("/html"));
-        org.jsoup.nodes.Document doc=Jsoup.parse(webElement.getAttribute("outerHTML"));
-        JXDocument jxDocument=new JXDocument(doc);
+//
 
-        System.out.println(jxDocument.sel("//dd[@class='public-tabs-title']/a/@href"));*/
+//        System.out.println(jxDocument.sel("//dd[@class='public-tabs-title']/a/@href"));
 
 
         /*Connection.Response res=Jsoup.connect("http://www.appgame.com/archives/620651.html").ignoreContentType(true).execute();

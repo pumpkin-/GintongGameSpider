@@ -17,6 +17,6 @@ public class SpiderContant {
     //持久化存储批量插入条数
     public static final int insertBatchContant = 5;
     public static final String phantomjsLinuxPath="/Spider/phantomjs-2.1.1-linux-x86_64/bin/phantomjs";
-    public static final String chromeWindowsPath= "E:/aaaa/chrom/chromedriver.exe";
+    public static final String chromeWindowsPath= "E:/chromedriver.exe";
 
 }
