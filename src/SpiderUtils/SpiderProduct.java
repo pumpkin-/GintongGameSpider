@@ -20,7 +20,6 @@ import org.dom4j.io.SAXReader;
 import org.jsoup.Jsoup;
 
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -35,7 +34,7 @@ public class SpiderProduct {
 
     public static void main(String[] args) throws FileNotFoundException, XpathSyntaxErrorException {
         //调用下面的方法获取配置文件中的信息,此处参数为配置文件中二级标签名
-        Map<String, Object> map = getElement("spiderYXGCsy");
+        Map<String, Object> map = getElement("spiderAZSC");
         //创建线程池
         ExecutorService pool= Executors.newFixedThreadPool(3);
         List urlNodes= (List) map.get("urls");
@@ -225,14 +224,29 @@ class Spider implements Runnable{
         this.map=map;
         this.startUrl=startUrl;
     }
+
+    /**
+     * 获取dom
+     */
+    public org.jsoup.nodes.Document getDocument(String url){
+        try{
+            org.jsoup.nodes.Document document=Jsoup.connect(url)
+                    .userAgent("Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; .NET CLR 2.0.50727)")
+                    .get();
+            return document;
+        }catch (Exception e){
+            throw new RuntimeException("===============连接网页:"+url+"失败！！！========================");
+        }
+    }
+
     //线程执行内容
     public void run() {
         JXDocument doc=null;
         org.jsoup.nodes.Document document=null;
         try{
-            document=Jsoup.connect(startUrl).get();
+            document=getDocument(startUrl);
             doc=new JXDocument(document);
-        }catch(IOException e){
+        }catch(Exception e){
             e.printStackTrace();
         }
 
@@ -241,13 +255,11 @@ class Spider implements Runnable{
             List<String>detailUrls=getDetailUrls(doc,map.get("detailurl").toString());
             for(String detailUrl:detailUrls){
                 try{
-                    org.jsoup.nodes.Document document1=Jsoup.connect(map.get("contentPath").toString()+detailUrl)
-                            .userAgent("Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; .NET CLR 2.0.50727)")
-                            .get();
+                    org.jsoup.nodes.Document document1=getDocument(map.get("contentPath").toString()+detailUrl);
                     //解析详情页面并且存储进数据库
                     parsePage(new JXDocument(document1),map);
                     System.out.println(Thread.currentThread().getName());
-                }catch(IOException e){
+                }catch(Exception e){
                         e.printStackTrace();
                 }
             }
@@ -328,14 +340,11 @@ class Spider implements Runnable{
                 gameInfo.setSource(source);
             }
             //图标logo
-            if(StringUtils.isNoneEmpty(map.get("logo").toString())){
-                logo=map.get("contentPath").toString()+document.sel(map.get("logo").toString()).get(0).toString();
-                if(map.get("source").toString()=="安智市场"||"安智市场".equals(map.get("source").toString())){
-                    logo=Jsoup.connect(logo).ignoreContentType(true).get().location();
-                }
-                System.out.println(logo);
-                gameInfo.setLogo(logo);
+            logo=map.get("contentPath").toString()+getInfomation(document,"logo");
+            if(map.get("source").toString()=="安智市场"||"安智市场".equals(map.get("source").toString())) {
+                logo = Jsoup.connect(logo).ignoreContentType(true).get().location();
             }
+            gameInfo.setLogo(logo);
             //名称gname
             if(StringUtils.isNoneEmpty(map.get("gname").toString())){
                 name=document.sel(map.get("gname").toString()).get(0).toString();
@@ -548,16 +557,16 @@ class Spider implements Runnable{
     /**
      * 通过xpath来获取相对应的网页信息
      */
-    public String getInfomation(JXDocument document,String xpath){
+    public String getInfomation(JXDocument document,String xpath) throws XpathSyntaxErrorException {
         String information=null;
-        try {
-            if(StringUtils.isNotEmpty(map.get(xpath).toString())) {
-                information = document.sel(map.get(xpath).toString()).get(0).toString();
+        String path=map.get(xpath).toString();
+            if(StringUtils.isNotEmpty(path)) {
+                if(document.sel(path).size()==0){
+                    throw new NullPointerException("Xpath语句：<"+xpath+">:"+path+"出错，未捕获到页面标签！！");
+                }
+                information =document.sel(map.get(xpath).toString()) .get(0).toString();
                 System.out.println(information);
             }
-        } catch (XpathSyntaxErrorException e) {
-            System.err.println("解析：：" + xpath + "出错了！！！");
-        }
         return information;
     }
 
