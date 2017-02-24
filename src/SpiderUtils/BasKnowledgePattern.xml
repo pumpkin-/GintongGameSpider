@@ -318,4 +318,254 @@
 
     </spiderDYW>
 
+    <!--游戏陀螺 标签-->
+    <spiderYXTL>
+        <title>//div[@id='text_content']/h1/text()</title>
+        <author></author>
+        <authorurl></authorurl>>
+        <cover>//img[@width='191']/@src</cover>>
+        <ptime timeFormat="yyyy MM dd">//p[@class='introduction']/time/text()</ptime>>
+        <tag>//div[@class='list']/section/time/a/text()</tag>>
+        <main>//div[@id='text_content']/main/p</main>>
+        <mainpic>/preceding-sibling::div/img/@src</mainpic>>
+        <type></type>>
+        <source>游戏陀螺</source>
+        <!--详情页翻页-->
+        <childnext></childnext>>
+        <childnextflag></childnextflag>
+        <!--点击更多-->
+        <more></more>>
+        <moreflag></moreflag>>
+        <!--详情页链接-->
+        <childLink Mosaic="http://www.youxituoluo.com">//div[@class='list']//section/a[@class='left_img']/@href</childLink>>
+        <!--下一页-->
+        <next>$('#list_right_button > span').click()</next>>
+        <nextflag>//div[@class='list']/section/aside/a[@id='list_right_button']</nextflag>>
+        <urls>
+            <url>
+                http://www.youxituoluo.com/news
+
+            </url>
+            <url>
+                http://www.youxituoluo.com/haiwai
+            </url>>
+            <url>
+                http://www.youxituoluo.com/haiwai/rhsc
+            </url>
+            <url>
+                http://www.youxituoluo.com/tv
+            </url>
+            <url>
+                http://www.youxituoluo.com/chanye/syyy
+            </url>
+            <url>
+                http://www.youxituoluo.com/chanye/yfsj
+            </url>
+            <url>
+                http://www.youxituoluo.com/chanye/hyhd
+            </url>
+            <url>
+                http://www.youxituoluo.com/data
+            </url>
+            <url>
+                http://www.youxituoluo.com/gjb
+            </url>
+            <url>
+                http://www.youxituoluo.com/gameshow-2
+            </url>
+        </urls>>
+
+    </spiderYXTL>
+    <!--游戏狗-->
+    <spiderYXG>
+        <title>//div[@class='news_title']/h1/text()</title>
+        <author>//div[@class='neirong-other']/span[3]/text()</author>
+        <authorurl></authorurl>>
+        <cover>//div[@class='class="newstw"']/div[@class='article-box']/a//img/@src</cover>>
+        <ptime timeFormat="yyyy MM dd">//div[@class='neirong-other']/span[1]/text()</ptime>>
+        <tag></tag>>
+        <main>//div[@class='neirong_des']//p</main>>
+        <mainpic>//img/@src</mainpic>>
+        <type></type>>
+        <source>游戏狗</source>
+        <!--详情页翻页-->
+        <childnext></childnext>>
+        <childnextflag></childnextflag>
+        <!--点击更多-->
+        <more></more>>
+        <moreflag></moreflag>>
+        <!--详情页链接-->
+        <childLink Mosaic="http://news.gamedog.cn">//div[@class='newstw']/div[@class='article-box']/a/@href</childLink>>
+        <!--下一页-->
+        <next>$('body > div.main > div.newsbody > div.newsleftlist.fl > div.fenye.page > a:nth-child(10)')[0].click()</next>>
+        <nextflag>//div[class='fenye page']/a[7]</nextflag>>
+        <urls>
+            <url>
+                http://news.gamedog.cn/zonghe.html
+
+            </url>
+            <url>
+                http://news.gamedog.cn/a/yejiedongtai_242_1.html
+            </url>>
+            <url>
+                http://news.gamedog.cn/guandian.html
+            </url>
+            <url>
+                http://news.gamedog.cn/a/renwufangtan_28_1.html
+            </url>
+            <url>
+                http://news.gamedog.cn/shuju.html
+            </url>
+            <url>
+                http://news.gamedog.cn/shebei.html
+            </url>
+        </urls>>
+
+    </spiderYXG>
+    <!--18183-->
+    <spider18183>
+        <title>//h1/text()</title>
+        <author>//div[@class='a_info']/text()</author>
+        <authorurl></authorurl>>
+        <cover></cover>>
+        <ptime timeFormat="yyyy MM dd">//div[@class='a_info']/text()</ptime>>
+        <tag></tag>>
+        <main>//div[@class='txt_con']/p</main>>
+        <mainpic>//img/@src</mainpic>>
+        <type></type>>
+        <source>18183</source>
+        <!--详情页翻页-->
+        <childnext></childnext>>
+        <childnextflag></childnextflag>
+        <!--点击更多-->
+        <more></more>>
+        <moreflag></moreflag>>
+        <!--详情页链接-->
+        <childLink Mosaic="">//div[@class='dllist']/dl//dt//a/@href</childLink>>
+        <!--下一页-->
+        <next>$('body > div.warpper > div.content.fl > div.txtlist > div:nth-child(4) > li:nth-child(12) > a')[0].click()</next>>
+        <nextflag>//div[class='fy']/li[12]</nextflag>>
+        <urls>
+            <url>
+                http://chanye.18183.com/cyqy/list_1184_36.html
+            </url>
+            <url>
+                http://chanye.18183.com/cyjy/
+            </url>>
+            <url>
+                http://chanye.18183.com/ydyy/
+            </url>
+            <url>
+                http://chanye.18183.com/sjhxz/
+            </url>
+            <url>
+                http://chanye.18183.com/yjhb/
+            </url>
+            <url>
+                http://chanye.18183.com/djzf/
+            </url>
+            <url>
+                http://chanye.18183.com/zhbb/
+            </url>
+            <url>
+                http://chanye.18183.com/tssy/
+            </url>
+            <url>
+                http://chanye.18183.com/zt/
+            </url>
+        </urls>>
+
+    </spider18183>
+    <!--蚕豆网-->
+    <spiderCDW>
+        <title>//div[@class='article mtop16']/h1/text()</title>
+        <author></author>
+        <authorurl></authorurl>>
+        <cover>//div[@class='newslist']/div[@class='newlist1']/img/@src</cover>>
+        <ptime timeFormat="yyyy MM dd">//div[@class='article mtop16']/ul/li[1]/text()</ptime>>
+        <tag>//div[@class='newslist']/div[@class='newlist1']/dl/dd/p/a/text()</tag>>
+        <main>//div[@class='articleBox']/p</main>>
+        <mainpic>//img/@src</mainpic>>
+        <type></type>>
+        <source>蚕豆网</source>
+        <!--详情页翻页-->
+        <childnext></childnext>>
+        <childnextflag></childnextflag>
+        <!--点击更多-->
+        <more></more>>
+        <moreflag></moreflag>>
+        <!--详情页链接-->
+        <childLink Mosaic="">//div[@class='dllist']/dl//dt//a/@href</childLink>>
+        <!--下一页-->
+        <next> </next>>
+        <nextflag></nextflag>>
+        <urls>
+            <url>
+                http://news.gamedog.cn/zonghe.html
+            </url>
+            <url>
+                http://news.gamedog.cn/a/yejiedongtai_242_1.html
+            </url>>
+            <url>
+                http://news.gamedog.cn/guandian.html
+            </url>
+            <url>
+                http://news.gamedog.cn/a/renwufangtan_28_1.html
+            </url>
+            <url>
+                http://news.gamedog.cn/shuju.html
+            </url>
+            <url>
+                http://news.gamedog.cn/shebei.html
+            </url>
+
+        </urls>>
+
+    </spiderCDW>
+    <!--pc25g-->
+    <spiderPc25g>
+        <title>//div[@class='article']/h1/text()</title>
+        <author>//div[@class='article']/span[1]/text()</author>
+        <authorurl></authorurl>>
+        <cover></cover>>
+        <ptime timeFormat="yyyy MM dd">//div[@class='article']/span[1]/text(3)</ptime>>
+        <tag></tag>>
+        <main>//div[@class='article']/p</main>>
+        <mainpic>//img/@src</mainpic>>
+        <type></type>>
+        <source>pc25g</source>
+        <!--详情页翻页-->
+        <childnext></childnext>>
+        <childnextflag></childnextflag>
+        <!--点击更多-->
+        <more></more>>
+        <moreflag></moreflag>>
+        <!--详情页链接-->
+        <childLink Mosaic="http://pc.265g.com">//div[@class='title-list']/ul/li/a/@href</childLink>>
+        <!--下一页-->
+        <next>$('body > div.wrap.clear > div.lbar.fl > div.pag > div > a:nth-child(9)')[0].click()</next>>
+        <nextflag>//div[@calss='pag2']/a[9]</nextflag>>
+        <urls>
+            <url>
+                http://news.gamedog.cn/zonghe.html
+            </url>
+            <url>
+                http://news.gamedog.cn/a/yejiedongtai_242_1.html
+            </url>>
+            <url>
+                http://news.gamedog.cn/guandian.html
+            </url>
+            <url>
+                http://news.gamedog.cn/a/renwufangtan_28_1.html
+            </url>
+            <url>
+                http://news.gamedog.cn/shuju.html
+            </url>
+            <url>
+                http://news.gamedog.cn/shebei.html
+            </url>
+
+        </urls>>
+
+    </spiderPc25g>
 </BasKnowledgeSpiderPattern>

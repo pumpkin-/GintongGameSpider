@@ -18,12 +18,12 @@ public class TextGame {
     public static void main(String [] args) throws XpathSyntaxErrorException {
         System.setProperty("webdriver.chrome.driver", SpiderContant.chromeWindowsPath );
         WebDriver driver= new ChromeDriver();
-        driver.get("http://www.qianzhan.com/game/detail/385/170223-66b7833b.html");
+        driver.get("http://www.youxituoluo.com/news");
         WebElement web = driver.findElement(By.xpath("/html"));
         String html = web.getAttribute("outerHTML");
         Document doc = Jsoup.parse(html);
        // System.out.println(doc.outerHtml());
         JXDocument document=new JXDocument(doc);
-        System.out.println(document.sel("//div[@class='info']/p[@class='fl']/span[@id='author_baidu']/text()"));
+            System.out.println(document.sel("//div[@class='list']//section/time/a/text()"));
     }
 }
