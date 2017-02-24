@@ -92,8 +92,7 @@ public class LevenshteinDis {
                         if (fg % 5 == 0) {
                             bzn = "false";
                         }
-
-                        SpiderUtils.storeBugdata(essay, aticle, proKnowledges.get(i).getUuid());
+                        SpiderUtils.storeBugdata(essay, aticle, proKnowledges.get(i+1).getUuid());
                         System.out.println("--------------This data should be delete------------------");
                     } else {
                         fg = 0;

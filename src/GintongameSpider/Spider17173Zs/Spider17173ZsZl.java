@@ -5,6 +5,7 @@ import JavaBean.PerKnowledge;
 import JavaBean.ProKnowledge;
 import SpiderUtils.SpiderContant;
 import SpiderUtils.SpiderUtils;
+
 import dao.impl.BasPersonInfoImpl;
 import dao.impl.PerKnowledgeImpl;
 import dao.impl.ProKnowledgeImpl;
