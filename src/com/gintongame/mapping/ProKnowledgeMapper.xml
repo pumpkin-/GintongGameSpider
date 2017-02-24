@@ -20,8 +20,8 @@
 
     </insert>
 	
-    <select id="selectList" parameterType="java.lang.String"  resultType="JavaBean.ProKnowledge">
-        SELECT * FROM pro_knowledge WHERE ptime BETWEEN #{date} AND DATE_SUB(#{date} , INTERVAL -5 DAY)
+    <select id="selectList" parameterType="JavaBean.DateInfo"  resultType="JavaBean.ProKnowledge">
+        SELECT * FROM pro_knowledge WHERE ptime BETWEEN #{datepast} AND #{date}
     </select>
 
 </mapper>

@@ -15,7 +15,9 @@
         <source>游戏大观</source>
         <childnext></childnext>>
         <childnextflag></childnextflag>>
-        <childLink>//div[@class='entry-thumb']/a/@href</childLink>>
+        <more></more>>
+        <moreflag></moreflag>>
+        <childLink Mosaic="">//div[@class='entry-thumb']/a/@href</childLink>>
         <next>$('div.pagenavi.clear a')[$('div.pagenavi.clear a').length-1].click()</next>>
         <nextflag>//div[@class='pagenavi clear']/a[text()*='Next']</nextflag>>
         <urls>
@@ -98,11 +100,13 @@
         <ptime timeFormat="yyyy MM dd HH mm">//div[@class='intro']/div[@class='fl']/text()</ptime>>
         <tag>//div[@class='tagshare']/table/tbody/tr/td/a[@class='tag']/text()</tag>>
         <main>//div[@class='content']/p</main>>
-        <mainpic>//img/@src</mainpic>>
+        <mainpic Mosaic="">//img/@src</mainpic>>
         <type>//div[@class='url']/a/text()</type>>
         <source>上方网</source>
         <childnext></childnext>>
         <childnextflag></childnextflag>>
+        <more></more>>
+        <moreflag></moreflag>>
         <childLink Mosaic="">//div[@class='rl fontblue']/a/@href</childLink>>
         <next>$('div.listpage a')[$('div.listpage a').length-2].click()</next>>
         <nextflag>//div[@class='listpage']/a[text()*='下一页']</nextflag>>
@@ -127,6 +131,8 @@
         <mainpic>//a/@href</mainpic>>
         <type>//div[@class='Mid2L_crumb']/a[@target='_self']/text()</type>>
         <source>游民星空</source>
+        <more></more>>
+        <moreflag></moreflag>>
         <childLink Mosaic="">//div[@class='Mid2L_con block']/ul[@class='pictxt contentpaging block']/li/div[@class='img']/a/@href|//div[@class='Mid2L_con block']/ul[@class='pictxt contentpaging']/li/div[@class='img']/a/@href</childLink>>
         <childnext>$('div.page_css a')[$('div.page_css a').length-1].click()</childnext>>
         <childnextflag>//div[@class='page_css']/a[text()*='下一页']</childnextflag>>
@@ -149,12 +155,14 @@
         <ptime timeFormat="yyyy MM dd HH mm ss">//div[@class='article']/address/span[1]/text()|//div[@class='newsDetail-header__info']/span/span[1]/em/text()</ptime>>
         <tag></tag>>
         <main>//div[@class='newsCon__content']/p|//div[@id='text']/p</main>>
-        <mainpic>//img/@href</mainpic>>
+        <mainpic Mosaic="">//img/@href</mainpic>>
         <type>//div[@class='mod-crumbs-s3']/a[2]/text()|//div[@class='newgame-header']/address/a[2]/text()</type>>
         <source>多玩游戏</source>
         <childLink Mosaic="http://www.duowan.com">//div[@class='ui-tab__panel']dl[@class='day-item']/dd/div[@class='item-fl']/a/@href</childLink>>
         <childnext></childnext>>
         <childnextflag></childnextflag>>
+        <more></more>>
+        <moreflag></moreflag>>
         <next>$('#pageNum > span:nth-child(12) > a').click()</next>>
         <nextflag>//*[@id="pageNum"]/span[last()]/a/text()*='下一页'</nextflag>>
         <urls>
@@ -164,4 +172,56 @@
         </urls>>
 
     </spiderDwyx>
+
+    <spiderRwt>
+        <title>//h1[@class='appgame-video-title']/text()|//h1[@class='appgame-single-title']/text()</title>
+        <author>//div[@class='appgame-article-state']/a/text()|//div[@class='appgame-video-state']/a/text()</author>
+        <authorurl>//div[@class='appgame-article-state']/a/@href|//div[@class='appgame-video-state']/a/@href</authorurl>>
+        <cover>//div[@class='appgame-item-section']/a/strong/i/@data-original</cover>>
+        <ptime timeFormat="yyyy MM dd HH mm">//div[@class='appgame-video-state']/text()|//div[@class='appgame-article-state']/text()</ptime>>
+        <tag></tag>>
+        <main>//div[@class='appgame-single-video']/p|//div[@class='appgame-primary']/p</main>>
+        <mainpic Mosaic="">//img/@src</mainpic>>
+        <type></type>>
+        <source>任玩堂</source>
+        <childnext></childnext>>
+        <childnextflag></childnextflag>>
+        <more></more>>
+        <moreflag></moreflag>>
+        <childLink Mosaic="">//h1[@class='appgame-item-title']/a/@href</childLink>>
+        <next>$('div.nav-next a')[0].click()</next>>
+        <nextflag>//div[@class='nav-next']/a</nextflag>>
+        <urls>
+            <url>
+                http://www.appgame.com/archives/category/apple-news
+            </url>
+        </urls>>
+
+    </spiderRwt>
+
+    <spiderKdbs>
+        <title>//h1[@class='tit_h1']/text()|//h1[@class='tit_h1 text_c col_h']/text()</title>
+        <author></author>
+        <authorurl></authorurl>>
+        <cover>//div[@class='common_box']/a/img/@src</cover>>
+        <ptime timeFormat="yyyy MM dd HH mm">//p[@class='co_hui txtC mt15 font14']/text()|//div[@class='ti_div']/p[@class='time_p text_c col_er']/text()</ptime>>
+        <tag></tag>>
+        <main>//div[@class='column fl txtcontent']/p|//div[@class='column new_list fl']/div[@class='txt_d']/p</main>>
+        <mainpic Mosaic="">//a/@href|//p/preceding-sibling-one::center/a/@href</mainpic>>
+        <type></type>>
+        <source>任玩堂</source>
+        <childnext></childnext>>
+        <childnextflag></childnextflag>>
+        <more></more>>
+        <moreflag></moreflag>>
+        <childLink Mosaic="">//div[@class='txt_r']/h1/a/@href</childLink>>
+        <next>$('div.page.mt25 a.pagelarge').click()</next>>
+        <nextflag>//div[@class='page mt25']/a[@class='pagelarge']</nextflag>>
+        <urls>
+            <url>
+                http://chanye.ptbus.com/
+            </url>
+        </urls>>
+
+    </spiderKdbs>
 </BasKnowledgeSpiderPattern>

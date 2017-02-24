@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<KnowledgeGrab>
+
+    <!--电玩巴士-->
+    <spiderDWBS>
+        <title>//div[@class='top-info']/h4[@class='title']/p/text()</title>
+        <author>//div[@class='author']/span[@class='name']/author</author>
+        <authorurl></authorurl>>
+        <cover>//ul[@class='ui-repeater']/li[@class='ui-repeater-item']/a[@class='pic']/img/src</cover>>
+        <ptime timeFormat="yyyy MM dd">//div[@class='time']/text()</ptime>>
+        <tag></tag>>
+        <main>//div[@class='article']/p</main>>
+        <mainpic>//img/@src</mainpic>>
+        <type></type>>
+        <source>电玩巴士</source>
+        <childnext></childnext>>
+        <childnextflag></childnextflag>
+        <more></more>>
+        <moreflag></moreflag>>
+        <childLink Mosaic="http://ol.tgbus.com">//ul[@class='ui-repeater']/li[@class='ui-repeater-item']/a[@class='pic']/href</childLink>>
+        <next></next>>
+        <nextflag></nextflag>>
+        <urls>
+            <url>
+                http://ol.tgbus.com/
+
+            </url>
+            <url>
+                http://ol.tgbus.com/list/xwdt/
+            </url>>
+            <url>
+                http://ol.tgbus.com/list/wypc/
+            </url>>
+        </urls>>
+
+    </spiderDWBS>
+   <!--爱玩网-->
+    <spiderAW>
+        <title>//h1[@class='article-h1']/text()</title>
+        <author>//div[@class='article-about']/span[1]/tet()</author>
+        <authorurl></authorurl>>
+        <cover>//div[id='Collist']/div[class='m-collist']/dt/img[@class='img']/src</cover>>
+        <ptime timeFormat="yyyy MM dd">//div[@class='article-about']/span[3]/text()</ptime>>
+        <tag></tag>>
+        <main>//div[@id='endText']/p</main>>
+        <mainpic>//img/@src</mainpic>>
+        <type></type>>
+        <source>爱玩网</source>
+        <childnext></childnext>>
+        <childnextflag></childnextflag>
+        <more>$('#CollistMore').click()</more>>
+        <moreflag></moreflag>>
+        <childLink Mosaic="">//div[id='Collist']/div[class='m-collist']/a/href</childLink>>
+        <next></next>>
+        <nextflag></nextflag>>
+        <urls>
+            <url>
+                http://play.163.com/
+            </url>
+
+        </urls>>
+
+    </spiderAW>
+    <!--易竞技-->
+    <spiderYJJ>
+        <title>//h1[@class='article-h1']/text()</title>
+        <author>//div[@class='article-about']/span[1]/tet()</author>
+        <authorurl></authorurl>>
+        <cover>//div[id='Collist']/div[class='m-collist']/dt/img[@class='img']/src</cover>>
+        <ptime timeFormat="yyyy MM dd">//div[@class='article-about']/span[3]/text()</ptime>>
+        <tag></tag>>
+        <main>//div[@id='endText']/p</main>>
+        <mainpic>//img/@src</mainpic>>
+        <type></type>>
+        <source>易竞技</source>
+        <childnext></childnext>>
+        <childnextflag></childnextflag>
+        <more>$('#CollistMore').click()</more>>
+        <moreflag></moreflag>>
+        <childLink Mosaic="">//div[id='Collist']/div[class='m-collist']/a/href</childLink>>
+        <next></next>>
+        <nextflag></nextflag>>
+        <urls>
+            <url>
+                http://gg.163.com/
+            </url>
+
+        </urls>>
+
+    </spiderYJJ>
+    <!--前瞻网-->
+    <spiderQZW>
+        <title>//h1[id='h_title']/text()</title>
+        <author>//div[@class='info']/span[@id='author_baidu']/text()</author>
+        <authorurl></authorurl>>
+        <cover>//div[@class='pic']/a[1]/img/original</cover>>
+        <ptime timeFormat="yyyy MM dd">//div[@class='info']/span[@id='pubtime_baidu']/text()</ptime>>
+        <tag></tag>>
+        <main>//div[@id='art_cont']/p</main>>
+        <mainpic>//img/@src</mainpic>>
+        <type></type>>
+        <source>前瞻网</source>
+        <childnext></childnext>>
+        <childnextflag></childnextflag>
+        <more></more>>
+        <moreflag></moreflag>>
+        <childLink Mosaic="">//div[id='txt_list']/ul/li/a/href</childLink>>
+        <next>$('.page a:last-child')[0].click()</next>>
+        <nextflag></nextflag>>
+        <urls>
+            <url>
+                http://www.qianzhan.com/game/list/385.html
+            </url>
+
+        </urls>>
+
+    </spiderQZW>
+    <!--当游网-->
+    <spiderDYW>
+        <title>//h1/text()</title>
+        <author>//div[@class='info']/span[3]/text()</author>
+        <authorurl></authorurl>>
+        <cover></cover>>
+        <ptime timeFormat="yyyy MM dd">//div[@class='info']/span[1]/text()</ptime>>
+        <tag></tag>>
+        <main>//div[@id='text']/p</main>>
+        <mainpic>//p/@src</mainpic>>
+        <type></type>>
+        <source>当游网</source>
+        <childnext></childnext>>
+        <childnextflag></childnextflag>
+        <more></more>>
+        <moreflag></moreflag>>
+        <childLink Mosaic="http://www.3h3.com">//div[@class='col-r r']/ul[@class='list-txt']/li/a[2]/@href</childLink>>
+        <next>$('#update_box > div.col-r.r > dl > dd > div.pg_pcl.p10 > div > div.tsp_nav > a.tsp_next > i').click()</next>>
+        <nextflag></nextflag>>
+        <urls>
+            <url>
+                http://www.3h3.com/new/nc_1_6.html
+            </url>
+            <url>
+                http://www.3h3.com/new/nc_2_1.html
+            </url>
+
+        </urls>>
+
+    </spiderDYW>
+</KnowledgeGrab>

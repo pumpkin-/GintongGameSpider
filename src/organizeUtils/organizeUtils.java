@@ -1,11 +1,13 @@
 package organizeUtils;
 
-import JavaBean.BaseKnowLedge;
-import JavaBean.OrganizeConfigure;
+import JavaBean.*;
 import SpiderUtils.LevenshteinDis;
 import SpiderUtils.SpiderUtils;
 import cn.wanghaomiao.xpath.exception.XpathSyntaxErrorException;
+import dao.impl.BasOrganizeInfoImpl;
+import dao.impl.OrgKnowledgeImpl;
 import dao.impl.ProKnowledgeImpl;
+import org.apache.commons.lang3.StringUtils;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
@@ -16,18 +18,28 @@ import org.xml.sax.SAXException;
 
 import java.io.*;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Created by lenovo on 2017/2/21.
  */
 public class organizeUtils {
-    public static void getElement(String flag,String element,int page) throws IOException, DocumentException, SpiderUtils.FormatEexception, InterruptedException, XpathSyntaxErrorException, ProKnowledgeImpl.FormatEexception, ParseException {
+    private static BasOrganizeInfoImpl basOrganizeInfo=new BasOrganizeInfoImpl();
+    private static OrgKnowledgeImpl orgKnowledgeimpl=new OrgKnowledgeImpl();
+    private static List<ProKnowledge> proKnowledgeList=new ArrayList<ProKnowledge>();
+
+    public static void getElement(String flag,String element,int page,String orgflag) throws IOException, DocumentException, SpiderUtils.FormatEexception, InterruptedException, XpathSyntaxErrorException, ProKnowledgeImpl.FormatEexception, ParseException {
         SAXReader saxReader = new SAXReader();
         InputStream fileInputStream=new FileInputStream("C:\\Users\\lenovo\\Desktop\\GintongGameSpider\\src\\organizeUtils\\BasKnowledgePattern.xml");
         Document docsax=saxReader.read(fileInputStream);
         Element root=docsax.getRootElement();
+        Element uuidi=root.element(element).element("uuid");
+        Element onamei=root.element(element).element("oname");
         Element website=root.element(element).element("knowledge").element("website");
+        Element classifiedLink=website.element("urls");
+        List<Element> classifiedlist=classifiedLink.elements();
         Element childLink=website.element("childLink");
         Element next=website.element("next");
         Element nextflagi=website.element("nextflag");
@@ -46,7 +58,6 @@ public class organizeUtils {
         Element childnextflagi=website.element("childnextflag");
         Element morei=website.element("more");
         Element moreflag=website.element("moreflag");
-        Element url=website.element("url");
 
         OrganizeConfigure organizeConfigure=new OrganizeConfigure();
         organizeConfigure.setPage(page);
@@ -69,7 +80,7 @@ public class organizeUtils {
         organizeConfigure.setChildnextflagi(childnextflagi);
         organizeConfigure.setFlag(flag);
 
-        OutputFormat format = OutputFormat.createPrettyPrint();
+      /*  OutputFormat format = OutputFormat.createPrettyPrint();
         // 利用格式化类对编码进行设置
         format.setEncoding("GBK");
         FileOutputStream output = new FileOutputStream("C:\\Users\\lenovo\\Desktop\\GintongGameSpider\\src\\organizeUtils\\BasKnowledgePattern.xml");
@@ -77,18 +88,35 @@ public class organizeUtils {
 
         writer.write(docsax);
         writer.flush();
-        writer.close();
-        SpiderUtils.getDocument(flag, url.getText());
-        SpiderUtils.getData(organizeConfigure);
-       // SpiderU.getDriver().close();
+        writer.close();*/
+
+        for(Element ele:classifiedlist){
+            SpiderUtils.getDocument(flag, ele.getText().trim());
+            proKnowledgeList=SpiderUtils.getData(organizeConfigure,orgflag);
+        }
+        storeOrg(uuidi.getText(),onamei.getText(),proKnowledgeList);
+        SpiderUtils.baseKnowledge.getDriver().close();
         System.exit(0);
     }
 
-    public static void main(String args[]) throws Exception {
-        getElement("windows","spiderJzwh",0);
+    public static void storeOrg(String uuid,String oname,List<ProKnowledge> proKnowledgeListq) throws FileNotFoundException, DocumentException {
+        if(StringUtils.isEmpty(uuid)){
+            String ouuid= UUID.randomUUID().toString();
+            BasOrganizeInfo basOrganizeInfos=new BasOrganizeInfo();
+            basOrganizeInfos.setOname(oname);
+            basOrganizeInfos.setUuid(ouuid);
+            basOrganizeInfos.setCompany_nature("gintong");
+            basOrganizeInfo.insertSingle(basOrganizeInfos);
+            for(int x=0;x<proKnowledgeListq.size();x++) {
+                OrgKnowledge orgKnowledge = new OrgKnowledge();
+                orgKnowledge.setOname(oname);
+                orgKnowledge.setOuuid(ouuid);
+                orgKnowledge.setKuuid(proKnowledgeListq.get(x).getUuid());
+                orgKnowledge.setTitle(proKnowledgeListq.get(x).getTitle());
+                orgKnowledgeimpl.insert(orgKnowledge);
+            }
+        }
 
     }
-
-
 
 }
