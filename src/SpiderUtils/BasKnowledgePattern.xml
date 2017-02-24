@@ -23,7 +23,6 @@
         <urls>
             <url>
                 http://www.gamelook.com.cn/category/news
-
             </url>
             <url>
                 http://www.gamelook.com.cn/category/%E6%B8%B8%E6%88%8F%E8%BF%90%E8%90%A5
@@ -119,7 +118,7 @@
     </spider>
 
 
-<!--游民星空抓取-->
+    <!--游民星空抓取-->
     <spiderYmxk>
         <title>//div[@class='Mid2L_tit']/h1/text()</title>
         <author></author>
@@ -143,7 +142,6 @@
                 http://www.gamersky.com/news/
             </url>
         </urls>>
-
     </spiderYmxk>
 
 
@@ -170,7 +168,6 @@
                 http://www.duowan.com/news/
             </url>
         </urls>>
-
     </spiderDwyx>
 
     <spiderRwt>

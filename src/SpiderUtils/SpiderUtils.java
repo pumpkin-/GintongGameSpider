@@ -380,7 +380,21 @@ public class SpiderUtils {
     }
 
 
-
+    /**
+     * 解析配置文件
+     * @param flag
+     * @param element
+     * @param page
+     * @param orgflag
+     * @throws FormatEexception
+     * @throws DocumentException
+     * @throws ParserConfigurationException
+     * @throws XpathSyntaxErrorException
+     * @throws IOException
+     * @throws ProKnowledgeImpl.FormatEexception
+     * @throws InterruptedException
+     * @throws ParseException
+     */
     public static void getElements(String flag,String element,int page,String orgflag) throws FormatEexception, DocumentException, ParserConfigurationException, XpathSyntaxErrorException, IOException, ProKnowledgeImpl.FormatEexception, InterruptedException, ParseException {
         InputStream inputStream=new FileInputStream(SpiderUtils.class.getClassLoader().getResource("SpiderUtils/BasKnowledgePattern.xml").getFile());
         baseKnowledge.setDocsax(sax.read(inputStream));
@@ -428,7 +442,9 @@ public class SpiderUtils {
         organizeConfigure.setChildnextflagi(childnextflagi);
         organizeConfigure.setFlag(flag);
 
-
+        /**
+         * TODO 抽离代码
+         */
 
         int a=1;
         for(Element ele:classifiedlist){

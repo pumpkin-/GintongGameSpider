@@ -57,7 +57,7 @@ public class SpiderProduct {
      * @param targetNode 目标节点
      * @throws FileNotFoundException
      */
-    public static Map<String, Object>getElement(String targetNode){
+    public static Map<String, Object> getElement(String targetNode){
         try{
             SAXReader reader = new SAXReader();
             //获取配置文档dom树
@@ -153,7 +153,7 @@ public class SpiderProduct {
 }
 
 //爬虫内部线程类
-class Spider implements Runnable{
+class Spider implements Runnable {
     private Map<String, Object> map=null;
     private String startUrl;
     public Spider(Map<String, Object> map,String startUrl) {
