@@ -70,6 +70,11 @@ public class BaseKnowledgeSpider {
         grabWeb();
     }
 
+    /**
+     * 抓取网页
+     * @throws IOException
+     * @throws ProKnowledgeImpl.FormatEexception
+     */
     public static void grabWeb() throws IOException, ProKnowledgeImpl.FormatEexception {
         System.setProperty("phantomjs.binary.path", "/Spider/phantomjs-2.1.1-linux-x86_64/bin/phantomjs");
         WebDriver driver = new PhantomJSDriver();
