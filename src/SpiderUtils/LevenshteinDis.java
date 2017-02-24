@@ -78,7 +78,9 @@ public class LevenshteinDis {
                             perKnowledges.remove(i);
                         }
                         i = i - 1;
+                        break;
                     } else if (dis > 0.95) {
+                        SpiderUtils.storeBugdata(essay, aticle, proKnowledges.get(i).getUuid());
                         proKnowledges.remove(i);
                         if (basPersonInfos.size() > 0) {
                             basPersonInfos.remove(i);
@@ -92,8 +94,8 @@ public class LevenshteinDis {
                         if (fg % 5 == 0) {
                             bzn = "false";
                         }
-                        SpiderUtils.storeBugdata(essay, aticle, proKnowledges.get(i+1).getUuid());
                         System.out.println("--------------This data should be delete------------------");
+                        break;
                     } else {
                         fg = 0;
                     }

@@ -209,7 +209,7 @@
         <main>//div[@class='column fl txtcontent']/p|//div[@class='column new_list fl']/div[@class='txt_d']/p</main>>
         <mainpic Mosaic="">//a/@href|//p/preceding-sibling-one::center/a/@href</mainpic>>
         <type></type>>
-        <source>任玩堂</source>
+        <source>口袋巴士</source>
         <childnext></childnext>>
         <childnextflag></childnextflag>>
         <more></more>>
