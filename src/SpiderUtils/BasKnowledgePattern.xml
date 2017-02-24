@@ -17,7 +17,7 @@
         <childnextflag></childnextflag>>
         <more></more>>
         <moreflag></moreflag>>
-        <childLink>//div[@class='entry-thumb']/a/@href</childLink>>
+        <childLink Mosaic="">//div[@class='entry-thumb']/a/@href</childLink>>
         <next>$('div.pagenavi.clear a')[$('div.pagenavi.clear a').length-1].click()</next>>
         <nextflag>//div[@class='pagenavi clear']/a[text()*='Next']</nextflag>>
         <urls>
@@ -198,4 +198,30 @@
         </urls>>
 
     </spiderRwt>
+
+    <spiderKdbs>
+        <title>//h1[@class='tit_h1']/text()|//h1[@class='tit_h1 text_c col_h']/text()</title>
+        <author></author>
+        <authorurl></authorurl>>
+        <cover>//div[@class='common_box']/a/img/@src</cover>>
+        <ptime timeFormat="yyyy MM dd HH mm">//p[@class='co_hui txtC mt15 font14']/text()|//div[@class='ti_div']/p[@class='time_p text_c col_er']/text()</ptime>>
+        <tag></tag>>
+        <main>//div[@class='column fl txtcontent']/p|//div[@class='column new_list fl']/div[@class='txt_d']/p</main>>
+        <mainpic Mosaic="">//a/@href|//p/preceding-sibling-one::center/a/@href</mainpic>>
+        <type></type>>
+        <source>任玩堂</source>
+        <childnext></childnext>>
+        <childnextflag></childnextflag>>
+        <more></more>>
+        <moreflag></moreflag>>
+        <childLink Mosaic="">//div[@class='txt_r']/h1/a/@href</childLink>>
+        <next>$('div.page.mt25 a.pagelarge').click()</next>>
+        <nextflag>//div[@class='page mt25']/a[@class='pagelarge']</nextflag>>
+        <urls>
+            <url>
+                http://chanye.ptbus.com/
+            </url>
+        </urls>>
+
+    </spiderKdbs>
 </BasKnowledgeSpiderPattern>

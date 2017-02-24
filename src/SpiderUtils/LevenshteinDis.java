@@ -1,13 +1,13 @@
 package SpiderUtils;
 
-import JavaBean.BasPersonInfo;
-import JavaBean.BugData;
-import JavaBean.ProKnowledge;
+import JavaBean.*;
 import dao.impl.BasPersonInfoImpl;
 import dao.impl.BugDataImpl;
 import dao.impl.ProKnowledgeImpl;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.UnsupportedEncodingException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.regex.Matcher;
@@ -17,27 +17,99 @@ import java.util.regex.Pattern;
  * Created by lenovo on 2017/2/10.
  */
 public class LevenshteinDis {
+    private static int fg=0;
+    public static class FormatEexception extends Exception
+    {
+        public FormatEexception(String msg)
+        {
+            super(msg);
+        }
+    }
 
-    public static boolean isExist(String aticle, String date,String url,String kuuid) {
+    public static Map<Integer, List> isExist(List<ProKnowledge> proKnowledges, List<BasPersonInfo> basPersonInfos, List<PerKnowledge> perKnowledges) throws SpiderUtils.FormatEexception, ParseException, FormatEexception {
         ProKnowledgeImpl pro=new ProKnowledgeImpl();
         //System.out.println(pro.selectList(dateformat.format(date).toString()));
-        List<ProKnowledge> list=pro.selectList(date);
-        if (list == null || list.size() == 0) {
-            return false;
-        }
-        String essay;
-        for(int x=0;x<list.size();x++){
-            essay= list.get(x).getMain();
-
-            //修改为错误代码
-            double dis = getSimilarity(essay, aticle);
-            if (dis > 0.95) {
-                SpiderUtils.storeBugdata(essay, aticle, kuuid);
-                System.out.println("--------------This data should be delete------------------");
-                return true;
+        List<Integer> flaglist=new ArrayList<Integer>();
+        List<String> bznlist=new ArrayList<String>();
+        int flag=0;
+        String bzn="true";
+        Map<Integer,List> map=new TreeMap<Integer, List>();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date2=simpleDateFormat.parse(proKnowledges.get(0).getPtime());
+        Date date3=simpleDateFormat.parse(proKnowledges.get(0).getPtime());
+        for(int i=0;i<proKnowledges.size();i++){
+            try {
+                Date date1 = simpleDateFormat.parse(proKnowledges.get(i).getPtime());
+                if(date1.getTime()>date2.getTime()){
+                    date2=date1;
+                }
+                if(date1.getTime()<date3.getTime()){
+                    date3=date1;
+                }
+            } catch (Exception e) {
+                throw new FormatEexception("Time format error,It should be in the form of:\"yyyy-MM-dd HH:mm:ss\"");
             }
         }
-        return false;
+        String dd=simpleDateFormat.format(date2);
+        long day=(date2.getTime()-date3.getTime())/(24*60*60*1000);
+        Date date4=new Date(date2.getTime()-(day+5)*(24*60*60*1000));
+        DateInfo da=new DateInfo();
+        da.setDatepast(simpleDateFormat.format(date4));
+        da.setDate(dd);
+        System.out.println(da.getDatepast());
+        System.out.println(da.getDate());
+        List<ProKnowledge> list=pro.selectList(da);
+        System.out.println("从数据库中抽出："+list.size()+"条数据做对比");
+        String essay;
+        if(list.size()!=0) {
+            for (int i = 0; i < proKnowledges.size(); i++) {
+                for (int x = 0; x < list.size(); x++) {
+                    essay = list.get(x).getMain();
+                    String aticle = proKnowledges.get(i).getMain();
+                    //修改为错误代码
+                    double dis = getSimilarity(essay, aticle);
+                    if (StringUtils.isEmpty(proKnowledges.get(i).getMain())) {
+                        System.out.println("this is the null");
+                        proKnowledges.remove(i);
+                        if (basPersonInfos.size() > 0) {
+                            basPersonInfos.remove(i);
+                        }
+                        if (perKnowledges.size() > 0) {
+                            perKnowledges.remove(i);
+                        }
+                        i = i - 1;
+                    } else if (dis > 0.95) {
+                        proKnowledges.remove(i);
+                        if (basPersonInfos.size() > 0) {
+                            basPersonInfos.remove(i);
+                        }
+                        if (perKnowledges.size() > 0) {
+                            perKnowledges.remove(i);
+                        }
+                        i = i - 1;
+                        fg = fg + 1;
+
+                        if (fg % 5 == 0) {
+                            bzn = "false";
+                        }
+
+                        SpiderUtils.storeBugdata(essay, aticle, proKnowledges.get(i).getUuid());
+                        System.out.println("--------------This data should be delete------------------");
+                    } else {
+                        fg = 0;
+                    }
+                    flag = i + 1;
+                }
+            }
+        }
+        flaglist.add(flag);
+        bznlist.add(bzn);
+        map.put(1,basPersonInfos);
+        map.put(3,perKnowledges);
+        map.put(4,flaglist);
+        map.put(2,bznlist);
+        map.put(5,proKnowledges);
+        return map;
     }
 
     /**

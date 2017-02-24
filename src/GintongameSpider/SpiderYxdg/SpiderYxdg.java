@@ -4,6 +4,7 @@ import JavaBean.BasPersonInfo;
 import JavaBean.PerKnowledge;
 import JavaBean.ProKnowledge;
 import SpiderUtils.SpiderContant;
+import SpiderUtils.SpiderUtils;
 import dao.impl.BasPersonInfoImpl;
 import dao.impl.PerKnowledgeImpl;
 import dao.impl.ProKnowledgeImpl;
@@ -19,6 +20,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.phantomjs.PhantomJSDriver;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -47,8 +49,8 @@ public class SpiderYxdg {
         System.setProperty("webdriver.chrome.driver", SpiderContant.chromeWindowsPath);
         WebDriver driver = new ChromeDriver();
         int a=1;
-        for(int z=0;z<link.length;z++){
-            for(int i=270;i>0;i++){
+        for(int z=1;z<link.length;z++){
+            for(int i=1;i>0;i++){
                 driver.get(link[z] + "/page/" + i);
                 WebElement web=driver.findElement(By.xpath("/html"));
                 String html=web.getAttribute("outerHTML");
@@ -112,10 +114,14 @@ public class SpiderYxdg {
         for(Element linktag:linkstag){
             tag=(tag+","+linktag.text()).replace("null,","");
         }
-        storeToDatebase(title, ptime, type, cover, tag, author, main, puuid, kuuid, url, authorurl);
+        try {
+            storeToDatebase(title, ptime, type, cover, tag, author, main, puuid, kuuid, url, authorurl);
+        } catch (Exception e) {
+           e.printStackTrace();
+        }
     }
 
-    public static void storeToDatebase(String title,String ptime,String type,String cover,String tag,String author,String main,String puuid,String kuuid,String url,String authorurl) throws ProKnowledgeImpl.FormatEexception {
+    public static void storeToDatebase(String title,String ptime,String type,String cover,String tag,String author,String main,String puuid,String kuuid,String url,String authorurl) throws ProKnowledgeImpl.FormatEexception, SpiderUtils.FormatEexception, ParseException {
         ProKnowledge proKnowledge=new ProKnowledge();
         proKnowledge.setTitle(title);
         proKnowledge.setPtime(ptime);
