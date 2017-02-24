@@ -262,11 +262,11 @@
     </spiderYJJ>
     <!--前瞻网-->
     <spiderQZW>
-        <title>//h1[id='h_title']/text()</title>
-        <author>//div[@class='info']/span[@id='author_baidu']/text()</author>
+        <title>//h1[@id='h_title']/text()</title>
+        <author>//div[@class='info']/p[@class='fl']/span[@id='author_baidu']/text()</author>
         <authorurl></authorurl>>
-        <cover>//div[@class='pic']/a[1]/img/original</cover>>
-        <ptime timeFormat="yyyy MM dd">//div[@class='info']/span[@id='pubtime_baidu']/text()</ptime>>
+        <cover>//div[@class='pic']/a[1]/img/@original</cover>>
+        <ptime timeFormat="yyyy MM dd">//div[@class='info']/p[@class='fl']/span[@id='pubtime_baidu']/text()</ptime>>
         <tag></tag>>
         <main>//div[@id='art_cont']/p</main>>
         <mainpic>//img/@src</mainpic>>
@@ -276,9 +276,9 @@
         <childnextflag></childnextflag>
         <more></more>>
         <moreflag></moreflag>>
-        <childLink Mosaic="">//div[id='txt_list']/ul/li/a/@href</childLink>>
+        <childLink Mosaic="">//div[@class='txt_list']/ul[@id='ulNewsList']/li/div[@class='pic']/a/@href</childLink>>
         <next>$('.page a:last-child')[0].click()</next>>
-        <nextflag></nextflag>>
+        <nextflag>//div[@class='page']/a[10]</nextflag>>
         <urls>
             <url>
                 http://www.qianzhan.com/game/list/385.html
@@ -289,13 +289,13 @@
     </spiderQZW>
     <!--当游网-->
     <spiderDYW>
-        <title>//h1/text()</title>
-        <author>//div[@class='info']/span[3]/text()</author>
+        <title>//div[@id='zx_content']/h1/text()</title>
+        <author>//div[@class='info']/p/span[3]/text()</author>
         <authorurl></authorurl>>
         <cover></cover>>
-        <ptime timeFormat="yyyy MM dd">//div[@class='info']/span[1]/text()</ptime>>
+        <ptime timeFormat="yyyy MM dd">//div[@class='info']/p/span[1]/text()</ptime>>
         <tag></tag>>
-        <main>//div[@id='text']/p</main>>
+        <main>//div[@class='text']/p</main>>
         <mainpic>//p/@src</mainpic>>
         <type></type>>
         <source>当游网</source>
@@ -303,7 +303,7 @@
         <childnextflag></childnextflag>
         <more></more>>
         <moreflag></moreflag>>
-        <childLink Mosaic="http://www.3h3.com">//div[@class='col-r r']/ul[@class='list-txt']/li/a[2]/@href</childLink>>
+        <childLink Mosaic="http://www.3h3.com">//dd[@class='fix']/ul[@class='list-txt']/li/a[2]/@href</childLink>>
         <next>$('#update_box > div.col-r.r > dl > dd > div.pg_pcl.p10 > div > div.tsp_nav > a.tsp_next > i').click()</next>>
         <nextflag></nextflag>>
         <urls>

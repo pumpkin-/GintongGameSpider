@@ -15,9 +15,12 @@ import java.text.ParseException;
 public class SpiderGameData {
     public static void main(String [] args){
         try {
-           // SpiderUtils.getElements("windows","spiderDWBS",0,"no");
-            //SpiderUtils.getElements("windows","spiderAW",0,"no");
+            SpiderUtils.getElements("windows","spiderDWBS",0,"no");
+            SpiderUtils.getElements("windows","spiderAW",0,"no");
             SpiderUtils.getElements("windows","spiderYJJ",0,"no");
+
+            SpiderUtils.getElements("windows","spiderQZW",0,"no");
+            SpiderUtils.getElements("windows","spiderDYW",0,"no");
         } catch (Exception e) {
             e.printStackTrace();
         }

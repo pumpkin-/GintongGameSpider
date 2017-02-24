@@ -131,7 +131,7 @@
         <childnextflag></childnextflag>
         <more></more>>
         <moreflag></moreflag>>
-        <childLink Mosaic="http://www.3h3.com">//div[@class='col-r r']/ul[@class='list-txt']/li/a[2]/href</childLink>>
+        <childLink Mosaic="http://www.3h3.com">//div[@class='col-r r']/ul[@class='list-txt']/li/a[2]/@href</childLink>>
         <next>$('#update_box > div.col-r.r > dl > dd > div.pg_pcl.p10 > div > div.tsp_nav > a.tsp_next > i').click()</next>>
         <nextflag></nextflag>>
         <urls>
