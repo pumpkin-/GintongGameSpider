@@ -73,6 +73,7 @@ public class SpiderUtils {
     public static List<ProKnowledge> getData(OrganizeConfigure organizeConfigure,String orgflag) throws XpathSyntaxErrorException, ParseException, InterruptedException, FormatEexception, ProKnowledgeImpl.FormatEexception {
         List<ProKnowledge> test=new ArrayList<ProKnowledge>();
         for(int i=1;i>0;i++) {
+            Thread.sleep(2000);
             if(organizeConfigure.getPage()!=0) {
                 for (int pag = 1; pag < organizeConfigure.getPage(); pag++) {
                     JavascriptExecutor executornext = (JavascriptExecutor) baseKnowledge.getDriver();
@@ -182,6 +183,7 @@ public class SpiderUtils {
                         child= (String) obj;
                     }
                     baseKnowledge.getDriver().get((String) child);
+                    Thread.sleep(1000);
                     baseKnowledge.setWebElement(baseKnowledge.getDriver().findElement(By.xpath("/html")));
                     JXDocument jxDocumentChild = new JXDocument(Jsoup.parse(baseKnowledge.getWebElement().getAttribute("outerHTML")));
                     String puuid = UUID.randomUUID().toString();
@@ -378,7 +380,21 @@ public class SpiderUtils {
     }
 
 
-
+    /**
+     * 解析配置文件
+     * @param flag
+     * @param element
+     * @param page
+     * @param orgflag
+     * @throws FormatEexception
+     * @throws DocumentException
+     * @throws ParserConfigurationException
+     * @throws XpathSyntaxErrorException
+     * @throws IOException
+     * @throws ProKnowledgeImpl.FormatEexception
+     * @throws InterruptedException
+     * @throws ParseException
+     */
     public static void getElements(String flag,String element,int page,String orgflag) throws FormatEexception, DocumentException, ParserConfigurationException, XpathSyntaxErrorException, IOException, ProKnowledgeImpl.FormatEexception, InterruptedException, ParseException {
         InputStream inputStream=new FileInputStream(SpiderUtils.class.getClassLoader().getResource("SpiderUtils/BasKnowledgePattern.xml").getFile());
         baseKnowledge.setDocsax(sax.read(inputStream));
@@ -426,12 +442,16 @@ public class SpiderUtils {
         organizeConfigure.setChildnextflagi(childnextflagi);
         organizeConfigure.setFlag(flag);
 
-
+        /**
+         * TODO 抽离代码
+         */
 
         int a=1;
         for(Element ele:classifiedlist){
             SpiderUtils.getDocument(flag, ele.getText().trim());
             getData(organizeConfigure,orgflag);
+            inputStream.close();
+            baseKnowledge.getDriver().close();
         }
         inputStream.close();
         baseKnowledge.getDriver().close();
@@ -528,7 +548,7 @@ public class SpiderUtils {
 
     }
 
-    public static List storeToDatebase(String flag,String author,String orgflag) throws FormatEexception, ProKnowledgeImpl.FormatEexception {
+    public static List storeToDatebase(String flag,String author,String orgflag) throws FormatEexception, ProKnowledgeImpl.FormatEexception, ParseException {
         List<ProKnowledge> proKnowledgeListq=new ArrayList<ProKnowledge>();
         if (flag.equals("windows")) {
             Map map = proknowimpl.insertBatchAutoDedup(proKnowledgeList, basPersonInfoList, perKnowledgeList);
