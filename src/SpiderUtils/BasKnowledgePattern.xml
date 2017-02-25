@@ -410,7 +410,7 @@
         <type></type>>
         <source>前瞻网</source>
         <childLink join="">//div[@class='txt_list']/ul[@id='ulNewsList']/li/div[@class='pic']/a/@href</childLink>>
-        <nextpage join="http://pc.265g.com">a[text()*='下一页']</nextpage>
+        <nextpage join="http://pc.265g.com">//a[text()*='下一页']</nextpage>
         <flag>jsoup</flag>>
         <childnext join=""></childnext>>
         <chose demand=""></chose>>
@@ -447,7 +447,7 @@
         <type></type>>
         <source>当游网</source>
         <childLink join="http://www.3h3.com">//dd[@class='fix']/ul[@class='list-txt']/li/a[2]/@href</childLink>>
-        <nextpage join="http://www.3h3.com">//div[@class='tsp_nav']/a[text()*='下一页']/@href</nextpage>
+        <nextpage join="http://www.3h3.com">//div[@class='tsp_nav']/a[allText()*='下一页']/@href</nextpage>
         <flag>jsoup</flag>>
         <childnext join=""></childnext>>
         <chose demand=""></chose>>
@@ -567,8 +567,8 @@
         <type></type>>
         <source>18183</source>
         <childLink join="">//div[@class='dllist']/dl//dt//a/@href</childLink>>
-        <nextpage join="http://chanye.18183.com/">//div[@class='fy']/li/a[text()*='下一页']/@href</nextpage>
-        <flag>jsoup</flag>>
+        <nextpage join="">$('body > div.warpper > div.content.fl > div.txtlist > div:nth-child(4) > li:nth-child(12) > a')[0].click()</nextpage>
+        <flag>selenium</flag>>
         <childnext join=""></childnext>>
         <chose demand=""></chose>>
         <urls>

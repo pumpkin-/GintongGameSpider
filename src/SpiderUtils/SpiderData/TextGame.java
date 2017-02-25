@@ -45,10 +45,10 @@ public class TextGame {
         try {
             //跑完
            // CommonSpiderKnowledge.ergodicUrl("spiderDWBS", 0, "no");
-            //CommonSpiderKnowledge.ergodicUrl("spider18183", 0, "no");
+           // CommonSpiderKnowledge.ergodicUrl("spiderYXG", 0, "no");
             //跑完
             //CommonSpiderKnowledge.ergodicUrl("spiderYJJ", 0, "no");
-            CommonSpiderKnowledge.ergodicUrl("spiderDYW", 0, "no");
+            //CommonSpiderKnowledge.ergodicUrl("spiderDYW", 0, "no");
         } catch (Exception e) {
             e.printStackTrace();
         }
