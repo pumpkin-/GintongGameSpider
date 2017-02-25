@@ -320,17 +320,11 @@
         <mainpic>/preceding-sibling::div/img/@src</mainpic>>
         <type></type>>
         <source>游戏陀螺</source>
-        <!--详情页翻页-->
-        <childnext></childnext>>
-        <childnextflag></childnextflag>
-        <!--点击更多-->
-        <more></more>>
-        <moreflag></moreflag>>
-        <!--详情页链接-->
-        <childLink Mosaic="http://www.youxituoluo.com">//div[@class='list']//section/a[@class='left_img']/@href</childLink>>
-        <!--下一页-->
-        <next>$('#list_right_button > span').click()</next>>
-        <nextflag>//div[@class='list']/section/aside/a[@id='list_right_button']</nextflag>>
+        <nextpage join="http://www.youxituoluo.com">//a[@id='list_right_button']/@href</nextpage>>
+        <flag>jsoup</flag>>
+        <childnext join=""></childnext>>
+        <chose demand=""></chose>>
+        <childLink join="http://www.youxituoluo.com">//div[@class='list']//section/a[@class='left_img']/@href</childLink>>
         <urls>
             <url>
                 http://www.youxituoluo.com/news
@@ -372,24 +366,17 @@
         <author>//div[@class='headlines']/p/span[3]/text()</author>
         <authorurl></authorurl>>
         <cover>//div[@class='newstw']/div[@class='article-box']/a//img/@src</cover>>
-        <ptime timeFormat="yyyy MM dd">//div[@class='headlines']/p/span[1]/text()</ptime>>
+        <ptime timeFormat="yyyy MM dd">//div[@class='headlines']/p/span[1]/text()</ptime>
         <tag></tag>>
         <main>//div[@id='con_wenzhang']//p</main>>
         <mainpic>//img/@src</mainpic>>
         <type></type>>
         <source>游戏狗</source>
-        <!--详情页翻页-->
-        <childnext></childnext>>
-        <childnextflag></childnextflag>
-        <!--点击更多-->
-        <more></more>>
-        <moreflag></moreflag>>
-        <!--详情页链接-->
-        <childLink Mosaic="http://news.gamedog.cn">//div[@class='newstw']/div[@class='article-box']/a/@href</childLink>>
-        <!--下一页-->
-        <next>$('body > div.main > div.newsbody > div.newsleftlist.fl > div.fenye.page > div > a:nth-child(9)')[0].click()</next>>
-
-        <nextflag>//div[class='fenye page']/a[7]</nextflag>>
+        <childLink join="http://news.gamedog.cn">//div[@class='newstw']/div[@class='article-box']/a/@href</childLink>
+        <nextpage join="http://news.gamedog.cn">//div[@class='page']/a[7]/@href</nextpage>
+        <flag>jsoup</flag>>
+        <childnext join=""></childnext>
+        <chose demand=""></chose>
         <urls>
             <url>
                 http://news.gamedog.cn/zonghe.html
@@ -425,20 +412,14 @@
         <mainpic>//img/@src</mainpic>>
         <type></type>>
         <source>18183</source>
-        <!--详情页翻页-->
-        <childnext></childnext>>
-        <childnextflag></childnextflag>
-        <!--点击更多-->
-        <more></more>>
-        <moreflag></moreflag>>
-        <!--详情页链接-->
-        <childLink Mosaic="">//div[@class='dllist']/dl//dt//a/@href</childLink>>
-        <!--下一页-->
-        <next>$('body > div.warpper > div.content.fl > div.txtlist > div:nth-child(4) > li:nth-child(12) > a')[0].click()</next>>
-        <nextflag>//div[class='fy']/li[12]</nextflag>>
+        <childLink join="">//div[@class='dllist']/dl//dt//a/@href</childLink>>
+        <nextpage join="http://chanye.18183.com/">//div[@class='fy']//a[11]</nextpage>
+        <flag>jsoup</flag>>
+        <childnext join=""></childnext>>
+        <chose demand=""></chose>>
         <urls>
             <url>
-                http://chanye.18183.com/cyqy/list_1184_36.html
+                http://chanye.18183.com/cyqy/list_1184_1.html
             </url>
             <url>
                 http://chanye.18183.com/cyjy/
@@ -479,17 +460,11 @@
         <mainpic>//img/@src</mainpic>>
         <type></type>>
         <source>蚕豆网</source>
-        <!--详情页翻页-->
-        <childnext></childnext>>
-        <childnextflag></childnextflag>
-        <!--点击更多-->
-        <more></more>>
-        <moreflag></moreflag>>
-        <!--详情页链接-->
-        <childLink Mosaic="">//div[@class='newlist1']/dl//dt//a/@href</childLink>>
-        <!--下一页-->
-        <next>$('body > div.main > div.main_l > div > div.page > a:nth-child(9)')[0].click() </next>>
-        <nextflag>//div[@class='page']/a[9]/</nextflag>>
+        <childLink join="">//div[@class='newlist1']/dl//dt//a/@href</childLink>>
+        <nextpage join="http://news.candou.com">//div[@class='page']//a[6]</nextpage>
+        <flag>jsoup</flag>>
+        <childnext join=""></childnext>>
+        <chose demand=""></chose>>
         <urls>
             <url>
                 http://news.candou.com/newgame/
@@ -528,17 +503,11 @@
         <mainpic>//img/@src</mainpic>>
         <type></type>>
         <source>pc25g</source>
-        <!--详情页翻页-->
-        <childnext></childnext>>
-        <childnextflag></childnextflag>
-        <!--点击更多-->
-        <more></more>>
-        <moreflag></moreflag>>
-        <!--详情页链接-->
-        <childLink Mosaic="http://pc.265g.com">//div[@class='title-list']/ul/li/a/@href</childLink>>
-        <!--下一页-->
-        <next>$('body > div.wrap.clear > div.lbar.fl > div.pag > div > a:nth-child(9)')[0].click()</next>>
-        <nextflag>//div[@calss='pag']/a[9]</nextflag>>
+        <childLink join="http://pc.265g.com">//div[@class='title-list']/ul/li/a/@href</childLink>>
+        <nextpage join="http://pc.265g.com">//div[@class='page2']//a[8]</nextpage>
+        <flag>jsoup</flag>>
+        <childnext join=""></childnext>>
+        <chose demand=""></chose>>
         <urls>
             <url>
                 http://pc.265g.com/news/industry/

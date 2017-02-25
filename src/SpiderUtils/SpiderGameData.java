@@ -15,11 +15,11 @@ import java.text.ParseException;
 public class SpiderGameData {
     public static void main(String [] args){
         try {
-              SpiderUtils.getElements("windows","spiderYXTL",0,"no");
-//            SpiderUtils.getElements("windows","spiderYXG",0,"no");
-//            SpiderUtils.getElements("windows","spider18183",0,"no");
-//            SpiderUtils.getElements("windows","spiderCDW",0,"no");
-//            SpiderUtils.getElements("windows","spiderPc 25g",0,"no");
+              CommonSpiderKnowledge.ergodicUrl("spiderYXTL", 0, "no");
+//            CommonSpiderKnowledge.ergodicUrl("spiderYXTL", 0, "no");
+//            CommonSpiderKnowledge.ergodicUrl("spiderYXTL", 0, "no");
+//            CommonSpiderKnowledge.ergodicUrl("spiderYXTL", 0, "no");
+
 
         } catch (Exception e) {
             e.printStackTrace();
