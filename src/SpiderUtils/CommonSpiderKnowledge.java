@@ -256,22 +256,28 @@ public class CommonSpiderKnowledge {
      */
     public static KnowledgeSpiderConfig parseConfigXmlByWebName(String webName) throws FileNotFoundException, DocumentException {
         SAXReader saxReader = new SAXReader();
+//        配置文件对应的JavaBean
         KnowledgeSpiderConfig knowledgeSpiderConfig = new KnowledgeSpiderConfig();
+
         knowledgeSpiderConfig.webUrls = new ArrayList<Element>();
 
         org.dom4j.Document dom =  saxReader.read(new FileInputStream(SpiderUtils.class.getClassLoader().getResource("SpiderUtils/BasKnowledgePattern.xml").getFile()));
         Element rootElemnt = dom.getRootElement();//获取根元素
         Element childElement = rootElemnt.element(webName);
+
             //获取当前网站的所有子链接 并添加到javaBean中
             if(childElement.element("urls") == null || childElement.element("urls").elements().size() == 0) {
                 throw new NullPointerException("can't find corret web urls, please check your <urls> tag in your BasKnowledgePattern.xml");
             }
+//        获取当前元素urls下的所有子元素
             for (Element ele : (List<Element>)(childElement.element("urls")).elements()) {
                 knowledgeSpiderConfig.webUrls.add(ele);
             }
+
             if (childElement.element("next") != null) {
                 knowledgeSpiderConfig.nextPage = childElement.element("next");
             }
+
             if (childElement.element("author") != null) {
                 knowledgeSpiderConfig.author = childElement.element("author");
             }

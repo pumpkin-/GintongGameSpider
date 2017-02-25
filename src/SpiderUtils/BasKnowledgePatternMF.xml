@@ -35,10 +35,6 @@
 
         <more>$('.public-more').click()</more>>
 
-
-
-
-
         <moreflag>//a[class='public-more public-mb20']</moreflag>>
 
 
