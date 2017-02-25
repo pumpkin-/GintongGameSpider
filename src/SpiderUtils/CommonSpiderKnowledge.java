@@ -52,7 +52,7 @@ public class CommonSpiderKnowledge {
             @Override
             public void run() {
                 try {
-                    ergodicUrl("spiderSfw", 0, "no");
+                    ergodicUrl("spiderSfw",180, "no");
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -329,7 +329,7 @@ public class CommonSpiderKnowledge {
     }
 
     /**
-     * 遍历urls内部url Jsoup
+     * 遍历urls内部url
      */
     public static void ergodicUrl(String webname,int fromPageNum,String orgflag) throws Exception {
         System.out.println("Start parsing XML file");
@@ -338,10 +338,12 @@ public class CommonSpiderKnowledge {
             if(knowledgeSpiderConfig.flag.getText().equals("jsoup")) {
                 System.out.println("Get details page");
                 ergodicDetails(knowledgeSpiderConfig, url.getText().trim(), orgflag, fromPageNum);
+                fromPageNum=0;
             }else if(knowledgeSpiderConfig.flag.getText().equals("selenium")){
                 System.out.println("Get details page");
                 WebDriver driver=getChromeDriver();
                 ergodicDetails(knowledgeSpiderConfig, orgflag, fromPageNum,driver,url.getText().trim());
+                fromPageNum=0;
             }else{
                 throw new XpathSyntaxErrorException("you shuould chose jsoup or selenium");
             }
@@ -362,12 +364,14 @@ public class CommonSpiderKnowledge {
         int a=1;
         //页数
         int i=1;
+        //断点翻页
+        for(int x=1;x<formpage;x++){
+            System.out.println("Start page break");
+            System.out.println("now"+"  "+x);
+            doc=listPageJsoup(doc, knowledgeSpiderConfig);
+            i=x+1;
+        }
         while(true){
-            //断点翻页
-            for(int x=1;x<formpage;x++){
-                System.out.println("Start page break");
-                doc=listPageJsoup(doc, knowledgeSpiderConfig);
-            }
             int fg=0;
             //获取详情页列表
             List<Object> detailsUrls=doc.sel(knowledgeSpiderConfig.childLink.getText());
@@ -439,6 +443,17 @@ public class CommonSpiderKnowledge {
         Map<String,List<Object>> map=new HashMap<String, List<Object>>();
         System.out.println("Start getting starturl's DOM tree");
         doc=getJXDocument(driver,startUrl);
+        //页数
+        int i=1;
+        //条数
+        int a=1;
+        //断点翻页
+        for(int x=1;x<formpage;x++){
+            System.out.println("Start page break");
+            System.out.println("now"+"  "+x);
+            doc=listPageSelenium(knowledgeSpiderConfig,driver);
+            i=x+1;
+        }
         //点击更多
         if(knowledgeSpiderConfig.chose.attributeValue("demand").equals("clickMore")){
             while(true) {
@@ -467,15 +482,6 @@ public class CommonSpiderKnowledge {
         }else{
             throw new XpathSyntaxErrorException("you shuould chose clickMore or slidingRoller");
         }
-        //页数
-        int i=1;
-        //断点翻页
-        for(int x=1;x<formpage;x++){
-            System.out.println("Start page break");
-            doc=listPageSelenium(knowledgeSpiderConfig,driver);
-        }
-        //条数
-        int a=1;
         while(true){
             int fg=0;
             //获取详情页列表

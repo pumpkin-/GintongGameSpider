@@ -39,6 +39,7 @@ public class LevenshteinDis {
         Date date3=simpleDateFormat.parse(proKnowledges.get(0).getPtime());
         for(int i=0;i<proKnowledges.size();i++){
             try {
+<<<<<<< HEAD
                 Date date1 = simpleDateFormat.parse(proKnowledges.get(i).getPtime());
 
                 if(date1.getTime()>date2.getTime()){
@@ -46,6 +47,16 @@ public class LevenshteinDis {
                 }
                 if(date1.getTime()<date3.getTime()){
                     date3=date1;
+=======
+                if(StringUtils.isNotEmpty(proKnowledges.get(i).getPtime())) {
+                    Date date1 = simpleDateFormat.parse(proKnowledges.get(i).getPtime());
+                    if (date1.getTime() > date2.getTime()) {
+                        date2 = date1;
+                    }
+                    if (date1.getTime() < date3.getTime()) {
+                        date3 = date1;
+                    }
+>>>>>>> 6df9180aabb4b55f1cdcc8117bfeca09f8f9f49b
                 }
             } catch (Exception e) {
                 throw new FormatEexception("Time format error,It should be in the form of:\"yyyy-MM-dd HH:mm:ss\"");
