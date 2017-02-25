@@ -429,7 +429,7 @@ public class CommonSpiderKnowledge {
                 nexturl = knowledgeSpiderConfig.nextPage.attributeValue("join") + next.toString();
             }
         } else {
-            nexturl = next.toString();
+            nexturl = next.toString().replace("..","");
         }
         JXDocument nextDocument = getJXDocument(nexturl);
         return nextDocument;

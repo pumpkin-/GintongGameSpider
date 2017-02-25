@@ -60,7 +60,7 @@ public class LevenshteinDis {
         da.setDate(dd);
         System.out.println(da.getDatepast());
         System.out.println(da.getDate());
-        if(day>10){
+        if(day>SpiderContant.insertBatchContant*perKnowledges.size()){
             String essay;
             for (int i = 0; i < proKnowledges.size(); i++) {
                 DateInfo daa = new DateInfo();
