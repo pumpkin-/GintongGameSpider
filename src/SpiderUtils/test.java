@@ -5,7 +5,11 @@ import JavaBean.ProKnowledge;
 import cn.wanghaomiao.xpath.exception.XpathSyntaxErrorException;
 import cn.wanghaomiao.xpath.model.JXDocument;
 import cn.wanghaomiao.xpath.model.JXNode;
+
+import com.google.gson.Gson;
+
 import com.gargoylesoftware.htmlunit.activex.javascript.msxml.XMLSerializer;
+
 import dao.impl.ProKnowledgeImpl;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpEntity;
@@ -49,7 +53,7 @@ import java.util.Objects;
 import java.util.logging.SimpleFormatter;
 import java.util.logging.XMLFormatter;
 
-public class Test {
+public class test {
     static List<org.dom4j.Element> books;
     public static void main(String[] args) throws ParserConfigurationException, XpathSyntaxErrorException, SpiderUtils.FormatEexception, DocumentException, IOException, ProKnowledgeImpl.FormatEexception, InterruptedException, ParseException {
        /* FileInputStream inputStream=new FileInputStream(Test.class.getClassLoader().getResource("SpiderUtils/BasKnowledgePattern.xml").getFile());
@@ -73,6 +77,7 @@ public class Test {
 
 
 
+
        SpiderUtils.getElements("windows","spiderBufan",0,"no");
 
 
@@ -86,14 +91,26 @@ public class Test {
 //        System.out.println(jxDocument.selOne("//div[@class='appgame-video-state']/text()"));
 //        SpiderUtils.getElements("windows", "spiderChuapp", 0, "no");
 
+//        Connection.Response res=Jsoup.connect("https://maimai.cn/static/scripts/mm__node.bundle.min.js?a348d5f185d822306f21abc35824b9cb")
+//                                        .userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36")
+//                                        .ignoreContentType(true)
+//                .execute();
+//        String body=res.body();
+//        System.out.println(body);
+
+
         //SpiderUtils.getElements("windows","spiderYxgc",70,"no");
         //SpiderUtils.getElements("windows","spiderRwt",0,"no");
         //SpiderUtils.getElements("windows","spiderKdbs",0,"no");
+
 
 //        org.jsoup.nodes.Document doc=Jsoup.connect("http://www.gamersky.com/news/201702/872232.shtml")
 //                          .userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36")
 //                          .get();
 //     System.out.println(doc.outerHtml());
+
+
+
 
         /*System.setProperty("webdriver.chrome.driver",SpiderContant.chromeWindowsPath );
         WebDriver driver=new ChromeDriver();
@@ -106,6 +123,16 @@ public class Test {
 
 
 //
+
+
+     /*System.setProperty("webdriver.chrome.driver",SpiderContant.chromeWindowsPath );
+        WebDriver driver=new ChromeDriver();
+        driver.get("http://www.mofang.com/news");
+       JavascriptExecutor executorChildnext = (JavascriptExecutor) driver;
+        executorChildnext.executeScript("$('span.pagecss a.p1.nexe').click()");
+        WebElement webElement=driver.findElement(By.xpath("/html"));
+        org.jsoup.nodes.Document doc=Jsoup.parse(webElement.getAttribute("outerHTML"));
+        JXDocument jxDocument=new JXDocument(doc);
 
 //        System.out.println(jxDocument.sel("//dd[@class='public-tabs-title']/a/@href"));
 

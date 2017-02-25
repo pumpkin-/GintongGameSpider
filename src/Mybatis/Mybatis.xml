@@ -24,5 +24,12 @@
         <mapper resource="com/gintongame/mapping/ProGameTypeMapper.xml"/>
         <mapper resource="com/gintongame/mapping/OrgKnowledgeMapper.xml"/>
         <mapper resource="com/gintongame/mapping/ProGamePlatformMapper.xml"/>
+        <mapper resource="com/gintongame/mapping/BasBusinessInfoMapper.xml"/>
+        <mapper resource="com/gintongame/mapping/ComExecutiveInfoMapper.xml"/>
+        <mapper resource="com/gintongame/mapping/ComInvestmentInfoMapper.xml"/>
+        <mapper resource="com/gintongame/mapping/ComShareholderMapper.xml"/>
+        <mapper resource="com/gintongame/mapping/ComShareholderTeamMapper.xml"/>
+        <mapper resource="com/gintongame/mapping/PerOrganizeMapper.xml"/>
+
     </mappers>
 </configuration>

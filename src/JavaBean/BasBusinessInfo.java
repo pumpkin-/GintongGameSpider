@@ -3,13 +3,17 @@ package JavaBean;
 import java.util.Date;
 
 public class BasBusinessInfo {
+    private int bid;
+
     private String uuid;
 
     private String cname;
 
-    private String cnameOld;
+    private String cname_old;
 
-    private String stockCode;
+    private String stock_code;
+
+    private String stock_type;
 
     private String telephone;
 
@@ -19,29 +23,29 @@ public class BasBusinessInfo {
 
     private String adress;
 
-    private String legalPersen;
+    private String legal_persen;
 
     private String rcapital;
 
-    private Byte state;
+    private String state;
 
-    private Date rtime;
+    private String rtime;
 
     private String industry;
 
     private String rbnumber;
 
-    private String enterpriseType;
+    private String enterprise_type;
 
     private String ocode;
 
-    private String operationPeriod;
+    private String operation_period;
 
     private String rdepartment;
 
-    private Date approvaDate;
+    private String approva_date;
 
-    private String ucCode;
+    private String uc_code;
 
     private String radress;
 
@@ -68,19 +72,19 @@ public class BasBusinessInfo {
     }
 
     public String getCnameOld() {
-        return cnameOld;
+        return cname_old;
     }
 
     public void setCnameOld(String cnameOld) {
-        this.cnameOld = cnameOld == null ? null : cnameOld.trim();
+        this.cname_old = cnameOld == null ? null : cnameOld.trim();
     }
 
     public String getStockCode() {
-        return stockCode;
+        return stock_code;
     }
 
     public void setStockCode(String stockCode) {
-        this.stockCode = stockCode == null ? null : stockCode.trim();
+        this.stock_code = stockCode == null ? null : stockCode.trim();
     }
 
     public String getTelephone() {
@@ -116,11 +120,11 @@ public class BasBusinessInfo {
     }
 
     public String getLegalPersen() {
-        return legalPersen;
+        return legal_persen;
     }
 
     public void setLegalPersen(String legalPersen) {
-        this.legalPersen = legalPersen == null ? null : legalPersen.trim();
+        this.legal_persen = legalPersen == null ? null : legalPersen.trim();
     }
 
     public String getRcapital() {
@@ -131,19 +135,19 @@ public class BasBusinessInfo {
         this.rcapital = rcapital == null ? null : rcapital.trim();
     }
 
-    public Byte getState() {
+    public String getState() {
         return state;
     }
 
-    public void setState(Byte state) {
+    public void setState(String state) {
         this.state = state;
     }
 
-    public Date getRtime() {
+    public String getRtime() {
         return rtime;
     }
 
-    public void setRtime(Date rtime) {
+    public void setRtime(String rtime) {
         this.rtime = rtime;
     }
 
@@ -164,11 +168,11 @@ public class BasBusinessInfo {
     }
 
     public String getEnterpriseType() {
-        return enterpriseType;
+        return enterprise_type;
     }
 
     public void setEnterpriseType(String enterpriseType) {
-        this.enterpriseType = enterpriseType == null ? null : enterpriseType.trim();
+        this.enterprise_type = enterpriseType == null ? null : enterpriseType.trim();
     }
 
     public String getOcode() {
@@ -180,11 +184,11 @@ public class BasBusinessInfo {
     }
 
     public String getOperationPeriod() {
-        return operationPeriod;
+        return operation_period;
     }
 
     public void setOperationPeriod(String operationPeriod) {
-        this.operationPeriod = operationPeriod == null ? null : operationPeriod.trim();
+        this.operation_period = operationPeriod == null ? null : operationPeriod.trim();
     }
 
     public String getRdepartment() {
@@ -195,20 +199,20 @@ public class BasBusinessInfo {
         this.rdepartment = rdepartment == null ? null : rdepartment.trim();
     }
 
-    public Date getApprovaDate() {
-        return approvaDate;
+    public String getApprovaDate() {
+        return approva_date;
     }
 
-    public void setApprovaDate(Date approvaDate) {
-        this.approvaDate = approvaDate;
+    public void setApprovaDate(String approvaDate) {
+        this.approva_date = approvaDate;
     }
 
     public String getUcCode() {
-        return ucCode;
+        return uc_code;
     }
 
     public void setUcCode(String ucCode) {
-        this.ucCode = ucCode == null ? null : ucCode.trim();
+        this.uc_code = ucCode == null ? null : ucCode.trim();
     }
 
     public String getRadress() {
@@ -241,5 +245,21 @@ public class BasBusinessInfo {
 
     public void setBscope(String bscope) {
         this.bscope = bscope == null ? null : bscope.trim();
+    }
+
+    public String getStockType() {
+        return stock_type;
+    }
+
+    public void setStockType(String stockType) {
+        this.stock_type = stockType;
+    }
+
+    public int getBid() {
+        return bid;
+    }
+
+    public void setBid(int bid) {
+        this.bid = bid;
     }
 }

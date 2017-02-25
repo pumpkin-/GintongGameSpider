@@ -6,20 +6,18 @@
         <title>//h1[@class='entry-title']/text()</title>
         <author>//span[@class='meta-author']/a/text()</author>
         <authorurl></authorurl>>
-        <cover>//div[@class='entry entry-content']/p/img[1]/@src</cover>>
+        <cover Mosaic="">//div[@class='entry entry-content']/p/img[1]/@src</cover>>
         <ptime timeFormat="yyyy MM dd">//span[@class='meta-date']/text()</ptime>>
         <tag>//div[@id='entry-tags']/a/text()</tag>>
         <main>//div[@class='entry entry-content']/p</main>>
-        <mainpic>//img/@src</mainpic>>
+        <mainpic Mosaic="">//img/@src</mainpic>>
         <type>//span[@class='meta-cat']/a/text()</type>>
         <source>游戏大观</source>
         <childnext></childnext>>
-        <childnextflag></childnextflag>>
-        <more></more>>
-        <moreflag></moreflag>>
-        <childLink>//div[@class='entry-thumb']/a/@href</childLink>>
-        <next>$('div.pagenavi.clear a')[$('div.pagenavi.clear a').length-1].click()</next>>
-        <nextflag>//div[@class='pagenavi clear']/a[text()*='Next']</nextflag>>
+        <chose demand=""></chose>>
+        <flag>jsoup</flag>>
+        <childLink Mosaic="">//div[@class='entry-thumb']/a/@href</childLink>>
+        <nextpage>//div[@class='pagenavi clear']/a[text()*='Next']/@href</nextpage>>
         <urls>
             <url>
                 http://www.gamelook.com.cn/category/news
@@ -75,13 +73,10 @@
         <mainpic Mosaic="">//img/@src</mainpic>>
         <type>//div[@class='s_1 on']/p/a[@class='on']/text()</type>>
         <source>游戏观察</source>
-        <childnext></childnext>>
-        <childnextflag></childnextflag>>
         <childLink Mosaic="http://www.youxiguancha.com">//div[@class='inf clearfix']/div[@class='inf_c']/h2/a/@href</childLink>>
         <next>$('div.page_manu a.pageNext')[0].click()</next>>
         <nextflag>//div[@class='page_manu']/a[@class='pageNext']</nextflag>>
-        <more></more>>
-        <moreflag></moreflag>>
+        <chose demand=""></chose>>
         <urls>
             <url>
                 http://www.youxiguancha.com/news/
@@ -464,7 +459,7 @@
         <authorurl></authorurl>>
         <cover>//img[@width='191']/@src</cover>>
         <ptime timeFormat="yyyy MM dd">//p[@class='introduction']/time/text()</ptime>>
-        <tag>//div[@class='list']/section/time/a/text()</tag>>
+        <tag>//div[@class='list']/section//section/p[@class='subtitle']/a/text()</tag>>
         <main>//div[@id='text_content']/main/p</main>>
         <mainpic>/preceding-sibling::div/img/@src</mainpic>>
         <type></type>>
@@ -517,13 +512,13 @@
     </spiderYXTL>
     <!--游戏狗-->
     <spiderYXG>
-        <title>//div[@class='news_title']/h1/text()</title>
-        <author>//div[@class='neirong-other']/span[3]/text()</author>
+        <title>//div[@class='headlines']/h1/text()</title>
+        <author>//div[@class='headlines']/p/span[3]/text()</author>
         <authorurl></authorurl>>
-        <cover>//div[@class='class="newstw"']/div[@class='article-box']/a//img/@src</cover>>
-        <ptime timeFormat="yyyy MM dd">//div[@class='neirong-other']/span[1]/text()</ptime>>
+        <cover>//div[@class='newstw']/div[@class='article-box']/a//img/@src</cover>>
+        <ptime timeFormat="yyyy MM dd">//div[@class='headlines']/p/span[1]/text()</ptime>>
         <tag></tag>>
-        <main>//div[@class='neirong_des']//p</main>>
+        <main>//div[@id='con_wenzhang']//p</main>>
         <mainpic>//img/@src</mainpic>>
         <type></type>>
         <source>游戏狗</source>
@@ -536,7 +531,8 @@
         <!--详情页链接-->
         <childLink Mosaic="http://news.gamedog.cn">//div[@class='newstw']/div[@class='article-box']/a/@href</childLink>>
         <!--下一页-->
-        <next>$('body > div.main > div.newsbody > div.newsleftlist.fl > div.fenye.page > a:nth-child(10)')[0].click()</next>>
+        <next>$('body > div.main > div.newsbody > div.newsleftlist.fl > div.fenye.page > div > a:nth-child(9)')[0].click()</next>>
+
         <nextflag>//div[class='fenye page']/a[7]</nextflag>>
         <urls>
             <url>
@@ -617,13 +613,13 @@
     </spider18183>
     <!--蚕豆网-->
     <spiderCDW>
-        <title>//div[@class='article mtop16']/h1/text()</title>
+        <title>//div[@class='main_l']//h1/text()</title>
         <author></author>
         <authorurl></authorurl>>
-        <cover>//div[@class='newslist']/div[@class='newlist1']/img/@src</cover>>
-        <ptime timeFormat="yyyy MM dd">//div[@class='article mtop16']/ul/li[1]/text()</ptime>>
-        <tag>//div[@class='newslist']/div[@class='newlist1']/dl/dd/p/a/text()</tag>>
-        <main>//div[@class='articleBox']/p</main>>
+        <cover>//div[@class='newlist1']/img/@src</cover>>
+        <ptime timeFormat="yyyy MM dd">//div[@class='titleBar']/ul/li[1]/text()</ptime>>
+        <tag>//div[@class='label-l']/a/text()</tag>>
+        <main>//div[@class='articleBox mtop']/p</main>>
         <mainpic>//img/@src</mainpic>>
         <type></type>>
         <source>蚕豆网</source>
@@ -634,28 +630,31 @@
         <more></more>>
         <moreflag></moreflag>>
         <!--详情页链接-->
-        <childLink Mosaic="">//div[@class='dllist']/dl//dt//a/@href</childLink>>
+        <childLink Mosaic="">//div[@class='newlist1']/dl//dt//a/@href</childLink>>
         <!--下一页-->
-        <next> </next>>
-        <nextflag></nextflag>>
+        <next>$('body > div.main > div.main_l > div > div.page > a:nth-child(9)')[0].click() </next>>
+        <nextflag>//div[@class='page']/a[9]/</nextflag>>
         <urls>
             <url>
-                http://news.gamedog.cn/zonghe.html
+                http://news.candou.com/newgame/
             </url>
             <url>
-                http://news.gamedog.cn/a/yejiedongtai_242_1.html
+                http://news.candou.com/industry/
             </url>>
             <url>
-                http://news.gamedog.cn/guandian.html
+                http://news.candou.com/worldgame/
             </url>
             <url>
-                http://news.gamedog.cn/a/renwufangtan_28_1.html
+                http://news.candou.com/people/
             </url>
             <url>
-                http://news.gamedog.cn/shuju.html
+                http://news.candou.com/data/
             </url>
             <url>
-                http://news.gamedog.cn/shebei.html
+                http://news.candou.com/pr/
+            </url>
+            <url>
+                http://news.candou.com/zhoubian/
             </url>
 
         </urls>>
@@ -664,10 +663,10 @@
     <!--pc25g-->
     <spiderPc25g>
         <title>//div[@class='article']/h1/text()</title>
-        <author>//div[@class='article']/span[1]/text()</author>
+        <author>//div[@class='article-info']/span[1]/text()</author>
         <authorurl></authorurl>>
         <cover></cover>>
-        <ptime timeFormat="yyyy MM dd">//div[@class='article']/span[1]/text(3)</ptime>>
+        <ptime timeFormat="yyyy MM dd">//div[@class='article-info']/span[3]/text()</ptime>>
         <tag></tag>>
         <main>//div[@class='article']/p</main>>
         <mainpic>//img/@src</mainpic>>
@@ -683,25 +682,16 @@
         <childLink Mosaic="http://pc.265g.com">//div[@class='title-list']/ul/li/a/@href</childLink>>
         <!--下一页-->
         <next>$('body > div.wrap.clear > div.lbar.fl > div.pag > div > a:nth-child(9)')[0].click()</next>>
-        <nextflag>//div[@calss='pag2']/a[9]</nextflag>>
+        <nextflag>//div[@calss='pag']/a[9]</nextflag>>
         <urls>
             <url>
-                http://news.gamedog.cn/zonghe.html
+                http://pc.265g.com/news/industry/
             </url>
             <url>
-                http://news.gamedog.cn/a/yejiedongtai_242_1.html
+                http://pc.265g.com/news/xw/
             </url>>
             <url>
-                http://news.gamedog.cn/guandian.html
-            </url>
-            <url>
-                http://news.gamedog.cn/a/renwufangtan_28_1.html
-            </url>
-            <url>
-                http://news.gamedog.cn/shuju.html
-            </url>
-            <url>
-                http://news.gamedog.cn/shebei.html
+                http://pc.265g.com/news/ceping/
             </url>
 
         </urls>>

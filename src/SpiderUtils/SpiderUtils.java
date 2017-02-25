@@ -281,12 +281,9 @@ public class SpiderUtils {
                                 tag = (tag + "," + objtag).replace("null,", "");
                             }
                         } else {
-                            if(StringUtils.isNotEmpty(tagslist.get(fg).toString())) {
-                                tag= tagslist.get(fg).toString().replace(" ",",");
 
-                            }else{
-                                tag=null;
-                            }
+                            tag = (tag + "," + tagslist.get(fg)).replace("null,", "");
+
                         }
                     }else{
                         tag=null;
