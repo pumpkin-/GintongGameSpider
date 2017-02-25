@@ -96,7 +96,7 @@
         <ptime timeFormat="yyyy MM dd HH mm">//div[@class='intro']/div[@class='fl']/text()</ptime>>
         <tag>//div[@class='tagshare']/table/tbody/tr/td/a[@class='tag']/text()</tag>>
         <main>//div[@class='content']/p</main>>
-        <mainpic join="">//img/@src</mainpic>>
+        <mainpic join="http://www.sfw.cn">//img/@src|//img/@data-original</mainpic>>
         <type>//div[@class='url']/a/text()</type>>
         <source>上方网</source>
         <childnext join=""></childnext>>
