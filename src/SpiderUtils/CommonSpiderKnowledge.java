@@ -52,7 +52,7 @@ public class CommonSpiderKnowledge {
             @Override
             public void run() {
                 try {
-                    ergodicUrl("spiderDwyx", 0, "no");
+                    ergodicUrl("spiderSfw",180, "no");
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -82,7 +82,7 @@ public class CommonSpiderKnowledge {
             @Override
             public void run() {
                 try {
-                    ergodicUrl("spiderYxgc", 0, "no");
+                    ergodicUrl("spiderDwyx", 0, "no");
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -92,7 +92,7 @@ public class CommonSpiderKnowledge {
             @Override
             public void run() {
                 try {
-                    ergodicUrl("spiderSfw", 0, "no");
+                    ergodicUrl("spiderYxgc", 0, "no");
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -329,7 +329,7 @@ public class CommonSpiderKnowledge {
     }
 
     /**
-     * 遍历urls内部url Jsoup
+     * 遍历urls内部url
      */
     public static void ergodicUrl(String webname,int fromPageNum,String orgflag) throws Exception {
         System.out.println("Start parsing XML file");
@@ -338,10 +338,13 @@ public class CommonSpiderKnowledge {
             if(knowledgeSpiderConfig.flag.getText().equals("jsoup")) {
                 System.out.println("Get details page");
                 ergodicDetails(knowledgeSpiderConfig, url.getText().trim(), orgflag, fromPageNum);
+                fromPageNum=0;
             }else if(knowledgeSpiderConfig.flag.getText().equals("selenium")){
                 System.out.println("Get details page");
                 WebDriver driver=getChromeDriver();
                 ergodicDetails(knowledgeSpiderConfig, orgflag, fromPageNum,driver,url.getText().trim());
+                fromPageNum=0;
+                driver.close();
             }else{
                 throw new XpathSyntaxErrorException("you shuould chose jsoup or selenium");
             }
@@ -362,12 +365,14 @@ public class CommonSpiderKnowledge {
         int a=1;
         //页数
         int i=1;
+        //断点翻页
+        for(int x=1;x<formpage;x++){
+            System.out.println("Start page break");
+            System.out.println("now"+"  "+x);
+            doc=listPageJsoup(doc, knowledgeSpiderConfig);
+            i=x+1;
+        }
         while(true){
-            //断点翻页
-            for(int x=1;x<formpage;x++){
-                System.out.println("Start page break");
-                doc=listPageJsoup(doc, knowledgeSpiderConfig);
-            }
             int fg=0;
             //获取详情页列表
             List<Object> detailsUrls=doc.sel(knowledgeSpiderConfig.childLink.getText());
@@ -439,6 +444,17 @@ public class CommonSpiderKnowledge {
         Map<String,List<Object>> map=new HashMap<String, List<Object>>();
         System.out.println("Start getting starturl's DOM tree");
         doc=getJXDocument(driver,startUrl);
+        //页数
+        int i=1;
+        //条数
+        int a=1;
+        //断点翻页
+        for(int x=1;x<formpage;x++){
+            System.out.println("Start page break");
+            System.out.println("now"+"  "+x);
+            doc=listPageSelenium(knowledgeSpiderConfig,driver);
+            i=x+1;
+        }
         //点击更多
         if(knowledgeSpiderConfig.chose.attributeValue("demand").equals("clickMore")){
             while(true) {
@@ -455,6 +471,7 @@ public class CommonSpiderKnowledge {
             for(int s=0;s<Integer.parseInt(knowledgeSpiderConfig.chose.getText());s++){
                 try {
                     System.out.println("Start slide roller");
+                    System.out.println("now"+"  "+s);
                     doc = slidingRoller(driver);
                 }catch (Exception e){
                     System.out.println("More clicks or no more buttons");
@@ -467,15 +484,6 @@ public class CommonSpiderKnowledge {
         }else{
             throw new XpathSyntaxErrorException("you shuould chose clickMore or slidingRoller");
         }
-        //页数
-        int i=1;
-        //断点翻页
-        for(int x=1;x<formpage;x++){
-            System.out.println("Start page break");
-            doc=listPageSelenium(knowledgeSpiderConfig,driver);
-        }
-        //条数
-        int a=1;
         while(true){
             int fg=0;
             //获取详情页列表
@@ -506,6 +514,10 @@ public class CommonSpiderKnowledge {
             try {
                 i++;
                 System.out.println("Start listpage");
+                if(StringUtils.isEmpty(knowledgeSpiderConfig.nextPage.getText())){
+                    System.out.println("Page failure or To the last page");
+                    break;
+                }
                 doc = listPageSelenium(knowledgeSpiderConfig, driver);
             }catch (Exception e){
                 System.out.println("Page failure or To the last page");
@@ -655,7 +667,11 @@ public class CommonSpiderKnowledge {
                     }
                 }
             } else {
-                author = map.get("author").get(fg).toString().replace("作者：","").replace("频道作者：","");
+                try {
+                    author = map.get("author").get(fg).toString().replace("作者：", "").replace("频道作者：", "");
+                }catch (Exception e){
+                    author=null;
+                }
             }
         }else{
             author=null;
@@ -665,7 +681,11 @@ public class CommonSpiderKnowledge {
             if (map.get("authorurl")==null||map.get("authorurl").size()<=1) {
                 authorurl = getTagOne(childDocumet,knowledgeSpiderConfig.authorUrl.getText()).toString();
             } else {
-                authorurl = map.get("authorurl").get(fg).toString();
+                try {
+                    authorurl = map.get("authorurl").get(fg).toString();
+                }catch (Exception e){
+                    authorurl=null;
+                }
             }
         }else{
             authorurl= childLink;
@@ -675,7 +695,11 @@ public class CommonSpiderKnowledge {
             if (map.get("title")==null||map.get("title").size()<=1) {
                 title =getTagOne(childDocumet,knowledgeSpiderConfig.title.getText()).toString();
             } else {
-                title = map.get("title").get(fg).toString();
+                try {
+                    title = map.get("title").get(fg).toString();
+                }catch (Exception e){
+                    title=null;
+                }
             }
         }else{
             title=null;
@@ -686,12 +710,12 @@ public class CommonSpiderKnowledge {
                 if(StringUtils.isNotEmpty(knowledgeSpiderConfig.cover.attributeValue("join"))) {
                     cover = knowledgeSpiderConfig.cover.attributeValue("join")+getTagOne(childDocumet,knowledgeSpiderConfig.cover.getText()).toString();
                 }else{
-                    cover=null;
+                    cover=getTagOne(childDocumet,knowledgeSpiderConfig.cover.getText()).toString();
                 }
             } else {
-                if(StringUtils.isNotEmpty((String) map.get("cover").get(fg))) {
-                    cover = map.get("cover").get(fg).toString() ;
-                }else{
+                try {
+                    cover = map.get("cover").get(fg).toString();
+                }catch (Exception e){
                     cover=null;
                 }
             }
@@ -703,10 +727,16 @@ public class CommonSpiderKnowledge {
             if (map.get("ptime")==null||map.get("ptime").size()<=1) {
                 ptimetest = getTag(childDocumet, knowledgeSpiderConfig.ptime.getText()).toString().replaceAll("\\D", " ").trim();
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat(knowledgeSpiderConfig.ptime.attributeValue("timeFormat"));
-                Date date = simpleDateFormat.parse(ptimetest);
-                ptime = simpleDateFormatchange.format(date);
+                if(StringUtils.isNotEmpty(ptimetest)) {
+                    Date date = simpleDateFormat.parse(ptimetest);
+                    ptime = simpleDateFormatchange.format(date);
+                }
             } else {
-                ptime = map.get("ptime").get(fg).toString();
+                try {
+                    ptime = map.get("ptime").get(fg).toString();
+                }catch (Exception e){
+                    ptime=null;
+                }
             }
         }else{
             ptime=null;
@@ -731,7 +761,11 @@ public class CommonSpiderKnowledge {
                     type = (type + "," + objtype).replace("null,", "");
                 }
             } else {
-                type = (type + "," + map.get("type").get(fg)).replace("null,", "").replace(" ", ",");
+                try {
+                    type = (type + "," + map.get("type").get(fg)).replace("null,", "").replace(" ", ",");
+                }catch (Exception e){
+                    type=null;
+                }
             }
         }else{
             type=null;
@@ -745,7 +779,11 @@ public class CommonSpiderKnowledge {
                     tag = (tag + "," + objtag).replace("null,", "");
                 }
             } else {
-                tag = (tag + "," + map.get("tag").get(fg)).replace("null,", "").replace(" ", ",");
+                try {
+                    tag = (tag + "," + map.get("tag").get(fg)).replace("null,", "").replace(" ", ",");
+                }catch (Exception e){
+                    tag=null;
+                }
             }
         }else{
             tag=null;
@@ -759,10 +797,18 @@ public class CommonSpiderKnowledge {
                 }
                 if (StringUtils.isNotEmpty(knowledgeSpiderConfig.mainPicture.getText())) {
                     if(objmain.sel(knowledgeSpiderConfig.mainPicture.getText()).size()>0) {
-                        if (StringUtils.isNotEmpty(knowledgeSpiderConfig.mainPicture.attributeValue("join"))) {
-                            main = (main + "\r\n<img src=\"" + knowledgeSpiderConfig.mainPicture.attributeValue("join") + objmain.sel(knowledgeSpiderConfig.mainPicture.getText()).get(0) + "\">");
-                        } else {
-                            main = (main + "\r\n<img src=\"" + objmain.sel(knowledgeSpiderConfig.mainPicture.getText()).get(0) + "\">");
+                        try {
+                            if (StringUtils.isNotEmpty(knowledgeSpiderConfig.mainPicture.attributeValue("join"))) {
+                                if (!objmain.sel(knowledgeSpiderConfig.mainPicture.getText()).get(0).toString().substring(0, 4).equals("http")) {
+                                    main = (main + "\r\n<img src=\"" + knowledgeSpiderConfig.mainPicture.attributeValue("join") + objmain.sel(knowledgeSpiderConfig.mainPicture.getText()).get(0) + "\">");
+                                } else {
+                                    main = (main + "\r\n<img src=\"" + objmain.sel(knowledgeSpiderConfig.mainPicture.getText()).get(0) + "\">");
+                                }
+                            } else {
+                                main = (main + "\r\n<img src=\"" + objmain.sel(knowledgeSpiderConfig.mainPicture.getText()).get(0) + "\">");
+                            }
+                        }catch (Exception e){
+                            System.out.println("mainpic is null");
                         }
                     }
                 }
@@ -776,10 +822,18 @@ public class CommonSpiderKnowledge {
                     }
                     if (StringUtils.isNotEmpty(knowledgeSpiderConfig.mainPicture.getText())) {
                         if(objmain.sel(knowledgeSpiderConfig.mainPicture.getText()).size()>0) {
-                            if (StringUtils.isNotEmpty(knowledgeSpiderConfig.mainPicture.attributeValue("join"))) {
-                                main = (main + "\r\n<img src=\"" + knowledgeSpiderConfig.mainPicture.attributeValue("join") + objmain.sel(knowledgeSpiderConfig.mainPicture.getText()).get(0) + "\">");
-                            } else {
-                                main = (main + "\r\n<img src=\"" + objmain.sel(knowledgeSpiderConfig.mainPicture.getText()).get(0) + "\">");
+                            try {
+                                if (StringUtils.isNotEmpty(knowledgeSpiderConfig.mainPicture.attributeValue("join"))) {
+                                    if (!objmain.sel(knowledgeSpiderConfig.mainPicture.getText()).get(0).toString().substring(0, 4).equals("http")) {
+                                        main = (main + "\r\n<img src=\"" + knowledgeSpiderConfig.mainPicture.attributeValue("join") + objmain.sel(knowledgeSpiderConfig.mainPicture.getText()).get(0) + "\">");
+                                    } else {
+                                        main = (main + "\r\n<img src=\"" + objmain.sel(knowledgeSpiderConfig.mainPicture.getText()).get(0) + "\">");
+                                    }
+                                } else {
+                                    main = (main + "\r\n<img src=\"" + objmain.sel(knowledgeSpiderConfig.mainPicture.getText()).get(0) + "\">");
+                                }
+                            }catch (Exception e){
+                                System.out.println("mainpic is null");
                             }
                         }
                     }
