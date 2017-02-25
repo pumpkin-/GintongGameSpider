@@ -40,6 +40,7 @@ public class LevenshteinDis {
         for(int i=0;i<proKnowledges.size();i++){
             try {
                 Date date1 = simpleDateFormat.parse(proKnowledges.get(i).getPtime());
+
                 if(date1.getTime()>date2.getTime()){
                     date2=date1;
                 }
