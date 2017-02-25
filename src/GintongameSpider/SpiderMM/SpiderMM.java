@@ -25,7 +25,7 @@ import java.util.*;
 /**
  * Created by lenovo on 2017/1/16.
  */
-public class SpiderMM {
+/*public class SpiderMM {
     public static void main(String args[]) throws Exception {
         System.setProperty("webdriver.chrome.driver", SpiderContant.chromeWindowsPath);
         WebDriver driver=new ChromeDriver();
@@ -129,7 +129,7 @@ public class SpiderMM {
 
         Set<Cookie> cookies=driver.manage().getCookies();
         System.out.println("cookies------>"+cookies);
-        Map<String,Set> map=new HashMap<>();
+        Map<String,Set> map=new HashMap();
         map.put("cookies",cookies);
         org.jsoup.Connection.Response res = Jsoup.connect("https://maimai.cn/contact/detail/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1IjozMDU4Nzg2LCJsZXZlbCI6MX0.00WZZ-W-x7yNWdvsS_k81qco3Fhi-HG73QUt9dQub-Q?from=webview%23%2Fweb%2Fsearch_center")
                 .data("m","13267462575","p","123456")
@@ -160,3 +160,4 @@ public class SpiderMM {
 
     }
 }
+*/

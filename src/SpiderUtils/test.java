@@ -79,14 +79,9 @@ public class test {
 
 
 
-
-        Connection.Response res=Jsoup.connect("https://maimai.cn/contact/detail/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1IjozMDU4Nzg2LCJsZXZlbCI6MX0.00WZZ-W-x7yNWdvsS_k81qco3Fhi-HG73QUt9dQub-Q?from=webview%23%2Fweb%2Fsearch_center")
-                                        .userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36")
-                .ignoreHttpErrors(true)
-                .ignoreContentType(true)
-                .execute();
-        String body=res.body();
-
+        org.jsoup.nodes.Document doc=Jsoup.connect("http://www.3h3.com/new/nc_1_1.html").get();
+        JXDocument jxDocument=new JXDocument(doc);
+        System.out.println(doc.outerHtml());
 
         //SpiderUtils.getElements("windows","spiderYxgc",70,"no");
         //SpiderUtils.getElements("windows","spiderRwt",0,"no");

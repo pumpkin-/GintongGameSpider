@@ -430,7 +430,7 @@
         <type></type>>
         <source>当游网</source>
         <childLink join="http://www.3h3.com">//dd[@class='fix']/ul[@class='list-txt']/li/a[2]/@href</childLink>>
-        <nextpage join="http://www.3h3.com">//a[@calss='tsp_next']/@href</nextpage>
+        <nextpage join="http://www.3h3.com">//div[@class='tsp_nav']/a[text()*='下一页']/@href</nextpage>
         <flag>jsoup</flag>>
         <childnext join=""></childnext>>
         <chose demand=""></chose>>
@@ -550,7 +550,7 @@
         <type></type>>
         <source>18183</source>
         <childLink join="">//div[@class='dllist']/dl//dt//a/@href</childLink>>
-        <nextpage join="http://chanye.18183.com/">//div[@class='fy']//a[11]</nextpage>
+        <nextpage join="http://chanye.18183.com/">//div[@class='fy']/li/a[text()*='下一页']/@href</nextpage>
         <flag>jsoup</flag>>
         <childnext join=""></childnext>>
         <chose demand=""></chose>>
@@ -641,7 +641,7 @@
         <type></type>>
         <source>pc25g</source>
         <childLink join="http://pc.265g.com">//div[@class='title-list']/ul/li/a/@href</childLink>>
-        <nextpage join="http://pc.265g.com">//div[@class='page2']//a[8]</nextpage>
+        <nextpage join="http://pc.265g.com">//div[@class='pag']/div[@class='pag2']/a[text()*='下一页']/@href</nextpage>
         <flag>jsoup</flag>>
         <childnext join=""></childnext>>
         <chose demand=""></chose>>

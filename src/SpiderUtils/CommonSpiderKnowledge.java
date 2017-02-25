@@ -431,6 +431,7 @@ public class CommonSpiderKnowledge {
         } else {
             nexturl = next.toString();
         }
+        System.out.println(nexturl);
         JXDocument nextDocument = getJXDocument(nexturl);
         return nextDocument;
     }
