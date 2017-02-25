@@ -1,3 +1,4 @@
+
 package SpiderUtils;
 
 import JavaBean.ProKnowledge;
@@ -40,9 +41,12 @@ import java.io.*;
 import java.net.*;
 import java.nio.charset.Charset;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
+import java.util.logging.SimpleFormatter;
 import java.util.logging.XMLFormatter;
 
 public class Test {
@@ -68,17 +72,38 @@ public class Test {
         System.out.println();*/
 
 
-       SpiderUtils.getElements("windows","spiderChuapp",0,"no");
+
+       SpiderUtils.getElements("windows","spiderBufan",0,"no");
+
 
 //        System.setProperty("webdriver.chrome.driver",SpiderContant.chromeWindowsPath );
 //        WebDriver driver=new ChromeDriver();
-//        driver.get("http://xin.bufan.com/article/130772.html");
+//        driver.get("http://www.chuapp.com/article/282337.html");
 //        WebElement webElement=driver.findElement(By.xpath("/html"));
 //        org.jsoup.nodes.Document doc=Jsoup.parse(webElement.getAttribute("outerHTML"));
-//     JXDocument jxDocument=new JXDocument(doc);
-//       System.out.println(doc.outerHtml());
-//       System.out.println(jxDocument.selOne("//div[@class='appgame-video-state']/text()"));
+//        JXDocument jxDocument=new JXDocument(doc);
+//        System.out.println(doc.outerHtml());
+//        System.out.println(jxDocument.selOne("//div[@class='appgame-video-state']/text()"));
 //        SpiderUtils.getElements("windows", "spiderChuapp", 0, "no");
+
+        //SpiderUtils.getElements("windows","spiderYxgc",70,"no");
+        //SpiderUtils.getElements("windows","spiderRwt",0,"no");
+        //SpiderUtils.getElements("windows","spiderKdbs",0,"no");
+
+//        org.jsoup.nodes.Document doc=Jsoup.connect("http://www.gamersky.com/news/201702/872232.shtml")
+//                          .userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36")
+//                          .get();
+//     System.out.println(doc.outerHtml());
+
+        /*System.setProperty("webdriver.chrome.driver",SpiderContant.chromeWindowsPath );
+        WebDriver driver=new ChromeDriver();
+        driver.get("http://ol.tgbus.com/");
+        WebElement webElement=driver.findElement(By.xpath("/html"));
+        org.jsoup.nodes.Document doc=Jsoup.parse(webElement.getAttribute("outerHTML"));
+        JXDocument jxDocument=new JXDocument(doc);
+        System.out.println(doc.outerHtml());*/
+
+
 
 //
 
@@ -94,3 +119,4 @@ public class Test {
     }
 
 }
+

@@ -5,6 +5,7 @@ import JavaBean.PerKnowledge;
 import JavaBean.ProKnowledge;
 import SpiderUtils.LevenshteinDis;
 import SpiderUtils.SpiderContant;
+import SpiderUtils.SpiderUtils;
 import dao.impl.BasPersonInfoImpl;
 import dao.impl.PerKnowledgeImpl;
 import dao.impl.ProKnowledgeImpl;
@@ -18,6 +19,7 @@ import org.openqa.selenium.phantomjs.PhantomJSDriver;
 import javax.xml.crypto.Data;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -104,9 +106,13 @@ public class SpiderYxpt {
                 main=(main+"\r\n"+"<img src=\""+linkmain.select("img").attr("src")+"\">").replace("null\r\n","");
             }
         }
-        storeToDatebase(title,ptime,type,cover,tag,author,main,puuid,kuuid,url);
+        try {
+            storeToDatebase(title,ptime,type,cover,tag,author,main,puuid,kuuid,url);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
-    public static void storeToDatebase(String title,String ptime,String type,String cover,String tag,String author,String main,String puuid,String kuuid,String url) throws ProKnowledgeImpl.FormatEexception {
+    public static void storeToDatebase(String title,String ptime,String type,String cover,String tag,String author,String main,String puuid,String kuuid,String url) throws ProKnowledgeImpl.FormatEexception, SpiderUtils.FormatEexception, ParseException {
             ProKnowledge proKnowledge=new ProKnowledge();
             proKnowledge.setTitle(title);
             proKnowledge.setPtime(ptime+" 00:00:00");

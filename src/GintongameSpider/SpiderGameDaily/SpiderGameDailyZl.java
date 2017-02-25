@@ -34,7 +34,7 @@ public class SpiderGameDailyZl {
     /*
   爬取一个业的数据
    */
-    public static void grab(WebDriver driver){
+    /*public static void grab(WebDriver driver){
         WebElement web = driver.findElement(By.xpath("/html"));
         String html = web.getAttribute("outerHTML");
         //获取dom元素
@@ -163,6 +163,8 @@ public class SpiderGameDailyZl {
             } catch (ParseException e) {
                 e.printStackTrace();
 
+            } catch (LevenshteinDis.FormatEexception formatEexception) {
+                formatEexception.printStackTrace();
             }
 
         }
@@ -239,6 +241,6 @@ public class SpiderGameDailyZl {
         System.exit(0);
 
     }
-
+*/
 
 }

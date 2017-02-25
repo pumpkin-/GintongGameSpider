@@ -24,6 +24,5 @@
         <mapper resource="com/gintongame/mapping/ProGameTypeMapper.xml"/>
         <mapper resource="com/gintongame/mapping/OrgKnowledgeMapper.xml"/>
         <mapper resource="com/gintongame/mapping/ProGamePlatformMapper.xml"/>
-
     </mappers>
 </configuration>

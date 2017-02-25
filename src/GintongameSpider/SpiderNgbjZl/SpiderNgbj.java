@@ -2,6 +2,7 @@ package GintongameSpider.SpiderNgbjZl;
 
 import SpiderUtils.LevenshteinDis;
 import SpiderUtils.SpiderContant;
+import SpiderUtils.SpiderUtils;
 import dao.impl.BasPersonInfoImpl;
 import dao.impl.PerKnowledgeImpl;
 import dao.impl.ProKnowledgeImpl;
@@ -139,38 +140,46 @@ public class SpiderNgbj {
         SimpleDateFormat time1=new SimpleDateFormat("yyyy-MM-dd");
         Date date=time.parse(ptime);
         String timeto=time1.format(date);
-        if(main!=null&&main.length()>0&&!LevenshteinDis.isExist(main,timeto,url,kuuid)){
-            ProKnowledge proKnow=new ProKnowledge();
-            proKnow.setUuid(kuuid);
-            proKnow.setAuthor(author);
-            proKnow.setTitle(title);
-            proKnow.setCover(cover);
-            proKnow.setMain(main);
-            proKnow.setPtime(ptime);
-            proKnow.setType(type);
-            proKnow.setUrl(url);
-            proKnow.setSource("鸟哥笔记");
-            proKnowledges.add(proKnow);
-            System.out.println("插入数据");
-            System.out.println(url);
+        try {
+            try {
+                if(main!=null&&main.length()>0){
+                    ProKnowledge proKnow=new ProKnowledge();
+                    proKnow.setUuid(kuuid);
+                    proKnow.setAuthor(author);
+                    proKnow.setTitle(title);
+                    proKnow.setCover(cover);
+                    proKnow.setMain(main);
+                    proKnow.setPtime(ptime);
+                    proKnow.setType(type);
+                    proKnow.setUrl(url);
+                    proKnow.setSource("鸟哥笔记");
+                    proKnowledges.add(proKnow);
+                    System.out.println("插入数据");
+                    System.out.println(url);
 
 
-            PerKnowledge perKnow=new PerKnowledge();
-            perKnow.setName(author);
-            perKnow.setKname(title);
-            perKnow.setRtype("原作者");
-            perKnow.setPuuid(puuid);
-            perKnow.setKuuid(kuuid);
-            perKnow.setSource("鸟哥笔记");
-            perKnowledges.add(perKnow);
+                    PerKnowledge perKnow=new PerKnowledge();
+                    perKnow.setName(author);
+                    perKnow.setKname(title);
+                    perKnow.setRtype("原作者");
+                    perKnow.setPuuid(puuid);
+                    perKnow.setKuuid(kuuid);
+                    perKnow.setSource("鸟哥笔记");
+                    perKnowledges.add(perKnow);
 
 
-            BasPersonInfo basPerson=new BasPersonInfo();
-            basPerson.setUuid(puuid);
-            basPerson.setName(author);
-            basPerson.setSource("鸟哥笔记");
-            basPerson.setUrl(url);
-            basPersoninfos.add(basPerson);
+                    BasPersonInfo basPerson=new BasPersonInfo();
+                    basPerson.setUuid(puuid);
+                    basPerson.setName(author);
+                    basPerson.setSource("鸟哥笔记");
+                    basPerson.setUrl(url);
+                    basPersoninfos.add(basPerson);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         if((proKnowledges.size()>0&&proKnowledges.size()% SpiderContant.insertBatchContant==0)) {
             ProKnowledgeImpl proknowimpl=new ProKnowledgeImpl();

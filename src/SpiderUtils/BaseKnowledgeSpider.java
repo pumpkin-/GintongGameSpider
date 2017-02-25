@@ -21,6 +21,7 @@ import org.openqa.selenium.phantomjs.PhantomJSDriver;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -48,7 +49,9 @@ public class BaseKnowledgeSpider {
         WebElement web=driver.findElement(By.xpath("/html"));
         String html=web.getAttribute("outerHTML");*/
         // InputStream inputStream=new FileInputStream(new File("SpiderUtils/BasKnowledgePattern.xml"));
+
         InputStream inputStream= BaseKnowledgeSpider.class.getResourceAsStream("/SpiderUtils/BasKnowledgePatternMF.xml");
+
         SAXReader sax=new SAXReader();
         org.dom4j.Document doc=sax.read(inputStream);
         org.dom4j.Element root = doc.getRootElement();//获取根元素
@@ -69,6 +72,11 @@ public class BaseKnowledgeSpider {
         grabWeb();
     }
 
+    /**
+     * 抓取网页
+     * @throws IOException
+     * @throws ProKnowledgeImpl.FormatEexception
+     */
     public static void grabWeb() throws IOException, ProKnowledgeImpl.FormatEexception {
         System.setProperty("phantomjs.binary.path", "/Spider/phantomjs-2.1.1-linux-x86_64/bin/phantomjs");
         WebDriver driver = new PhantomJSDriver();
@@ -240,7 +248,11 @@ public class BaseKnowledgeSpider {
         }else if(type.equals("活动资讯")){
             type="活动展会";
         }
-        storeToDatebase(title, ptime, type, tag, author, main, puuid, kuuid, url);
+        try {
+            storeToDatebase(title, ptime, type, tag, author, main, puuid, kuuid, url);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public static void storeToDatebase(String title,String ptime,String type,String tag,String author,String main,String puuid,String kuuid,String url) throws ProKnowledgeImpl.FormatEexception {
@@ -273,8 +285,12 @@ public class BaseKnowledgeSpider {
         basPersonInfoList.add(basPerson);
 
         ProKnowledgeImpl proknowimpl = new ProKnowledgeImpl();
-        if(proknowimpl.insertBatchAutoDedup(proKnowledgeList,basPersonInfoList,perKnowledgeList).get(2).equals("false")) {
-            System.exit(0);
+        try {
+            if(proknowimpl.insertBatchAutoDedup(proKnowledgeList,basPersonInfoList,perKnowledgeList).get(2).equals("false")) {
+                System.exit(0);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         BasPersonInfoImpl basperimpl = new BasPersonInfoImpl();
         basperimpl.insertBatch(basPersonInfoList);
