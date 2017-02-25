@@ -24,7 +24,7 @@ public class SpiderGameData {
 //            CommonSpiderKnowledge.ergodicUrl("spiderDYW", 0, "no");
 //            CommonSpiderKnowledge.ergodicUrl("spiderQZW", 0, "no");
 //            CommonSpiderKnowledge.ergodicUrl("spiderYJJ", 0, "no");
-//           
+//
 //            CommonSpiderKnowledge.ergodicUrl("spiderAW", 0, "no");
 
 
