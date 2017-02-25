@@ -50,6 +50,8 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.logging.SimpleFormatter;
 import java.util.logging.XMLFormatter;
 
@@ -103,6 +105,39 @@ public class test {
         //SpiderUtils.getElements("windows","spiderRwt",0,"no");
         //SpiderUtils.getElements("windows","spiderKdbs",0,"no");
 
+/*org.jsoup.nodes.Document doc=Jsoup.connect("http://www.duowan.com/news/m_346763061239_2.html").get();
+        JXDocument jxDocument=new JXDocument(doc);
+        System.out.println(doc.outerHtml());*/
+
+        ExecutorService singleThreadExecutor = Executors.newFixedThreadPool(2);
+        for (int i = 0; i < 10; i++) {
+            final int index = i;
+            final int u=i;
+            singleThreadExecutor.execute(new Runnable() {
+
+                @Override
+                public void run() {
+                    try {
+                        System.out.println(index);
+                        Thread.sleep(2000);
+                    } catch (InterruptedException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                }
+            });
+            singleThreadExecutor.execute(new Runnable() {
+                @Override
+                public void run() {
+                    System.out.println(u);
+                    try {
+                        Thread.sleep(2000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+        }
 
 //        org.jsoup.nodes.Document doc=Jsoup.connect("http://www.gamersky.com/news/201702/872232.shtml")
 //                          .userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36")
