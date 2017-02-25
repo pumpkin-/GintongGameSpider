@@ -344,6 +344,7 @@ public class CommonSpiderKnowledge {
                 WebDriver driver=getChromeDriver();
                 ergodicDetails(knowledgeSpiderConfig, orgflag, fromPageNum,driver,url.getText().trim());
                 fromPageNum=0;
+                driver.close();
             }else{
                 throw new XpathSyntaxErrorException("you shuould chose jsoup or selenium");
             }
@@ -470,6 +471,7 @@ public class CommonSpiderKnowledge {
             for(int s=0;s<Integer.parseInt(knowledgeSpiderConfig.chose.getText());s++){
                 try {
                     System.out.println("Start slide roller");
+                    System.out.println("now"+"  "+s);
                     doc = slidingRoller(driver);
                 }catch (Exception e){
                     System.out.println("More clicks or no more buttons");
