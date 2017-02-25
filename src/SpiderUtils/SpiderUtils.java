@@ -36,7 +36,7 @@ import java.util.*;
 public class SpiderUtils {
 
     private static BugDataImpl bugDataimpl = new BugDataImpl();
-    private static BaseKnowLedge baseKnowledge=new BaseKnowLedge();
+    public static BaseKnowLedge baseKnowledge=new BaseKnowLedge();
     private static SAXReader sax=new SAXReader();
     private static List<ProKnowledge> proKnowledgeList=new ArrayList<ProKnowledge>();
     private static List<BasPersonInfo> basPersonInfoList=new ArrayList<BasPersonInfo>();
@@ -46,7 +46,6 @@ public class SpiderUtils {
     private static PerKnowledgeImpl perknowimpl = new PerKnowledgeImpl();
     private static SimpleDateFormat simpleDateFormatchange=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     private static int a=1;
-    private static JXDocument jxDocument;
 
     public static class FormatEexception extends Exception
     {
@@ -71,27 +70,28 @@ public class SpiderUtils {
     }
 
 
-    public static void getData(OrganizeConfigure organizeConfigure) throws XpathSyntaxErrorException, ParseException, InterruptedException, FormatEexception, ProKnowledgeImpl.FormatEexception {
+    public static List<ProKnowledge> getData(OrganizeConfigure organizeConfigure,String orgflag) throws XpathSyntaxErrorException, ParseException, InterruptedException, FormatEexception, ProKnowledgeImpl.FormatEexception {
+        List<ProKnowledge> test=new ArrayList<ProKnowledge>();
         for(int i=1;i>0;i++) {
+            Thread.sleep(2000);
             if(organizeConfigure.getPage()!=0) {
                 for (int pag = 1; pag < organizeConfigure.getPage(); pag++) {
                     JavascriptExecutor executornext = (JavascriptExecutor) baseKnowledge.getDriver();
                     executornext.executeScript(organizeConfigure.getNext().getText());
                 }
             }
-            /*JavascriptExecutor executorRoller = (JavascriptExecutor) baseKnowledge.getDriver();
-            executorRoller.executeScript("$(window).scrollTop(30000)");*/
+            JavascriptExecutor executorRoller = (JavascriptExecutor) baseKnowledge.getDriver();
+           // executorRoller.executeScript("$(window).scrollTop(30000)");
             baseKnowledge.setWebElement(baseKnowledge.getDriver().findElement(By.xpath("/html")));
-            jxDocument =new JXDocument(Jsoup.parse(baseKnowledge.getWebElement().getAttribute("outerHTML")));
+            JXDocument jxDocument =new JXDocument(Jsoup.parse(baseKnowledge.getWebElement().getAttribute("outerHTML")));
             if(StringUtils.isNotEmpty(organizeConfigure.getMore().getText())){
                 for(int more=1;more>0;more++) {
                     JavascriptExecutor executormore = (JavascriptExecutor) baseKnowledge.getDriver();
-                    executormore.executeScript(organizeConfigure.getNext().getText());
+                    executormore.executeScript(organizeConfigure.getMore().getText());
+                    Thread.sleep(1000);
                     baseKnowledge.setWebElement(baseKnowledge.getDriver().findElement(By.xpath("/html")));
-                    jxDocument =new JXDocument(Jsoup.parse(baseKnowledge.getWebElement().getAttribute("outerHTML")));
-                    if(jxDocument.selOne(organizeConfigure.getMoreflag().getText())==null){
-                        break;
-                    }else if(StringUtils.isEmpty(jxDocument.selOne(organizeConfigure.getMoreflag().getText()).toString())){
+                    JXDocument jxDocumentnow =new JXDocument(Jsoup.parse(baseKnowledge.getWebElement().getAttribute("outerHTML")));
+                    if(jxDocumentnow.selOne(organizeConfigure.getMoreflag().getText())==null){
                         break;
                     }
                 }
@@ -183,6 +183,7 @@ public class SpiderUtils {
                         child= (String) obj;
                     }
                     baseKnowledge.getDriver().get((String) child);
+                    Thread.sleep(1000);
                     baseKnowledge.setWebElement(baseKnowledge.getDriver().findElement(By.xpath("/html")));
                     JXDocument jxDocumentChild = new JXDocument(Jsoup.parse(baseKnowledge.getWebElement().getAttribute("outerHTML")));
                     String puuid = UUID.randomUUID().toString();
@@ -190,7 +191,7 @@ public class SpiderUtils {
 
 
                     if(StringUtils.isNotEmpty(organizeConfigure.getAuthori().getText())) {
-                        if (jxDocument.selN(organizeConfigure.getAuthori().getText()).size() <= 0) {
+                        if (jxDocument.selN(organizeConfigure.getAuthori().getText()).size() <= 1) {
                             author = (String) jxDocumentChild.selOne(organizeConfigure.getAuthori().getText()).toString().replace("作者：", "").replace("频道作者：","");
                         } else {
                             author = (String) authorlist.get(fg).toString().replace("作者：","").replace("频道作者：","");
@@ -199,7 +200,7 @@ public class SpiderUtils {
                         author=null;
                     }
                     if(StringUtils.isNotEmpty(organizeConfigure.getAuthorurli().getText())) {
-                        if (jxDocument.selN(organizeConfigure.getAuthorurli().getText()).size() <= 0) {
+                        if (jxDocument.selN(organizeConfigure.getAuthorurli().getText()).size() <= 1) {
                             authorurl = (String) jxDocumentChild.selOne(organizeConfigure.getAuthorurli().getText());
                         } else {
                             authorurl = (String) authorurllist.get(fg);
@@ -208,7 +209,7 @@ public class SpiderUtils {
                         authorurl= (String) child;
                     }
                     if(StringUtils.isNotEmpty(organizeConfigure.getTitlei().getText())) {
-                        if (jxDocument.selN(organizeConfigure.getTitlei().getText()).size() <= 0) {
+                        if (jxDocument.selN(organizeConfigure.getTitlei().getText()).size() <= 1) {
                             title = (String) jxDocumentChild.selOne(organizeConfigure.getTitlei().getText());
                         } else {
                             title = (String) titlelist.get(fg);
@@ -217,24 +218,24 @@ public class SpiderUtils {
                         title=null;
                     }
                     if(StringUtils.isNotEmpty(organizeConfigure.getCoveri().getText())) {
-                        if (jxDocument.selN(organizeConfigure.getCoveri().getText()).size() <= 0) {
+                        if (jxDocument.selN(organizeConfigure.getCoveri().getText()).size() <= 1) {
                             if(StringUtils.isNotEmpty(organizeConfigure.getCoveri().attributeValue("Mosaic"))) {
                                 cover = (String) organizeConfigure.getCoveri().attributeValue("Mosaic")+jxDocumentChild.selOne(organizeConfigure.getCoveri().getText());
                             }else{
-                                cover= (String) jxDocumentChild.selOne(organizeConfigure.getCoveri().getText());
+                                cover=null;
                             }
                         } else {
-                            if(StringUtils.isNotEmpty(organizeConfigure.getCoveri().attributeValue("Mosaic"))) {
-                                cover = organizeConfigure.getCoveri().attributeValue("Mosaic")+coverlist.get(fg).toString();
+                            if(StringUtils.isNotEmpty((String) coverlist.get(fg))) {
+                                cover = (String) coverlist.get(fg) ;
                             }else{
-                                cover=coverlist.get(fg).toString();
+                                cover=null;
                             }
                         }
                     }else{
                         cover=null;
                     }
                     if(StringUtils.isNotEmpty(organizeConfigure.getPtimei().getText())) {
-                        if (jxDocument.selN(organizeConfigure.getPtimei().getText()).size() <= 0) {
+                        if (jxDocument.selN(organizeConfigure.getPtimei().getText()).size() <= 1) {
                             ptimetest = jxDocumentChild.selOne(organizeConfigure.getPtimei().getText()).toString().replaceAll("\\D", " ").trim();
                             SimpleDateFormat simpleDateFormat = new SimpleDateFormat(organizeConfigure.getPtimei().attributeValue("timeFormat"));
                             Date date = simpleDateFormat.parse(ptimetest);
@@ -257,26 +258,26 @@ public class SpiderUtils {
                     System.out.println(source);
 
                     if(StringUtils.isNotEmpty(organizeConfigure.getTypei().getText())) {
-                        if (jxDocument.selN(organizeConfigure.getTypei().getText()).size() <= 0) {
+                        if (jxDocument.selN(organizeConfigure.getTypei().getText()).size() <= 1) {
                             List<Object> typelist = jxDocumentChild.sel(organizeConfigure.getTypei().getText());
                             for (Object objtype : typelist) {
                                 type = (type + "," + objtype).replace("null,", "");
                             }
                         } else {
-                            type = (tag + "," + typeslist.get(fg)).replace("null,", "").replace(" ", ",");
+                            type = (type + "," + typeslist.get(fg)).replace("null,", "").replace(" ", ",");
                         }
                     }else{
                         type=null;
                     }
 
                     if(StringUtils.isNotEmpty(organizeConfigure.getTagi().getText())) {
-                        if (jxDocument.selN(organizeConfigure.getTagi().getText()).size() <= 0) {
+                        if (jxDocument.selN(organizeConfigure.getTagi().getText()).size() <= 1) {
                             List<Object> taglist = jxDocumentChild.sel(organizeConfigure.getTagi().getText());
                             for (Object objtag : taglist) {
                                 tag = (tag + "," + objtag).replace("null,", "");
                             }
                         } else {
-                            tag = (tag + "," + tagslist.get(fg)).replace("null,", "").replace(" ",",");
+                            tag = (tag + "," + tagslist.get(fg)).replace("null,", "");
                         }
                     }else{
                         tag=null;
@@ -335,7 +336,10 @@ public class SpiderUtils {
                     e.printStackTrace();
                 }
             }
-            storeToDatebase(organizeConfigure.getFlag(), author);
+
+
+            test=storeToDatebase(organizeConfigure.getFlag(), author,orgflag);
+
             String handle2 = baseKnowledge.getDriver().getWindowHandle();
             baseKnowledge.getDriver().close();
             Thread.sleep(2000);
@@ -365,11 +369,26 @@ public class SpiderUtils {
                 }
             }
         }
+        return test;
     }
 
 
-
-    public static void getElements(String flag,String element,int page) throws FormatEexception, DocumentException, ParserConfigurationException, XpathSyntaxErrorException, IOException, ProKnowledgeImpl.FormatEexception, InterruptedException, ParseException {
+    /**
+     * 解析配置文件
+     * @param flag
+     * @param element
+     * @param page
+     * @param orgflag
+     * @throws FormatEexception
+     * @throws DocumentException
+     * @throws ParserConfigurationException
+     * @throws XpathSyntaxErrorException
+     * @throws IOException
+     * @throws ProKnowledgeImpl.FormatEexception
+     * @throws InterruptedException
+     * @throws ParseException
+     */
+    public static void getElements(String flag,String element,int page,String orgflag) throws FormatEexception, DocumentException, ParserConfigurationException, XpathSyntaxErrorException, IOException, ProKnowledgeImpl.FormatEexception, InterruptedException, ParseException {
         InputStream inputStream=new FileInputStream(SpiderUtils.class.getClassLoader().getResource("SpiderUtils/BasKnowledgePattern.xml").getFile());
         baseKnowledge.setDocsax(sax.read(inputStream));
         baseKnowledge.setRoot(baseKnowledge.getDocsax().getRootElement());//获取根元素
@@ -416,29 +435,33 @@ public class SpiderUtils {
         organizeConfigure.setChildnextflagi(childnextflagi);
         organizeConfigure.setFlag(flag);
 
-
+        /**
+         * TODO 抽离代码
+         */
 
         int a=1;
         for(Element ele:classifiedlist){
             SpiderUtils.getDocument(flag, ele.getText().trim());
-            getData(organizeConfigure);
+            getData(organizeConfigure,orgflag);
+            inputStream.close();
+            baseKnowledge.getDriver().close();
         }
         inputStream.close();
         baseKnowledge.getDriver().close();
         System.exit(0);
     }
 
-    public static void getElementsAdd(String flag) throws ProKnowledgeImpl.FormatEexception, FormatEexception, InterruptedException, XpathSyntaxErrorException, ParseException, FileNotFoundException, DocumentException {
+    public static void getElementsAdd(String flag,int page,String orgflag) throws ProKnowledgeImpl.FormatEexception, FormatEexception, InterruptedException, XpathSyntaxErrorException, ParseException, FileNotFoundException, DocumentException {
         baseKnowledge.setInputStream(new FileInputStream(SpiderUtils.class.getClassLoader().getResource("SpiderUtils/BasKnowledgePattern.xml").getFile()));
         baseKnowledge.setDocsax(sax.read(baseKnowledge.getInputStream()));
         baseKnowledge.setRoot(baseKnowledge.getDocsax().getRootElement());//获取根元素
         List<Element> childElements = baseKnowledge.getRoot().elements("spider");
         for(Element childElement:childElements) {
-            Element classifiedLink = childElement.element("urls");
-            List<Element> classifiedlist = classifiedLink.elements();
-            Element childLink = childElement.element("childLink");
-            Element next = childElement.element("next");
-            Element nextflagi = childElement.element("nextflag");
+            Element classifiedLink=childElement.element("urls");
+            List<Element> classifiedlist=classifiedLink.elements();
+            Element childLink=childElement.element("childLink");
+            Element next=childElement.element("next");
+            Element nextflagi=childElement.element("nextflag");
 
             Element authori = childElement.element("author");
             Element titlei = childElement.element("title");
@@ -450,19 +473,15 @@ public class SpiderUtils {
             Element typei = childElement.element("type");
             Element sourcei = childElement.element("source");
             Element authorurli = childElement.element("authorurl");
-            Element childnexti = childElement.element("childnext");
-            Element childnextflagi = childElement.element("childnextflag");
-
-
-            String author = null;
-            String title = null;
-            String cover = null;
-            String ptimetest = null;
-            String ptime = null;
-            String authorurl = null;
-            String Mosaic = null;
+            Element childnexti=childElement.element("childnext");
+            Element childnextflagi=childElement.element("childnextflag");
+            Element morei=childElement.element("more");
+            Element moreflag=childElement.element("moreflag");
 
             OrganizeConfigure organizeConfigure=new OrganizeConfigure();
+            organizeConfigure.setPage(page);
+            organizeConfigure.setMore(morei);
+            organizeConfigure.setMoreflag(moreflag);
             organizeConfigure.setChildLink(childLink);
             organizeConfigure.setNext(next);
             organizeConfigure.setNextflagi(nextflagi);
@@ -481,7 +500,7 @@ public class SpiderUtils {
             organizeConfigure.setFlag(flag);
             for (Element ele : classifiedlist) {
                 SpiderUtils.getDocument(flag, ele.getText().trim());
-                getData(organizeConfigure);
+                getData(organizeConfigure,orgflag);
             }
         }
     }
@@ -522,14 +541,18 @@ public class SpiderUtils {
 
     }
 
-    public static void storeToDatebase(String flag,String author) throws FormatEexception, ProKnowledgeImpl.FormatEexception {
+    public static List storeToDatebase(String flag,String author,String orgflag) throws FormatEexception, ProKnowledgeImpl.FormatEexception, ParseException {
+        List<ProKnowledge> proKnowledgeListq=new ArrayList<ProKnowledge>();
         if (flag.equals("windows")) {
             Map map = proknowimpl.insertBatchAutoDedup(proKnowledgeList, basPersonInfoList, perKnowledgeList);
+            proKnowledgeListq= (List<ProKnowledge>) map.get(5);
             if (((List<Integer>) map.get(4)).get(0) != 0&&StringUtils.isNotEmpty(author)) {
                 basperimpl.insertBatch((List<BasPersonInfo>) map.get(1));
                 perknowimpl.insertBatch((List<PerKnowledge>) map.get(3));
             }
-            proKnowledgeList.clear();
+            if(orgflag.equals("no")) {
+                proKnowledgeList.clear();
+            }
             basPersonInfoList.clear();
             perKnowledgeList.clear();
         } else if (flag.equals("linux")) {
@@ -547,6 +570,7 @@ public class SpiderUtils {
         } else {
             throw new FormatEexception("You have to choose windows or linux");
         }
+        return proKnowledgeListq;
     }
 
     public static void storeBugdata(String key,String value,String uuid){

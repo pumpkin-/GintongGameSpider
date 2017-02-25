@@ -127,11 +127,15 @@ public class SpiderNgbjZl {
                     SimpleDateFormat time1=new SimpleDateFormat("yyyy-MM-dd");
                     Date date=time.parse(text.get(1));
                     String timeto=time1.format(date);
-                    if(text.get(0)!=null&&text.get(0).length()> 0 &&!LevenshteinDis.isExist(text.get(0), timeto,childLink,text.get(2))) {
-                        b=1;
-                        dataClean(doc1, childLink, b,z);
-                    }else{
-                        System.exit(0);
+                    try {
+                        if(text.get(0)!=null&&text.get(0).length()> 0) {
+                            b=1;
+                            dataClean(doc1, childLink, b,z);
+                        }else{
+                            System.exit(0);
+                        }
+                    } catch (Exception E) {
+                        E.printStackTrace();
                     }
                     System.out.println(c+"+"+i);
                     c++;
@@ -151,38 +155,42 @@ public class SpiderNgbjZl {
         SimpleDateFormat time1=new SimpleDateFormat("yyyy-MM-dd");
         Date date=time.parse(ptime);
         String timeto=time1.format(date);
-        if(main!=null&&main.length()>0&&!LevenshteinDis.isExist(main,timeto,url,kuuid)){
-            ProKnowledge proKnow=new ProKnowledge();
-            proKnow.setUuid(kuuid);
-            proKnow.setAuthor(author);
-            proKnow.setTitle(title);
-            proKnow.setCover(cover);
-            proKnow.setMain(main);
-            proKnow.setPtime(ptime);
-            proKnow.setType(type);
-            proKnow.setUrl(url);
-            proKnow.setSource("鸟哥笔记");
-            proKnowledges.add(proKnow);
-            System.out.println("插入数据");
-            System.out.println(url);
+        try {
+            if(main!=null&&main.length()>0){
+                ProKnowledge proKnow=new ProKnowledge();
+                proKnow.setUuid(kuuid);
+                proKnow.setAuthor(author);
+                proKnow.setTitle(title);
+                proKnow.setCover(cover);
+                proKnow.setMain(main);
+                proKnow.setPtime(ptime);
+                proKnow.setType(type);
+                proKnow.setUrl(url);
+                proKnow.setSource("鸟哥笔记");
+                proKnowledges.add(proKnow);
+                System.out.println("插入数据");
+                System.out.println(url);
 
 
-            PerKnowledge perKnow=new PerKnowledge();
-            perKnow.setName(author);
-            perKnow.setName(title);
-            perKnow.setRtype("原作者");
-            perKnow.setPuuid(puuid);
-            perKnow.setKuuid(kuuid);
-            perKnow.setSource("鸟哥笔记");
-            perKnowledges.add(perKnow);
+                PerKnowledge perKnow=new PerKnowledge();
+                perKnow.setName(author);
+                perKnow.setName(title);
+                perKnow.setRtype("原作者");
+                perKnow.setPuuid(puuid);
+                perKnow.setKuuid(kuuid);
+                perKnow.setSource("鸟哥笔记");
+                perKnowledges.add(perKnow);
 
 
-            BasPersonInfo basPerson=new BasPersonInfo();
-            basPerson.setUuid(puuid);
-            basPerson.setName(author);
-            basPerson.setSource("鸟哥笔记");
-            basPerson.setUrl(url);
-            basPersoninfos.add(basPerson);
+                BasPersonInfo basPerson=new BasPersonInfo();
+                basPerson.setUuid(puuid);
+                basPerson.setName(author);
+                basPerson.setSource("鸟哥笔记");
+                basPerson.setUrl(url);
+                basPersoninfos.add(basPerson);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         if((proKnowledges.size()>0&&proKnowledges.size()% SpiderContant.insertBatchContant==0)) {
             ProKnowledgeImpl proknowimpl=new ProKnowledgeImpl();

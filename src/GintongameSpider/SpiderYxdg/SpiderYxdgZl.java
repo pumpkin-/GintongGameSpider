@@ -4,6 +4,7 @@ import JavaBean.BasPersonInfo;
 import JavaBean.PerKnowledge;
 import JavaBean.ProKnowledge;
 import SpiderUtils.SpiderContant;
+import SpiderUtils.SpiderUtils;
 import dao.impl.BasPersonInfoImpl;
 import dao.impl.PerKnowledgeImpl;
 import dao.impl.ProKnowledgeImpl;
@@ -18,6 +19,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.phantomjs.PhantomJSDriver;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -100,10 +102,14 @@ public class SpiderYxdgZl {
         for(Element linktag:linkstag){
             tag=(tag+","+linktag.text()).replace("null,","");
         }
-        storeToDatebase(title,ptime,type,cover,tag,author,main,puuid,kuuid,url,authorurl);
+        try {
+            storeToDatebase(title,ptime,type,cover,tag,author,main,puuid,kuuid,url,authorurl);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
-    public static void storeToDatebase(String title,String ptime,String type,String cover,String tag,String author,String main,String puuid,String kuuid,String url,String authorurl) throws ProKnowledgeImpl.FormatEexception {
+    public static void storeToDatebase(String title,String ptime,String type,String cover,String tag,String author,String main,String puuid,String kuuid,String url,String authorurl) throws ProKnowledgeImpl.FormatEexception, SpiderUtils.FormatEexception, ParseException {
         ProKnowledge proKnowledge=new ProKnowledge();
         proKnowledge.setTitle(title);
         proKnowledge.setPtime(ptime+" 00:00:00");

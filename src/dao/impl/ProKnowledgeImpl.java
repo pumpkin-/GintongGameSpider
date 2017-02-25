@@ -1,15 +1,18 @@
 package dao.impl;
 
 import JavaBean.BasPersonInfo;
-import JavaBean.BugData;
+import JavaBean.DateInfo;
 import JavaBean.PerKnowledge;
+
+
 import SpiderUtils.LevenshteinDis;
+import SpiderUtils.SpiderUtils;
 import dao.ProKnowledgeDao;
 import JavaBean.ProKnowledge;
 import org.apache.commons.lang3.StringUtils;
-import org.w3c.dom.ls.LSException;
 
-import java.io.Serializable;
+
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -45,78 +48,29 @@ public class ProKnowledgeImpl extends BaseDaoImpl<List> implements ProKnowledgeD
 
 
 
-    public Map<Integer,List> insertBatchAutoDedup(List<ProKnowledge> proKnowledges,List<BasPersonInfo> basPersonInfos,List<PerKnowledge> perKnowledges) throws FormatEexception {
-        List<Integer> flaglist=new ArrayList<Integer>();
-        List<String> bznlist=new ArrayList<String>();
-        int flag=0;
-        String bzn="true";
-        Map<Integer,List> map=new TreeMap<Integer, List>();
-        for(int i=0;i<proKnowledges.size();i++){
-            SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            try {
-                Date date = simpleDateFormat.parse(proKnowledges.get(i).getPtime());
-            }catch (Exception e){
-                throw new FormatEexception("Time format error,It should be in the form of:\"yyyy-MM-dd HH:mm:ss\"");
+    public Map<Integer,List> insertBatchAutoDedup(List<ProKnowledge> proKnowledges,List<BasPersonInfo> basPersonInfos,List<PerKnowledge> perKnowledges) throws SpiderUtils.FormatEexception, ParseException, FormatEexception {
+        Map<Integer,List> map= null;
+        try {
+            map = LevenshteinDis.isExist(proKnowledges, basPersonInfos, perKnowledges);
+            if(((List<Integer>) map.get(4)).get(0)!=0) {
+                this.getSqlSession().insert(this.getNs() + "insertBatch", proKnowledges);
             }
-            if(StringUtils.isEmpty(proKnowledges.get(i).getMain())){
-                System.out.println("this is the null");
-                proKnowledges.remove(i);
-                if(basPersonInfos.size()>0) {
-                    basPersonInfos.remove(i);
-                }
-                if(perKnowledges.size()>0) {
-                    perKnowledges.remove(i);
-                }
-                i=i-1;
-            }else if (StringUtils.isNotEmpty(proKnowledges.get(i).getMain()) && LevenshteinDis.isExist(proKnowledges.get(i).getMain(), proKnowledges.get(i).getPtime(),proKnowledges.get(i).getUrl(),proKnowledges.get(i).getUuid())) {
-                proKnowledges.remove(i);
-                if(basPersonInfos.size()>0) {
-                    basPersonInfos.remove(i);
-                }
-                if(perKnowledges.size()>0) {
-                    perKnowledges.remove(i);
-                }
-                i=i-1;
-                fg=fg+1;
-
-                if(fg%5==0){
-                    bzn="false";
-                }
-            }else{
-                fg=0;
-            }
-            flag=i+1;
-        }
-        flaglist.add(flag);
-        bznlist.add(bzn);
-        map.put(1,basPersonInfos);
-        map.put(3,perKnowledges);
-        map.put(4,flaglist);
-        map.put(2,bznlist);
-        if(flag!=0) {
-            this.getSqlSession().insert(this.getNs() + "insertBatch", proKnowledges);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return map;
     }
 
-    public void insert(ProKnowledge proKnowledge) throws FormatEexception {
-            SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            try {
-                Date date = simpleDateFormat.parse(proKnowledge.getPtime());
-            }catch (Exception e){
-                throw new FormatEexception("Time format error,It should be in the form of:\"yyyy-MM-dd HH:mm:ss\"");
-            }
-            if (StringUtils.isNotEmpty(proKnowledge.getMain()) && !LevenshteinDis.isExist(proKnowledge.getMain(), proKnowledge.getPtime(),proKnowledge.getUrl(),proKnowledge.getUuid())) {
-                this.getSqlSession().insert(this.getNs() + "insert", proKnowledge);
-            }
 
+
+    public void insert(ProKnowledge proKnowledge) throws FormatEexception {
 
     }
 
 
 
-    public List<ProKnowledge> selectList(String str) {
-        return this.getSqlSession().selectList(getNs() + "selectList", str);
+    public List<ProKnowledge> selectList(DateInfo date) {
+        return this.getSqlSession().selectList(getNs() + "selectList", date);
     }
 
     public List<ProKnowledge> select(){

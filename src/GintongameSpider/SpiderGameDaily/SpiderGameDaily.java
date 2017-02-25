@@ -4,7 +4,6 @@ import JavaBean.BasPersonInfo;
 import JavaBean.PerKnowledge;
 import JavaBean.ProKnowledge;
 import SpiderUtils.LevenshteinDis;
-import SpiderUtils.SpiderContant;
 import dao.impl.BasPersonInfoImpl;
 import dao.impl.PerKnowledgeImpl;
 import dao.impl.ProKnowledgeImpl;
@@ -32,7 +31,7 @@ public class SpiderGameDaily {
     /*
     爬取一个页的数据
      */
-    public static void grab(WebDriver driver){
+   /* public static void grab(WebDriver driver){
         WebElement web = driver.findElement(By.xpath("/html"));
         String html = web.getAttribute("outerHTML");
         //获取dom元素
@@ -94,40 +93,46 @@ public class SpiderGameDaily {
             }
             String kuuid = UUID.randomUUID().toString();
             //去重复数据
-            if (main != null && main.length() > 0 && !LevenshteinDis.isExist(main, time, url,kuuid)) {
-                //知识表映射
-                ProKnowledge pk = new ProKnowledge();
-                ;
-                pk.setUuid(kuuid);
-                pk.setUrl(url);
-                pk.setCover(img);
-                pk.setTitle(title);
-                pk.setAuthor(name);
-                pk.setPtime(time);
-                pk.setTag(label);
-                pk.setMain(main);
-                pk.setType(type);
-                proKnowledges.add(pk);
-                pk.setSource("游戏日报");
-                //关系表映射
-                PerKnowledge perk = new PerKnowledge();
-                String puuid = UUID.randomUUID().toString();
-                String rtype = "原作者";
-                perk.setKuuid(kuuid);
-                perk.setPuuid(puuid);
-                perk.setName(name);
-                perk.setKname(title);
-                perk.setSource(url);
-                perk.setRtype(rtype);
-                perk.setSource("游戏日报");
-                perKnowledges.add(perk);
-                //人表映射
-                BasPersonInfo bp = new BasPersonInfo();
-                bp.setUuid(puuid);
-                bp.setName(name);
-                bp.setSource("游戏日报");
-                bp.setUrl(url);
-                basPersoninfos.add(bp);
+            try {
+                if (main != null && main.length() > 0 && !LevenshteinDis.isExist(main, time, url, kuuid)) {
+                    //知识表映射
+                    ProKnowledge pk = new ProKnowledge();
+                    ;
+                    pk.setUuid(kuuid);
+                    pk.setUrl(url);
+                    pk.setCover(img);
+                    pk.setTitle(title);
+                    pk.setAuthor(name);
+                    pk.setPtime(time);
+                    pk.setTag(label);
+                    pk.setMain(main);
+                    pk.setType(type);
+                    proKnowledges.add(pk);
+                    pk.setSource("游戏日报");
+                    //关系表映射
+                    PerKnowledge perk = new PerKnowledge();
+                    String puuid = UUID.randomUUID().toString();
+                    String rtype = "原作者";
+                    perk.setKuuid(kuuid);
+                    perk.setPuuid(puuid);
+                    perk.setName(name);
+                    perk.setKname(title);
+                    perk.setSource(url);
+                    perk.setRtype(rtype);
+                    perk.setSource("游戏日报");
+                    perKnowledges.add(perk);
+                    //人表映射
+                    BasPersonInfo bp = new BasPersonInfo();
+                    bp.setUuid(puuid);
+                    bp.setName(name);
+                    bp.setSource("游戏日报");
+                    bp.setUrl(url);
+                    basPersoninfos.add(bp);
+                }
+            } catch (LevenshteinDis.FormatEexception formatEexception) {
+                formatEexception.printStackTrace();
+            } catch (java.text.ParseException e) {
+                e.printStackTrace();
             }
 
             if ((proKnowledges.size() > 0 && proKnowledges.size() % 1 == 0)) {
@@ -218,6 +223,6 @@ public class SpiderGameDaily {
         System.exit(0);
 
     }
-
+*/
 
 }
