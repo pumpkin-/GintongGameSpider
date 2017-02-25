@@ -52,7 +52,7 @@ public class CommonSpiderKnowledge {
             @Override
             public void run() {
                 try {
-                    ergodicUrl("spiderYxgc", 0, "no");
+                    ergodicUrl("spiderSfw", 0, "no");
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -92,7 +92,7 @@ public class CommonSpiderKnowledge {
             @Override
             public void run() {
                 try {
-                    ergodicUrl("spiderSfw", 0, "no");
+                    ergodicUrl("spiderYxgc", 0, "no");
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -698,16 +698,12 @@ public class CommonSpiderKnowledge {
                 if(StringUtils.isNotEmpty(knowledgeSpiderConfig.cover.attributeValue("join"))) {
                     cover = knowledgeSpiderConfig.cover.attributeValue("join")+getTagOne(childDocumet,knowledgeSpiderConfig.cover.getText()).toString();
                 }else{
-                    cover=null;
+                    cover=getTagOne(childDocumet,knowledgeSpiderConfig.cover.getText()).toString();
                 }
             } else {
-                if(StringUtils.isNotEmpty((String) map.get("cover").get(fg))) {
-                    try {
-                        cover = map.get("cover").get(fg).toString();
-                    }catch (Exception e){
-                        cover=null;
-                    }
-                }else{
+                try {
+                    cover = map.get("cover").get(fg).toString();
+                }catch (Exception e){
                     cover=null;
                 }
             }

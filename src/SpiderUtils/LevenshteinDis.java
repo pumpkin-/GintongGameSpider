@@ -66,8 +66,13 @@ public class LevenshteinDis {
                 for (int x = 0; x < list.size(); x++) {
                     essay = list.get(x).getMain();
                     String aticle = proKnowledges.get(i).getMain();
+                    double dis;
                     //修改为错误代码
-                    double dis = getSimilarity(essay, aticle);
+                    try {
+                        dis = getSimilarity(essay, aticle);
+                    }catch (Exception e){
+                        dis=0;
+                    }
                     if (StringUtils.isEmpty(proKnowledges.get(i).getMain())) {
                         System.out.println("this is the null");
                         proKnowledges.remove(i);
