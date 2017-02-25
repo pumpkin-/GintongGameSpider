@@ -60,63 +60,127 @@ public class LevenshteinDis {
         da.setDate(dd);
         System.out.println(da.getDatepast());
         System.out.println(da.getDate());
-        List<ProKnowledge> list=pro.selectList(da);
-        System.out.println("从数据库中抽出："+list.size()+"条数据做对比");
-        String essay;
-        if(list.size()!=0) {
+        if(day>10){
+            String essay;
             for (int i = 0; i < proKnowledges.size(); i++) {
-                for (int x = 0; x < list.size(); x++) {
-                    essay = list.get(x).getMain();
-                    String aticle = proKnowledges.get(i).getMain();
-                    double dis;
-                    //修改为错误代码
-                    try {
-                        dis = getSimilarity(essay, aticle);
-                    }catch (Exception e){
-                        dis=0;
-                    }
-                    if (StringUtils.isEmpty(proKnowledges.get(i).getMain())) {
-                        System.out.println("this is the null");
-                        proKnowledges.remove(i);
-                        if (basPersonInfos.size() > 0) {
-                            basPersonInfos.remove(i);
+                DateInfo daa = new DateInfo();
+                daa.setDate(proKnowledges.get(i).getPtime());
+                Date date5 = new Date((simpleDateFormat.parse(proKnowledges.get(i).getPtime()).getTime()) - (5 * (24 * 60 * 60 * 1000)));
+                dd = simpleDateFormat.format(date5);
+                daa.setDatepast(dd);
+                List<ProKnowledge> list = pro.selectList(daa);
+                if (list == null || list.size() != 0) {
+                    for (int x = 0; x < list.size(); x++) {
+                        essay = list.get(x).getMain();
+                        String aticle = proKnowledges.get(i).getMain();
+                        double dis;
+                        //修改为错误代码
+                        try {
+                            dis = getSimilarity(essay, aticle);
+                        } catch (Exception e) {
+                            dis = 0;
                         }
-                        if (perKnowledges.size() > 0) {
-                            perKnowledges.remove(i);
-                        }
-                        i = i - 1;
-                        break;
-                    } else if (dis > 0.95) {
-                        CommonSpiderKnowledge.storeBugdata(essay, aticle, proKnowledges.get(i).getUuid());
-                        proKnowledges.remove(i);
-                        if (basPersonInfos.size() > 0) {
-                            basPersonInfos.remove(i);
-                        }
-                        if (perKnowledges.size() > 0) {
-                            perKnowledges.remove(i);
-                        }
-                        i = i - 1;
-                        fg = fg + 1;
+                        if (StringUtils.isEmpty(proKnowledges.get(i).getMain())) {
+                            System.out.println("this is the null");
+                            proKnowledges.remove(i);
+                            if (basPersonInfos.size() > 0) {
+                                basPersonInfos.remove(i);
+                            }
+                            if (perKnowledges.size() > 0) {
+                                perKnowledges.remove(i);
+                            }
+                            i = i - 1;
+                            break;
+                        } else if (dis > 0.95) {
+                            CommonSpiderKnowledge.storeBugdata(essay, aticle, proKnowledges.get(i).getUuid());
+                            proKnowledges.remove(i);
+                            if (basPersonInfos.size() > 0) {
+                                basPersonInfos.remove(i);
+                            }
+                            if (perKnowledges.size() > 0) {
+                                perKnowledges.remove(i);
+                            }
+                            i = i - 1;
+                            fg = fg + 1;
 
-                        if (fg % 5 == 0) {
-                            bzn = "false";
+                            if (fg % 5 == 0) {
+                                bzn = "false";
+                            }
+                            System.out.println("--------------This data should be delete------------------");
+                            break;
+                        } else {
+                            fg = 0;
                         }
-                        System.out.println("--------------This data should be delete------------------");
-                        break;
-                    } else {
-                        fg = 0;
                     }
+                    flag = i + 1;
                 }
-                flag = i + 1;
             }
+            flaglist.add(flag);
+            bznlist.add(bzn);
+            map.put(1,basPersonInfos);
+            map.put(3,perKnowledges);
+            map.put(4,flaglist);
+            map.put(2,bznlist);
+            map.put(5,proKnowledges);
+        }else {
+            List<ProKnowledge> list = pro.selectList(da);
+            System.out.println("从数据库中抽出：" + list.size() + "条数据做对比");
+            String essay;
+            if (list==null||list.size() != 0) {
+                for (int i = 0; i < proKnowledges.size(); i++) {
+                    for (int x = 0; x < list.size(); x++) {
+                        essay = list.get(x).getMain();
+                        String aticle = proKnowledges.get(i).getMain();
+                        double dis;
+                        //修改为错误代码
+                        try {
+                            dis = getSimilarity(essay, aticle);
+                        } catch (Exception e) {
+                            dis = 0;
+                        }
+                        if (StringUtils.isEmpty(proKnowledges.get(i).getMain())) {
+                            System.out.println("this is the null");
+                            proKnowledges.remove(i);
+                            if (basPersonInfos.size() > 0) {
+                                basPersonInfos.remove(i);
+                            }
+                            if (perKnowledges.size() > 0) {
+                                perKnowledges.remove(i);
+                            }
+                            i = i - 1;
+                            break;
+                        } else if (dis > 0.95) {
+                            CommonSpiderKnowledge.storeBugdata(essay, aticle, proKnowledges.get(i).getUuid());
+                            proKnowledges.remove(i);
+                            if (basPersonInfos.size() > 0) {
+                                basPersonInfos.remove(i);
+                            }
+                            if (perKnowledges.size() > 0) {
+                                perKnowledges.remove(i);
+                            }
+                            i = i - 1;
+                            fg = fg + 1;
+
+                            if (fg % 5 == 0) {
+                                bzn = "false";
+                            }
+                            System.out.println("--------------This data should be delete------------------");
+                            break;
+                        } else {
+                            fg = 0;
+                        }
+                    }
+                    flag = i + 1;
+                }
+            }
+            flaglist.add(flag);
+            bznlist.add(bzn);
+            map.put(1, basPersonInfos);
+            map.put(3, perKnowledges);
+            map.put(4, flaglist);
+            map.put(2, bznlist);
+            map.put(5, proKnowledges);
         }
-        flaglist.add(flag);
-        bznlist.add(bzn);
-        map.put(1,basPersonInfos);
-        map.put(3,perKnowledges);
-        map.put(4,flaglist);
-        map.put(2,bznlist);
-        map.put(5,proKnowledges);
         return map;
     }
 
