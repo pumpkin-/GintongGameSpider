@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gintongame.mapping.ComShareholderMapper">
+    <insert id="insertComShareholder" parameterType="JavaBean.ComShareholder" useGeneratedKeys="true">
+      insert into com_shareholder
+      (bid,uuid,name,investment,adress,web)
+      VALUES
+      (#{bid},#{uuid},#{name},#{investment},#{adress},#{web})
+    </insert>
+</mapper>

@@ -28,4 +28,11 @@ public class BasPersonInfoImpl extends BaseDaoImpl<List> implements BasPersonInf
     public List<String> selectList(String str) {
         return this.getSqlSession().selectList(getNs() + "selectList", str);
     }
+
+    @Override
+    public void insertPerInfo(BasPersonInfo basPersonInfo) {
+        this.getSqlSession().insert(this.getNs()+"insertPerInfo",basPersonInfo);
+    }
+
+
 }

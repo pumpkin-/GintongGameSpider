@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gintongame.mapping.ComExecutiveInfoMapper">
+    <insert id="insertComExecutive" parameterType="JavaBean.ComExecutiveInfo" useGeneratedKeys="true">
+        insert into com_executive_info
+        (bid,uuid,pname,job,adress,web)
+        VALUES
+        (#{bid},#{uuid},#{pname},#{job},#{adress},#{web})
+    </insert>
+</mapper>

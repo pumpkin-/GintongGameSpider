@@ -10,5 +10,6 @@ import java.util.List;
 public interface BasOrganizeInfoDao extends BaseDao<List>{
     public void insertBatch(List<BasOrganizeInfo> ts);
     public void insertSingle(BasOrganizeInfo ts);
+    public List<String> selcetOrganId(String uuid);
     public List<BasOrganizeInfo> selectList(String ts);
 }
