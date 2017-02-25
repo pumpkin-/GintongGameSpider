@@ -301,9 +301,9 @@ public class CommonSpiderKnowledge {
         doc=getJXDocument(startUrl);
         //条数
         int a=1;
+        //页数
+        int i=1;
         while(true){
-            //页数
-            int i=1;
             //断点翻页
             for(int x=1;x<formpage;x++){
                 System.out.println("Start page break");
@@ -334,7 +334,7 @@ public class CommonSpiderKnowledge {
                 fg++;
             }
             System.out.println("Start storage");
-            storeToDatebaseLocal(orgflag);
+            //storeToDatebaseLocal(orgflag);
             try {
                 i++;
                 System.out.println("Start listpage");
