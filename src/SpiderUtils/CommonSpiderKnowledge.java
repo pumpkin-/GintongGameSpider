@@ -439,6 +439,11 @@ public class CommonSpiderKnowledge {
         Map<String,List<Object>> map=new HashMap<String, List<Object>>();
         System.out.println("Start getting starturl's DOM tree");
         doc=getJXDocument(driver,startUrl);
+        //断点翻页
+        for(int x=1;x<formpage;x++){
+            System.out.println("Start page break");
+            doc=listPageSelenium(knowledgeSpiderConfig,driver);
+        }
         //点击更多
         if(knowledgeSpiderConfig.chose.attributeValue("demand").equals("clickMore")){
             while(true) {
@@ -469,11 +474,6 @@ public class CommonSpiderKnowledge {
         }
         //页数
         int i=1;
-        //断点翻页
-        for(int x=1;x<formpage;x++){
-            System.out.println("Start page break");
-            doc=listPageSelenium(knowledgeSpiderConfig,driver);
-        }
         //条数
         int a=1;
         while(true){

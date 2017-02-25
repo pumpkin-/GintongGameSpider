@@ -11,6 +11,7 @@ import com.google.gson.Gson;
 import com.gargoylesoftware.htmlunit.activex.javascript.msxml.XMLSerializer;
 
 import dao.impl.ProKnowledgeImpl;
+import net.sf.json.JSONObject;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -80,19 +81,21 @@ public class test {
 
 
 
-        /*Connection.Response res=Jsoup.connect("https://maimai.cn/static/scripts/mm__node.bundle.min.js?a348d5f185d822306f21abc35824b9cb")
+        Connection.Response res=Jsoup.connect("https://maimai.cn/contact/detail/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1IjozMDU4Nzg2LCJsZXZlbCI6MX0.00WZZ-W-x7yNWdvsS_k81qco3Fhi-HG73QUt9dQub-Q?from=webview%23%2Fweb%2Fsearch_center")
                                         .userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36")
-                                        .ignoreContentType(true)
+                .ignoreHttpErrors(true)
+                .ignoreContentType(true)
                 .execute();
         String body=res.body();
-        System.out.println(body);*/
+        JSONObject gson=JSONObject.fromObject(body);
+        System.out.println(gson);
 
 
         //SpiderUtils.getElements("windows","spiderYxgc",70,"no");
         //SpiderUtils.getElements("windows","spiderRwt",0,"no");
         //SpiderUtils.getElements("windows","spiderKdbs",0,"no");
 
-/*org.jsoup.nodes.Document doc=Jsoup.connect("http://www.duowan.com/news/m_346763061239_2.html").get();
+/*org.jsoup.nodes.Document doc=Jsoup.connect("http://www.youxituoluo.com/2211.html").get();
         JXDocument jxDocument=new JXDocument(doc);
         System.out.println(doc.outerHtml());*/
 
