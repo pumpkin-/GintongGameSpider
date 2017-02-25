@@ -514,6 +514,10 @@ public class CommonSpiderKnowledge {
             try {
                 i++;
                 System.out.println("Start listpage");
+                if(StringUtils.isEmpty(knowledgeSpiderConfig.nextPage.getText())){
+                    System.out.println("Page failure or To the last page");
+                    break;
+                }
                 doc = listPageSelenium(knowledgeSpiderConfig, driver);
             }catch (Exception e){
                 System.out.println("Page failure or To the last page");
