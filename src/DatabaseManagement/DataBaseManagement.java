@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 /**
  * Created by lenovo on 2017/2/20.
  */
-public class Test {
+public class DataBaseManagement {
     public static void main(String [] args) throws Exception {
         Map<String,String> mainMap=new HashMap<String,String>();
         Map<String,String> coverMap=new HashMap<String, String>();
