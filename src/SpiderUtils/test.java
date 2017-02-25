@@ -80,7 +80,7 @@ public class test {
 
 
 
-<<<<<<< HEAD
+
        //SpiderUtils.getElements("windows","spiderChuapp",0,"no");
 
 
@@ -100,21 +100,13 @@ public class test {
                 .execute();
         String body=res.body();
         System.out.println(body);*/
-=======
-        Connection.Response res=Jsoup.connect("https://maimai.cn/contact/detail/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1IjozMDU4Nzg2LCJsZXZlbCI6MX0.00WZZ-W-x7yNWdvsS_k81qco3Fhi-HG73QUt9dQub-Q?from=webview%23%2Fweb%2Fsearch_center")
-                                        .userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36")
-                .ignoreHttpErrors(true)
-                .ignoreContentType(true)
-                .execute();
-        String body=res.body();
->>>>>>> c130f3d026a7b9a63dc999238cb4623efce57a10
 
 
         //SpiderUtils.getElements("windows","spiderYxgc",70,"no");
         //SpiderUtils.getElements("windows","spiderRwt",0,"no");
         //SpiderUtils.getElements("windows","spiderKdbs",0,"no");
 
-<<<<<<< HEAD
+
 
 //        ExecutorService singleThreadExecutor = Executors.newFixedThreadPool(2);
 //        for (int i = 0; i < 10; i++) {
@@ -145,42 +137,6 @@ public class test {
 //                }
 //            });
 //        }
-=======
-/*org.jsoup.nodes.Document doc=Jsoup.connect("http://www.youxituoluo.com/2211.html").get();
-        JXDocument jxDocument=new JXDocument(doc);
-        System.out.println(doc.outerHtml());*/
-
-        /*ExecutorService singleThreadExecutor = Executors.newSingleThreadExecutor();
-        for (int i = 0; i < 10; i++) {
-            final int index = i;
-            final int u=i;
-            singleThreadExecutor.execute(new Runnable() {
-
-                @Override
-                public void run() {
-                    try {
-                        System.out.println(index);
-                        Thread.sleep(2000);
-                    } catch (InterruptedException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
-                    }
-                }
-            });
-            singleThreadExecutor.execute(new Runnable() {
-                @Override
-                public void run() {
-                    System.out.println(u);
-                    try {
-                        Thread.sleep(2000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            });
-        }*/
-
->>>>>>> c130f3d026a7b9a63dc999238cb4623efce57a10
 
 //        org.jsoup.nodes.Document doc=Jsoup.connect("http://www.gamersky.com/news/201702/872232.shtml")
 //                          .userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36")
