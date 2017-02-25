@@ -6,18 +6,18 @@
         <title>//h1[@class='entry-title']/text()</title>
         <author>//span[@class='meta-author']/a/text()</author>
         <authorurl></authorurl>>
-        <cover Mosaic="">//div[@class='entry entry-content']/p/img[1]/@src</cover>>
+        <cover join="">//div[@class='entry entry-content']/p/img[1]/@src</cover>>
         <ptime timeFormat="yyyy MM dd">//span[@class='meta-date']/text()</ptime>>
         <tag>//div[@id='entry-tags']/a/text()</tag>>
         <main>//div[@class='entry entry-content']/p</main>>
-        <mainpic Mosaic="">//img/@src</mainpic>>
+        <mainpic join="">//img/@src</mainpic>>
         <type>//span[@class='meta-cat']/a/text()</type>>
         <source>游戏大观</source>
-        <childnext></childnext>>
+        <childnext join=""></childnext>>
         <chose demand=""></chose>>
         <flag>jsoup</flag>>
-        <childLink Mosaic="">//div[@class='entry-thumb']/a/@href</childLink>>
-        <nextpage>//div[@class='pagenavi clear']/a[text()*='Next']/@href</nextpage>>
+        <childLink join="">//div[@class='entry-thumb']/a/@href</childLink>>
+        <nextpage join="">//div[@class='pagenavi clear']/a[text()*='Next']/@href</nextpage>>
         <urls>
             <url>
                 http://www.gamelook.com.cn/category/news
@@ -66,16 +66,17 @@
         <title>//div[@class='detail_cont']/h1[@class='tit']/text()</title>
         <author></author>
         <authorurl></authorurl>>
-        <cover Mosaic="">//div[@class='inf clearfix']/a[@class='img_box']/img/@src</cover>>
+        <cover join="">//div[@class='inf clearfix']/a[@class='img_box']/img/@src</cover>>
         <ptime timeFormat="yyyy MM dd HH mm">//div[@class='info']/em[1]/text()</ptime>>
         <tag></tag>>
         <main>//div[@class='detail_c']/p</main>>
-        <mainpic Mosaic="">//img/@src</mainpic>>
+        <mainpic join="">//img/@src</mainpic>>
         <type>//div[@class='s_1 on']/p/a[@class='on']/text()</type>>
         <source>游戏观察</source>
-        <childLink Mosaic="http://www.youxiguancha.com">//div[@class='inf clearfix']/div[@class='inf_c']/h2/a/@href</childLink>>
-        <next>$('div.page_manu a.pageNext')[0].click()</next>>
-        <nextflag>//div[@class='page_manu']/a[@class='pageNext']</nextflag>>
+        <childLink join="http://www.youxiguancha.com">//div[@class='inf clearfix']/div[@class='inf_c']/h2/a/@href</childLink>>
+        <nextpage join="http://www.youxiguancha.com/news/">//div[@class='page_manu']/a[@class='pageNext']/@href</nextpage>>
+        <flag>jsoup</flag>>
+        <childnext join=""></childnext>>
         <chose demand=""></chose>>
         <urls>
             <url>
@@ -87,52 +88,48 @@
 
 
     <!--上方网抓取-->
-    <spider>
+    <spiderSfw>
         <title>//div[@class='side']/h1[@class='h1title']/text()</title>
         <author></author>
         <authorurl></authorurl>>
-        <cover>//table[@class='margin12']/tbody/tr/td/a/img/@src</cover>>
+        <cover join="">//table[@class='margin12']/tbody/tr/td/a/img/@src</cover>>
         <ptime timeFormat="yyyy MM dd HH mm">//div[@class='intro']/div[@class='fl']/text()</ptime>>
         <tag>//div[@class='tagshare']/table/tbody/tr/td/a[@class='tag']/text()</tag>>
         <main>//div[@class='content']/p</main>>
-        <mainpic Mosaic="">//img/@src</mainpic>>
+        <mainpic join="">//img/@src</mainpic>>
         <type>//div[@class='url']/a/text()</type>>
         <source>上方网</source>
-        <childnext></childnext>>
-        <childnextflag></childnextflag>>
-        <more></more>>
-        <moreflag></moreflag>>
-        <childLink Mosaic="">//div[@class='rl fontblue']/a/@href</childLink>>
-        <next>$('div.listpage a')[$('div.listpage a').length-2].click()</next>>
-        <nextflag>//div[@class='listpage']/a[text()*='下一页']</nextflag>>
+        <childnext join=""></childnext>>
+        <flag>jsoup</flag>>
+        <chose demand=""></chose>>
+        <childLink join="">//div[@class='rl fontblue']/a/@href</childLink>>
+        <nextpage join="http://www.sfw.cn">//div[@class='listpage']/a[text()*='下一页']/@href</nextpage>>
         <urls>
             <url>
                 http://www.sfw.cn/kuaixun/p/1
             </url>
         </urls>>
 
-    </spider>
+    </spiderSfw>
 
 
 <!--游民星空抓取-->
     <spiderYmxk>
-        <title>//div[@class='Mid2L_tit']/h1/text()</title>
-        <author></author>
+        <title>//div[@class='Mid2L_tit']/h1/text()|//div[@class='MidL_title']/h1/text()</title>
+        <author>//div[@class='detail']/span[text()*=作者]/text()</author>
         <authorurl></authorurl>>
-        <cover>//div[@class='img']/a/img/@src</cover>>
+        <cover join="">//div[@class='img']/a/img/@src</cover>>
         <ptime timeFormat="yyyy MM dd HH mm">//div[@class='tem']/div[@class='time']/text()</ptime>>
         <tag>//div[@class='RelevantR']/ul[@class='Relevantlike']/li[@class='txt']/a/text()</tag>>
         <main>//div[@class='Mid2L_con']/p</main>>
-        <mainpic>//a/@href</mainpic>>
+        <mainpic join="">//a/@href</mainpic>>
         <type>//div[@class='Mid2L_crumb']/a[@target='_self']/text()</type>>
         <source>游民星空</source>
-        <more></more>>
-        <moreflag></moreflag>>
-        <childLink Mosaic="">//div[@class='Mid2L_con block']/ul[@class='pictxt contentpaging block']/li/div[@class='img']/a/@href|//div[@class='Mid2L_con block']/ul[@class='pictxt contentpaging']/li/div[@class='img']/a/@href</childLink>>
-        <childnext>$('div.page_css a')[$('div.page_css a').length-1].click()</childnext>>
-        <childnextflag>//div[@class='page_css']/a[text()*='下一页']</childnextflag>>
-        <next>$('span.pagecss a.p1.nexe').click()</next>>
-        <nextflag>//span[@class='pagecss']/a[text()*='下一页']</nextflag>>
+        <flag>selenium</flag>>
+        <chose demand=""></chose>>
+        <childLink join="">//div[@class='Mid2L_con block']/ul[@class='pictxt contentpaging block']/li/div[@class='img']/a/@href|//div[@class='Mid2L_con block']/ul[@class='pictxt contentpaging']/li/div[@class='img']/a/@href</childLink>>
+        <childnext join="">//div[@class='page_css']/a[text()*='下一页']/@href</childnext>>
+        <nextpage join="">$('span.pagecss a.p1.nexe').click()</nextpage>>
         <urls>
             <url>
                 http://www.gamersky.com/news/
@@ -141,25 +138,23 @@
 
     </spiderYmxk>
 
-
+<!--多玩游戏-->
     <spiderDwyx>
         <title>//div[@class='article']/h1/text()|//div[@class='newsDetail-header']/h1/text()</title>
         <author>//div[@class='info']/span[@class='author']/text()</author>
         <authorurl></authorurl>>
-        <cover>//div[@class='img-wrap']/img/@src</cover>>
+        <cover join="">//div[@class='img-wrap']/img/@src</cover>>
         <ptime timeFormat="yyyy MM dd HH mm ss">//div[@class='article']/address/span[1]/text()|//div[@class='newsDetail-header__info']/span/span[1]/em/text()</ptime>>
         <tag></tag>>
         <main>//div[@class='newsCon__content']/p|//div[@id='text']/p</main>>
-        <mainpic Mosaic="">//img/@href</mainpic>>
+        <mainpic join="">//img/@href</mainpic>>
         <type>//div[@class='mod-crumbs-s3']/a[2]/text()|//div[@class='newgame-header']/address/a[2]/text()</type>>
         <source>多玩游戏</source>
-        <childLink Mosaic="http://www.duowan.com">//div[@class='ui-tab__panel']dl[@class='day-item']/dd/div[@class='item-fl']/a/@href</childLink>>
-        <childnext></childnext>>
-        <childnextflag></childnextflag>>
-        <more></more>>
-        <moreflag></moreflag>>
-        <next>$('#pageNum > span:nth-child(12) > a').click()</next>>
-        <nextflag>//*[@id="pageNum"]/span[last()]/a/text()*='下一页'</nextflag>>
+        <flag>selenium</flag>>
+        <chose demand=""></chose>>
+        <childLink join="http://www.duowan.com">//div[@class='ui-tab__panel']dl[@class='day-item']/dd/div[@class='item-fl']/a/@href</childLink>>
+        <childnext join=""></childnext>>
+        <nextpage join="">$('#pageNum > span:nth-child(12) > a').click()</nextpage>>
         <urls>
             <url>
                 http://www.duowan.com/news/
