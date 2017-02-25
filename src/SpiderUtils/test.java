@@ -79,6 +79,11 @@ public class test {
 
 
 
+<<<<<<< HEAD
+        org.jsoup.nodes.Document doc=Jsoup.connect("http://www.3h3.com/new/nc_1_1.html").get();
+        JXDocument jxDocument=new JXDocument(doc);
+        System.out.println(doc.outerHtml());
+=======
 
 
        //SpiderUtils.getElements("windows","spiderChuapp",0,"no");
@@ -101,6 +106,7 @@ public class test {
         String body=res.body();
         System.out.println(body);*/
 
+>>>>>>> bffcef6e0f701966fd79c81dd32e3e1e8a71ad29
 
         //SpiderUtils.getElements("windows","spiderYxgc",70,"no");
         //SpiderUtils.getElements("windows","spiderRwt",0,"no");
