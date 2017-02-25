@@ -79,12 +79,12 @@ public class test {
 
 
 
-        Connection.Response res=Jsoup.connect("https://maimai.cn/static/scripts/mm__node.bundle.min.js?a348d5f185d822306f21abc35824b9cb")
+        /*Connection.Response res=Jsoup.connect("https://maimai.cn/static/scripts/mm__node.bundle.min.js?a348d5f185d822306f21abc35824b9cb")
                                         .userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36")
                                         .ignoreContentType(true)
                 .execute();
         String body=res.body();
-        System.out.println(body);
+        System.out.println(body);*/
 
         //SpiderUtils.getElements("windows","spiderYxgc",70,"no");
         //SpiderUtils.getElements("windows","spiderRwt",0,"no");
@@ -94,7 +94,7 @@ public class test {
         JXDocument jxDocument=new JXDocument(doc);
         System.out.println(doc.outerHtml());*/
 
-        ExecutorService singleThreadExecutor = Executors.newFixedThreadPool(2);
+        /*ExecutorService singleThreadExecutor = Executors.newSingleThreadExecutor();
         for (int i = 0; i < 10; i++) {
             final int index = i;
             final int u=i;
@@ -122,7 +122,8 @@ public class test {
                     }
                 }
             });
-        }
+        }*/
+
 
 
         /*System.setProperty("webdriver.chrome.driver",SpiderContant.chromeWindowsPath );
