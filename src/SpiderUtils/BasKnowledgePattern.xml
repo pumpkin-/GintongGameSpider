@@ -21,7 +21,6 @@
         <urls>
             <url>
                 http://www.gamelook.com.cn/category/news
-
             </url>
             <url>
                 http://www.gamelook.com.cn/category/%E6%B8%B8%E6%88%8F%E8%BF%90%E8%90%A5
@@ -217,15 +216,15 @@
 
 
 
-<!--逗游爬虫 刘雪明2.24-->
+<!--逗游爬虫 刘雪明2.25-->
     <spiderDoyo>
         <!--详情页标题-->
-        <title>//div[@class='item ']/a/@title</title>
+        <title>//div[@class='title']/h1/text()</title>
         <!--详情页作者-->
         <author>//span[@id='author_baidu']/text()</author>
         <authorurl></authorurl>>
         <!--列表页封面-->
-        <cover>//div[@class='item']/a/img/@src</cover>>
+        <cover>//div[@class='item']/a/@style</cover>>
         <!--详情页时间-->
         <ptime timeFormat="yyyy MM dd HH mm">//span[@id='pubtime_baidu']/text()</ptime>>
         <tag></tag>>
@@ -233,26 +232,23 @@
         <main>//div[@id='article_content']/p</main>>
         <!--正文图片-->
         <mainpic>//img/@src</mainpic>>
-        <type>//div[@class='tags']</type>>
+        <type></type>>
         <source>逗游</source>
         <!--子链接-->
-        <childLink Mosaic="http://www.doyo.cn">//div[@class='content']/a/@href</childLink>>
-        <childnext></childnext>>
-        <childnextflag></childnextflag>>
-        <more>$('#article_list > a').click()</more>>
-        <moreflag>//*[@id="article_list"]/a</moreflag>>
-        <next></next>>
-        <nextflag></nextflag>>
+        <childLink Mosaic="http://www.doyo.cn">//div[@class='item']/a/@href</childLink>>
+        <flag>jsoup</flag>>
+        <chose demand=""></chose>>
+        <nextpage join="more">$('#article_list > a').click()</nextpage>
         <urls>
-            <url>
-                http://www.doyo.cn/news
-            </url>
             <!--<url>-->
-                <!--http://www.doyo.cn/news/wangye-->
+                <!--http://www.doyo.cn/news-->
             <!--</url>-->
+            <url>
+                http://www.doyo.cn/news/wangye
+            </url>
         </urls>>
     </spiderDoyo>
-<!--游戏邦爬虫  刘雪明2.24-->
+<!--游戏邦爬虫  刘雪明2.25-->
     <spiderGamerboom>
         <title>//div[@class='the_article']/h1/text()</title>
         <!--详情页作者-->
@@ -266,24 +262,31 @@
         <!--详情页的正文-->
         <main>//div[@class='cnt_body']/p</main>>
         <!--正文图片-->
-        <mainpic>//img/@src</mainpic>>
+        <mainpic>//p/preceding-sibling-one::div[@class='wp-caption aligncenter']/a/img/@src</mainpic>>
         <type></type>>
         <source>游戏邦</source>
         <!--子链接-->
         <childLink Mosaic="">//div[@class='news']/h3/a/@href</childLink>>
         <childnext></childnext>>
-        <childnextflag></childnextflag>>
-        <more></more>>
-        <moreflag></moreflag>>
-        <next>$('body > div.main.margin-top > div.clumn > div.jc_content > div > a:nth-child(8)').click()</next>>
-        <nextflag>/html/body/div[6]/div[1]/div[2]/div/a[7]</nextflag>>
+        <flag>selenium</flag>>
+        <chose demand=""></chose>>
+        <nextpage join="">//div[@class='wp-pagenavi']/a[@class='nextpostslink']/@href</nextpage>
         <urls>
             <url>
                 http://gamerboom.com/archives/category/original
             </url>
+            <url>
+                http://gamerboom.com/archives/category/observe
+            </url>
+            <url>
+                http://gamerboom.com/archives/category/interview
+            </url>
+            <url>
+                http://gamerboom.com/archives/category/dataview
+            </url>
         </urls>>
     </spiderGamerboom>
-    <!--不凡游戏爬虫  刘雪明2.24-->
+<!--不凡游戏爬虫  刘雪明2.25-->
     <spiderBufan>
         <title>//div[@class='this_con']/h2/text()</title>
         <!--详情页作者-->
@@ -292,7 +295,7 @@
         <!--列表页封面-->
         <cover>//div[@class=this_list3']/dl/dt/a/img/@src</cover>>
         <!--详情页时间-->
-        <ptime timeFormat="yyyy MM dd HH mm">//em[@class='lt']/i/text()</ptime>>
+        <ptime timeFormat="yyyy MM dd HH mm">//em[@class='lt']/i/text()|//div[@class='tit-left']/dl/dd[2]</ptime>>
         <tag></tag>>
         <!--详情页的正文-->
         <main>//div[@class='this_con']/p</main>>
@@ -303,44 +306,58 @@
         <!--子链接-->
         <childLink Mosaic="">//div[@class='this_list3']/dl/dd/b/a/@href</childLink>>
         <childnext></childnext>>
-        <childnextflag></childnextflag>>
-        <more></more>>
-        <moreflag></moreflag>>
-        <next>$('body > div.this_bgall > div > div > div.this_670.lt > div.cont_pages > a:nth-child(11)').click</next>>
-        <nextflag>/html/body/div[4]/div/div/div[1]/div[3]/a[10]</nextflag>>
+        <flag>jsoup</flag>>
+        <chose demand=""></chose>>
+        <nextpage join="">//div[@class='cont_pages']/a[text()*='下一页']/@href</nextpage>
         <urls>
             <url>
                 http://xin.bufan.com/news_201/
             </url>
+            <url>
+                http://xin.bufan.com/news_202/
+            </url>
+            <url>
+                http://xin.bufan.com/news_203/
+            </url>
         </urls>>
     </spiderBufan>
-    <!-- 触乐抓取  刘雪明 2.23 -->
+<!-- 触乐抓取  刘雪明 2.25 -->
     <spiderChuapp>
         <!--列表页标题-->
-        <title>//div[@class='single-cont']/h1/test()</title>
+        <title>//dl[@class='fn-left']/dt/text()</title>
         <!--详情页作者-->
         <author>//div[@class='author-time fn-clear']/span[@class='fn-left']/text()</author>
         <authorurl></authorurl>>
         <!--列表页封面-->
-        <cover>//div[@class='category-list']/a/img/@src</cover>>
+        <cover join="">//div[@class='category-list']/a/img/@src</cover>>
         <!--详情页时间-->
-        <ptime timeFormat="yyyy MM dd HH mm">//div[@class=author-time fn-clear']/span[@class='fn-right friendly_time']/text()</ptime>>
+        <ptime timeFormat="yyyy MM dd HH mm">//div[@class='author-time fn-clear']/span[@class='fn-right friendly_time']/text()</ptime>>
         <tag></tag>>
         <!--详情页的正文-->
         <main>//div[@class='the-content']/p</main>>
         <!--正文图片-->
-        <mainpic>//img/@src</mainpic>>
+        <mainpic join="">//p/preceding-sibling-one::figure[@class='image']/img/@src</mainpic>>
         <type></type>>
         <source>触乐</source>
         <!--子链接-->
-        <childLink Mosaic=" http://www.chuapp.com">//div[@class='category-list']/a/@href</childLink>>
-        <childnext></childnext>>
-        <childnextflag></childnextflag>>
-        <more>$('#show_more').click()</more>>
-        <moreflag>//*[@id="show_more"]</moreflag>>
+        <childLink join="http://www.chuapp.com">//div[@class='category-list']/a/@href</childLink>>
+        <!--详情页的页面-->
+        <childnext join=""></childnext>>
+        <flag>jsoup</flag>>
+        <chose demand=""></chose>>
+        <nextpage join="">//div[@class='cont_pages']/a[text()*='下一页']/@href</nextpage>
         <urls>
             <url>
                 http://www.chuapp.com/category/daily
+            </url>
+            <url>
+                http://www.chuapp.com/category/news
+            </url>
+            <url>
+                http://www.chuapp.com/category/sd
+            </url>
+            <url>
+                http://www.chuapp.com/category/zsyx
             </url>
         </urls>>
     </spiderChuapp>
