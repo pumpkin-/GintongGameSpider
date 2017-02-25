@@ -715,8 +715,10 @@ public class CommonSpiderKnowledge {
             if (map.get("ptime")==null||map.get("ptime").size()<=1) {
                 ptimetest = getTag(childDocumet, knowledgeSpiderConfig.ptime.getText()).toString().replaceAll("\\D", " ").trim();
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat(knowledgeSpiderConfig.ptime.attributeValue("timeFormat"));
-                Date date = simpleDateFormat.parse(ptimetest);
-                ptime = simpleDateFormatchange.format(date);
+                if(StringUtils.isNotEmpty(ptimetest)) {
+                    Date date = simpleDateFormat.parse(ptimetest);
+                    ptime = simpleDateFormatchange.format(date);
+                }
             } else {
                 try {
                     ptime = map.get("ptime").get(fg).toString();
@@ -783,10 +785,18 @@ public class CommonSpiderKnowledge {
                 }
                 if (StringUtils.isNotEmpty(knowledgeSpiderConfig.mainPicture.getText())) {
                     if(objmain.sel(knowledgeSpiderConfig.mainPicture.getText()).size()>0) {
-                        if (StringUtils.isNotEmpty(knowledgeSpiderConfig.mainPicture.attributeValue("join"))) {
-                            main = (main + "\r\n<img src=\"" + knowledgeSpiderConfig.mainPicture.attributeValue("join") + objmain.sel(knowledgeSpiderConfig.mainPicture.getText()).get(0) + "\">");
-                        } else {
-                            main = (main + "\r\n<img src=\"" + objmain.sel(knowledgeSpiderConfig.mainPicture.getText()).get(0) + "\">");
+                        try {
+                            if (StringUtils.isNotEmpty(knowledgeSpiderConfig.mainPicture.attributeValue("join"))) {
+                                if (!objmain.sel(knowledgeSpiderConfig.mainPicture.getText()).get(0).toString().substring(0, 4).equals("http")) {
+                                    main = (main + "\r\n<img src=\"" + knowledgeSpiderConfig.mainPicture.attributeValue("join") + objmain.sel(knowledgeSpiderConfig.mainPicture.getText()).get(0) + "\">");
+                                } else {
+                                    main = (main + "\r\n<img src=\"" + objmain.sel(knowledgeSpiderConfig.mainPicture.getText()).get(0) + "\">");
+                                }
+                            } else {
+                                main = (main + "\r\n<img src=\"" + objmain.sel(knowledgeSpiderConfig.mainPicture.getText()).get(0) + "\">");
+                            }
+                        }catch (Exception e){
+                            System.out.println("mainpic is null");
                         }
                     }
                 }
@@ -800,10 +810,18 @@ public class CommonSpiderKnowledge {
                     }
                     if (StringUtils.isNotEmpty(knowledgeSpiderConfig.mainPicture.getText())) {
                         if(objmain.sel(knowledgeSpiderConfig.mainPicture.getText()).size()>0) {
-                            if (StringUtils.isNotEmpty(knowledgeSpiderConfig.mainPicture.attributeValue("join"))) {
-                                main = (main + "\r\n<img src=\"" + knowledgeSpiderConfig.mainPicture.attributeValue("join") + objmain.sel(knowledgeSpiderConfig.mainPicture.getText()).get(0) + "\">");
-                            } else {
-                                main = (main + "\r\n<img src=\"" + objmain.sel(knowledgeSpiderConfig.mainPicture.getText()).get(0) + "\">");
+                            try {
+                                if (StringUtils.isNotEmpty(knowledgeSpiderConfig.mainPicture.attributeValue("join"))) {
+                                    if (!objmain.sel(knowledgeSpiderConfig.mainPicture.getText()).get(0).toString().substring(0, 4).equals("http")) {
+                                        main = (main + "\r\n<img src=\"" + knowledgeSpiderConfig.mainPicture.attributeValue("join") + objmain.sel(knowledgeSpiderConfig.mainPicture.getText()).get(0) + "\">");
+                                    } else {
+                                        main = (main + "\r\n<img src=\"" + objmain.sel(knowledgeSpiderConfig.mainPicture.getText()).get(0) + "\">");
+                                    }
+                                } else {
+                                    main = (main + "\r\n<img src=\"" + objmain.sel(knowledgeSpiderConfig.mainPicture.getText()).get(0) + "\">");
+                                }
+                            }catch (Exception e){
+                                System.out.println("mainpic is null");
                             }
                         }
                     }
