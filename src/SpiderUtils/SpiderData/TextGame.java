@@ -1,5 +1,6 @@
 package SpiderUtils.SpiderData;
 
+import SpiderUtils.CommonSpiderKnowledge;
 import SpiderUtils.SpiderContant;
 import SpiderUtils.SpiderUtils;
 import cn.wanghaomiao.xpath.exception.XpathSyntaxErrorException;
@@ -42,10 +43,13 @@ public class TextGame {
 //       //Document doc= Jsoup.parse(html);
 //        System.out.println(doc.title());
         try {
-            SpiderUtils.getElements("windows", "spiderCDW", 0, "no");
+
+            CommonSpiderKnowledge.ergodicUrl("spiderDWBS", 0, "no");
+
         } catch (Exception e) {
             e.printStackTrace();
         }
+
 
 
 

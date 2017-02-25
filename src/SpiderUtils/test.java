@@ -11,6 +11,7 @@ import com.google.gson.Gson;
 import com.gargoylesoftware.htmlunit.activex.javascript.msxml.XMLSerializer;
 
 import dao.impl.ProKnowledgeImpl;
+import net.sf.json.JSONObject;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -50,14 +51,16 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.logging.SimpleFormatter;
 import java.util.logging.XMLFormatter;
 
 public class test {
     static List<org.dom4j.Element> books;
     public static void main(String[] args) throws ParserConfigurationException, XpathSyntaxErrorException, SpiderUtils.FormatEexception, DocumentException, IOException, ProKnowledgeImpl.FormatEexception, InterruptedException, ParseException {
-       /* FileInputStream inputStream=new FileInputStream(test.class.getClassLoader().getResource("SpiderUtils/BasKnowledgePattern.xml").getFile());
-        System.out.println(test.class.getClassLoader().getResource("SpiderUtils/BasKnowledgePattern.xml").getFile().toString());
+       /* FileInputStream inputStream=new FileInputStream(Test.class.getClassLoader().getResource("SpiderUtils/BasKnowledgePattern.xml").getFile());
+        System.out.println(Test.class.getClassLoader().getResource("SpiderUtils/BasKnowledgePattern.xml").getFile().toString());
         SAXReader sax=new SAXReader();
         org.dom4j.Document doc=sax.read(inputStream);
         org.dom4j.Element root = doc.getRootElement();//获取根元素
@@ -77,16 +80,61 @@ public class test {
 
 
 
-        Connection.Response res=Jsoup.connect("https://maimai.cn/static/scripts/mm__node.bundle.min.js?a348d5f185d822306f21abc35824b9cb")
+
+        Connection.Response res=Jsoup.connect("https://maimai.cn/contact/detail/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1IjozMDU4Nzg2LCJsZXZlbCI6MX0.00WZZ-W-x7yNWdvsS_k81qco3Fhi-HG73QUt9dQub-Q?from=webview%23%2Fweb%2Fsearch_center")
                                         .userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36")
-                                        .ignoreContentType(true)
+                .ignoreHttpErrors(true)
+                .ignoreContentType(true)
                 .execute();
         String body=res.body();
-        System.out.println(body);
+        JSONObject gson=JSONObject.fromObject(body);
+        System.out.println(gson);
+
 
         //SpiderUtils.getElements("windows","spiderYxgc",70,"no");
         //SpiderUtils.getElements("windows","spiderRwt",0,"no");
         //SpiderUtils.getElements("windows","spiderKdbs",0,"no");
+
+/*org.jsoup.nodes.Document doc=Jsoup.connect("http://www.youxituoluo.com/2211.html").get();
+        JXDocument jxDocument=new JXDocument(doc);
+        System.out.println(doc.outerHtml());*/
+
+        /*ExecutorService singleThreadExecutor = Executors.newSingleThreadExecutor();
+        for (int i = 0; i < 10; i++) {
+            final int index = i;
+            final int u=i;
+            singleThreadExecutor.execute(new Runnable() {
+
+                @Override
+                public void run() {
+                    try {
+                        System.out.println(index);
+                        Thread.sleep(2000);
+                    } catch (InterruptedException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                }
+            });
+            singleThreadExecutor.execute(new Runnable() {
+                @Override
+                public void run() {
+                    System.out.println(u);
+                    try {
+                        Thread.sleep(2000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+        }*/
+
+
+//        org.jsoup.nodes.Document doc=Jsoup.connect("http://www.gamersky.com/news/201702/872232.shtml")
+//                          .userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36")
+//                          .get();
+//     System.out.println(doc.outerHtml());
+
 
 
 
@@ -100,6 +148,8 @@ public class test {
 
 
 
+//
+
 
      /*System.setProperty("webdriver.chrome.driver",SpiderContant.chromeWindowsPath );
         WebDriver driver=new ChromeDriver();
@@ -110,7 +160,7 @@ public class test {
         org.jsoup.nodes.Document doc=Jsoup.parse(webElement.getAttribute("outerHTML"));
         JXDocument jxDocument=new JXDocument(doc);
 
-        System.out.println(jxDocument.sel("//dd[@class='public-tabs-title']/a/@href"));*/
+//        System.out.println(jxDocument.sel("//dd[@class='public-tabs-title']/a/@href"));
 
 
         /*Connection.Response res=Jsoup.connect("http://www.appgame.com/archives/620651.html").ignoreContentType(true).execute();

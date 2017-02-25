@@ -26,6 +26,8 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -45,7 +47,58 @@ public class CommonSpiderKnowledge {
     private static BugDataImpl bugDataimpl = new BugDataImpl();
 
     public static void main(String[] args) throws Exception {
-        ergodicUrl("spiderYxdg",0,"no");
+        ExecutorService pool= Executors.newSingleThreadExecutor();
+        pool.submit(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    ergodicUrl("spiderSfw",180, "no");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        pool.submit(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    ergodicUrl("spiderYxdg", 0, "no");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        pool.submit(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    ergodicUrl("spiderYmxk", 0, "no");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        pool.submit(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    ergodicUrl("spiderDwyx", 0, "no");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        pool.submit(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    ergodicUrl("spiderYxgc", 0, "no");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
     }
 
     /**
@@ -75,7 +128,7 @@ public class CommonSpiderKnowledge {
             obj = document.selOne(xpath);
         }
         if(obj==null){
-            throw new XpathSyntaxErrorException("xpath syntax error, check your xpath : " + xpath);
+            obj="null";
         }
         return obj;
     }
@@ -188,8 +241,8 @@ public class CommonSpiderKnowledge {
                 knowledgeSpiderConfig.childnext = childElement.element("childnext");
             }
 
-            if(childElement.element("nextPage")!=null){
-                knowledgeSpiderConfig.nextPage=childElement.element("nextPage");
+            if(childElement.element("nextpage")!=null){
+                knowledgeSpiderConfig.nextPage=childElement.element("nextpage");
             }
             //将解析完的一个爬虫配置文件添加到List中
             configs.add(knowledgeSpiderConfig);
@@ -203,22 +256,28 @@ public class CommonSpiderKnowledge {
      */
     public static KnowledgeSpiderConfig parseConfigXmlByWebName(String webName) throws FileNotFoundException, DocumentException {
         SAXReader saxReader = new SAXReader();
+//        配置文件对应的JavaBean
         KnowledgeSpiderConfig knowledgeSpiderConfig = new KnowledgeSpiderConfig();
+
         knowledgeSpiderConfig.webUrls = new ArrayList<Element>();
 
         org.dom4j.Document dom =  saxReader.read(new FileInputStream(SpiderUtils.class.getClassLoader().getResource("SpiderUtils/BasKnowledgePattern.xml").getFile()));
         Element rootElemnt = dom.getRootElement();//获取根元素
         Element childElement = rootElemnt.element(webName);
+
             //获取当前网站的所有子链接 并添加到javaBean中
             if(childElement.element("urls") == null || childElement.element("urls").elements().size() == 0) {
                 throw new NullPointerException("can't find corret web urls, please check your <urls> tag in your BasKnowledgePattern.xml");
             }
+//        获取当前元素urls下的所有子元素
             for (Element ele : (List<Element>)(childElement.element("urls")).elements()) {
                 knowledgeSpiderConfig.webUrls.add(ele);
             }
+
             if (childElement.element("next") != null) {
                 knowledgeSpiderConfig.nextPage = childElement.element("next");
             }
+
             if (childElement.element("author") != null) {
                 knowledgeSpiderConfig.author = childElement.element("author");
             }
@@ -262,15 +321,15 @@ public class CommonSpiderKnowledge {
         if(childElement.element("flag")!=null){
             knowledgeSpiderConfig.flag=childElement.element("flag");
         }
-        if(childElement.element("nextPage")!=null){
-            knowledgeSpiderConfig.nextPage=childElement.element("nextPage");
+        if(childElement.element("nextpage")!=null){
+            knowledgeSpiderConfig.nextPage=childElement.element("nextpage");
         }
 
             return knowledgeSpiderConfig;
     }
 
     /**
-     * 遍历urls内部url Jsoup
+     * 遍历urls内部url
      */
     public static void ergodicUrl(String webname,int fromPageNum,String orgflag) throws Exception {
         System.out.println("Start parsing XML file");
@@ -279,10 +338,13 @@ public class CommonSpiderKnowledge {
             if(knowledgeSpiderConfig.flag.getText().equals("jsoup")) {
                 System.out.println("Get details page");
                 ergodicDetails(knowledgeSpiderConfig, url.getText().trim(), orgflag, fromPageNum);
+                fromPageNum=0;
             }else if(knowledgeSpiderConfig.flag.getText().equals("selenium")){
                 System.out.println("Get details page");
                 WebDriver driver=getChromeDriver();
                 ergodicDetails(knowledgeSpiderConfig, orgflag, fromPageNum,driver,url.getText().trim());
+                fromPageNum=0;
+                driver.close();
             }else{
                 throw new XpathSyntaxErrorException("you shuould chose jsoup or selenium");
             }
@@ -303,12 +365,14 @@ public class CommonSpiderKnowledge {
         int a=1;
         //页数
         int i=1;
+        //断点翻页
+        for(int x=1;x<formpage;x++){
+            System.out.println("Start page break");
+            System.out.println("now"+"  "+x);
+            doc=listPageJsoup(doc, knowledgeSpiderConfig);
+            i=x+1;
+        }
         while(true){
-            //断点翻页
-            for(int x=1;x<formpage;x++){
-                System.out.println("Start page break");
-                doc=listPageJsoup(doc, knowledgeSpiderConfig);
-            }
             int fg=0;
             //获取详情页列表
             List<Object> detailsUrls=doc.sel(knowledgeSpiderConfig.childLink.getText());
@@ -317,11 +381,11 @@ public class CommonSpiderKnowledge {
             map=dataCleanList(knowledgeSpiderConfig,doc);
             System.out.println("Start traversal details page");
             for(Object details:detailsUrls){
-                if(StringUtils.isNotEmpty(knowledgeSpiderConfig.childLink.attributeValue("Mosaic"))) {
+                if(StringUtils.isNotEmpty(knowledgeSpiderConfig.childLink.attributeValue("join"))) {
                     if(details.toString().substring(0,4).equals("http")) {
                         childLink = details.toString();
                     }else{
-                        childLink=knowledgeSpiderConfig.childLink.attributeValue("Mosaic") + details.toString();
+                        childLink=knowledgeSpiderConfig.childLink.attributeValue("join") + details.toString();
                     }
                 }else{
                     childLink= details.toString();
@@ -334,7 +398,7 @@ public class CommonSpiderKnowledge {
                 fg++;
             }
             System.out.println("Start storage");
-            //storeToDatebaseLocal(orgflag);
+            storeToDatebaseLocal(orgflag);
             try {
                 i++;
                 System.out.println("Start listpage");
@@ -358,12 +422,11 @@ public class CommonSpiderKnowledge {
         String nexturl=null;
         String next=null;
         next = getTagOne(doc, knowledgeSpiderConfig.nextPage.getText()).toString();
-        System.out.println(next);
-        if (StringUtils.isNotEmpty(knowledgeSpiderConfig.nextPage.attributeValue("Mosaic"))) {
+        if (StringUtils.isNotEmpty(knowledgeSpiderConfig.nextPage.attributeValue("join"))) {
             if (next.toString().substring(0, 4).equals("http")) {
                 nexturl = next.toString();
             } else {
-                nexturl = knowledgeSpiderConfig.childLink.attributeValue("Mosaic") + next.toString();
+                nexturl = knowledgeSpiderConfig.nextPage.attributeValue("join") + next.toString();
             }
         } else {
             nexturl = next.toString();
@@ -381,6 +444,17 @@ public class CommonSpiderKnowledge {
         Map<String,List<Object>> map=new HashMap<String, List<Object>>();
         System.out.println("Start getting starturl's DOM tree");
         doc=getJXDocument(driver,startUrl);
+        //页数
+        int i=1;
+        //条数
+        int a=1;
+        //断点翻页
+        for(int x=1;x<formpage;x++){
+            System.out.println("Start page break");
+            System.out.println("now"+"  "+x);
+            doc=listPageSelenium(knowledgeSpiderConfig,driver);
+            i=x+1;
+        }
         //点击更多
         if(knowledgeSpiderConfig.chose.attributeValue("demand").equals("clickMore")){
             while(true) {
@@ -397,6 +471,7 @@ public class CommonSpiderKnowledge {
             for(int s=0;s<Integer.parseInt(knowledgeSpiderConfig.chose.getText());s++){
                 try {
                     System.out.println("Start slide roller");
+                    System.out.println("now"+"  "+s);
                     doc = slidingRoller(driver);
                 }catch (Exception e){
                     System.out.println("More clicks or no more buttons");
@@ -409,13 +484,6 @@ public class CommonSpiderKnowledge {
         }else{
             throw new XpathSyntaxErrorException("you shuould chose clickMore or slidingRoller");
         }
-        //页数
-        int i=1;
-        //断点翻页
-        for(int x=1;x<formpage;x++){
-            System.out.println("Start page break");
-            doc=listPageSelenium(knowledgeSpiderConfig,driver);
-        }
         while(true){
             int fg=0;
             //获取详情页列表
@@ -425,13 +493,11 @@ public class CommonSpiderKnowledge {
             map=dataCleanList(knowledgeSpiderConfig,doc);
             System.out.println("Start traversal details page");
             for(Object details:detailsUrls){
-                //条数
-                int a=1;
-                if(StringUtils.isNotEmpty(knowledgeSpiderConfig.childLink.attributeValue("Mosaic"))) {
+                if(StringUtils.isNotEmpty(knowledgeSpiderConfig.childLink.attributeValue("join"))) {
                     if(details.toString().substring(0,4).equals("http")) {
                         childLink = details.toString();
                     }else{
-                        childLink=knowledgeSpiderConfig.childLink.attributeValue("Mosaic") + details.toString();
+                        childLink=knowledgeSpiderConfig.childLink.attributeValue("join") + details.toString();
                     }
                 }else{
                     childLink= details.toString();
@@ -446,6 +512,7 @@ public class CommonSpiderKnowledge {
             System.out.println("Start storage");
             storeToDatebaseLocal(orgflag);
             try {
+                i++;
                 System.out.println("Start listpage");
                 doc = listPageSelenium(knowledgeSpiderConfig, driver);
             }catch (Exception e){
@@ -461,6 +528,15 @@ public class CommonSpiderKnowledge {
     public static JXDocument listPageSelenium(KnowledgeSpiderConfig knowledgeSpiderConfig,WebDriver driver) throws InterruptedException {
         JavascriptExecutor executornext = (JavascriptExecutor) driver;
         executornext.executeScript(knowledgeSpiderConfig.nextPage.getText());
+        String handle = driver.getWindowHandle();
+        for (String handles : driver.getWindowHandles()) {
+            if (handles.equals(handle)) {
+                continue;
+            }else {
+                driver.close();
+                driver.switchTo().window(handles);
+            }
+        }
         Thread.sleep(2000);
         WebElement webElement=driver.findElement(By.xpath("/html"));
         JXDocument jxDocument=new JXDocument(Jsoup.parse(webElement.getAttribute("outerHTML")));
@@ -577,7 +653,7 @@ public class CommonSpiderKnowledge {
 
         //作者
         if(StringUtils.isNotEmpty(knowledgeSpiderConfig.author.getText())) {
-            if (map.get("author")==null) {
+            if (map.get("author")==null||map.get("author").size()<=1) {
                 String test[] = getTagOne(childDocumet,knowledgeSpiderConfig.author.getText()).toString().split(" ");
                 for(int y=0;y<test.length;y++) {
                     Pattern pat = Pattern.compile(".*作者.*");
@@ -587,43 +663,55 @@ public class CommonSpiderKnowledge {
                     }
                 }
             } else {
-                author = map.get("author").get(fg).toString().replace("作者：","").replace("频道作者：","");
+                try {
+                    author = map.get("author").get(fg).toString().replace("作者：", "").replace("频道作者：", "");
+                }catch (Exception e){
+                    author=null;
+                }
             }
         }else{
             author=null;
         }
         //作者链接
         if(StringUtils.isNotEmpty(knowledgeSpiderConfig.authorUrl.getText())) {
-            if (map.get("authorurl")==null) {
+            if (map.get("authorurl")==null||map.get("authorurl").size()<=1) {
                 authorurl = getTagOne(childDocumet,knowledgeSpiderConfig.authorUrl.getText()).toString();
             } else {
-                authorurl = map.get("authorurl").get(fg).toString();
+                try {
+                    authorurl = map.get("authorurl").get(fg).toString();
+                }catch (Exception e){
+                    authorurl=null;
+                }
             }
         }else{
             authorurl= childLink;
         }
         //标题
         if(StringUtils.isNotEmpty(knowledgeSpiderConfig.title.getText())) {
-            if (map.get("title")==null) {
+            if (map.get("title")==null||map.get("title").size()<=1) {
                 title =getTagOne(childDocumet,knowledgeSpiderConfig.title.getText()).toString();
             } else {
-                title = map.get("title").get(fg).toString();
+                try {
+                    title = map.get("title").get(fg).toString();
+                }catch (Exception e){
+                    title=null;
+                }
             }
         }else{
             title=null;
         }
         //封面
         if(StringUtils.isNotEmpty(knowledgeSpiderConfig.cover.getText())) {
-            if (map.get("cover")==null) {
-                if(StringUtils.isNotEmpty(knowledgeSpiderConfig.cover.attributeValue("Mosaic"))) {
-                    cover = knowledgeSpiderConfig.cover.attributeValue("Mosaic")+getTagOne(childDocumet,knowledgeSpiderConfig.cover.getText()).toString();
+            if (map.get("cover")==null||map.get("cover").size()<=1) {
+                if(StringUtils.isNotEmpty(knowledgeSpiderConfig.cover.attributeValue("join"))) {
+                    cover = knowledgeSpiderConfig.cover.attributeValue("join")+getTagOne(childDocumet,knowledgeSpiderConfig.cover.getText()).toString();
                 }else{
-                    cover=null;
+                    cover=getTagOne(childDocumet,knowledgeSpiderConfig.cover.getText()).toString();
                 }
             } else {
-                if(StringUtils.isNotEmpty((String) map.get("cover").get(fg))) {
-                    cover = map.get("cover").get(fg).toString() ;
-                }else{
+                try {
+                    cover = map.get("cover").get(fg).toString();
+                }catch (Exception e){
                     cover=null;
                 }
             }
@@ -632,13 +720,19 @@ public class CommonSpiderKnowledge {
         }
         //发布时间
         if(StringUtils.isNotEmpty(knowledgeSpiderConfig.ptime.getText())) {
-            if (map.get("ptime")==null) {
+            if (map.get("ptime")==null||map.get("ptime").size()<=1) {
                 ptimetest = getTag(childDocumet, knowledgeSpiderConfig.ptime.getText()).toString().replaceAll("\\D", " ").trim();
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat(knowledgeSpiderConfig.ptime.attributeValue("timeFormat"));
-                Date date = simpleDateFormat.parse(ptimetest);
-                ptime = simpleDateFormatchange.format(date);
+                if(StringUtils.isNotEmpty(ptimetest)) {
+                    Date date = simpleDateFormat.parse(ptimetest);
+                    ptime = simpleDateFormatchange.format(date);
+                }
             } else {
-                ptime = map.get("ptime").get(fg).toString();
+                try {
+                    ptime = map.get("ptime").get(fg).toString();
+                }catch (Exception e){
+                    ptime=null;
+                }
             }
         }else{
             ptime=null;
@@ -657,13 +751,17 @@ public class CommonSpiderKnowledge {
 
         //类别
         if(StringUtils.isNotEmpty(knowledgeSpiderConfig.type.getText())) {
-            if (map.get("type")==null) {
+            if (map.get("type")==null||map.get("type").size()<=1) {
                 List<Object> typelist = getTag(childDocumet,knowledgeSpiderConfig.type.getText());
                 for (Object objtype : typelist) {
                     type = (type + "," + objtype).replace("null,", "");
                 }
             } else {
-                type = (type + "," + map.get("type").get(fg)).replace("null,", "").replace(" ", ",");
+                try {
+                    type = (type + "," + map.get("type").get(fg)).replace("null,", "").replace(" ", ",");
+                }catch (Exception e){
+                    type=null;
+                }
             }
         }else{
             type=null;
@@ -671,13 +769,17 @@ public class CommonSpiderKnowledge {
 
         //标签
         if(StringUtils.isNotEmpty(knowledgeSpiderConfig.tag.getText())) {
-            if (map.get("tag")==null) {
+            if (map.get("tag")==null||map.get("tag").size()<=1) {
                 List<Object> taglist = getTag(childDocumet, knowledgeSpiderConfig.tag.getText());
                 for (Object objtag : taglist) {
                     tag = (tag + "," + objtag).replace("null,", "");
                 }
             } else {
-                tag = (tag + "," + map.get("tag").get(fg)).replace("null,", "").replace(" ", ",");
+                try {
+                    tag = (tag + "," + map.get("tag").get(fg)).replace("null,", "").replace(" ", ",");
+                }catch (Exception e){
+                    tag=null;
+                }
             }
         }else{
             tag=null;
@@ -691,10 +793,18 @@ public class CommonSpiderKnowledge {
                 }
                 if (StringUtils.isNotEmpty(knowledgeSpiderConfig.mainPicture.getText())) {
                     if(objmain.sel(knowledgeSpiderConfig.mainPicture.getText()).size()>0) {
-                        if (StringUtils.isNotEmpty(knowledgeSpiderConfig.mainPicture.attributeValue("Mosaic"))) {
-                            main = (main + "\r\n<img src=\"" + knowledgeSpiderConfig.mainPicture.attributeValue("Mosaic") + objmain.sel(knowledgeSpiderConfig.mainPicture.getText()).get(0) + "\">");
-                        } else {
-                            main = (main + "\r\n<img src=\"" + objmain.sel(knowledgeSpiderConfig.mainPicture.getText()).get(0) + "\">");
+                        try {
+                            if (StringUtils.isNotEmpty(knowledgeSpiderConfig.mainPicture.attributeValue("join"))) {
+                                if (!objmain.sel(knowledgeSpiderConfig.mainPicture.getText()).get(0).toString().substring(0, 4).equals("http")) {
+                                    main = (main + "\r\n<img src=\"" + knowledgeSpiderConfig.mainPicture.attributeValue("join") + objmain.sel(knowledgeSpiderConfig.mainPicture.getText()).get(0) + "\">");
+                                } else {
+                                    main = (main + "\r\n<img src=\"" + objmain.sel(knowledgeSpiderConfig.mainPicture.getText()).get(0) + "\">");
+                                }
+                            } else {
+                                main = (main + "\r\n<img src=\"" + objmain.sel(knowledgeSpiderConfig.mainPicture.getText()).get(0) + "\">");
+                            }
+                        }catch (Exception e){
+                            System.out.println("mainpic is null");
                         }
                     }
                 }
@@ -708,23 +818,31 @@ public class CommonSpiderKnowledge {
                     }
                     if (StringUtils.isNotEmpty(knowledgeSpiderConfig.mainPicture.getText())) {
                         if(objmain.sel(knowledgeSpiderConfig.mainPicture.getText()).size()>0) {
-                            if (StringUtils.isNotEmpty(knowledgeSpiderConfig.mainPicture.attributeValue("Mosaic"))) {
-                                main = (main + "\r\n<img src=\"" + knowledgeSpiderConfig.mainPicture.attributeValue("Mosaic") + objmain.sel(knowledgeSpiderConfig.mainPicture.getText()).get(0) + "\">");
-                            } else {
-                                main = (main + "\r\n<img src=\"" + objmain.sel(knowledgeSpiderConfig.mainPicture.getText()).get(0) + "\">");
+                            try {
+                                if (StringUtils.isNotEmpty(knowledgeSpiderConfig.mainPicture.attributeValue("join"))) {
+                                    if (!objmain.sel(knowledgeSpiderConfig.mainPicture.getText()).get(0).toString().substring(0, 4).equals("http")) {
+                                        main = (main + "\r\n<img src=\"" + knowledgeSpiderConfig.mainPicture.attributeValue("join") + objmain.sel(knowledgeSpiderConfig.mainPicture.getText()).get(0) + "\">");
+                                    } else {
+                                        main = (main + "\r\n<img src=\"" + objmain.sel(knowledgeSpiderConfig.mainPicture.getText()).get(0) + "\">");
+                                    }
+                                } else {
+                                    main = (main + "\r\n<img src=\"" + objmain.sel(knowledgeSpiderConfig.mainPicture.getText()).get(0) + "\">");
+                                }
+                            }catch (Exception e){
+                                System.out.println("mainpic is null");
                             }
                         }
                     }
                 }
                 try {
                     String childnext = null;
-                    String childnexturl = null;
-                    childnext = getTagOne(childDocumet, knowledgeSpiderConfig.nextPage.getText()).toString();
-                    if (StringUtils.isNotEmpty(knowledgeSpiderConfig.nextPage.attributeValue("Mosaic"))) {
+                    String childnexturl=null;
+                    childnext = getTagOne(childDocumet, knowledgeSpiderConfig.childnext.getText()).toString();
+                    if (StringUtils.isNotEmpty(knowledgeSpiderConfig.childnext.attributeValue("join"))) {
                         if (childnext.toString().substring(0, 4).equals("http")) {
                             childnexturl = childnext.toString();
                         } else {
-                            childnexturl = knowledgeSpiderConfig.childLink.attributeValue("Mosaic") + childnext.toString();
+                            childnexturl = knowledgeSpiderConfig.childnext.attributeValue("join") + childnext.toString();
                         }
                     } else {
                         childnexturl = childnext.toString();
