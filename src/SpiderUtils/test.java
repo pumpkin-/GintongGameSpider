@@ -84,15 +84,7 @@ public class test {
        //SpiderUtils.getElements("windows","spiderChuapp",0,"no");
 
 
-        System.setProperty("webdriver.chrome.driver",SpiderContant.chromeWindowsPath );
-        WebDriver driver=new ChromeDriver();
-        driver.get("http://www.doyo.cn/news");
-        WebElement webElement=driver.findElement(By.xpath("/html"));
-        org.jsoup.nodes.Document doc=Jsoup.parse(webElement.getAttribute("outerHTML"));
-        JXDocument jxDocument=new JXDocument(doc);
-        System.out.println(doc.outerHtml());
-        System.out.println(jxDocument.selOne("//div[@class='appgame-video-state']/text()"));
-//        SpiderUtils.getElements("windows", "spiderChuapp", 0, "no");
+
 
 /*        Connection.Response res=Jsoup.connect("https://maimai.cn/static/scripts/mm__node.bundle.min.js?a348d5f185d822306f21abc35824b9cb")
                                         .userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36")
@@ -138,10 +130,11 @@ public class test {
 //            });
 //        }
 
-//        org.jsoup.nodes.Document doc=Jsoup.connect("http://www.gamersky.com/news/201702/872232.shtml")
-//                          .userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36")
-//                          .get();
-//     System.out.println(doc.outerHtml());
+        org.jsoup.nodes.Document doc1=Jsoup.connect("http://www.doyo.cn/news/wangye")
+                         .userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36").get();
+        JXDocument jxDocument=new JXDocument(doc1);
+        System.out.println(doc1.outerHtml());
+        System.out.println(jxDocument.sel("//div[@class='content']//a[@class='pic']/@href"));
 
 
 
