@@ -20,9 +20,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Scanner;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * Created by lenovo on 2017/1/16.
@@ -32,7 +30,6 @@ public class SpiderMM {
         System.setProperty("webdriver.chrome.driver", SpiderContant.chromeWindowsPath);
         WebDriver driver=new ChromeDriver();
         JavascriptExecutor executornext = (JavascriptExecutor)driver;
-
         String WebUrl="https://maimai.cn/login";
         String username="13267462575";
         String password="123456";
@@ -45,18 +42,10 @@ public class SpiderMM {
         if(loginBox.contains("验证码")) {
             driver.findElement(By.xpath("//*[@id=\"form\"]/div[1]/div/input")).sendKeys(username);
             driver.findElement(By.xpath("//*[@id=\"form\"]/div[2]/input")).sendKeys(password);
-//            String code=doc.select("#form > div:nth-child(5) > input[type=\"text\"]").val();
             Scanner scan=new Scanner(System.in);
             System.out.println("请输入验证码:");
             String code=scan.nextLine();
             driver.findElement(By.xpath("//*[@id=\"form\"]/div[3]/input")).sendKeys(code);
-//            while (true) {
-//                Thread.sleep(1000);
-//                if (code.length() == 5) {
-//                    executornext.executeScript("$('#form > input.loginBtn').click()");
-//                    break;
-//                }
-//            }
             executornext.executeScript("$('#form > input.loginBtn').click()");
             Thread.sleep(1000);
 
@@ -67,18 +56,14 @@ public class SpiderMM {
             executornext.executeScript("$('#form > input.loginBtn').click()");
             Thread.sleep(1000);
         }
-//            driver.findElement(By.xpath("//*[@id=\"react_app\"]/div/div[1]/div[1]/ul/li[7]/div/input")).sendKeys(name);
-//            Thread.sleep(1000);
-//            driver.findElement(By.xpath("//*[@id=\"react_app\"]/div/div[1]/div[1]/ul/li[7]/div/input")).sendKeys(Keys.ENTER);
-//            String handl=driver.getWindowHandle();
-          //  driver.close();
+
             driver.get(url);
             WebElement webElementMain = driver.findElement(By.xpath("/html"));
             Document docMain = Jsoup.parse(webElementMain.getAttribute("outerHTML"));
             BasPersonInfoDao basPersonInfoDao=new BasPersonInfoImpl();
             String uuid= UUID.randomUUID().toString();
 
-            System.out.println(docMain.outerHtml());
+            //System.out.println(docMain.outerHtml());
 
             //姓名
             String name=docMain.select("#react_app > div > div.PCcontainer.clearfix > div.PCcontent.float-l > div > div.list-group-item > div > dl:nth-child(2) > dd:nth-child(2) > span > span").text();
@@ -142,18 +127,24 @@ public class SpiderMM {
             String service=docMain.select("div[data-reactid="+tagTwo+"] div.ascInfo").text();
             System.out.println(service);
 
-        Document res = Jsoup.connect(url)
-                .header("Accept", "*/*")
-                .header("Accept-Encoding", "gzip, deflate")
-                .header("Accept-Language","zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3")
-                .header("Content-Type", "application/json;charset=UTF-8")
-                .header("User-Agent","Mozilla/5.0 (Windows NT 6.1; WOW64; rv:48.0) Gecko/20100101 Firefox/48.0")
-                .ignoreContentType(true).timeout(200000).data()
-                .get();
-
+        Set<Cookie> cookies=driver.manage().getCookies();
+        System.out.println("cookies------>"+cookies);
+        Map<String,Set> map=new HashMap<>();
+        map.put("cookies",cookies);
+        org.jsoup.Connection.Response res = Jsoup.connect("https://maimai.cn/contact/detail/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1IjozMDU4Nzg2LCJsZXZlbCI6MX0.00WZZ-W-x7yNWdvsS_k81qco3Fhi-HG73QUt9dQub-Q?from=webview%23%2Fweb%2Fsearch_center")
+                .data("m","13267462575","p","123456")
+                .userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36")
+                .timeout(200000).ignoreHttpErrors(true).ignoreContentType(true).execute();
+        System.out.println(res.cookies());
+       // System.out.println(res.body());
         Gson gson = new Gson();
-        String json = gson.toJson(res);
-        System.out.println(json);
+
+
+//        Maimai maimai = gson.fromJson(res.body(), Maimai.class);
+//        System.out.println(maimai.data.uinfo.noaccount);
+//        System.out.println(maimai.data.uinfo.noemail);
+//        System.out.println(maimai.data.uinfo.nomobile);
+//        System.out.println(maimai.data.uinfo.xingzuo);
 
 //            BasPersonInfo basPersonInfo=new BasPersonInfo();
 //            basPersonInfo.setSource("脉脉");
@@ -165,23 +156,7 @@ public class SpiderMM {
 //            basPersonInfo.setPtag(flag);
 //            basPersonInfoDao.insertPerInfo(basPersonInfo);
 
-
-
-
             driver.close();
-//            for(String handls:driver.getWindowHandles()){
-//                if(handls.equals(handl)){
-//                    continue;
-//                }
-//                driver.switchTo().window(handls);
-//            }
-//            WebElement webElement1=driver.findElement(By.xpath("/html"));
-//            System.out.println(webElement1.getAttribute("outerHTML"));
-
-
-
-
-
 
     }
 }

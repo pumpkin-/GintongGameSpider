@@ -15,6 +15,7 @@ import java.text.ParseException;
 public class SpiderGameData {
     public static void main(String [] args){
         try {
+
               CommonSpiderKnowledge.ergodicUrl("spiderYXTL", 0, "no");
 //            CommonSpiderKnowledge.ergodicUrl("spider18183", 0, "no");
 //            CommonSpiderKnowledge.ergodicUrl("spiderCDW", 0, "no");
@@ -27,7 +28,7 @@ public class SpiderGameData {
 //
 //            CommonSpiderKnowledge.ergodicUrl("spiderAW", 0, "no");
 
-
+            
         } catch (Exception e) {
             e.printStackTrace();
         }
