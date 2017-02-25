@@ -175,13 +175,11 @@
         <mainpic>//img/@src</mainpic>>
         <type></type>>
         <source>电玩巴士</source>
-        <childnext></childnext>>
-        <childnextflag></childnextflag>
-        <more></more>>
-        <moreflag></moreflag>>
-        <childLink Mosaic="">//div[@class='info-item']/a/@href</childLink>>
-        <next></next>>
-        <nextflag></nextflag>>
+        <childLink jsoin="">//div[@class='info-item']/a/@href</childLink>>
+        <nextpage join=""></nextpage>
+        <flag>selenium</flag>>
+        <childnext join=""></childnext>
+        <chose demand="slidingRoller">50</chose>>
         <urls>
             <url>
                 http://ol.tgbus.com/
@@ -207,13 +205,11 @@
         <mainpic>//img/@src</mainpic>>
         <type></type>>
         <source>爱玩网</source>
-        <childnext></childnext>>
-        <childnextflag></childnextflag>
-        <more>$('#CollistMore').click()</more>>
-        <moreflag>//div[@class='m-collistfoot']/a[@id='CollistMore']</moreflag>>
-        <childLink Mosaic="">//div[@id='Collist']/div[@class='m-collist']/a/@href</childLink>>
-        <next></next>>
-        <nextflag></nextflag>>
+        <childLink join="">//div[@id='Collist']/div[@class='m-collist']/a/@href</childLink>
+        <nextpage join=""></nextpage>
+        <flag>selenium</flag>>
+        <childnext join=""></childnext>
+        <chose demand="clickMore">$('#CollistMore').click()</chose>>
         <urls>
             <url>
                 http://play.163.com/
@@ -375,13 +371,11 @@
         <mainpic>//img/@src</mainpic>>
         <type></type>>
         <source>易竞技</source>
-        <childnext></childnext>>
-        <childnextflag></childnextflag>
-        <more>$('#CollistMore').click()</more>>
-        <moreflag>//div[@class='m-collistfoot']/a[@id='CollistMore']</moreflag>>
-        <childLink Mosaic="">//div[@id='Collist']/div[@class='m-collist']/a/@href</childLink>>
-        <next></next>>
-        <nextflag></nextflag>>
+        <childLink join="">//div[@id='Collist']/div[@class='m-collist']/a/@href</childLink>>
+        <nextpage join=""></nextpage>
+        <flag>selenium</flag>>
+        <childnext join=""></childnext>
+        <chose demand="clickMore">$('#CollistMore').click()</chose>>
         <urls>
             <url>
                 http://gg.163.com/
@@ -401,14 +395,24 @@
         <mainpic>//img/@src</mainpic>>
         <type></type>>
         <source>前瞻网</source>
-        <childnext></childnext>>
-        <childnextflag></childnextflag>
-        <more></more>>
-        <moreflag></moreflag>>
-        <childLink Mosaic="">//div[@class='txt_list']/ul[@id='ulNewsList']/li/div[@class='pic']/a/@href</childLink>>
-        <next>$('.page a:last-child')[0].click()</next>>
-        <nextflag>//div[@class='page']/a[10]</nextflag>>
+        <childLink join="">//div[@class='txt_list']/ul[@id='ulNewsList']/li/div[@class='pic']/a/@href</childLink>>
+        <nextpage join="http://pc.265g.com">a[text()*='下一页']</nextpage>
+        <flag>jsoup</flag>>
+        <childnext join=""></childnext>>
+        <chose demand=""></chose>>
         <urls>
+            <url>
+                http://www.qianzhan.com/game/list/381.html
+            </url>
+            <url>
+                http://www.qianzhan.com/game/list/382.html
+            </url>
+            <url>
+                http://www.qianzhan.com/game/list/383.html
+            </url>
+            <url>
+                http://www.qianzhan.com/game/list/384.html
+            </url>
             <url>
                 http://www.qianzhan.com/game/list/385.html
             </url>
@@ -428,16 +432,14 @@
         <mainpic>//p/@src</mainpic>>
         <type></type>>
         <source>当游网</source>
-        <childnext></childnext>>
-        <childnextflag></childnextflag>
-        <more></more>>
-        <moreflag></moreflag>>
-        <childLink Mosaic="http://www.3h3.com">//dd[@class='fix']/ul[@class='list-txt']/li/a[2]/@href</childLink>>
-        <next>$('#update_box > div.col-r.r > dl > dd > div.pg_pcl.p10 > div > div.tsp_nav > a.tsp_next > i').click()</next>>
-        <nextflag></nextflag>>
+        <childLink join="http://www.3h3.com">//dd[@class='fix']/ul[@class='list-txt']/li/a[2]/@href</childLink>>
+        <nextpage join="http://www.3h3.com">//a[@calss='tsp_next']/@href</nextpage>
+        <flag>jsoup</flag>>
+        <childnext join=""></childnext>>
+        <chose demand=""></chose>>
         <urls>
             <url>
-                http://www.3h3.com/new/nc_1_6.html
+                http://www.3h3.com/new/nc_1_1.html
             </url>
             <url>
                 http://www.3h3.com/new/nc_2_1.html

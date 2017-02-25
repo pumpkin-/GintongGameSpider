@@ -52,7 +52,7 @@ public class CommonSpiderKnowledge {
             @Override
             public void run() {
                 try {
-                    ergodicUrl("spiderSfw", 0, "no");
+                    ergodicUrl("spiderSfw",180, "no");
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
