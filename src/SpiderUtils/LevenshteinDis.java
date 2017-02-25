@@ -115,6 +115,13 @@ public class LevenshteinDis {
                     flag = i + 1;
                 }
             }
+            for(int u=0;u<proKnowledges.size();u++){
+                if(proKnowledges.get(u).getAuthor().equals("null")){
+                    basPersonInfos.remove(u);
+                    perKnowledges.remove(u);
+                    u=u-1;
+                }
+            }
             flaglist.add(flag);
             bznlist.add(bzn);
             map.put(1,basPersonInfos);

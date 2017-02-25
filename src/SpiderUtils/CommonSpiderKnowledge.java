@@ -894,7 +894,6 @@ public class CommonSpiderKnowledge {
         proKnowledge.setSource(source);
         proKnowledge.setUuid(kuuid);
         proKnowledgeList.add(proKnowledge);
-
         if(StringUtils.isNotEmpty(author)) {
             PerKnowledge perKnow = new PerKnowledge();
             perKnow.setName(author);
@@ -908,6 +907,22 @@ public class CommonSpiderKnowledge {
             BasPersonInfo basPerson = new BasPersonInfo();
             basPerson.setUuid(puuid);
             basPerson.setName(author);
+            basPerson.setSource(source);
+            basPerson.setUrl(authorurl);
+            basPersonInfoList.add(basPerson);
+        }else{
+            PerKnowledge perKnow = new PerKnowledge();
+            perKnow.setName("null");
+            perKnow.setKname(title);
+            perKnow.setRtype("原作者");
+            perKnow.setPuuid(puuid);
+            perKnow.setKuuid(kuuid);
+            perKnow.setSource(source);
+            perKnowledgeList.add(perKnow);
+
+            BasPersonInfo basPerson = new BasPersonInfo();
+            basPerson.setUuid(puuid);
+            basPerson.setName("null");
             basPerson.setSource(source);
             basPerson.setUrl(authorurl);
             basPersonInfoList.add(basPerson);
