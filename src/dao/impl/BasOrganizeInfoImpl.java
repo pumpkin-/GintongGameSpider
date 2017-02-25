@@ -22,4 +22,8 @@ public class BasOrganizeInfoImpl extends BaseDaoImpl<List> implements BasOrganiz
     public void insertSingle(BasOrganizeInfo ts) {
         this.getSqlSession().insert(this.getNs() + "insertSingle", ts);
     }
+
+    public List<String> selcetOrganId(String uuid){
+        return this.getSqlSession().selectList(this.getNs()+"selectOrganId",uuid);
+    }
 }

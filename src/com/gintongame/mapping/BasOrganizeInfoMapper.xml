@@ -41,5 +41,9 @@
         #{tag,jdbcType=LONGVARCHAR})
     </insert>
 
+    <select id="selectOrganId" parameterType="java.lang.String" resultType="String">
+        select id from bas_organize_info where uuid=#{uuid}
+    </select>
+
 
 </mapper>

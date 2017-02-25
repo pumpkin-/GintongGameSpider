@@ -7,11 +7,11 @@ public class ComShareholderTeam {
 
     private String oname;
 
-    private String legalPersen;
+    private String legal_persen;
 
     private String industry;
 
-    private Byte state;
+    private String state;
 
     private String investment;
 
@@ -42,11 +42,11 @@ public class ComShareholderTeam {
     }
 
     public String getLegalPersen() {
-        return legalPersen;
+        return legal_persen;
     }
 
     public void setLegalPersen(String legalPersen) {
-        this.legalPersen = legalPersen == null ? null : legalPersen.trim();
+        this.legal_persen = legalPersen == null ? null : legalPersen.trim();
     }
 
     public String getIndustry() {
@@ -57,11 +57,11 @@ public class ComShareholderTeam {
         this.industry = industry == null ? null : industry.trim();
     }
 
-    public Byte getState() {
+    public String getState() {
         return state;
     }
 
-    public void setState(Byte state) {
+    public void setState(String state) {
         this.state = state;
     }
 

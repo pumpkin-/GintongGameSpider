@@ -4,6 +4,7 @@ import JavaBean.ProKnowledge;
 import cn.wanghaomiao.xpath.exception.XpathSyntaxErrorException;
 import cn.wanghaomiao.xpath.model.JXDocument;
 import cn.wanghaomiao.xpath.model.JXNode;
+import com.google.gson.Gson;
 import dao.impl.ProKnowledgeImpl;
 import org.apache.commons.lang3.StringUtils;
 import org.dom4j.Attribute;
@@ -55,6 +56,12 @@ public class test {
         System.out.println();*/
 
 
+        Connection.Response res=Jsoup.connect("https://maimai.cn/static/scripts/mm__node.bundle.min.js?a348d5f185d822306f21abc35824b9cb")
+                                        .userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36")
+                                        .ignoreContentType(true)
+                .execute();
+        String body=res.body();
+        System.out.println(body);
 
         //SpiderUtils.getElements("windows","spiderYxgc",31);
 
