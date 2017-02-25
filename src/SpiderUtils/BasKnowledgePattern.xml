@@ -185,7 +185,6 @@
         <urls>
             <url>
                 http://ol.tgbus.com/
-
             </url>
             <url>
                 http://ol.tgbus.com/list/xwdt/
@@ -221,8 +220,149 @@
             </url>
 
         </urls>>
+        </spiderAW>
 
-    </spiderAW>
+
+
+<!--逗游爬虫 刘雪明2.24-->
+    <spiderDoyo>
+        <!--详情页标题-->
+        <title>//div[@class='item ']/a/@title</title>
+        <!--详情页作者-->
+        <author>//span[@id='author_baidu']/text()</author>
+        <authorurl></authorurl>>
+        <!--列表页封面-->
+        <cover>//div[@class='item']/a/img/@src</cover>>
+        <!--详情页时间-->
+        <ptime timeFormat="yyyy MM dd HH mm">//span[@id='pubtime_baidu']/text()</ptime>>
+        <tag></tag>>
+        <!--详情页的正文-->
+        <main>//div[@id='article_content']/p</main>>
+        <!--正文图片-->
+        <mainpic>//img/@src</mainpic>>
+        <type>//div[@class='tags']</type>>
+        <source>逗游</source>
+        <!--子链接-->
+        <childLink Mosaic="http://www.doyo.cn">//div[@class='content']/a/@href</childLink>>
+        <childnext></childnext>>
+        <childnextflag></childnextflag>>
+        <more>$('#article_list > a').click()</more>>
+        <moreflag>//*[@id="article_list"]/a</moreflag>>
+        <next></next>>
+        <nextflag></nextflag>>
+        <urls>
+            <url>
+                http://www.doyo.cn/news
+            </url>
+            <!--<url>-->
+                <!--http://www.doyo.cn/news/wangye-->
+            <!--</url>-->
+        </urls>>
+    </spiderDoyo>
+<!--游戏邦爬虫  刘雪明2.24-->
+    <spiderGamerboom>
+        <title>//div[@class='the_article']/h1/text()</title>
+        <!--详情页作者-->
+        <author>//div[@class='cnt_main']/div[@class='cnt_body']/p[1]/text()</author>
+        <authorurl></authorurl>>
+        <!--列表页封面-->
+        <cover>//div[@class='ta-pageimg-left']/a/img/@src</cover>>
+        <!--详情页时间-->
+        <ptime timeFormat="yyyy MM dd">//div[@class='news']/h3/span/text()</ptime>>
+        <tag>//div[@class='tags']/a/text()</tag>>
+        <!--详情页的正文-->
+        <main>//div[@class='cnt_body']/p</main>>
+        <!--正文图片-->
+        <mainpic>//img/@src</mainpic>>
+        <type></type>>
+        <source>游戏邦</source>
+        <!--子链接-->
+        <childLink Mosaic="">//div[@class='news']/h3/a/@href</childLink>>
+        <childnext></childnext>>
+        <childnextflag></childnextflag>>
+        <more></more>>
+        <moreflag></moreflag>>
+        <next>$('body > div.main.margin-top > div.clumn > div.jc_content > div > a:nth-child(8)').click()</next>>
+        <nextflag>/html/body/div[6]/div[1]/div[2]/div/a[7]</nextflag>>
+        <urls>
+            <url>
+                http://gamerboom.com/archives/category/original
+            </url>
+        </urls>>
+    </spiderGamerboom>
+    <!--不凡游戏爬虫  刘雪明2.24-->
+    <spiderBufan>
+        <title>//div[@class='this_con']/h2/text()</title>
+        <!--详情页作者-->
+        <author>//em[@class='lt']/text()</author>
+        <authorurl></authorurl>>
+        <!--列表页封面-->
+        <cover>//div[@class=this_list3']/dl/dt/a/img/@src</cover>>
+        <!--详情页时间-->
+        <ptime timeFormat="yyyy MM dd HH mm">//em[@class='lt']/i/text()</ptime>>
+        <tag></tag>>
+        <!--详情页的正文-->
+        <main>//div[@class='this_con']/p</main>>
+        <!--正文图片-->
+        <mainpic>//img/@src</mainpic>>
+        <type></type>>
+        <source>不凡游戏</source>
+        <!--子链接-->
+        <childLink Mosaic="">//div[@class='this_list3']/dl/dd/b/a/@href</childLink>>
+        <childnext></childnext>>
+        <childnextflag></childnextflag>>
+        <more></more>>
+        <moreflag></moreflag>>
+        <next>$('body > div.this_bgall > div > div > div.this_670.lt > div.cont_pages > a:nth-child(11)').click</next>>
+        <nextflag>/html/body/div[4]/div/div/div[1]/div[3]/a[10]</nextflag>>
+        <urls>
+            <url>
+                http://xin.bufan.com/news_201/
+            </url>
+        </urls>>
+    </spiderBufan>
+    <!-- 触乐抓取  刘雪明 2.23 -->
+    <spiderChuapp>
+        <!--列表页标题-->
+        <title>//div[@class='single-cont']/h1/test()</title>
+        <!--详情页作者-->
+        <author>//div[@class='author-time fn-clear']/span[@class='fn-left']/text()</author>
+        <authorurl></authorurl>>
+        <!--列表页封面-->
+        <cover>//div[@class='category-list']/a/img/@src</cover>>
+        <!--详情页时间-->
+        <ptime timeFormat="yyyy MM dd HH mm">//div[@class=author-time fn-clear']/span[@class='fn-right friendly_time']/text()</ptime>>
+        <tag></tag>>
+        <!--详情页的正文-->
+        <main>//div[@class='the-content']/p</main>>
+        <!--正文图片-->
+        <mainpic>//img/@src</mainpic>>
+        <type></type>>
+        <source>触乐</source>
+        <!--子链接-->
+        <childLink Mosaic=" http://www.chuapp.com">//div[@class='category-list']/a/@href</childLink>>
+        <childnext></childnext>>
+        <childnextflag></childnextflag>>
+        <more>$('#show_more').click()</more>>
+        <moreflag>//*[@id="show_more"]</moreflag>>
+        <urls>
+            <url>
+                http://www.chuapp.com/category/daily
+            </url>
+        </urls>>
+    </spiderChuapp>
+
+
+
+    <spiderRwt>
+        <title>//h1[@class='appgame-video-title']/text()|//h1[@class='appgame-single-title']/text()</title>
+        <author>//div[@class='appgame-article-state']/a/text()|//div[@class='appgame-video-state']/a/text()</author>
+        <authorurl>//div[@class='appgame-article-state']/a/@href|//div[@class='appgame-video-state']/a/@href</authorurl>>
+        <cover>//div[@class='appgame-item-section']/a/strong/i/@data-original</cover>>
+        <ptime timeFormat="yyyy MM dd HH mm">//div[@class='appgame-video-state']/text()|//div[@class='appgame-article-state']/text()</ptime>>
+
+</spiderRwt>
+
     <!--易竞技-->
     <spiderYJJ>
         <title>//h1[@class='article-h1']/text()</title>
@@ -248,7 +388,6 @@
             </url>
 
         </urls>>
-
     </spiderYJJ>
     <!--前瞻网-->
     <spiderQZW>
@@ -328,7 +467,6 @@
         <urls>
             <url>
                 http://www.youxituoluo.com/news
-
             </url>
             <url>
                 http://www.youxituoluo.com/haiwai

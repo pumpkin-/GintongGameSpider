@@ -81,10 +81,14 @@ public class SpiderUtils {
                 }
             }
             JavascriptExecutor executorRoller = (JavascriptExecutor) baseKnowledge.getDriver();
-           // executorRoller.executeScript("$(window).scrollTop(30000)");
+            executorRoller.executeScript("$(window).scrollTop(30000)");
+
             baseKnowledge.setWebElement(baseKnowledge.getDriver().findElement(By.xpath("/html")));
             JXDocument jxDocument =new JXDocument(Jsoup.parse(baseKnowledge.getWebElement().getAttribute("outerHTML")));
-            if(StringUtils.isNotEmpty(organizeConfigure.getMore().getText())){
+            if(organizeConfigure.getMore() == null) {
+                System.out.println("如果您想抓取更多页面， 请在配置文件中配置<more>标签");
+            }
+            if(organizeConfigure.getMore() != null && StringUtils.isNotEmpty(organizeConfigure.getMore().getText())){
                 for(int more=1;more>0;more++) {
                     JavascriptExecutor executormore = (JavascriptExecutor) baseKnowledge.getDriver();
                     executormore.executeScript(organizeConfigure.getMore().getText());
@@ -277,7 +281,9 @@ public class SpiderUtils {
                                 tag = (tag + "," + objtag).replace("null,", "");
                             }
                         } else {
+
                             tag = (tag + "," + tagslist.get(fg)).replace("null,", "");
+
                         }
                     }else{
                         tag=null;

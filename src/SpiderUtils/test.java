@@ -58,8 +58,8 @@ import java.util.logging.XMLFormatter;
 public class test {
     static List<org.dom4j.Element> books;
     public static void main(String[] args) throws ParserConfigurationException, XpathSyntaxErrorException, SpiderUtils.FormatEexception, DocumentException, IOException, ProKnowledgeImpl.FormatEexception, InterruptedException, ParseException {
-       /* FileInputStream inputStream=new FileInputStream(test.class.getClassLoader().getResource("SpiderUtils/BasKnowledgePattern.xml").getFile());
-        System.out.println(test.class.getClassLoader().getResource("SpiderUtils/BasKnowledgePattern.xml").getFile().toString());
+       /* FileInputStream inputStream=new FileInputStream(Test.class.getClassLoader().getResource("SpiderUtils/BasKnowledgePattern.xml").getFile());
+        System.out.println(Test.class.getClassLoader().getResource("SpiderUtils/BasKnowledgePattern.xml").getFile().toString());
         SAXReader sax=new SAXReader();
         org.dom4j.Document doc=sax.read(inputStream);
         org.dom4j.Element root = doc.getRootElement();//获取根元素
@@ -79,12 +79,14 @@ public class test {
 
 
 
-        Connection.Response res=Jsoup.connect("https://maimai.cn/static/scripts/mm__node.bundle.min.js?a348d5f185d822306f21abc35824b9cb")
+
+        /*Connection.Response res=Jsoup.connect("https://maimai.cn/static/scripts/mm__node.bundle.min.js?a348d5f185d822306f21abc35824b9cb")
                                         .userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36")
                                         .ignoreContentType(true)
                 .execute();
         String body=res.body();
-        System.out.println(body);
+        System.out.println(body);*/
+
 
         //SpiderUtils.getElements("windows","spiderYxgc",70,"no");
         //SpiderUtils.getElements("windows","spiderRwt",0,"no");
@@ -94,7 +96,7 @@ public class test {
         JXDocument jxDocument=new JXDocument(doc);
         System.out.println(doc.outerHtml());*/
 
-        ExecutorService singleThreadExecutor = Executors.newFixedThreadPool(2);
+        /*ExecutorService singleThreadExecutor = Executors.newSingleThreadExecutor();
         for (int i = 0; i < 10; i++) {
             final int index = i;
             final int u=i;
@@ -122,7 +124,15 @@ public class test {
                     }
                 }
             });
-        }
+        }*/
+
+
+//        org.jsoup.nodes.Document doc=Jsoup.connect("http://www.gamersky.com/news/201702/872232.shtml")
+//                          .userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36")
+//                          .get();
+//     System.out.println(doc.outerHtml());
+
+
 
 
         /*System.setProperty("webdriver.chrome.driver",SpiderContant.chromeWindowsPath );
@@ -135,6 +145,8 @@ public class test {
 
 
 
+//
+
 
      /*System.setProperty("webdriver.chrome.driver",SpiderContant.chromeWindowsPath );
         WebDriver driver=new ChromeDriver();
@@ -145,7 +157,7 @@ public class test {
         org.jsoup.nodes.Document doc=Jsoup.parse(webElement.getAttribute("outerHTML"));
         JXDocument jxDocument=new JXDocument(doc);
 
-        System.out.println(jxDocument.sel("//dd[@class='public-tabs-title']/a/@href"));*/
+//        System.out.println(jxDocument.sel("//dd[@class='public-tabs-title']/a/@href"));
 
 
         /*Connection.Response res=Jsoup.connect("http://www.appgame.com/archives/620651.html").ignoreContentType(true).execute();

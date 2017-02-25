@@ -52,7 +52,7 @@ public class CommonSpiderKnowledge {
             @Override
             public void run() {
                 try {
-                    ergodicUrl("spiderDwyx", 0, "no");
+                    ergodicUrl("spiderYxgc", 0, "no");
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -82,7 +82,7 @@ public class CommonSpiderKnowledge {
             @Override
             public void run() {
                 try {
-                    ergodicUrl("spiderYxgc", 0, "no");
+                    ergodicUrl("spiderDwyx", 0, "no");
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -256,22 +256,28 @@ public class CommonSpiderKnowledge {
      */
     public static KnowledgeSpiderConfig parseConfigXmlByWebName(String webName) throws FileNotFoundException, DocumentException {
         SAXReader saxReader = new SAXReader();
+//        配置文件对应的JavaBean
         KnowledgeSpiderConfig knowledgeSpiderConfig = new KnowledgeSpiderConfig();
+
         knowledgeSpiderConfig.webUrls = new ArrayList<Element>();
 
         org.dom4j.Document dom =  saxReader.read(new FileInputStream(SpiderUtils.class.getClassLoader().getResource("SpiderUtils/BasKnowledgePattern.xml").getFile()));
         Element rootElemnt = dom.getRootElement();//获取根元素
         Element childElement = rootElemnt.element(webName);
+
             //获取当前网站的所有子链接 并添加到javaBean中
             if(childElement.element("urls") == null || childElement.element("urls").elements().size() == 0) {
                 throw new NullPointerException("can't find corret web urls, please check your <urls> tag in your BasKnowledgePattern.xml");
             }
+//        获取当前元素urls下的所有子元素
             for (Element ele : (List<Element>)(childElement.element("urls")).elements()) {
                 knowledgeSpiderConfig.webUrls.add(ele);
             }
+
             if (childElement.element("next") != null) {
                 knowledgeSpiderConfig.nextPage = childElement.element("next");
             }
+
             if (childElement.element("author") != null) {
                 knowledgeSpiderConfig.author = childElement.element("author");
             }
@@ -649,7 +655,11 @@ public class CommonSpiderKnowledge {
                     }
                 }
             } else {
-                author = map.get("author").get(fg).toString().replace("作者：","").replace("频道作者：","");
+                try {
+                    author = map.get("author").get(fg).toString().replace("作者：", "").replace("频道作者：", "");
+                }catch (Exception e){
+                    author=null;
+                }
             }
         }else{
             author=null;
@@ -659,7 +669,11 @@ public class CommonSpiderKnowledge {
             if (map.get("authorurl")==null||map.get("authorurl").size()<=1) {
                 authorurl = getTagOne(childDocumet,knowledgeSpiderConfig.authorUrl.getText()).toString();
             } else {
-                authorurl = map.get("authorurl").get(fg).toString();
+                try {
+                    authorurl = map.get("authorurl").get(fg).toString();
+                }catch (Exception e){
+                    authorurl=null;
+                }
             }
         }else{
             authorurl= childLink;
@@ -669,7 +683,11 @@ public class CommonSpiderKnowledge {
             if (map.get("title")==null||map.get("title").size()<=1) {
                 title =getTagOne(childDocumet,knowledgeSpiderConfig.title.getText()).toString();
             } else {
-                title = map.get("title").get(fg).toString();
+                try {
+                    title = map.get("title").get(fg).toString();
+                }catch (Exception e){
+                    title=null;
+                }
             }
         }else{
             title=null;
@@ -684,7 +702,11 @@ public class CommonSpiderKnowledge {
                 }
             } else {
                 if(StringUtils.isNotEmpty((String) map.get("cover").get(fg))) {
-                    cover = map.get("cover").get(fg).toString() ;
+                    try {
+                        cover = map.get("cover").get(fg).toString();
+                    }catch (Exception e){
+                        cover=null;
+                    }
                 }else{
                     cover=null;
                 }
@@ -700,7 +722,11 @@ public class CommonSpiderKnowledge {
                 Date date = simpleDateFormat.parse(ptimetest);
                 ptime = simpleDateFormatchange.format(date);
             } else {
-                ptime = map.get("ptime").get(fg).toString();
+                try {
+                    ptime = map.get("ptime").get(fg).toString();
+                }catch (Exception e){
+                    ptime=null;
+                }
             }
         }else{
             ptime=null;
@@ -725,7 +751,11 @@ public class CommonSpiderKnowledge {
                     type = (type + "," + objtype).replace("null,", "");
                 }
             } else {
-                type = (type + "," + map.get("type").get(fg)).replace("null,", "").replace(" ", ",");
+                try {
+                    type = (type + "," + map.get("type").get(fg)).replace("null,", "").replace(" ", ",");
+                }catch (Exception e){
+                    type=null;
+                }
             }
         }else{
             type=null;
@@ -739,7 +769,11 @@ public class CommonSpiderKnowledge {
                     tag = (tag + "," + objtag).replace("null,", "");
                 }
             } else {
-                tag = (tag + "," + map.get("tag").get(fg)).replace("null,", "").replace(" ", ",");
+                try {
+                    tag = (tag + "," + map.get("tag").get(fg)).replace("null,", "").replace(" ", ",");
+                }catch (Exception e){
+                    tag=null;
+                }
             }
         }else{
             tag=null;
