@@ -6,20 +6,18 @@
         <title>//h1[@class='entry-title']/text()</title>
         <author>//span[@class='meta-author']/a/text()</author>
         <authorurl></authorurl>>
-        <cover>//div[@class='entry entry-content']/p/img[1]/@src</cover>>
+        <cover Mosaic="">//div[@class='entry entry-content']/p/img[1]/@src</cover>>
         <ptime timeFormat="yyyy MM dd">//span[@class='meta-date']/text()</ptime>>
         <tag>//div[@id='entry-tags']/a/text()</tag>>
         <main>//div[@class='entry entry-content']/p</main>>
-        <mainpic>//img/@src</mainpic>>
+        <mainpic Mosaic="">//img/@src</mainpic>>
         <type>//span[@class='meta-cat']/a/text()</type>>
         <source>游戏大观</source>
         <childnext></childnext>>
-        <childnextflag></childnextflag>>
-        <more></more>>
-        <moreflag></moreflag>>
+        <chose demand=""></chose>>
+        <flag>jsoup</flag>>
         <childLink Mosaic="">//div[@class='entry-thumb']/a/@href</childLink>>
-        <next>$('div.pagenavi.clear a')[$('div.pagenavi.clear a').length-1].click()</next>>
-        <nextflag>//div[@class='pagenavi clear']/a[text()*='Next']</nextflag>>
+        <nextpage>//div[@class='pagenavi clear']/a[text()*='Next']/@href</nextpage>>
         <urls>
             <url>
                 http://www.gamelook.com.cn/category/news
@@ -74,13 +72,10 @@
         <mainpic Mosaic="">//img/@src</mainpic>>
         <type>//div[@class='s_1 on']/p/a[@class='on']/text()</type>>
         <source>游戏观察</source>
-        <childnext></childnext>>
-        <childnextflag></childnextflag>>
         <childLink Mosaic="http://www.youxiguancha.com">//div[@class='inf clearfix']/div[@class='inf_c']/h2/a/@href</childLink>>
         <next>$('div.page_manu a.pageNext')[0].click()</next>>
         <nextflag>//div[@class='page_manu']/a[@class='pageNext']</nextflag>>
-        <more></more>>
-        <moreflag></moreflag>>
+        <chose demand=""></chose>>
         <urls>
             <url>
                 http://www.youxiguancha.com/news/

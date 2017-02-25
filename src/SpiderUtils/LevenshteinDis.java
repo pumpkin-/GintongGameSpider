@@ -80,7 +80,7 @@ public class LevenshteinDis {
                         i = i - 1;
                         break;
                     } else if (dis > 0.95) {
-                        SpiderUtils.storeBugdata(essay, aticle, proKnowledges.get(i).getUuid());
+                        CommonSpiderKnowledge.storeBugdata(essay, aticle, proKnowledges.get(i).getUuid());
                         proKnowledges.remove(i);
                         if (basPersonInfos.size() > 0) {
                             basPersonInfos.remove(i);
@@ -99,8 +99,8 @@ public class LevenshteinDis {
                     } else {
                         fg = 0;
                     }
-                    flag = i + 1;
                 }
+                flag = i + 1;
             }
         }
         flaglist.add(flag);
@@ -200,10 +200,13 @@ public class LevenshteinDis {
         //对文本进行预处理, 去除图片的影响
         String regEx = "(?<=src=).+\\.";
         Pattern p = Pattern.compile(regEx);
-       // String  doc1 = p.matcher(tmpdoc1).replaceAll("");
-        String  doc1 =  tmpdoc1.replaceAll(regEx, "");
-        String doc2 = p.matcher(tmpdoc2).replaceAll("");
-
+        String doc1 =null;
+        String doc2=null;
+        // String  doc1 = p.matcher(tmpdoc1).replaceAll("");
+        if(StringUtils.isNotEmpty(tmpdoc1)&&StringUtils.isNotEmpty(tmpdoc2)) {
+            doc1 = tmpdoc1.replaceAll(regEx, "");
+            doc2 = p.matcher(tmpdoc2).replaceAll("");
+        }
         if (doc1 != null && doc1.length() > 0 && doc2 != null
                 && doc2.length() > 0) {
             Map<Integer, int[]> AlgorithmMap = new HashMap<Integer, int[]>();
@@ -211,13 +214,13 @@ public class LevenshteinDis {
             //将两个字符串中的中文字符以及出现的总数封装到，AlgorithmMap中
             for (int i = 0; i < doc1.length(); i++) {
                 char d1 = doc1.charAt(i);
-                if(isHanZi(d1)){
+                if (isHanZi(d1)) {
                     int charIndex = getGB2312Id(d1);
-                    if(charIndex != -1){
+                    if (charIndex != -1) {
                         int[] fq = AlgorithmMap.get(charIndex);
-                        if(fq != null && fq.length == 2){
+                        if (fq != null && fq.length == 2) {
                             fq[0]++;
-                        }else {
+                        } else {
                             fq = new int[2];
                             fq[0] = 1;
                             fq[1] = 0;
@@ -229,13 +232,13 @@ public class LevenshteinDis {
 
             for (int i = 0; i < doc2.length(); i++) {
                 char d2 = doc2.charAt(i);
-                if(isHanZi(d2)){
+                if (isHanZi(d2)) {
                     int charIndex = getGB2312Id(d2);
-                    if(charIndex != -1){
+                    if (charIndex != -1) {
                         int[] fq = AlgorithmMap.get(charIndex);
-                        if(fq != null && fq.length == 2){
+                        if (fq != null && fq.length == 2) {
                             fq[1]++;
-                        }else {
+                        } else {
                             fq = new int[2];
                             fq[0] = 0;
                             fq[1] = 1;
@@ -249,13 +252,13 @@ public class LevenshteinDis {
             double sqdoc1 = 0;
             double sqdoc2 = 0;
             double denominator = 0;
-            while(iterator.hasNext()){
+            while (iterator.hasNext()) {
                 int[] c = AlgorithmMap.get(iterator.next());
-                denominator += c[0]*c[1];
-                sqdoc1 += c[0]*c[0];
-                sqdoc2 += c[1]*c[1];
+                denominator += c[0] * c[1];
+                sqdoc1 += c[0] * c[0];
+                sqdoc2 += c[1] * c[1];
             }
-            return denominator / Math.sqrt(sqdoc1*sqdoc2);
+            return denominator / Math.sqrt(sqdoc1 * sqdoc2);
         } else {
             throw new NullPointerException(
                     " the Document is null or have not cahrs!!");

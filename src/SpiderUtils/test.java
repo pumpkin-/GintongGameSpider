@@ -7,6 +7,7 @@ import cn.wanghaomiao.xpath.model.JXDocument;
 import cn.wanghaomiao.xpath.model.JXNode;
 import com.gargoylesoftware.htmlunit.activex.javascript.msxml.XMLSerializer;
 import dao.impl.ProKnowledgeImpl;
+import net.sf.json.JSONObject;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -76,10 +77,7 @@ public class test {
         //SpiderUtils.getElements("windows","spiderRwt",0,"no");
         //SpiderUtils.getElements("windows","spiderKdbs",0,"no");
 
-        org.jsoup.nodes.Document doc=Jsoup.connect("http://www.gamersky.com/news/201702/872232.shtml")
-                          .userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36")
-                          .get();
-     System.out.println(doc.outerHtml());
+
 
         /*System.setProperty("webdriver.chrome.driver",SpiderContant.chromeWindowsPath );
         WebDriver driver=new ChromeDriver();
