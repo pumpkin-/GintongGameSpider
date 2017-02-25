@@ -179,14 +179,11 @@
         <nextpage join=""></nextpage>
         <flag>selenium</flag>>
         <childnext join=""></childnext>
-        <chose demand="slidingRoller">50</chose>>
+        <chose demand="slidingRoller">10</chose>>
         <urls>
             <url>
                 http://ol.tgbus.com/
             </url>
-            <url>
-                http://ol.tgbus.com/list/xwdt/
-            </url>>
             <url>
                 http://ol.tgbus.com/list/wypc/
             </url>>

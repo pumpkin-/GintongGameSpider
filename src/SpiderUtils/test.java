@@ -11,7 +11,6 @@ import com.google.gson.Gson;
 import com.gargoylesoftware.htmlunit.activex.javascript.msxml.XMLSerializer;
 
 import dao.impl.ProKnowledgeImpl;
-import net.sf.json.JSONObject;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -87,8 +86,6 @@ public class test {
                 .ignoreContentType(true)
                 .execute();
         String body=res.body();
-        JSONObject gson=JSONObject.fromObject(body);
-        System.out.println(gson);
 
 
         //SpiderUtils.getElements("windows","spiderYxgc",70,"no");
