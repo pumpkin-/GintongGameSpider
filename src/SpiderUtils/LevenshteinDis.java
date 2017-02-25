@@ -60,7 +60,7 @@ public class LevenshteinDis {
         da.setDate(dd);
         System.out.println(da.getDatepast());
         System.out.println(da.getDate());
-        if(day>10){
+        if(day>SpiderContant.insertBatchContant*perKnowledges.size()){
             String essay;
             for (int i = 0; i < proKnowledges.size(); i++) {
                 DateInfo daa = new DateInfo();
@@ -113,6 +113,13 @@ public class LevenshteinDis {
                         }
                     }
                     flag = i + 1;
+                }
+            }
+            for(int u=0;u<proKnowledges.size();u++){
+                if(proKnowledges.get(u).getAuthor().equals("null")){
+                    basPersonInfos.remove(u);
+                    perKnowledges.remove(u);
+                    u=u-1;
                 }
             }
             flaglist.add(flag);

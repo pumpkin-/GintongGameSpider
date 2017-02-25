@@ -80,10 +80,10 @@ public class test {
 
 
 
-
        //SpiderUtils.getElements("windows","spiderChuapp",0,"no");
 
-
+        
+//        SpiderUtils.getElements("windows", "spiderChuapp", 0, "no");
 
 
 /*        Connection.Response res=Jsoup.connect("https://maimai.cn/static/scripts/mm__node.bundle.min.js?a348d5f185d822306f21abc35824b9cb")
@@ -92,6 +92,7 @@ public class test {
                 .execute();
         String body=res.body();
         System.out.println(body);*/
+
 
 
         //SpiderUtils.getElements("windows","spiderYxgc",70,"no");
@@ -130,11 +131,18 @@ public class test {
 //            });
 //        }
 
-        org.jsoup.nodes.Document doc1=Jsoup.connect("http://www.doyo.cn/news/wangye")
-                         .userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36").get();
-        JXDocument jxDocument=new JXDocument(doc1);
-        System.out.println(doc1.outerHtml());
-        System.out.println(jxDocument.sel("//div[@class='content']//a[@class='pic']/@href"));
+
+//        org.jsoup.nodes.Document doc1=Jsoup.connect("http://www.doyo.cn/news/wangye")
+//                         .userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36").get();
+//        JXDocument jxDocument=new JXDocument(doc1);
+//        System.out.println(doc1.outerHtml());
+//        System.out.println(jxDocument.sel("//div[@class='content']//a[@class='pic']/@href"));
+//
+//       org.jsoup.nodes.Document doc=Jsoup.connect("http://chanye.18183.com/cyqy/list_1184_1.html")
+//                          .userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36")
+//                         .get();
+//     System.out.println(doc.outerHtml());
+
 
 
 
