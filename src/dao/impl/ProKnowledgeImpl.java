@@ -52,7 +52,7 @@ public class ProKnowledgeImpl extends BaseDaoImpl<List> implements ProKnowledgeD
         Map<Integer,List> map= null;
         try {
             map = LevenshteinDis.isExist(proKnowledges, basPersonInfos, perKnowledges);
-            if(!map.get(4).get(0).equals("0")) {
+            if(((List<Integer>) map.get(4)).get(0)!=0) {
                 this.getSqlSession().insert(this.getNs() + "insertBatch", proKnowledges);
             }
         } catch (Exception e) {

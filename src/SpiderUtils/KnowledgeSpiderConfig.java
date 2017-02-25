@@ -14,40 +14,38 @@ public class KnowledgeSpiderConfig {
      * 该配置文件中的字段应当与数据库的字段名保持统一
      */
 
-    public String flag;
+    public Element flag;
     //当前网站url
-    public String url;
+    public Element url;
     //当前网站的分页
-    public List<String> webUrls;
+    public List<Element> webUrls;
     //下一页点击xpath
-    public String nextPage;
+    public Element nextPage;
     //更多页面
-    public String more;
-    //TODO 不懂什么意思
-    public Element nextflagi;
+    public Element chose;
     //文章作者
-    public String author;
+    public Element author;
     //文章标题
-    public String title;
+    public Element title;
     //文章封面
-    public String cover;
+    public Element cover;
     //文章标签
-    public String tag;
+    public Element tag;
     //正文
-    public String main;
+    public Element main;
     //正文图片
-    public String mainPicture;
+    public Element mainPicture;
     //文章发表时间
-    public String ptime;
+    public Element ptime;
     //文章类别
-    public String type;
+    public Element type;
     //文章对应的网站名称(eg:"游戏观察" "游戏狗" etc)
-    public String source;
+    public Element source;
     //作者在该网站对应的url
-    public String authorUrl;
+    public Element authorUrl;
 
-    public String childnexti;
-    public String childnextflagi;
+    public Element childnext;
+    public Element childLink;
     public int page=0;
 
     @Override
@@ -57,8 +55,7 @@ public class KnowledgeSpiderConfig {
                 ", url='" + url + '\'' +
                 ", webUrls=" + webUrls +
                 ", nextPage='" + nextPage + '\'' +
-                ", more='" + more + '\'' +
-                ", nextflagi=" + nextflagi +
+                ", more='" + chose + '\'' +
                 ", author='" + author + '\'' +
                 ", title='" + title + '\'' +
                 ", cover='" + cover + '\'' +
@@ -69,8 +66,7 @@ public class KnowledgeSpiderConfig {
                 ", type='" + type + '\'' +
                 ", source='" + source + '\'' +
                 ", authorUrl='" + authorUrl + '\'' +
-                ", childnexti='" + childnexti + '\'' +
-                ", childnextflagi='" + childnextflagi + '\'' +
+                ", childnexti='" + childnext + '\'' +
                 ", page=" + page +
                 '}';
     }
