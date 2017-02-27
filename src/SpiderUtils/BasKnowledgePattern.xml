@@ -235,10 +235,11 @@
         <type></type>>
         <source>逗游</source>
         <!--子链接-->
-        <childLink Mosaic="http://www.doyo.cn">//div[@class='item']/a/@href</childLink>>
+        <childLink join="http://www.doyo.cn">//div[@class='content']//a[@class='pic']/@href</childLink>>
         <flag>jsoup</flag>>
         <chose demand=""></chose>>
-        <nextpage join="more">$('#article_list > a').click()</nextpage>
+        <childnext></childnext>
+        <nextpage join="http://www.doyo.cn">//div[@class='change_page']/a[@class='next']/@href</nextpage>
         <urls>
             <!--<url>-->
                 <!--http://www.doyo.cn/news-->
@@ -288,7 +289,7 @@
     </spiderGamerboom>
 <!--不凡游戏爬虫  刘雪明2.25-->
     <spiderBufan>
-        <title>//div[@class='this_con']/h2/text()</title>
+        <title>//div[@class='this_con']/h2/text()|//div[@class='tit-right']/dl//dt/text()</title>
         <!--详情页作者-->
         <author>//em[@class='lt']/text()</author>
         <authorurl></authorurl>>
@@ -298,7 +299,7 @@
         <ptime timeFormat="yyyy MM dd HH mm">//em[@class='lt']/i/text()|//div[@class='tit-left']/dl/dd[2]</ptime>>
         <tag></tag>>
         <!--详情页的正文-->
-        <main>//div[@class='this_con']/p</main>>
+        <main>//div[@class='this_con']/p|//div[@class='this-cont']/p</main>>
         <!--正文图片-->
         <mainpic>//img/@src</mainpic>>
         <type></type>>
@@ -316,9 +317,9 @@
             <url>
                 http://xin.bufan.com/news_202/
             </url>
-            <url>
-                http://xin.bufan.com/news_203/
-            </url>
+            <!--<url>-->
+                <!--http://xin.bufan.com/news_203/-->
+            <!--</url>-->
         </urls>>
     </spiderBufan>
 <!-- 触乐抓取  刘雪明 2.25 -->
@@ -410,7 +411,7 @@
         <type></type>>
         <source>前瞻网</source>
         <childLink join="">//div[@class='txt_list']/ul[@id='ulNewsList']/li/div[@class='pic']/a/@href</childLink>>
-        <nextpage join="http://pc.265g.com">a[text()*='下一页']</nextpage>
+        <nextpage join="http://pc.265g.com">//a[text()*='下一页']</nextpage>
         <flag>jsoup</flag>>
         <childnext join=""></childnext>>
         <chose demand=""></chose>>
@@ -447,7 +448,7 @@
         <type></type>>
         <source>当游网</source>
         <childLink join="http://www.3h3.com">//dd[@class='fix']/ul[@class='list-txt']/li/a[2]/@href</childLink>>
-        <nextpage join="http://www.3h3.com">//div[@class='tsp_nav']/a[text()*='下一页']/@href</nextpage>
+        <nextpage join="http://www.3h3.com">//div[@class='tsp_nav']/a[allText()*='下一页']/@href</nextpage>
         <flag>jsoup</flag>>
         <childnext join=""></childnext>>
         <chose demand=""></chose>>
@@ -567,8 +568,8 @@
         <type></type>>
         <source>18183</source>
         <childLink join="">//div[@class='dllist']/dl//dt//a/@href</childLink>>
-        <nextpage join="http://chanye.18183.com/">//div[@class='fy']/li/a[text()*='下一页']/@href</nextpage>
-        <flag>jsoup</flag>>
+        <nextpage join="">$('body > div.warpper > div.content.fl > div.txtlist > div:nth-child(4) > li:nth-child(12) > a')[0].click()</nextpage>
+        <flag>selenium</flag>>
         <childnext join=""></childnext>>
         <chose demand=""></chose>>
         <urls>

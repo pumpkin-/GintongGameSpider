@@ -80,10 +80,27 @@ public class test {
 
 
 
+<<<<<<< HEAD
         org.jsoup.nodes.Document doc=Jsoup.connect("http://www.3h3.com/new/nc_1_1.html").get();
         JXDocument jxDocument=new JXDocument(doc);
         System.out.println(doc.outerHtml());
 
+=======
+       //SpiderUtils.getElements("windows","spiderChuapp",0,"no");
+
+        
+//        SpiderUtils.getElements("windows", "spiderChuapp", 0, "no");
+
+
+/*        Connection.Response res=Jsoup.connect("https://maimai.cn/static/scripts/mm__node.bundle.min.js?a348d5f185d822306f21abc35824b9cb")
+                                        .userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36")
+                                        .ignoreContentType(true)
+                .execute();
+        String body=res.body();
+        System.out.println(body);*/
+
+
+>>>>>>> 8b721d27ce6a208275337cd26a71c1b1429c8689
 
         //SpiderUtils.getElements("windows","spiderYxgc",70,"no");
         //SpiderUtils.getElements("windows","spiderRwt",0,"no");
@@ -121,10 +138,18 @@ public class test {
 //            });
 //        }
 
-//        org.jsoup.nodes.Document doc=Jsoup.connect("http://www.gamersky.com/news/201702/872232.shtml")
+
+//        org.jsoup.nodes.Document doc1=Jsoup.connect("http://www.doyo.cn/news/wangye")
+//                         .userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36").get();
+//        JXDocument jxDocument=new JXDocument(doc1);
+//        System.out.println(doc1.outerHtml());
+//        System.out.println(jxDocument.sel("//div[@class='content']//a[@class='pic']/@href"));
+//
+//       org.jsoup.nodes.Document doc=Jsoup.connect("http://chanye.18183.com/cyqy/list_1184_1.html")
 //                          .userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36")
-//                          .get();
+//                         .get();
 //     System.out.println(doc.outerHtml());
+
 
 
 

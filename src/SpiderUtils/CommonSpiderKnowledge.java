@@ -424,14 +424,13 @@ public class CommonSpiderKnowledge {
         next = getTagOne(doc, knowledgeSpiderConfig.nextPage.getText()).toString();
         if (StringUtils.isNotEmpty(knowledgeSpiderConfig.nextPage.attributeValue("join"))) {
             if (next.toString().substring(0, 4).equals("http")) {
-                nexturl = next.toString();
+                nexturl = next.toString().replace("..", "");
             } else {
-                nexturl = knowledgeSpiderConfig.nextPage.attributeValue("join") + next.toString();
+                nexturl = knowledgeSpiderConfig.nextPage.attributeValue("join") + next.toString().replace("..", "");
             }
         } else {
-            nexturl = next.toString().replace("..","");
+            nexturl = next.toString().replace("..", "");
         }
-        System.out.println(nexturl);
         JXDocument nextDocument = getJXDocument(nexturl);
         return nextDocument;
     }
