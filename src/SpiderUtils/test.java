@@ -79,34 +79,11 @@ public class test {
 
 
 
-<<<<<<< HEAD
+
         org.jsoup.nodes.Document doc=Jsoup.connect("http://www.3h3.com/new/nc_1_1.html").get();
         JXDocument jxDocument=new JXDocument(doc);
         System.out.println(doc.outerHtml());
-=======
 
-
-       //SpiderUtils.getElements("windows","spiderChuapp",0,"no");
-
-
-        System.setProperty("webdriver.chrome.driver",SpiderContant.chromeWindowsPath );
-        WebDriver driver=new ChromeDriver();
-        driver.get("http://www.doyo.cn/news");
-        WebElement webElement=driver.findElement(By.xpath("/html"));
-        org.jsoup.nodes.Document doc=Jsoup.parse(webElement.getAttribute("outerHTML"));
-        JXDocument jxDocument=new JXDocument(doc);
-        System.out.println(doc.outerHtml());
-        System.out.println(jxDocument.selOne("//div[@class='appgame-video-state']/text()"));
-//        SpiderUtils.getElements("windows", "spiderChuapp", 0, "no");
-
-/*        Connection.Response res=Jsoup.connect("https://maimai.cn/static/scripts/mm__node.bundle.min.js?a348d5f185d822306f21abc35824b9cb")
-                                        .userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36")
-                                        .ignoreContentType(true)
-                .execute();
-        String body=res.body();
-        System.out.println(body);*/
-
->>>>>>> bffcef6e0f701966fd79c81dd32e3e1e8a71ad29
 
         //SpiderUtils.getElements("windows","spiderYxgc",70,"no");
         //SpiderUtils.getElements("windows","spiderRwt",0,"no");
