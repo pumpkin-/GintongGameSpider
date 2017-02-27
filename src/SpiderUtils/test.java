@@ -130,7 +130,7 @@ public class test {
 //            });
 //        }
 
-       org.jsoup.nodes.Document doc=Jsoup.connect("http://chanye.18183.com/cyqy/list_1184_1.html")
+       org.jsoup.nodes.Document doc=Jsoup.connect("http://www.qianzhan.com/game/list/381.html")
                           .userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36")
                          .get();
      System.out.println(doc.outerHtml());

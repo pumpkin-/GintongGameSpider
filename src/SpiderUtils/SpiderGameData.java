@@ -22,11 +22,11 @@ public class SpiderGameData {
               //跑完
          //   CommonSpiderKnowledge.ergodicUrl("spiderPc25g", 0, "no");
 
-              //CommonSpiderKnowledge.ergodicUrl("spiderYXG", 0, "no");
+
 
 //
               //李刚
-//            CommonSpiderKnowledge.ergodicUrl("spiderQZW", 0, "no");
+           CommonSpiderKnowledge.ergodicUrl("spider18183", 0, "no");
 //
 //               李刚
 //            CommonSpiderKnowledge.ergodicUrl("spiderAW", 0, "no");

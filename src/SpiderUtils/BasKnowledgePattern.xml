@@ -405,12 +405,12 @@
         <cover>//div[@class='pic']/a[1]/img/@original</cover>>
         <ptime timeFormat="yyyy MM dd">//div[@class='info']/p[@class='fl']/span[@id='pubtime_baidu']/text()</ptime>>
         <tag></tag>>
-        <main>//div[@id='art_cont']/p</main>>
+        <main>//div[@id='div_content']/p</main>>
         <mainpic>//img/@src</mainpic>>
         <type></type>>
         <source>前瞻网</source>
         <childLink join="">//div[@class='txt_list']/ul[@id='ulNewsList']/li/div[@class='pic']/a/@href</childLink>>
-        <nextpage join="http://pc.265g.com">//a[text()*='下一页']</nextpage>
+        <nextpage join="http://www.qianzhan.com">//div[@class='page']/a[text()*='下一页']/@href</nextpage>
         <flag>jsoup</flag>>
         <childnext join=""></childnext>>
         <chose demand=""></chose>>
