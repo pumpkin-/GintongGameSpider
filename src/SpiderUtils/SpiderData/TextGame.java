@@ -45,10 +45,13 @@ public class TextGame {
         try {
             //跑完
            // CommonSpiderKnowledge.ergodicUrl("spiderDWBS", 0, "no");
-           // CommonSpiderKnowledge.ergodicUrl("spiderYXG", 0, "no");
+            //网站有问题
+          //  CommonSpiderKnowledge.ergodicUrl("spiderYXG", 0, "no");
             //跑完
             //CommonSpiderKnowledge.ergodicUrl("spiderYJJ", 0, "no");
-            //CommonSpiderKnowledge.ergodicUrl("spiderDYW", 0, "no");
+
+         //   CommonSpiderKnowledge.ergodicUrl("spiderDYW", 0, "no");
+            CommonSpiderKnowledge.ergodicUrl("spiderQZW", 0, "no");
         } catch (Exception e) {
             e.printStackTrace();
         }
