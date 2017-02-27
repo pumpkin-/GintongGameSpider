@@ -80,18 +80,9 @@ public class test {
 
 
 
-       //SpiderUtils.getElements("windows","spiderChuapp",0,"no");
-
-
-//        SpiderUtils.getElements("windows", "spiderChuapp", 0, "no");
-
-/*        Connection.Response res=Jsoup.connect("https://maimai.cn/static/scripts/mm__node.bundle.min.js?a348d5f185d822306f21abc35824b9cb")
-                                        .userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36")
-                                        .ignoreContentType(true)
-                .execute();
-        String body=res.body();
-        System.out.println(body);*/
-
+        org.jsoup.nodes.Document doc=Jsoup.connect("http://www.3h3.com/new/nc_1_1.html").get();
+        JXDocument jxDocument=new JXDocument(doc);
+        System.out.println(doc.outerHtml());
 
 
         //SpiderUtils.getElements("windows","spiderYxgc",70,"no");
@@ -130,7 +121,8 @@ public class test {
 //            });
 //        }
 
-       org.jsoup.nodes.Document doc=Jsoup.connect("http://www.qianzhan.com/game/list/381.html")
+
+       org.jsoup.nodes.Document doc1=Jsoup.connect("http://www.qianzhan.com/game/list/381.html")
                           .userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36")
                          .get();
      System.out.println(doc.outerHtml());

@@ -48,16 +48,16 @@ public class CommonSpiderKnowledge {
 
     public static void main(String[] args) throws Exception {
         ExecutorService pool= Executors.newSingleThreadExecutor();
-        pool.submit(new Runnable() {
+        /*pool.submit(new Runnable() {
             @Override
             public void run() {
                 try {
-                    ergodicUrl("spiderSfw",180, "no");
+                    ergodicUrl("spiderSfw",1231, "no");
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
-        });
+        });*/
         pool.submit(new Runnable() {
             @Override
             public void run() {
@@ -68,11 +68,11 @@ public class CommonSpiderKnowledge {
                 }
             }
         });
-        pool.submit(new Runnable() {
+        /*pool.submit(new Runnable() {
             @Override
             public void run() {
                 try {
-                    ergodicUrl("spiderYmxk", 0, "no");
+                    ergodicUrl("spiderYmxk", 3, "no");
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -97,7 +97,7 @@ public class CommonSpiderKnowledge {
                     e.printStackTrace();
                 }
             }
-        });
+        });*/
 
     }
 
@@ -541,7 +541,7 @@ public class CommonSpiderKnowledge {
                 driver.switchTo().window(handles);
             }
         }
-        Thread.sleep(2000);
+        Thread.sleep(5000);
         WebElement webElement=driver.findElement(By.xpath("/html"));
         JXDocument jxDocument=new JXDocument(Jsoup.parse(webElement.getAttribute("outerHTML")));
         return jxDocument;

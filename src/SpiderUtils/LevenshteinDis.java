@@ -69,6 +69,7 @@ public class LevenshteinDis {
                 dd = simpleDateFormat.format(date5);
                 daa.setDatepast(dd);
                 List<ProKnowledge> list = pro.selectList(daa);
+                System.out.println("从数据库中抽出：" + list.size() + "条数据做对比");
                 if (list == null || list.size() != 0) {
                     for (int x = 0; x < list.size(); x++) {
                         essay = list.get(x).getMain();
@@ -83,23 +84,15 @@ public class LevenshteinDis {
                         if (StringUtils.isEmpty(proKnowledges.get(i).getMain())) {
                             System.out.println("this is the null");
                             proKnowledges.remove(i);
-                            if (basPersonInfos.size() > 0) {
-                                basPersonInfos.remove(i);
-                            }
-                            if (perKnowledges.size() > 0) {
-                                perKnowledges.remove(i);
-                            }
+                            basPersonInfos.remove(i);
+                            perKnowledges.remove(i);
                             i = i - 1;
                             break;
                         } else if (dis > 0.95) {
                             CommonSpiderKnowledge.storeBugdata(essay, aticle, proKnowledges.get(i).getUuid());
                             proKnowledges.remove(i);
-                            if (basPersonInfos.size() > 0) {
-                                basPersonInfos.remove(i);
-                            }
-                            if (perKnowledges.size() > 0) {
-                                perKnowledges.remove(i);
-                            }
+                            basPersonInfos.remove(i);
+                            perKnowledges.remove(i);
                             i = i - 1;
                             fg = fg + 1;
 
@@ -115,11 +108,13 @@ public class LevenshteinDis {
                     flag = i + 1;
                 }
             }
-            for(int u=0;u<proKnowledges.size();u++){
-                if(proKnowledges.get(u).getAuthor().equals("null")){
-                    basPersonInfos.remove(u);
-                    perKnowledges.remove(u);
-                    u=u-1;
+            if(basPersonInfos!=null) {
+                for (int u = 0; u < basPersonInfos.size(); u++) {
+                    if (basPersonInfos.get(u).getName().equals("null")) {
+                        basPersonInfos.remove(u);
+                        perKnowledges.remove(u);
+                        u = u - 1;
+                    }
                 }
             }
             flaglist.add(flag);
@@ -148,23 +143,15 @@ public class LevenshteinDis {
                         if (StringUtils.isEmpty(proKnowledges.get(i).getMain())) {
                             System.out.println("this is the null");
                             proKnowledges.remove(i);
-                            if (basPersonInfos.size() > 0) {
-                                basPersonInfos.remove(i);
-                            }
-                            if (perKnowledges.size() > 0) {
-                                perKnowledges.remove(i);
-                            }
+                            basPersonInfos.remove(i);
+                            perKnowledges.remove(i);
                             i = i - 1;
                             break;
                         } else if (dis > 0.95) {
                             CommonSpiderKnowledge.storeBugdata(essay, aticle, proKnowledges.get(i).getUuid());
                             proKnowledges.remove(i);
-                            if (basPersonInfos.size() > 0) {
-                                basPersonInfos.remove(i);
-                            }
-                            if (perKnowledges.size() > 0) {
-                                perKnowledges.remove(i);
-                            }
+                            basPersonInfos.remove(i);
+                            perKnowledges.remove(i);
                             i = i - 1;
                             fg = fg + 1;
 
@@ -178,6 +165,15 @@ public class LevenshteinDis {
                         }
                     }
                     flag = i + 1;
+                }
+            }
+            if(basPersonInfos!=null) {
+                for (int u = 0; u < basPersonInfos.size(); u++) {
+                    if (basPersonInfos.get(u).getName().equals("null")) {
+                        basPersonInfos.remove(u);
+                        perKnowledges.remove(u);
+                        u = u - 1;
+                    }
                 }
             }
             flaglist.add(flag);
