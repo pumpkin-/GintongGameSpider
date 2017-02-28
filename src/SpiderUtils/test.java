@@ -120,23 +120,23 @@ public class test {
 //        }
 
 
-
-        org.jsoup.nodes.Document doc1=Jsoup.connect("http://news.yzz.cn/ku/shsj/#p=503_132712_713ea.jpg")
-                         .userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36").ignoreContentType(true).get();
-        JXDocument jxDocument=new JXDocument(doc1);
-        System.out.println(doc1.outerHtml());
+//        String url="http://www.18touch.com/walkthrough/new/page/1";
+//        org.jsoup.nodes.Document doc1=Jsoup.connect(url)
+//                         .userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36").ignoreContentType(true).get();
+//        JXDocument jxDocument=new JXDocument(doc1);
+//        System.out.println(doc1.outerHtml());
         //System.out.println(jxDocument.sel("//div[@class='page-number pageNumber']/ul[@class='clearfix']/li/a[text()*='下一页']/@href"));
 
 
 
 
-        /*System.setProperty("webdriver.chrome.driver",SpiderContant.chromeWindowsPath );
+        System.setProperty("webdriver.chrome.driver",SpiderContant.chromeWindowsPath );
         WebDriver driver=new ChromeDriver();
-        driver.get("http://ol.tgbus.com/");
+        driver.get("http://games.sina.cn/pc/newslist.d.html?cid=35435,35434,35436,35437,35439,35440,35441&page=1&pagesize=53");
         WebElement webElement=driver.findElement(By.xpath("/html"));
         org.jsoup.nodes.Document doc=Jsoup.parse(webElement.getAttribute("outerHTML"));
         JXDocument jxDocument=new JXDocument(doc);
-        System.out.println(doc.outerHtml());*/
+        System.out.println(doc.outerHtml());
 
 
 
@@ -160,6 +160,13 @@ public class test {
         JSONObject json = new JSONObject(true);
         //JSON json1= com.sun.org
         System.out.println(body);*/
+
+
+
+
+
+
+
 
     }
 

@@ -12,7 +12,6 @@ import dao.PerOrganizeDao;
 import dao.impl.BasOrganizeInfoImpl;
 import dao.impl.BasPersonInfoImpl;
 import dao.impl.PerOrganizeImpl;
-import net.sf.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
