@@ -47,7 +47,7 @@ public class CommonSpiderKnowledge {
     private static BugDataImpl bugDataimpl = new BugDataImpl();
 
     public static void main(String[] args) throws Exception {
-        ExecutorService pool= Executors.newSingleThreadExecutor();
+        ExecutorService pool= Executors.newFixedThreadPool(5);
         /*pool.submit(new Runnable() {
             @Override
             public void run() {
@@ -72,7 +72,7 @@ public class CommonSpiderKnowledge {
             @Override
             public void run() {
                 try {
-                    ergodicUrl("spiderYmxk", 3, "no");
+                    ergodicUrl("spiderYmxk", 52, "no");
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -164,7 +164,7 @@ public class CommonSpiderKnowledge {
      * @return
      */
     public static JXDocument getJXDocument(String url) throws IOException {
-        return new JXDocument(Jsoup.connect(url).userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36").timeout(100000).get());
+        return new JXDocument(Jsoup.connect(url).userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36").ignoreContentType(true).ignoreHttpErrors(true).timeout(100000).get());
     }
     /**
      * 解析全部配置文件 获取所有的spider节点
@@ -723,7 +723,11 @@ public class CommonSpiderKnowledge {
                 }
             } else {
                 try {
-                    cover = map.get("cover").get(fg).toString();
+                    if(StringUtils.isNotEmpty(knowledgeSpiderConfig.cover.attributeValue("join"))) {
+                        cover = knowledgeSpiderConfig.cover.attributeValue("join")+map.get("cover").get(fg).toString();
+                    }else{
+                        cover=map.get("cover").get(fg).toString();
+                    }
                 }catch (Exception e){
                     cover=null;
                 }

@@ -120,12 +120,71 @@ public class test {
 //        }
 
 
+
 //        String url="http://www.18touch.com/walkthrough/new/page/1";
 //        org.jsoup.nodes.Document doc1=Jsoup.connect(url)
 //                         .userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36").ignoreContentType(true).get();
 //        JXDocument jxDocument=new JXDocument(doc1);
 //        System.out.println(doc1.outerHtml());
-        //System.out.println(jxDocument.sel("//div[@class='page-number pageNumber']/ul[@class='clearfix']/li/a[text()*='下一页']/@href"));
+
+//jsoup查看网页源码
+//http://chanye.07073.com/     http://chanye.07073.com/shuju/1560716.html
+      org.jsoup.nodes.Document doc1=Jsoup.connect("http://www.gamekezhan.com/news/c16-p1.htm")
+                          .userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36")
+                         .get();
+     System.out.println(doc1.outerHtml());
+
+//        http://www.gamerbbs.cn/news/1706.html
+//        http://www.gamerbbs.cn/news/1707.html
+
+        /*org.jsoup.nodes.Document doc1=Jsoup.connect("http://news.yzz.cn/ku/shsj/#p=503_132712_713ea.jpg")
+                         .userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36").ignoreContentType(true).get();
+        JXDocument jxDocument=new JXDocument(doc1);
+        System.out.println(doc1.outerHtml());*/
+
+
+
+
+//        org.jsoup.nodes.Document doc1=Jsoup.connect("http://s.weibo.com/user/%25E6%25B8%25B8%25E6%2588%258FHR&Refer=SUer_box")
+//                         .userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36").ignoreContentType(true).ignoreHttpErrors(true).get();
+//        System.out.println(doc1.outerHtml());
+//        Pattern pat=Pattern.compile("<script>.+?\\(");
+//        Matcher mat=pat.matcher(doc1.outerHtml());
+//        String a=null;
+//        for(int x=0;x<5;x++) {
+//            if (mat.find()) {
+//                if(x==2) {
+//                    a=mat.group(0);
+//                }
+//            }
+//        }
+//        Pattern pat1=Pattern.compile("\\\\u[0-9,a-f,A-F]{4}");
+//        Matcher mat1=pat1.matcher(a);
+//        while(mat1.find()) {
+//            String b=mat1.group(0);
+//            int data = Integer.parseInt(b.replaceAll("\\\\u", ""), 16);
+//            a =a.replace(b,String.valueOf((char)data));
+//        }
+//        System.out.println(a);
+        /*while(mat.find()){
+            String a=mat.group(0);
+            Pattern pat1=Pattern.compile("\\\\u[0-9,a-f,A-F]{4}");
+            Matcher mat1=pat1.matcher(a);
+            while(mat1.find()) {
+                String b=mat1.group(0);
+                System.out.println(b);
+                int data = Integer.parseInt(b.replace("\\u", ""), 16);
+                String main =a.replace(b,String.valueOf((char)data));
+            }
+        }*/
+
+
+
+
+
+
+
+
 
 
 
@@ -133,24 +192,39 @@ public class test {
         System.setProperty("webdriver.chrome.driver",SpiderContant.chromeWindowsPath );
         WebDriver driver=new ChromeDriver();
         driver.get("http://games.sina.cn/pc/newslist.d.html?cid=35435,35434,35436,35437,35439,35440,35441&page=1&pagesize=53");
+
+
+        /*System.setProperty("webdriver.chrome.driver",SpiderContant.chromeWindowsPath );
+        WebDriver driver=new ChromeDriver();
+        driver.get("http://news.yzz.cn/ku/hlsgsd/");
+>>>>>>> aab6a92320762dfc69834479f358aa63c4613fe6
         WebElement webElement=driver.findElement(By.xpath("/html"));
         org.jsoup.nodes.Document doc=Jsoup.parse(webElement.getAttribute("outerHTML"));
         JXDocument jxDocument=new JXDocument(doc);
         System.out.println(doc.outerHtml());
+
+
+//        System.setProperty("webdriver.chrome.driver",SpiderContant.chromeWindowsPath );
+//        WebDriver driver=new ChromeDriver();
+//        driver.get("http://www.html5dw.com/news");
+//        WebElement webElement=driver.findElement(By.xpath("/html"));
+//        org.jsoup.nodes.Document doc=Jsoup.parse(webElement.getAttribute("outerHTML"));
+//        JXDocument jxDocument=new JXDocument(doc);
+//        System.out.println(doc.outerHtml());
 
 
 
 //
 
-
-     /*System.setProperty("webdriver.chrome.driver",SpiderContant.chromeWindowsPath );
-        WebDriver driver=new ChromeDriver();
-        driver.get("http://news.yzz.cn/ku/shsj/#p=503_132712_713ea.jpg");
-        WebElement webElement=driver.findElement(By.xpath("/html"));
-        org.jsoup.nodes.Document doc=Jsoup.parse(webElement.getAttribute("outerHTML"));
-        JXDocument jxDocument=new JXDocument(doc);
-        System.out.println(doc.outerHtml());
-        System.out.println(jxDocument.sel("//div[@class='nph_photo_next']/a/@href"));*/
+//selenium查看网页源码
+//     System.setProperty("webdriver.chrome.driver",SpiderContant.chromeWindowsPath );
+//        WebDriver driver=new ChromeDriver();
+//        driver.get("http://news.shouyou.com/news/dnews.shtml");
+//        WebElement webElement=driver.findElement(By.xpath("/html"));
+//        org.jsoup.nodes.Document doc=Jsoup.parse(webElement.getAttribute("outerHTML"));
+//        JXDocument jxDocument=new JXDocument(doc);
+//        System.out.println(doc.outerHtml());
+//        System.out.println(jxDocument.sel("//div[@class='nph_photo_next']/a/@href"));
 
 //        System.out.println(jxDocument.sel("//dd[@class='public-tabs-title']/a/@href"));
 
