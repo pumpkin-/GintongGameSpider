@@ -411,11 +411,8 @@
         <type></type>>
         <source>前瞻网</source>
         <childLink join="">//div[@class='txt_list']/ul[@id='ulNewsList']/li/div[@class='pic']/a/@href</childLink>>
-<<<<<<< HEAD
-        <nextpage join="http://pc.265g.com">//a[text()*='下一页']</nextpage>
-=======
+
         <nextpage join="http://www.qianzhan.com">//div[@class='page']/a[text()*='下一页']/@href</nextpage>
->>>>>>> 75e584d5027f1b7b140e8942b591187b28f01f0a
         <flag>jsoup</flag>>
         <childnext join=""></childnext>>
         <chose demand=""></chose>>
