@@ -119,19 +119,13 @@ public class test {
 //            });
 //        }
 
-<<<<<<< HEAD
-//http://chanye.07073.com/     http://chanye.07073.com/shuju/1560716.html
-       org.jsoup.nodes.Document doc1=Jsoup.connect("http://news.52pk.com/renwu/tjrw.shtml")
-                          .userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36")
-                         .get();
-     System.out.println(doc1.outerHtml());
-=======
+
 
 
         org.jsoup.nodes.Document doc1=Jsoup.connect("http://s.weibo.com/user/%25E6%25B8%25B8%25E6%2588%258FHR&Refer=SUer_box")
                          .userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36").ignoreContentType(true).ignoreHttpErrors(true).get();
         System.out.println(doc1.outerHtml());
-        Pattern pat=Pattern.compile("(?<=<script>.+?\\()");
+        Pattern pat=Pattern.compile("<script>.+?\\(");
         Matcher mat=pat.matcher(doc1.outerHtml());
         String a=null;
         for(int x=0;x<5;x++) {
@@ -171,7 +165,6 @@ public class test {
 
 
         //System.out.println(jxDocument.sel("//div[@class='page-number pageNumber']/ul[@class='clearfix']/li/a[text()*='下一页']/@href"));
->>>>>>> 84951f59356df03a4ec3bc15a5a12e9b020f548a
 
 
 
