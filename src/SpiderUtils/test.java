@@ -11,7 +11,7 @@ import com.google.gson.Gson;
 import com.gargoylesoftware.htmlunit.activex.javascript.msxml.XMLSerializer;
 
 import dao.impl.ProKnowledgeImpl;
-import net.sf.json.JSONObject;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -55,6 +55,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.logging.SimpleFormatter;
 import java.util.logging.XMLFormatter;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class test {
     static List<org.dom4j.Element> books;
@@ -79,16 +81,6 @@ public class test {
         System.out.println();*/
 
 
-
-
-        Connection.Response res=Jsoup.connect("https://maimai.cn/contact/detail/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1IjozMDU4Nzg2LCJsZXZlbCI6MX0.00WZZ-W-x7yNWdvsS_k81qco3Fhi-HG73QUt9dQub-Q?from=webview%23%2Fweb%2Fsearch_center")
-                                        .userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36")
-                .ignoreHttpErrors(true)
-                .ignoreContentType(true)
-                .execute();
-        String body=res.body();
-        JSONObject gson=JSONObject.fromObject(body);
-        System.out.println(gson);
 
 
         //SpiderUtils.getElements("windows","spiderYxgc",70,"no");

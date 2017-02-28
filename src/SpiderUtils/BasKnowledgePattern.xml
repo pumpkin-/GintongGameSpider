@@ -396,7 +396,7 @@
         <type></type>>
         <source>前瞻网</source>
         <childLink join="">//div[@class='txt_list']/ul[@id='ulNewsList']/li/div[@class='pic']/a/@href</childLink>>
-        <nextpage join="http://pc.265g.com">a[text()*='下一页']</nextpage>
+        <nextpage join="http://pc.265g.com">//a[text()*='下一页']</nextpage>
         <flag>jsoup</flag>>
         <childnext join=""></childnext>>
         <chose demand=""></chose>>

@@ -44,8 +44,10 @@ public class TextGame {
 //        System.out.println(doc.title());
         try {
 
-            CommonSpiderKnowledge.ergodicUrl("spiderDWBS", 0, "no");
-
+           // CommonSpiderKnowledge.ergodicUrl("spiderDWBS", 0, "no");
+           //cuowu CommonSpiderKnowledge.ergodicUrl("spiderYXG", 0, "no");
+          //  CommonSpiderKnowledge.ergodicUrl("spiderYJJ", 0, "no");
+            CommonSpiderKnowledge.ergodicUrl("spiderQZW", 0, "no");
         } catch (Exception e) {
             e.printStackTrace();
         }
