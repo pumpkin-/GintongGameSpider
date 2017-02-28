@@ -80,9 +80,6 @@ public class test {
 
 
 
-        org.jsoup.nodes.Document doc=Jsoup.connect("http://www.3h3.com/new/nc_1_1.html").get();
-        JXDocument jxDocument=new JXDocument(doc);
-        System.out.println(doc.outerHtml());
 
 
         //SpiderUtils.getElements("windows","spiderYxgc",70,"no");
@@ -122,10 +119,12 @@ public class test {
 //        }
 
 
-       org.jsoup.nodes.Document doc1=Jsoup.connect("http://www.qianzhan.com/game/list/381.html")
+       org.jsoup.nodes.Document doc1=Jsoup.connect("http://games.qq.com/a/20170227/054571.htm")
                           .userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36")
                          .get();
-     System.out.println(doc.outerHtml());
+        System.out.println(doc1.outerHtml());
+        JXDocument jxDocument=new JXDocument(doc1);
+     System.out.println(jxDocument.sel(""));
 
 
 

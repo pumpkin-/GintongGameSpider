@@ -390,6 +390,7 @@ public class CommonSpiderKnowledge {
                 }else{
                     childLink= details.toString();
                 }
+                System.out.println(childLink);
                 System.out.println("Get details page DOM tree");
                 JXDocument childDocumet=getJXDocument(childLink);
                 System.out.println("Start cleaning") ;
