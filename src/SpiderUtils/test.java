@@ -119,46 +119,47 @@ public class test {
 //            });
 //        }
 
-<<<<<<< HEAD
+//jsoup查看网页源码
 //http://chanye.07073.com/     http://chanye.07073.com/shuju/1560716.html
-       org.jsoup.nodes.Document doc1=Jsoup.connect("http://news.52pk.com/renwu/tjrw.shtml")
+      org.jsoup.nodes.Document doc1=Jsoup.connect("http://www.gamekezhan.com/news/c16-p1.htm")
                           .userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36")
                          .get();
      System.out.println(doc1.outerHtml());
-=======
 
+//        http://www.gamerbbs.cn/news/1706.html
+//        http://www.gamerbbs.cn/news/1707.html
 
         /*org.jsoup.nodes.Document doc1=Jsoup.connect("http://news.yzz.cn/ku/shsj/#p=503_132712_713ea.jpg")
                          .userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36").ignoreContentType(true).get();
         JXDocument jxDocument=new JXDocument(doc1);
         System.out.println(doc1.outerHtml());*/
         //System.out.println(jxDocument.sel("//div[@class='page-number pageNumber']/ul[@class='clearfix']/li/a[text()*='下一页']/@href"));
->>>>>>> 84951f59356df03a4ec3bc15a5a12e9b020f548a
 
 
 
 
-        System.setProperty("webdriver.chrome.driver",SpiderContant.chromeWindowsPath );
-        WebDriver driver=new ChromeDriver();
-        driver.get("http://news.yzz.cn/ku/hlsgsd/");
-        WebElement webElement=driver.findElement(By.xpath("/html"));
-        org.jsoup.nodes.Document doc=Jsoup.parse(webElement.getAttribute("outerHTML"));
-        JXDocument jxDocument=new JXDocument(doc);
-        System.out.println(doc.outerHtml());
+
+//        System.setProperty("webdriver.chrome.driver",SpiderContant.chromeWindowsPath );
+//        WebDriver driver=new ChromeDriver();
+//        driver.get("http://www.html5dw.com/news");
+//        WebElement webElement=driver.findElement(By.xpath("/html"));
+//        org.jsoup.nodes.Document doc=Jsoup.parse(webElement.getAttribute("outerHTML"));
+//        JXDocument jxDocument=new JXDocument(doc);
+//        System.out.println(doc.outerHtml());
 
 
 
 //
 
-
-     /*System.setProperty("webdriver.chrome.driver",SpiderContant.chromeWindowsPath );
-        WebDriver driver=new ChromeDriver();
-        driver.get("http://news.yzz.cn/ku/shsj/#p=503_132712_713ea.jpg");
-        WebElement webElement=driver.findElement(By.xpath("/html"));
-        org.jsoup.nodes.Document doc=Jsoup.parse(webElement.getAttribute("outerHTML"));
-        JXDocument jxDocument=new JXDocument(doc);
-        System.out.println(doc.outerHtml());
-        System.out.println(jxDocument.sel("//div[@class='nph_photo_next']/a/@href"));*/
+//selenium查看网页源码
+//     System.setProperty("webdriver.chrome.driver",SpiderContant.chromeWindowsPath );
+//        WebDriver driver=new ChromeDriver();
+//        driver.get("http://news.shouyou.com/news/dnews.shtml");
+//        WebElement webElement=driver.findElement(By.xpath("/html"));
+//        org.jsoup.nodes.Document doc=Jsoup.parse(webElement.getAttribute("outerHTML"));
+//        JXDocument jxDocument=new JXDocument(doc);
+//        System.out.println(doc.outerHtml());
+//        System.out.println(jxDocument.sel("//div[@class='nph_photo_next']/a/@href"));
 
 //        System.out.println(jxDocument.sel("//dd[@class='public-tabs-title']/a/@href"));
 

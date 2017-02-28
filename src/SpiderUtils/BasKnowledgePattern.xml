@@ -1211,17 +1211,17 @@
         </urls>>
 
     </spiderSYJZ>
-    <!--52pk网 刘雪明2.27-->
+    <!--52pk网 刘雪明2.28（玩家八卦）-->
     <spider52PK>
         <!--详情页标题-->
-        <title>//div[@class='lt contentl']/h1/text()|//div[@class='articletxt1 mb1']/h1/text()</title>
+        <title>//div[@class='lt contentl']/h1/text()</title>
         <!--作者-->
-        <author>//div[@class='m_left lt']/span[3]/text()|//div[@class='articletxt1 mb1']/h2[@class='color049']/text()</author>
+        <author>//div[@class='m_left lt']/span[3]/text()</author>
         <authorurl></authorurl>>
         <!--封面图片-->
         <cover></cover>>
         <!--时间-->
-        <ptime timeFormat="yyyy MM dd HH mm">//div[@class='m_left lt']/span[1]/text()|//div[@class='articletxt1 mb1']/h2[@class='color049']/text()</ptime>>
+        <ptime timeFormat="yyyy MM dd HH mm">//div[@class='m_left lt']/span[1]/text()</ptime>>
         <tag>//div[@class='tagbox cc']/a/text()</tag>>
         <!--正文内容-->
         <main>//div[@id='article']/p</main>>
@@ -1230,37 +1230,270 @@
         <type></type>>
         <source>52PK网</source>
         <!--子链接-->
-        <childLink join="">//ul[@class='latestxw']/li/a/@href|//div[@class='listtxt1 mb1']/ul[@class='listlb color049']/li/a/@href</childLink>>
+        <childLink join="">//ul[@class='latestxw']/li/a/@href</childLink>>
         <flag>jsoup</flag>>
         <chose demand=""></chose>>
         <!--详情页面中的下一页-->
         <childnext></childnext>
         <!--列表页中的下一页-->
-        <nextpage join="">//div[@class='pages']/a[text()*='下一页']/@href|//div[@class='listpage']/span[@id='center']/a[text()*='下一页']/@href</nextpage>
+        <nextpage join="">//div[@class='pages']/a[text()*='下一页']/@href</nextpage>
         <urls>
-            <!--<url>-->
-                <!--http://news.52pk.com/shtml/sjbg.shtml-->
-            <!--</url>-->
-            <!--<url>-->
-                <!--http://news.52pk.com/shtml/yaowen.shtml-->
-            <!--</url>-->
-            <!--<url>-->
-                <!--http://news.52pk.com/tag_6044_1.shtml-->
-            <!--</url>-->
-            <!--<url>-->
-                <!--http://news.52pk.com/shtml/kehu.shtml-->
-            <!--</url>-->
-            <!--<url>-->
-                <!--http://news.52pk.com/renwu/tjrw.shtml-->
-            <!--</url>-->
-            <!--<url>-->
-                <!--http://news.52pk.com/zt/-->
-            <!--</url>-->
+            <url>
+                http://news.52pk.com/shtml/sjbg.shtml
+            </url>
+        </urls>>
+    </spider52PK>
+    <!--52PK网 （有点意思）  刘雪明2.28  有问题-->
+    <spider52PKYDYS>
+        <!--详情页标题-->
+        <title>//div[@class='lt contentl']/h1/text()|//div[@class='main']/h2[@class='t']/span/text()</title>
+        <!--作者-->
+        <author>//div[@class='m_left lt']/span[3]/text()</author>
+        <authorurl></authorurl>>
+        <!--封面图片-->
+        <cover></cover>>
+        <!--时间-->
+        <ptime timeFormat="yyyy MM dd HH mm">//div[@class='m_left lt']/span[1]/text()</ptime>>
+        <tag>//div[@class='tagbox cc']/a/text()</tag>>
+        <!--正文内容-->
+        <main>//div[@id='article']/p</main>>
+        <!--正文图片-->
+        <mainpic>//img/@src</mainpic>>
+        <type></type>>
+        <source>52PK网</source>
+        <!--子链接-->
+        <childLink join="">//ul[@class='latestxw']/li/a/@href</childLink>>
+        <flag>jsoup</flag>>
+        <chose demand=""></chose>>
+        <!--详情页面中的下一页-->
+        <childnext></childnext>
+        <!--列表页中的下一页-->
+        <nextpage join="">//div[@class='pages']/a[text()*='下一页']/@href</nextpage>
+        <urls>
             <url>
                 http://news.52pk.com/ydys/
             </url>
         </urls>>
-    </spider52PK>
 
+
+    </spider52PKYDYS>
+    <!--手游手游戏网 刘雪明2.28-->
+    <spiderShouYou>
+        <!--详情页标题-->
+        <title>//div[@class='art-info']/h1[@class='art-info-tit']/text()|//div[@class='gb-final-pn-article']/h1[@class='gb-final-tit-article']/text()</title>
+        <!--作者-->
+        <author></author>
+        <authorurl></authorurl>>
+        <!--封面图片-->
+        <cover>//div[@class='avatar-box']/a[@class='avatar']/img/@src</cover>>
+        <!--时间-->
+        <ptime timeFormat="yyyy MM dd HH mm ss">//div[@class='info-bar']/span[@class='date']/text()|//div[@class='gb-final-mod-info']/span[@class='gb-final-date']/text()</ptime>>
+        <tag></tag>>
+        <!--正文内容-->
+        <main>//div[@class='info-article']/p|//div[@id='mod_article']/p</main>>
+        <!--正文图片-->
+        <mainpic>//p/preceding-sibling-one::center/img/@src|//img/@src</mainpic>>
+        <type>//span[@id='roleName']/text()</type>>
+        <source>手游手</source>
+        <!--子链接-->
+        <childLink join="">//div[@class='txt-box']/h3[@class='tit']/a/@href|//div[@class='avatar-box']/a[@class='avatar']/@href</childLink>>
+        <flag>selenium</flag>>
+        <chose demand=""></chose>>
+        <!--详情页面中的下一页-->
+        <childnext></childnext>
+        <!--列表页中的下一页-->
+        <nextpage join="http://news.shouyou.com/news/">$('body > div.wrapper > div.content > div.art-list-box > div > div.bd > div > ul > li.next > a').click();</nextpage>
+        <urls>
+            <url>
+                http://news.shouyou.com/news/dnews.shtml
+            </url>
+        </urls>>
+    </spiderShouYou>
+    <!--游戏论坛 刘雪明2.28-->
+    <spiderGameBBS>
+        <!--详情页标题-->
+        <title>//div[@class='listPage']/h1/text()</title>
+        <!--作者-->
+        <author>//div[@class='listPage']/h2/span[2]/text()</author>
+        <authorurl></authorurl>>
+        <!--封面图片-->
+        <cover>//div[@class='listPage']/dl[2]/dt/text()</cover>>
+        <!--时间-->
+        <ptime timeFormat="yyyy MM dd HH mm ss">//div[@class='listPage']/h2/span[1]/text()</ptime>>
+        <tag></tag>>
+        <!--正文内容-->
+        <main>//div[@class='c-con']/p</main>>
+        <!--正文图片-->
+        <mainpic>//img/@src</mainpic>>
+        <type>//h1/text()</type>>
+        <source>游戏论坛</source>
+        <!--子链接-->
+        <childLink join="http://www.gamerbbs.cn">//div[@class='listPage']/dl/dd/h3/a/@href</childLink>>
+        <flag>jsoup</flag>>
+        <chose demand=""></chose>>
+        <!--详情页面中的下一页-->
+        <childnext></childnext>
+        <!--列表页中的下一页-->
+        <nextpage join="http://www.gamerbbs.cn">//div[@class='epages']/a[text()*='下一页']/@href</nextpage>
+        <urls>
+            <url>
+                http://www.gamerbbs.cn/news/
+            </url>
+            <url>
+                http://www.gamerbbs.cn/guandian/
+            </url>
+            <url>
+                http://www.gamerbbs.cn/renwu/
+            </url>
+            <url>
+                http://www.gamerbbs.cn/bj/
+            </url>
+            <url>
+                http://www.gamerbbs.cn/gtv/
+            </url>
+            <url>
+                http://www.gamerbbs.cn/vr/
+            </url>
+            <url>
+                http://www.gamerbbs.cn/gmph/
+            </url>
+        </urls>>
+
+    </spiderGameBBS>
+    <!--522K网 刘雪明2.28-->
+    <spider522k>
+        <!--详情页标题-->
+        <title>//div[@class='news_top']/h1/text()</title>
+        <!--作者-->
+        <author>//div[@class='news_top']/p/span[3]/text()</author>
+        <authorurl></authorurl>>
+        <!--封面图片-->
+        <cover></cover>>
+        <!--时间-->
+        <ptime timeFormat="yyyy MM dd HH mm">//div[@class='news_top']/p/span[1]/text()</ptime>>
+        <tag></tag>>
+        <!--正文内容-->
+        <main>//div[@class='art_info']/p</main>>
+        <!--正文图片-->
+        <mainpic>//img/@src</mainpic>>
+        <type></type>>
+        <source>522K</source>
+        <!--子链接-->
+        <childLink join="http://www.522k.com">//div[@class='art']/p[@class='tit']/a/@href</childLink>>
+        <flag>jsoup</flag>>
+        <chose demand=""></chose>>
+        <!--详情页面中的下一页-->
+        <childnext></childnext>
+        <!--列表页中的下一页-->
+        <nextpage join="http://www.522k.com">//div[@class='lstpage list_lstpage']/a[@class='next']/@href</nextpage>
+        <urls>
+            <url>
+                http://www.522k.com/zixun/
+            </url>
+            <url>
+                http://www.522k.com/hangye/
+            </url>
+            <url>
+                http://www.522k.com/dongtai/
+            </url>
+            <url>
+                http://www.522k.com/yugao/
+            </url>
+            <url>
+                http://www.522k.com/hudong/
+            </url>
+            <url>
+                http://www.522k.com/ziliao/
+            </url>
+            <url>
+                http://www.522k.com/zhinan/
+            </url>
+            <url>
+                http://www.522k.com/gonglue/
+            </url>
+            <url>
+                http://www.522k.com/pingce/
+            </url>
+        </urls>>
+
+    </spider522k>
+    <!--html5 刘雪明2.28 小问题-->
+    <spiderHtml5>
+        <!--详情页标题-->
+        <title>//div[@class='post-hd']/h2[@class='post-title']/text()</title>
+        <!--作者-->
+        <author></author>
+        <authorurl></authorurl>>
+        <!--封面图片-->
+        <cover></cover>>
+        <!--时间-->
+        <ptime timeFormat="yyyy MM dd">//div[@class='meta']</ptime>>
+        <tag></tag>>
+        <!--正文内容-->
+        <main>//div[@class='editor-viewer text clear']/ul[@class='list-paddingleft-2']/li|//div[@class='entry typo']/p|//div[@class='inner']/p|//p</main>>
+        <!--正文图片-->
+        <mainpic>//img/@src</mainpic>>
+        <type></type>>
+        <source>522K</source>
+        <!--子链接-->
+        <childLink join="">//div[@class='card horizontal']/a/@href</childLink>>
+        <flag>jsoup</flag>>
+        <chose demand=""></chose>>
+        <!--详情页面中的下一页-->
+        <childnext></childnext>
+        <!--列表页中的下一页-->
+        <nextpage join="">//div[@class='wp-pagenavi']/a[@class='nextpostslink']/@href</nextpage>
+        <urls>
+            <!--<url>-->
+                <!--http://www.html5dw.com/news-->
+            <!--</url>-->
+            <!--<url>-->
+                <!--http://www.html5dw.com/dev-->
+            <!--</url>-->
+            <!--<url>  问题URL-->
+                <!--http://www.html5dw.com/h5-->
+            <!--</url>-->
+            <!--<url> 有问题-->
+                <!--http://www.html5dw.com/game-->
+            <!--</url>-->
+            <url>
+                http://www.html5dw.com/events
+            </url>
+        </urls>>
+
+    </spiderHtml5>
+    <!--游戏客栈 刘雪明2.28-->
+    <spiderGameKZ>
+        <!--详情页标题-->
+        <title></title>
+        <!--作者-->
+        <author></author>
+        <authorurl></authorurl>>
+        <!--封面图片-->
+        <cover></cover>>
+        <!--时间-->
+        <ptime timeFormat="yyyy MM dd"></ptime>>
+        <tag></tag>>
+        <!--正文内容-->
+        <main></main>>
+        <!--正文图片-->
+        <mainpic></mainpic>>
+        <type></type>>
+        <source>522K</source>
+        <!--子链接-->
+        <childLink join=""></childLink>>
+        <flag>jsoup</flag>>
+        <chose demand=""></chose>>
+        <!--详情页面中的下一页-->
+        <childnext></childnext>
+        <!--列表页中的下一页-->
+        <nextpage join=""></nextpage>
+        <urls>
+            <url>
+
+            </url>
+        </urls>>
+
+    </spiderGameKZ>
 
 </BasKnowledgeSpiderPattern>
