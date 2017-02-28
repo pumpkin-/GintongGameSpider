@@ -18,8 +18,15 @@ import org.dom4j.Element;
 import org.dom4j.Node;
 import org.dom4j.io.SAXReader;
 import org.jsoup.Jsoup;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.phantomjs.PhantomJSDriver;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -32,25 +39,50 @@ import java.util.concurrent.Executors;
  */
 public class SpiderProduct {
 
-    public static void main(String[] args) throws FileNotFoundException, XpathSyntaxErrorException {
-        //调用下面的方法获取配置文件中的信息,此处参数为配置文件中二级标签名
-        Map<String, Object> map = getElement("spiderAZSC");
-        //创建线程池
+    public static void main(String[] args) throws Exception {
+        ergodicUrl("spiderYZZ",0);
+    }
+
+    /**
+     * 遍历urls内部url
+     */
+    public static void ergodicUrl(String webname,int fromPageNum) throws Exception {
+        System.out.println("Start parsing XML file");
+        Map<String, Object> map = getElement(webname);
         ExecutorService pool= Executors.newFixedThreadPool(3);
         List urlNodes= (List) map.get("urls");
         for(Object ele:urlNodes){
-            Element element= (Element) ele;
-            String url=element.getText().trim();
-            System.out.println(url);
-            //运行线程
-            pool.submit(new Spider(map,url));
+            if(map.get("flag").equals("jsoup")) {
+                Element element= (Element) ele;
+                String url=element.getText().trim();
+                System.out.println(url);
+                final Spider s=new Spider(map, url,fromPageNum);
+                //运行线程
+                pool.submit(new Runnable() {
+                    @Override
+                    public void run() {
+                        s.run();
+                    }
+                });
+                fromPageNum=0;
+            }else if(map.get("flag").equals("selenium")){
+                Element element= (Element) ele;
+                String url=element.getText().trim();
+                System.out.println("Get details page");
+                final Spider s=new Spider(map, url,fromPageNum);
+                WebDriver driver=s.getChromeDriver();
+                s.ergodicDetails(map, driver, url, fromPageNum);
+                fromPageNum=0;
+                driver.close();
+            }else{
+                throw new XpathSyntaxErrorException("you shuould chose jsoup or selenium");
+            }
         }
-//        // 停止加入新的线程
-//        pool.shutdown();
-//        while (!pool.isTerminated()) {
-//            // 如果所有线程执行完成,那么挑出该循环.
-//        }
     }
+
+
+
+
     /**
      * 获取配置文件中要爬取的信息
      *
@@ -155,14 +187,27 @@ public class SpiderProduct {
             String films_time=target.selectSingleNode("//"+targetNode+"/films_time").getText();
 //            <!--下载链接-->
             String download_link=target.selectSingleNode("//"+targetNode+"/download_link").getText();
-
-
-
+            String flag=target.selectSingleNode("//"+targetNode+"/flag").getText();
+            String moreclick= target.selectSingleNode("//"+targetNode+"/moreclick").getText();
+            String slidingRoller= target.selectSingleNode("//"+targetNode+"/slidingRoller").getText();
+            String contentPathnext= target.selectSingleNode("//"+targetNode+"/contentPathnext").getText();
+            String flagchild=target.selectSingleNode("//"+targetNode+"/flagchild").getText();
+            String gamepicflag=target.selectSingleNode("//"+targetNode+"/gamepicflag").getText();
+            String contentPathpic=target.selectSingleNode("//"+targetNode+"/contentPathpic").getText();
+            String nextpic=target.selectSingleNode("//"+targetNode+"/nextpic").getText();
 
 
             //将上面读到的配置文件中的xpath信息返回main方法
             Map<String, Object>map=new HashMap();
 
+            map.put("nextpic",nextpic);
+            map.put("contentPathpic",contentPathpic);
+            map.put("gamepicflag",gamepicflag);
+            map.put("flagchild",flagchild);
+            map.put("contentPathnext",contentPathnext);
+            map.put("flag",flag);
+            map.put("moreclick",moreclick);
+            map.put("slidingRoller",slidingRoller);
             map.put("urls",urls);
             map.put("source",source);
             map.put("contentPath",contentPath);
@@ -220,13 +265,208 @@ public class SpiderProduct {
 }
 
 //爬虫内部线程类
-class Spider implements Runnable {
-    private Map<String, Object> map=null;
-    private String startUrl;
-    public Spider(Map<String, Object> map,String startUrl) {
+class Spider{
+    private static Map<String, Object> map=null;
+    private static String startUrl;
+    private static int formpage;
+    public Spider(Map<String, Object> map,String startUrl,int formpage) {
         this.map=map;
         this.startUrl=startUrl;
+        this.formpage=formpage;
     }
+
+    /**
+     * 获取selenium驱动 chrome
+     */
+    public static WebDriver getChromeDriver(){
+        System.setProperty("webdriver.chrome.driver",SpiderContant.chromeWindowsPath );
+        return new ChromeDriver();
+    }
+
+    /**
+     * 获取selenium驱动 phantomjs
+     */
+    public static WebDriver getPhantomDriver(){
+        System.setProperty("phantomjs.binary.path", "/Spider/phantomjs-2.1.1-linux-x86_64/bin/phantomjs");
+        return new PhantomJSDriver();
+    }
+
+    /**
+     * 通过驱动器获得当前页面的doucument树
+     * @param driver
+     * @return
+     */
+    public static JXDocument getJXDocument(WebDriver driver,String url) throws InterruptedException {
+        driver.get(url);
+        Thread.sleep(1000);
+        return new JXDocument(Jsoup.parse(driver.findElement(By.xpath("/html")).getAttribute("outerHTML")));
+    }
+
+    /**
+     * 通过驱动器获得当前页面的doucument树
+     * @param url
+     * @return
+     */
+    public static JXDocument getJXDocument(String url) throws IOException {
+        return new JXDocument(Jsoup.connect(url).userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36").timeout(100000).get());
+    }
+
+    /**
+     * 根据url获取详情页 selenium
+     */
+    public static void ergodicDetails(Map<String, Object> map,WebDriver driver,String startUrl,int formpage) throws Exception {
+        JXDocument doc=null;
+        System.out.println("Start getting starturl's DOM tree");
+        doc=getJXDocument(driver,startUrl);
+        //页数
+        int i=1;
+        //条数
+        int a=1;
+        //断点翻页
+        for(int x=1;x<formpage;x++){
+            System.out.println("Start page break");
+            System.out.println("now"+"  "+x);
+            doc=listPageSelenium(map,driver);
+            i=x+1;
+        }
+        //点击更多
+        if(StringUtils.isNotEmpty(map.get("moreclick").toString())){
+            while(true) {
+                try {
+                    System.out.println("Start clicking more");
+                    doc = clickMore(map, driver);
+                }catch (Exception e){
+                    System.out.println("More clicks or no more buttons");
+                    break;
+                }
+                Thread.sleep(1000);
+            }                                   //滑动滚轮
+        }else if(StringUtils.isNotEmpty(map.get("slidingRoller").toString())){
+            for(int s=0;s<Integer.parseInt(map.get("slidingRoller").toString());s++){
+                try {
+                    System.out.println("Start slide roller");
+                    System.out.println("now"+"  "+s);
+                    doc = slidingRoller(driver);
+                }catch (Exception e){
+                    System.out.println("More clicks or no more buttons");
+                    break;
+                }
+                Thread.sleep(1000);
+            }
+        }
+        while(true){
+            //获取详情页列表
+            List<Object> detailsUrls=doc.sel(map.get("detailurl").toString());
+            System.out.println("Start traversal details page");
+            for(Object details:detailsUrls){
+                String childLink=null;
+                JXDocument childDocumet=null;
+                if(StringUtils.isNotEmpty(map.get("contentPath").toString())){
+                    childLink=map.get("contentPath").toString()+details.toString();
+                }else{
+                    childLink=details.toString();
+                }
+                System.out.println("Get details page DOM tree");
+                if(map.get("flagchild").toString().equals("jsoup")) {
+                    childDocumet = getJXDocument(childLink);
+                }else{
+                    JavascriptExecutor executor = (JavascriptExecutor) driver;
+                    executor.executeScript("window.open('" + "https://www.baidu.com/" + "')");
+                    String handle = driver.getWindowHandle();
+                    for (String handles : driver.getWindowHandles()) {
+                        if (handles.equals(handle)) {
+                            continue;
+                        }
+                        driver.switchTo().window(handles);
+                    }
+                    childDocumet = getJXDocument(driver,childLink);
+                }
+                System.out.println("Start cleaning");
+                Spider.parsePage(childDocumet, map,childLink);
+                System.out.println(a+"+"+i);
+                a++;
+                System.out.println("-------------------------------");
+            }
+            try {
+                i++;
+                if(map.get("flagchild").toString().equals("selenium")) {
+                    String handle2 = driver.getWindowHandle();
+                    driver.close();
+                    Thread.sleep(2000);
+                    for (String handles : driver.getWindowHandles()) {
+                        if (handles.equals(handle2)) {
+                            continue;
+                        }
+                        driver.switchTo().window(handles);
+                    }
+                    System.out.println("Start listpage");
+                    if (StringUtils.isEmpty(map.get("nextpage").toString())) {
+                        System.out.println("Page failure or To the last page");
+                        break;
+                    }
+                    doc = listPageSelenium(map, driver);
+                }else{
+                    System.out.println("Start listpage");
+                    if (StringUtils.isEmpty(map.get("nextpage").toString())) {
+                        System.out.println("Page failure or To the last page");
+                        break;
+                    }
+                    doc = listPageSelenium(map, driver);
+                }
+            }catch (Exception e){
+                System.out.println("Page failure or To the last page");
+                break;
+            }
+        }
+    }
+
+    /**
+     * 翻页 selenium
+     */
+    public static JXDocument listPageSelenium(Map<String, Object> map,WebDriver driver) throws InterruptedException {
+        JavascriptExecutor executornext = (JavascriptExecutor) driver;
+        executornext.executeScript(map.get("nextpage").toString());
+        String handle = driver.getWindowHandle();
+        for (String handles : driver.getWindowHandles()) {
+            if (handles.equals(handle)) {
+                continue;
+            }else {
+                driver.close();
+                driver.switchTo().window(handles);
+            }
+        }
+        Thread.sleep(5000);
+        WebElement webElement=driver.findElement(By.xpath("/html"));
+        JXDocument jxDocument=new JXDocument(Jsoup.parse(webElement.getAttribute("outerHTML")));
+        return jxDocument;
+    }
+
+    /**
+     * 点击更多
+     */
+    public static JXDocument clickMore(Map<String, Object> map,WebDriver driver) throws InterruptedException {
+        JavascriptExecutor executornext = (JavascriptExecutor) driver;
+        executornext.executeScript(map.get("moreclick").toString());
+        Thread.sleep(2000);
+        WebElement webElement=driver.findElement(By.xpath("/html"));
+        JXDocument nextDocument=new JXDocument(Jsoup.parse(webElement.getAttribute("outerHTML")));
+        return nextDocument;
+    }
+
+    /**
+     * 滑动滚轮
+     */
+    public static JXDocument slidingRoller(WebDriver driver) throws InterruptedException {
+        JavascriptExecutor executornext = (JavascriptExecutor) driver;
+        executornext.executeScript("$(window).scrollTop(30000)");
+        Thread.sleep(2000);
+        WebElement webElement=driver.findElement(By.xpath("/html"));
+        JXDocument nextDocument=new JXDocument(Jsoup.parse(webElement.getAttribute("outerHTML")));
+        return nextDocument;
+    }
+
+
+
 
     /**
      * 获取dom
@@ -253,41 +493,73 @@ class Spider implements Runnable {
             e.printStackTrace();
         }
 
+        //条数
+        int a=1;
+        //页数
+        int i=1;
         while(true){
+            WebDriver driver=null;
+            if(map.get("flagchild").toString().equals("selenium")){
+                driver=getChromeDriver();
+            }
+            //断点翻页
+            for(int x=1;x<formpage;x++){
+                System.out.println("Start page break");
+                System.out.println("now"+"  "+x);
+                doc=listPageJsoup(doc);
+                i=x+1;
+            }
+
             //调用下面的方法获取详情页的url列表
             List<String>detailUrls=getDetailUrls(doc,map.get("detailurl").toString());
             for(String detailUrl:detailUrls){
                 try{
-                    org.jsoup.nodes.Document document1=getDocument(map.get("contentPath").toString()+detailUrl);
-                    //解析详情页面并且存储进数据库
-                    parsePage(new JXDocument(document1),map);
-                    System.out.println(Thread.currentThread().getName());
+                    if(map.get("flagchild").toString().equals("jsoup")) {
+                        org.jsoup.nodes.Document document1 = getDocument(map.get("contentPath").toString() + detailUrl);
+                        //解析详情页面并且存储进数据库
+                        parsePage(new JXDocument(document1), map,map.get("contentPath").toString() + detailUrl);
+                        System.out.println(Thread.currentThread().getName());
+                    }else{
+                        System.out.println(map.get("contentPath").toString() + detailUrl);
+                        JXDocument childDocumet = getJXDocument(driver,map.get("contentPath").toString() + detailUrl);
+                        parsePage(childDocumet, map,map.get("contentPath").toString() + detailUrl);
+                        System.out.println(Thread.currentThread().getName());
+                    }
                 }catch(Exception e){
                         e.printStackTrace();
                 }
+                System.out.println(a+"+"+i);
+                a++;
+                System.out.println("---------------------------------------");
             }
-            String next=null;
-            //进入下一页
-            try{
-                String nextUrl=null;
-                try {
-                    //若获取下一页失败，则停止当前线程
-                    nextUrl = doc.sel(map.get("nextpage").toString()).get(0).toString();
-                }catch (Exception e){
-                    return;
-                }
-                next=map.get("contentPath").toString()+nextUrl;
-                org.jsoup.nodes.Document nextdocument=Jsoup.connect(next)
-                        .userAgent("Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; .NET CLR 2.0.50727)")
-                        .get();
-                doc=new JXDocument(nextdocument);
-            }catch(Exception e){
-                System.err.println(Thread.currentThread().getName()+"进入下一页错误");
-            }
+            driver.close();
+            doc=listPageJsoup(doc);
+            i++;
         }
     }
 
-
+    public static JXDocument listPageJsoup(JXDocument doc){
+        String next=null;
+        //进入下一页
+        try{
+            String nextUrl=null;
+            try {
+                //若获取下一页失败，则停止当前线程
+                nextUrl = doc.sel(map.get("nextpage").toString()).get(0).toString();
+            }catch (Exception e){
+                return doc;
+            }
+            next=map.get("contentPathnext").toString()+nextUrl;
+            System.out.println(next);
+            org.jsoup.nodes.Document nextdocument=Jsoup.connect(next)
+                    .userAgent("Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; .NET CLR 2.0.50727)")
+                    .get();
+            doc=new JXDocument(nextdocument);
+        }catch(Exception e){
+            System.err.println(Thread.currentThread().getName()+"进入下一页错误");
+        }
+        return doc;
+    }
 
     /**
      * 获取每页列表中的详情页的url
@@ -312,7 +584,7 @@ class Spider implements Runnable {
      *
      * @param document
      */
-    public  void parsePage(JXDocument document, Map map){
+    public static void parsePage(JXDocument document, Map map,String childLink){
         String logo=null;
         String name=null;
         String version=null;
@@ -370,6 +642,9 @@ class Spider implements Runnable {
                 }
                 System.out.println(network_type);
                 gameInfo.setNetwork_type(getNetType(network_type));
+            }else{
+                network_type="0";
+                gameInfo.setNetwork_type(getNetType(network_type));
             }
             //setWeb_update_time
             if(StringUtils.isNotEmpty(map.get("web_update_time").toString())){
@@ -395,7 +670,7 @@ class Spider implements Runnable {
             }
             //资费charge_mode
             if(StringUtils.isNotEmpty(map.get("charge_mode").toString())){
-                charge_mode=document.sel(map.get("charge_mode").toString()).get(0).toString().split("\\：")[1];
+                charge_mode=document.sel(map.get("charge_mode").toString()).get(0).toString();
                 System.out.println(charge_mode);
                 gameInfo.setCharge_mode(charge_mode);
             }
@@ -529,27 +804,42 @@ class Spider implements Runnable {
             gameInfo.setDownload_link(download_link);
             //游戏截图picture
             if(StringUtils.isNotEmpty(map.get("picture").toString())){
-                List<Object> liEles=document.sel(map.get("picture").toString());
-                //多个游戏截图用“,”分隔连接为一个StringBuffer
-                StringBuffer screenBuffer=new StringBuffer();
-                for(Object ele:liEles){
-                    //如果是安智市场的图片url需要进一步访问，获取其真实url
-                    if(map.get("source").toString()=="安智市场"||"安智市场".equals(map.get("source").toString())) {
-                        String screenShot=map.get("contentPath").toString()+ele.toString();
-                        screenShot = Jsoup.connect(screenShot)
-                                .ignoreContentType(true)
-                                .userAgent("Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; .NET CLR 2.0.50727)")
-                                .timeout(1500)
-                                .get().location();
-                        screenBuffer.append(screenShot+",");
+                if(StringUtils.isEmpty(map.get("nextpic").toString())) {
+                    List<Object> liEles = document.sel(map.get("picture").toString());
+                    //多个游戏截图用“,”分隔连接为一个StringBuffer
+                    StringBuffer screenBuffer = new StringBuffer();
+                    for (Object ele : liEles) {
+                        screenBuffer.append(ele.toString() + ",");
                     }
-                    screenBuffer.append(ele.toString()+",");
+                    screenShots = screenBuffer.toString();
+                    System.out.println(screenShots);
+                    gameInfo.setPicture(screenShots);
+                }else{
+                    StringBuffer screenBuffer = new StringBuffer();
+                    WebDriver driver=getChromeDriver();
+                    String startpic=map.get("contentPathpic").toString() + document.selOne(map.get("nextpic").toString()).toString();
+                    while(true){
+                        List<Object> liEles = document.sel(map.get("picture").toString());
+                        screenBuffer.append(liEles.toString().replace("[", "").replace("]","")+",");
+                        try {
+                            System.out.println(screenBuffer.toString());
+                            driver.get(childLink+document.selOne(map.get("nextpic").toString()).toString());
+                            Thread.sleep(2000);
+                            JXDocument jxDocument = new JXDocument(Jsoup.parse(driver.findElement(By.xpath("/html")).getAttribute("outerHTML")));
+                            document = jxDocument;
+                            if((map.get("contentPathpic").toString() + document.selOne(map.get("nextpic").toString()).toString()).equals(startpic)){
+                                driver.close();
+                                break;
+                            }
+                        }catch (Exception e){
+                            driver.close();
+                            break;
+                        }
+                    }
+                    screenShots = screenBuffer.toString();
+                    gameInfo.setPicture(screenShots);
                 }
-                screenShots=screenBuffer.toString();
-                System.out.println(screenShots);
-                gameInfo.setPicture(screenShots);
             }
-            System.out.println("----------------------------------------------------------------------");
             //存入数据库
             storeToDataBase(gameInfo,progtypes,proPlatform);
         }catch(Exception e){
@@ -560,7 +850,7 @@ class Spider implements Runnable {
     /**
      * 通过xpath来获取相对应的网页信息
      */
-    public String getInfomation(JXDocument document,String xpath) throws XpathSyntaxErrorException {
+    public static String getInfomation(JXDocument document, String xpath) throws XpathSyntaxErrorException {
         String information=null;
         String path=map.get(xpath).toString();
             if(StringUtils.isNotEmpty(path)) {
@@ -576,7 +866,7 @@ class Spider implements Runnable {
     /**
      *将数据存入mysql数据库中
      */
-    public void storeToDataBase(BasProGameInfo gameInfo,ProGameType gtypes,ProGamePlatform platform){
+    public static void storeToDataBase(BasProGameInfo gameInfo, ProGameType gtypes, ProGamePlatform platform){
         //网站源链接
         gameInfo.setUrl(startUrl);
         String uuid=UUID.randomUUID().toString();
@@ -601,7 +891,7 @@ class Spider implements Runnable {
     /**
      * 将时间字符串格式化为想要的格式化字符串
      */
-    public  String timeFormat(String time,String formatStr)throws ParseException{
+    public static String timeFormat(String time, String formatStr)throws ParseException{
             SimpleDateFormat parse=new SimpleDateFormat(formatStr);
             SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd");
             Date dateTemp=parse.parse(time);
@@ -612,7 +902,7 @@ class Spider implements Runnable {
     /**
      *将字符串转换为Date类型
      */
-    public  Date strToDate(String time,String formatStr)throws ParseException{
+    public static Date strToDate(String time, String formatStr)throws ParseException{
         SimpleDateFormat parse=new SimpleDateFormat(formatStr);
         Date date=parse.parse(time);
         return date;
@@ -621,7 +911,7 @@ class Spider implements Runnable {
     /**
      * 通过游戏分类字段获取对应的游戏的网络类型
      */
-    public String getNetType(String network_type){
+    public static String getNetType(String network_type){
         if(map.get("source").toString()=="游戏观察"){
             return "2";
         }

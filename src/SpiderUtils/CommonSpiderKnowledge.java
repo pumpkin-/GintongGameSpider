@@ -57,18 +57,18 @@ public class CommonSpiderKnowledge {
                     e.printStackTrace();
                 }
             }
-        });*/
+        });
         pool.submit(new Runnable() {
             @Override
             public void run() {
                 try {
-                    ergodicUrl("spiderYxdg", 0, "no");
+                    ergodicUrl("spiderYxdg", 10, "no");
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
-        });
-        /*pool.submit(new Runnable() {
+        });*/
+        pool.submit(new Runnable() {
             @Override
             public void run() {
                 try {
@@ -78,7 +78,7 @@ public class CommonSpiderKnowledge {
                 }
             }
         });
-        pool.submit(new Runnable() {
+        /*pool.submit(new Runnable() {
             @Override
             public void run() {
                 try {
@@ -399,7 +399,11 @@ public class CommonSpiderKnowledge {
                 fg++;
             }
             System.out.println("Start storage");
-            storeToDatebaseLocal(orgflag);
+            try {
+                storeToDatebaseLocal(orgflag);
+            }catch (Exception e){
+                System.out.println("exception");
+            }
             try {
                 i++;
                 System.out.println("Start listpage");
@@ -511,7 +515,11 @@ public class CommonSpiderKnowledge {
                 a++;
             }
             System.out.println("Start storage");
-            storeToDatebaseLocal(orgflag);
+            try {
+                storeToDatebaseLocal(orgflag);
+            }catch (Exception e){
+                System.out.println("exception");
+            }
             try {
                 i++;
                 System.out.println("Start listpage");
