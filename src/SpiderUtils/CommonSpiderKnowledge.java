@@ -47,7 +47,7 @@ public class CommonSpiderKnowledge {
     private static BugDataImpl bugDataimpl = new BugDataImpl();
 
     public static void main(String[] args) throws Exception {
-        ExecutorService pool= Executors.newSingleThreadExecutor();
+        ExecutorService pool= Executors.newFixedThreadPool(5);
         /*pool.submit(new Runnable() {
             @Override
             public void run() {
@@ -72,7 +72,7 @@ public class CommonSpiderKnowledge {
             @Override
             public void run() {
                 try {
-                    ergodicUrl("spiderYmxk", 3, "no");
+                    ergodicUrl("spiderYmxk", 52, "no");
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -723,7 +723,11 @@ public class CommonSpiderKnowledge {
                 }
             } else {
                 try {
-                    cover = map.get("cover").get(fg).toString();
+                    if(StringUtils.isNotEmpty(knowledgeSpiderConfig.cover.attributeValue("join"))) {
+                        cover = knowledgeSpiderConfig.cover.attributeValue("join")+map.get("cover").get(fg).toString();
+                    }else{
+                        cover=map.get("cover").get(fg).toString();
+                    }
                 }catch (Exception e){
                     cover=null;
                 }
