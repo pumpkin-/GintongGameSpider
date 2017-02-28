@@ -48,16 +48,16 @@ public class CommonSpiderKnowledge {
 
     public static void main(String[] args) throws Exception {
         ExecutorService pool= Executors.newSingleThreadExecutor();
-        pool.submit(new Runnable() {
+        /*pool.submit(new Runnable() {
             @Override
             public void run() {
                 try {
-                    ergodicUrl("spiderSfw",180, "no");
+                    ergodicUrl("spiderSfw",1231, "no");
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
-        });
+        });*/
         pool.submit(new Runnable() {
             @Override
             public void run() {
@@ -68,11 +68,11 @@ public class CommonSpiderKnowledge {
                 }
             }
         });
-        pool.submit(new Runnable() {
+        /*pool.submit(new Runnable() {
             @Override
             public void run() {
                 try {
-                    ergodicUrl("spiderYmxk", 0, "no");
+                    ergodicUrl("spiderYmxk", 3, "no");
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -97,7 +97,7 @@ public class CommonSpiderKnowledge {
                     e.printStackTrace();
                 }
             }
-        });
+        });*/
 
     }
 
@@ -424,12 +424,12 @@ public class CommonSpiderKnowledge {
         next = getTagOne(doc, knowledgeSpiderConfig.nextPage.getText()).toString();
         if (StringUtils.isNotEmpty(knowledgeSpiderConfig.nextPage.attributeValue("join"))) {
             if (next.toString().substring(0, 4).equals("http")) {
-                nexturl = next.toString();
+                nexturl = next.toString().replace("..", "");
             } else {
-                nexturl = knowledgeSpiderConfig.nextPage.attributeValue("join") + next.toString();
+                nexturl = knowledgeSpiderConfig.nextPage.attributeValue("join") + next.toString().replace("..", "");
             }
         } else {
-            nexturl = next.toString();
+            nexturl = next.toString().replace("..", "");
         }
         JXDocument nextDocument = getJXDocument(nexturl);
         return nextDocument;
@@ -514,6 +514,10 @@ public class CommonSpiderKnowledge {
             try {
                 i++;
                 System.out.println("Start listpage");
+                if(StringUtils.isEmpty(knowledgeSpiderConfig.nextPage.getText())){
+                    System.out.println("Page failure or To the last page");
+                    break;
+                }
                 doc = listPageSelenium(knowledgeSpiderConfig, driver);
             }catch (Exception e){
                 System.out.println("Page failure or To the last page");
@@ -537,7 +541,7 @@ public class CommonSpiderKnowledge {
                 driver.switchTo().window(handles);
             }
         }
-        Thread.sleep(2000);
+        Thread.sleep(5000);
         WebElement webElement=driver.findElement(By.xpath("/html"));
         JXDocument jxDocument=new JXDocument(Jsoup.parse(webElement.getAttribute("outerHTML")));
         return jxDocument;
@@ -890,7 +894,6 @@ public class CommonSpiderKnowledge {
         proKnowledge.setSource(source);
         proKnowledge.setUuid(kuuid);
         proKnowledgeList.add(proKnowledge);
-
         if(StringUtils.isNotEmpty(author)) {
             PerKnowledge perKnow = new PerKnowledge();
             perKnow.setName(author);
@@ -904,6 +907,22 @@ public class CommonSpiderKnowledge {
             BasPersonInfo basPerson = new BasPersonInfo();
             basPerson.setUuid(puuid);
             basPerson.setName(author);
+            basPerson.setSource(source);
+            basPerson.setUrl(authorurl);
+            basPersonInfoList.add(basPerson);
+        }else{
+            PerKnowledge perKnow = new PerKnowledge();
+            perKnow.setName("null");
+            perKnow.setKname(title);
+            perKnow.setRtype("原作者");
+            perKnow.setPuuid(puuid);
+            perKnow.setKuuid(kuuid);
+            perKnow.setSource(source);
+            perKnowledgeList.add(perKnow);
+
+            BasPersonInfo basPerson = new BasPersonInfo();
+            basPerson.setUuid(puuid);
+            basPerson.setName("null");
             basPerson.setSource(source);
             basPerson.setUrl(authorurl);
             basPersonInfoList.add(basPerson);

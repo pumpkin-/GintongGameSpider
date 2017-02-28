@@ -1,6 +1,7 @@
 package GintongameSpider.SpiderLxm;
 
 
+import SpiderUtils.CommonSpiderKnowledge;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -10,6 +11,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.phantomjs.PhantomJSDriver;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 
 /**
@@ -53,8 +56,17 @@ public class SpiderExercise {
         }
     }
     public static void main(String[] args){
-        System.setProperty("phantomjs.binary.path", "D://phantomjs//phantomjs.exe");
-        WebDriver driver = new PhantomJSDriver();
-       SpiderExercise.getHtmlContent(driver, "http://pc.265g.com/news/1702/16167.html");
+        ExecutorService pool= Executors.newSingleThreadExecutor();
+
+        pool.submit(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    CommonSpiderKnowledge.ergodicUrl("spiderSYJZ", 0, "no");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 }

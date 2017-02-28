@@ -83,49 +83,48 @@ public class test {
 
 
 
+
         //SpiderUtils.getElements("windows","spiderYxgc",70,"no");
         //SpiderUtils.getElements("windows","spiderRwt",0,"no");
         //SpiderUtils.getElements("windows","spiderKdbs",0,"no");
 
-/*org.jsoup.nodes.Document doc=Jsoup.connect("http://www.youxituoluo.com/2211.html").get();
-        JXDocument jxDocument=new JXDocument(doc);
-        System.out.println(doc.outerHtml());*/
-
-        /*ExecutorService singleThreadExecutor = Executors.newSingleThreadExecutor();
-        for (int i = 0; i < 10; i++) {
-            final int index = i;
-            final int u=i;
-            singleThreadExecutor.execute(new Runnable() {
-
-                @Override
-                public void run() {
-                    try {
-                        System.out.println(index);
-                        Thread.sleep(2000);
-                    } catch (InterruptedException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
-                    }
-                }
-            });
-            singleThreadExecutor.execute(new Runnable() {
-                @Override
-                public void run() {
-                    System.out.println(u);
-                    try {
-                        Thread.sleep(2000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            });
-        }*/
 
 
-//        org.jsoup.nodes.Document doc=Jsoup.connect("http://www.gamersky.com/news/201702/872232.shtml")
-//                          .userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36")
-//                          .get();
-//     System.out.println(doc.outerHtml());
+//        ExecutorService singleThreadExecutor = Executors.newFixedThreadPool(2);
+//        for (int i = 0; i < 10; i++) {
+//            final int index = i;
+//            final int u=i;
+//            singleThreadExecutor.execute(new Runnable() {
+//
+//                @Override
+//                public void run() {
+//                    try {
+//                        System.out.println(index);
+//                        Thread.sleep(2000);
+//                    } catch (InterruptedException e) {
+//                        // TODO Auto-generated catch block
+//                        e.printStackTrace();
+//                    }
+//                }
+//            });
+//            singleThreadExecutor.execute(new Runnable() {
+//                @Override
+//                public void run() {
+//                    System.out.println(u);
+//                    try {
+//                        Thread.sleep(2000);
+//                    } catch (InterruptedException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//            });
+//        }
+
+//http://chanye.07073.com/     http://chanye.07073.com/shuju/1560716.html
+       org.jsoup.nodes.Document doc1=Jsoup.connect("http://shouyoujz.com/")
+                          .userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36")
+                         .get();
+     System.out.println(doc1.outerHtml());
 
 
 
