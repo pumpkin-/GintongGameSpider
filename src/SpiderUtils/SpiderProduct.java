@@ -192,7 +192,6 @@ public class SpiderProduct {
             String slidingRoller= target.selectSingleNode("//"+targetNode+"/slidingRoller").getText();
             String contentPathnext= target.selectSingleNode("//"+targetNode+"/contentPathnext").getText();
             String flagchild=target.selectSingleNode("//"+targetNode+"/flagchild").getText();
-            String gamepicflag=target.selectSingleNode("//"+targetNode+"/gamepicflag").getText();
             String contentPathpic=target.selectSingleNode("//"+targetNode+"/contentPathpic").getText();
             String nextpic=target.selectSingleNode("//"+targetNode+"/nextpic").getText();
 
@@ -202,7 +201,6 @@ public class SpiderProduct {
 
             map.put("nextpic",nextpic);
             map.put("contentPathpic",contentPathpic);
-            map.put("gamepicflag",gamepicflag);
             map.put("flagchild",flagchild);
             map.put("contentPathnext",contentPathnext);
             map.put("flag",flag);
@@ -823,7 +821,7 @@ class Spider{
                         screenBuffer.append(liEles.toString().replace("[", "").replace("]","")+",");
                         try {
                             System.out.println(screenBuffer.toString());
-                            driver.get(childLink+document.selOne(map.get("nextpic").toString()).toString());
+                            driver.get(document.selOne(map.get("nextpic").toString()).toString());
                             Thread.sleep(2000);
                             JXDocument jxDocument = new JXDocument(Jsoup.parse(driver.findElement(By.xpath("/html")).getAttribute("outerHTML")));
                             document = jxDocument;

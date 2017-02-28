@@ -472,7 +472,6 @@
         <picture>//div[@class='nph_cnt']/img/@src</picture>
         <flag>jsoup</flag>>
         <flagchild>selenium</flagchild>>
-        <gamepicflag>yes</gamepicflag>>
         <moreclick></moreclick>>
         <slidingRoller></slidingRoller>>
         <!--起始页面-->

@@ -164,7 +164,7 @@ public class CommonSpiderKnowledge {
      * @return
      */
     public static JXDocument getJXDocument(String url) throws IOException {
-        return new JXDocument(Jsoup.connect(url).userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36").timeout(100000).get());
+        return new JXDocument(Jsoup.connect(url).userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36").ignoreContentType(true).ignoreHttpErrors(true).timeout(100000).get());
     }
     /**
      * 解析全部配置文件 获取所有的spider节点

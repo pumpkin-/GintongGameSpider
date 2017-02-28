@@ -34,7 +34,7 @@ import java.util.regex.Pattern;
  * Created by lenovo on 2017/1/16.
  */
 
-public class SpiderMm {
+class SpiderMm {
     private static WebDriver driver=null;
     private static String username="13267462575";
     private static String password="123456";

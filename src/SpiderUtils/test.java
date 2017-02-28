@@ -120,22 +120,22 @@ public class test {
 
 
 
-        org.jsoup.nodes.Document doc1=Jsoup.connect("http://news.yzz.cn/ku/shsj/#p=503_132712_713ea.jpg")
+        /*org.jsoup.nodes.Document doc1=Jsoup.connect("http://news.yzz.cn/ku/shsj/#p=503_132712_713ea.jpg")
                          .userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36").ignoreContentType(true).get();
         JXDocument jxDocument=new JXDocument(doc1);
-        System.out.println(doc1.outerHtml());
+        System.out.println(doc1.outerHtml());*/
         //System.out.println(jxDocument.sel("//div[@class='page-number pageNumber']/ul[@class='clearfix']/li/a[text()*='下一页']/@href"));
 
 
 
 
-        /*System.setProperty("webdriver.chrome.driver",SpiderContant.chromeWindowsPath );
+        System.setProperty("webdriver.chrome.driver",SpiderContant.chromeWindowsPath );
         WebDriver driver=new ChromeDriver();
-        driver.get("http://ol.tgbus.com/");
+        driver.get("http://news.yzz.cn/ku/hlsgsd/");
         WebElement webElement=driver.findElement(By.xpath("/html"));
         org.jsoup.nodes.Document doc=Jsoup.parse(webElement.getAttribute("outerHTML"));
         JXDocument jxDocument=new JXDocument(doc);
-        System.out.println(doc.outerHtml());*/
+        System.out.println(doc.outerHtml());
 
 
 
