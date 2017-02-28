@@ -681,14 +681,14 @@
     <!--178游戏网  刘雪明 2.27-->
     <spider178>
         <!--详情页标题-->
-        <title>//h2[@class='list-content-item-title']/text()</title>
+        <title>//h2[@class='list-content-item-title']/text()|//div[@id='content-header']/h2/text()</title>
         <!--作者-->
         <author></author>
         <authorurl></authorurl>>
         <!--封面图片-->
         <cover>//div[@class='list-content-item-pic']/img/@src</cover>>
 
-        <ptime timeFormat="yyyy MM dd HH mm ss">//p[@class='list-content-item-posttime']/text()</ptime>>
+        <ptime timeFormat="yyyy MM dd HH mm ss">//p[@class='list-content-item-posttime']/text()|//p[@id='content-meta']/text()</ptime>>
         <tag></tag>>
         <!--正文内容-->
         <main>//div[@id='main-content']/p</main>>
@@ -697,7 +697,7 @@
         <type></type>>
         <source>178游戏网</source>
         <!--子链接-->
-        <childLink join="">//li[@class='list-content-item']/a/@href</childLink>>
+        <childLink join="">//li[@class='list-content-item']/a/@href|//div[@class='article-section-info']/h2[@class='title']/a/@href</childLink>>
         <flag>jsoup</flag>>
         <chose demand=""></chose>>
         <!--详情页面中的下一页-->
@@ -722,6 +722,9 @@
             </url>
             <url>
                 http://news.178.com/list/242374307208.html
+            </url>
+            <url>
+                http://news.178.com/
             </url>
         </urls>>
     </spider178>
@@ -885,7 +888,7 @@
 
 
     </spiderWankr>
-    <!--手游矩阵-->
+    <!--手游矩阵 刘雪明2.27-->
     <spiderSYJZ>
         <!--详情页标题-->
         <title>//header[@class='single-header']/h1/text()</title>
@@ -936,5 +939,55 @@
         </urls>>
 
     </spiderSYJZ>
+    <!--52pk网 刘雪明2.27-->
+    <spider52PK>
+        <!--详情页标题-->
+        <title>//div[@class='lt contentl']/h1/text()|//div[@class='articletxt1 mb1']/h1/text()</title>
+        <!--作者-->
+        <author>//div[@class='m_left lt']/span[3]/text()|//div[@class='articletxt1 mb1']/h2[@class='color049']/text()</author>
+        <authorurl></authorurl>>
+        <!--封面图片-->
+        <cover></cover>>
+        <!--时间-->
+        <ptime timeFormat="yyyy MM dd HH mm">//div[@class='m_left lt']/span[1]/text()|//div[@class='articletxt1 mb1']/h2[@class='color049']/text()</ptime>>
+        <tag>//div[@class='tagbox cc']/a/text()</tag>>
+        <!--正文内容-->
+        <main>//div[@id='article']/p</main>>
+        <!--正文图片-->
+        <mainpic>//img/@src</mainpic>>
+        <type></type>>
+        <source>52PK网</source>
+        <!--子链接-->
+        <childLink join="">//ul[@class='latestxw']/li/a/@href|//div[@class='listtxt1 mb1']/ul[@class='listlb color049']/li/a/@href</childLink>>
+        <flag>jsoup</flag>>
+        <chose demand=""></chose>>
+        <!--详情页面中的下一页-->
+        <childnext></childnext>
+        <!--列表页中的下一页-->
+        <nextpage join="">//div[@class='pages']/a[text()*='下一页']/@href|//div[@class='listpage']/span[@id='center']/a[text()*='下一页']/@href</nextpage>
+        <urls>
+            <!--<url>-->
+                <!--http://news.52pk.com/shtml/sjbg.shtml-->
+            <!--</url>-->
+            <!--<url>-->
+                <!--http://news.52pk.com/shtml/yaowen.shtml-->
+            <!--</url>-->
+            <!--<url>-->
+                <!--http://news.52pk.com/tag_6044_1.shtml-->
+            <!--</url>-->
+            <!--<url>-->
+                <!--http://news.52pk.com/shtml/kehu.shtml-->
+            <!--</url>-->
+            <!--<url>-->
+                <!--http://news.52pk.com/renwu/tjrw.shtml-->
+            <!--</url>-->
+            <!--<url>-->
+                <!--http://news.52pk.com/zt/-->
+            <!--</url>-->
+            <url>
+                http://news.52pk.com/ydys/
+            </url>
+        </urls>>
+    </spider52PK>
 
 </BasKnowledgeSpiderPattern>
