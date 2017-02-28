@@ -11,6 +11,7 @@ import com.google.gson.Gson;
 import com.gargoylesoftware.htmlunit.activex.javascript.msxml.XMLSerializer;
 
 import dao.impl.ProKnowledgeImpl;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -54,6 +55,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.logging.SimpleFormatter;
 import java.util.logging.XMLFormatter;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class test {
     static List<org.dom4j.Element> books;
@@ -116,11 +119,13 @@ public class test {
 //        }
 
 
+
         org.jsoup.nodes.Document doc1=Jsoup.connect("http://news.yzz.cn/ku/shsj/#p=503_132712_713ea.jpg")
                          .userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36").ignoreContentType(true).get();
         JXDocument jxDocument=new JXDocument(doc1);
         System.out.println(doc1.outerHtml());
         //System.out.println(jxDocument.sel("//div[@class='page-number pageNumber']/ul[@class='clearfix']/li/a[text()*='下一页']/@href"));
+
 
 
 

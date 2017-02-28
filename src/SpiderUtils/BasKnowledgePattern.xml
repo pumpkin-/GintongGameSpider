@@ -406,12 +406,16 @@
         <cover>//div[@class='pic']/a[1]/img/@original</cover>>
         <ptime timeFormat="yyyy MM dd">//div[@class='info']/p[@class='fl']/span[@id='pubtime_baidu']/text()</ptime>>
         <tag></tag>>
-        <main>//div[@id='art_cont']/p</main>>
+        <main>//div[@id='div_content']/p</main>>
         <mainpic>//img/@src</mainpic>>
         <type></type>>
         <source>前瞻网</source>
         <childLink join="">//div[@class='txt_list']/ul[@id='ulNewsList']/li/div[@class='pic']/a/@href</childLink>>
+<<<<<<< HEAD
         <nextpage join="http://pc.265g.com">//a[text()*='下一页']</nextpage>
+=======
+        <nextpage join="http://www.qianzhan.com">//div[@class='page']/a[text()*='下一页']/@href</nextpage>
+>>>>>>> 75e584d5027f1b7b140e8942b591187b28f01f0a
         <flag>jsoup</flag>>
         <childnext join=""></childnext>>
         <chose demand=""></chose>>
@@ -677,4 +681,264 @@
         </urls>>
 
     </spiderPc25g>
+
+    <!--178游戏网  刘雪明 2.27-->
+    <spider178>
+        <!--详情页标题-->
+        <title>//h2[@class='list-content-item-title']/text()</title>
+        <!--作者-->
+        <author></author>
+        <authorurl></authorurl>>
+        <!--封面图片-->
+        <cover>//div[@class='list-content-item-pic']/img/@src</cover>>
+
+        <ptime timeFormat="yyyy MM dd HH mm ss">//p[@class='list-content-item-posttime']/text()</ptime>>
+        <tag></tag>>
+        <!--正文内容-->
+        <main>//div[@id='main-content']/p</main>>
+
+        <mainpic>//img/@src</mainpic>>
+        <type></type>>
+        <source>178游戏网</source>
+        <!--子链接-->
+        <childLink join="">//li[@class='list-content-item']/a/@href</childLink>>
+        <flag>jsoup</flag>>
+        <chose demand=""></chose>>
+        <!--详情页面中的下一页-->
+        <childnext>//div[@class='page']/a[@id='cms_page_next']/@href</childnext>
+        <!--列表页中的下一页-->
+        <nextpage join="">//div[@class='page']/span/a[@id='cms_page_next']/@href</nextpage>
+        <urls>
+            <url>
+                http://news.178.com/list/chanye.html
+            </url>
+            <url>
+                http://news.178.com/list/242362785857.html
+            </url>
+            <url>
+                http://news.178.com/list/242362762215.html
+            </url>
+            <url>
+                http://news.178.com/list/242362769466.html
+            </url>
+            <url>
+                http://news.178.com/list/242362780275.html
+            </url>
+            <url>
+                http://news.178.com/list/242374307208.html
+            </url>
+        </urls>>
+    </spider178>
+    <!--07073游戏网 刘雪明 2.27-->
+    <spider07073>
+        <!--详情页标题-->
+        <title>//div[@class='new15Cont fl']/h1[@class='h1title']/text()</title>
+        <!--作者-->
+        <author>//div[@class='thisAttnx']/ul/li[@class='tsax_3']/text()</author>
+        <authorurl></authorurl>>
+        <!--封面图片-->
+        <cover>//div[@class='new15IndexList']/dl[2]/dt/a/img/@src</cover>>
+        <!--时间-->
+        <ptime timeFormat="yyyy MM dd HH mm">//div[@class='thisAttnx']/ul/li[@class='tsax_1']/text()</ptime>>
+        <tag></tag>>
+        <!--正文内容-->
+        <main>//div[@class='new15MainContents']/p</main>>
+
+        <mainpic>//img/@src</mainpic>>
+        <type></type>>
+        <source>07073游戏网</source>
+        <!--子链接-->
+        <childLink join="">//div[@id='news']/dl/dd/h3/a/@href|//div[@class='new15ImageList']/dl/dt/a/@href</childLink>>
+        <flag>selenium</flag>>
+        <chose demand=""></chose>>
+        <!--详情页面中的下一页-->
+        <childnext>//div[@class='page']/a[@id='cms_page_next']/@href</childnext>
+        <!--列表页中的下一页-->
+        <nextpage join="">$('body > div.main.new15MainBG > div.new15Cont.fl > div.new15Loading > a').click()</nextpage>
+        <urls>
+            <url>
+                http://chanye.07073.com/
+            </url>
+        </urls>>
+    </spider07073>
+    <!--07073人物专访   刘雪明2.27-->
+    <spider07073Person>
+        <!--详情页标题-->
+        <title>//div[@class='new15CF_R fr']/h1[@class='h1title']/text()</title>
+        <!--作者-->
+        <author>//div[@class='thisAttnx']/ul/li[@class='tsax_3']/text()</author>
+        <authorurl></authorurl>>
+        <!--封面图片-->
+        <cover>//div[@class='new15IndexList']/dl[2]/dt/a/img/@src</cover>>
+        <!--时间-->
+        <ptime timeFormat="yyyy MM dd HH mm">//div[@class='thisAttnx']/ul/li[@class='tsax_1']/text()</ptime>>
+        <tag></tag>>
+        <!--正文内容-->
+        <main>//div[@class='new15MainContents']/p</main>>
+
+        <mainpic>//img/@src</mainpic>>
+        <type></type>>
+        <source>07073游戏网人物专访</source>
+        <!--子链接-->
+        <childLink join="">//div[@id='news']/dl/dd/h3/a/@href|//div[@class='new15ImageList']/dl/dt/a/@href</childLink>>
+        <flag>jsoup</flag>>
+        <chose demand=""></chose>>
+        <!--详情页面中的下一页-->
+        <childnext>//div[@class='page']/a[@id='cms_page_next']/@href</childnext>
+        <!--列表页中的下一页-->
+        <nextpage join="">//div[@class='new15Pages']/a[text()*='下一页']/@href</nextpage>
+        <urls>
+            <url>
+                http://chanye.07073.com/caifang/
+            </url>
+        </urls>>
+    </spider07073Person>
+    <!--游戏瓶  刘雪明2.27-->
+    <spiderYouXiPing>
+        <!--详情页标题-->
+        <title>//div[@class='h hm']/h1[@class='ph']/text()</title>
+        <!--作者-->
+        <author></author>
+        <authorurl></authorurl>>
+        <!--封面图片-->
+        <cover>//div[@class='newspic01 animated fadeInUp']/a[1]/img/@src</cover>>
+        <!--时间-->
+        <ptime timeFormat="yyyy MM dd HH mm">//div[@class='h hm']/p/a[2]/text()</ptime>>
+        <tag></tag>>
+        <!--正文内容-->
+        <main>//td[@id='article_content']/p</main>>
+
+        <mainpic>//img/@src</mainpic>>
+        <type>游戏瓶</type>>
+        <source>游戏瓶</source>
+        <!--子链接-->
+        <childLink join="http://www.youxiping.com/">//div[@class='newspic01 animated fadeInUp']/a[1]/@href</childLink>>
+        <flag>jsoup</flag>>
+        <chose demand=""></chose>>
+        <!--详情页面中的下一页-->
+        <childnext></childnext>
+        <!--列表页中的下一页-->
+        <nextpage join="">//div[@class='pg']/a[@class='nxt']/@href</nextpage>
+        <urls>
+            <url>
+                http://www.youxiping.com/chanye/
+            </url>
+            <url>
+                http://www.youxiping.com/shendu/
+            </url>
+            <url>
+                http://www.youxiping.com/shuju/
+            </url>
+            <url>
+                http://www.youxiping.com/huodong/
+            </url>
+            <url>
+                http://www.youxiping.com/renwu/
+            </url>
+            <url>
+                http://www.youxiping.com/shouji/
+            </url>
+        </urls>>
+
+    </spiderYouXiPing>
+    <!--玩客   刘雪明2.27-->
+    <spiderWankr>
+        <!--详情页标题-->
+        <title>//div[@class='wr15eva_glcon_l_art']/h3[@class='wr15eva_glcon_l_artH3']/text()</title>
+        <!--作者-->
+        <author>//div[@class='wr15eva_glcon_l_artlabel']/span[2]/text()</author>
+        <authorurl></authorurl>>
+        <!--封面图片-->
+        <cover>//div[@class='items']/ul/li[@class='pic']/a/img/@src</cover>>
+        <!--时间-->
+        <ptime timeFormat="yyyy MM dd">//div[@class='wr15eva_glcon_l_artlabel']/span[3]/text()</ptime>>
+        <tag></tag>>
+        <!--正文内容-->
+        <main>//div[@class='singleCore']/p</main>>
+        <mainpic>//img/@src</mainpic>>
+        <type>玩客资讯</type>>
+        <source>玩客</source>
+        <!--子链接-->
+        <childLink join="http://www.wankr.com.cn">//span[@class='text']/a/@href</childLink>>
+        <flag>jsoup</flag>>
+        <chose demand=""></chose>>
+        <!--详情页面中的下一页-->
+        <childnext></childnext>
+        <!--列表页中的下一页-->
+        <nextpage join="http://www.wankr.com.cn">//ul[@id='yw2']/li[@class='next']/a[text()*='后页 >']/@href</nextpage>
+        <urls>
+            <url>
+                http://www.wankr.com.cn/news
+            </url>
+            <url>
+                http://www.wankr.com.cn/industry/cp
+            </url>
+            <url>
+                http://www.wankr.com.cn/industry
+            </url>
+            <url>
+                http://www.wankr.com.cn/dashiye/wanxinji
+            </url>
+            <url>
+                http://www.wankr.com.cn/pingce
+            </url>
+            <url>
+                http://www.wankr.com.cn/video
+            </url>
+        </urls>
+
+
+    </spiderWankr>
+    <!--手游矩阵-->
+    <spiderSYJZ>
+        <!--详情页标题-->
+        <title>//header[@class='single-header']/h1/text()</title>
+        <!--作者-->
+        <author></author>
+        <authorurl></authorurl>>
+        <!--封面图片-->
+        <cover>//figure[@class='entry-img']/a/img/@src</cover>>
+        <!--时间-->
+        <ptime timeFormat="yyyy MM dd HH mm">//div[@class='time']/a/text()</ptime>>
+        <tag>//span[@class='sort']/a/text()</tag>>
+        <!--正文内容-->
+        <main>//div[@class='single-main']/p</main>>
+        <!--正文图片-->
+        <mainpic>//img/@src</mainpic>>
+        <type>手游矩阵</type>>
+        <source>手游矩阵</source>
+        <!--子链接-->
+        <childLink join="">//h2[@class='entry-title']/a/@href</childLink>>
+        <flag>jsoup</flag>>
+        <chose demand=""></chose>>
+        <!--详情页面中的下一页-->
+        <childnext></childnext>
+        <!--列表页中的下一页-->
+        <nextpage join="">//div[@id='pagenavi']/a[@class='page-numbers']/@href</nextpage>
+        <urls>
+            <url>
+                http://shouyoujz.com/
+            </url>
+            <url>
+                http://shouyoujz.com/content/newgame/6category/yuanchuang
+            </url>
+            <url>
+                http://shouyoujz.com/content/newgame/6category/hot
+            </url>
+            <url>
+                http://shouyoujz.com/content/newgame/6category/newgames
+            </url>
+            <url>
+                http://shouyoujz.com/content/newgame/6category/profession
+            </url>
+            <url>
+                http://shouyoujz.com/content/newgame/6category/news
+            </url>
+            <url>
+                http://shouyoujz.com/content/newgame/6category/live
+            </url>
+        </urls>>
+
+    </spiderSYJZ>
+
 </BasKnowledgeSpiderPattern>
