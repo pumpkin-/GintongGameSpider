@@ -135,11 +135,11 @@ public class test {
 //            });
 //        }
 
-
-//       org.jsoup.nodes.Document doc1=Jsoup.connect("http://www.qianzhan.com/game/list/381.html")
-//                          .userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36")
-//                         .get();
-//     System.out.println(doc.outerHtml());
+//http://chanye.07073.com/     http://chanye.07073.com/shuju/1560716.html
+       org.jsoup.nodes.Document doc1=Jsoup.connect("http://shouyoujz.com/")
+                          .userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36")
+                         .get();
+     System.out.println(doc1.outerHtml());
 
 
 
