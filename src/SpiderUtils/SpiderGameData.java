@@ -15,24 +15,11 @@ import java.text.ParseException;
 public class SpiderGameData {
     public static void main(String [] args){
         try {
-              //跑完
-       //       CommonSpiderKnowledge.ergodicUrl("spiderYXTL", 0, "no");
-//
-//             CommonSpiderKnowledge.ergodicUrl("spiderCDW", 0, "no");
-              //跑完
-         //   CommonSpiderKnowledge.ergodicUrl("spiderPc25g", 0, "no");
 
-
-
-
-
-//
-              //李刚
-           CommonSpiderKnowledge.ergodicUrl("spider18183", 0, "no");
-//
-//               李刚
-//            CommonSpiderKnowledge.ergodicUrl("spiderAW", 0, "no");
-
+            CommonSpiderKnowledge.ergodicUrl("spider43994", 140, "no");
+           // CommonSpiderKnowledge.ergodicUrl("spiderTXSY", 0, "no");
+           // CommonSpiderKnowledge.ergodicUrl("spiderTXYX", 0, "no");
+            
 
         } catch (Exception e) {
             e.printStackTrace();

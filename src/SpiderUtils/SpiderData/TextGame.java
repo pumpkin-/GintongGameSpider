@@ -21,15 +21,23 @@ import java.io.IOException;
  */
 public class TextGame {
     public static void main(String [] args) throws XpathSyntaxErrorException, IOException {
-   //     System.setProperty("webdriver.chrome.driver", SpiderContant.chromeWindowsPath );
+//        System.setProperty("webdriver.chrome.driver", SpiderContant.chromeWindowsPath );
 //        WebDriver driver= new ChromeDriver();
-//        driver.get("http://news.candou.com/738884.shtml");
+//        driver.get("http://cy.40407.com/xinwenchanye/107447.html");
 //        WebElement web = driver.findElement(By.xpath("/html"));
 //        String html = web.getAttribute("outerHTML");
 //        Document doc = Jsoup.parse(html);
-//        System.out.println(doc.outerHtml());
+//       System.out.println(doc.outerHtml());
 //        JXDocument document=new JXDocument(doc);
-           // System.out.println(document.sel("//div[@class='list']//section/p[@class='subtitle']/a/text()"));
+//           System.out.println(document.sel(""));
+
+        try {
+            CommonSpiderKnowledge.ergodicUrl("spider40407CY", 109, "no");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
         //String html = "<html><head><title>开源中国社区</title></head>"
           //      + "<body><p>这里是 jsoup 项目的相关文章</p></body></html>";
 //        String cookie="";
@@ -42,21 +50,12 @@ public class TextGame {
 //        System.out.println();
 //       //Document doc= Jsoup.parse(html);
 //        System.out.println(doc.title());
-        try {
-            //跑完
-           // CommonSpiderKnowledge.ergodicUrl("spiderDWBS", 0, "no");
-            //网站有问题
-          //  CommonSpiderKnowledge.ergodicUrl("spiderYXG", 0, "no");
-            //跑完
-            //CommonSpiderKnowledge.ergodicUrl("spiderYJJ", 0, "no");
+
 
 
          //   CommonSpiderKnowledge.ergodicUrl("spiderDYW", 0, "no");
 
-            CommonSpiderKnowledge.ergodicUrl("spiderQZW", 0, "no");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
 
 
 
