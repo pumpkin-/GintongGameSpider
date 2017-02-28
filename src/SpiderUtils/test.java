@@ -11,6 +11,7 @@ import com.google.gson.Gson;
 import com.gargoylesoftware.htmlunit.activex.javascript.msxml.XMLSerializer;
 
 import dao.impl.ProKnowledgeImpl;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -54,6 +55,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.logging.SimpleFormatter;
 import java.util.logging.XMLFormatter;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class test {
     static List<org.dom4j.Element> books;
@@ -77,25 +80,6 @@ public class test {
         System.out.println("出版社："+urls.getText());
         System.out.println();*/
 
-
-
-
-       //SpiderUtils.getElements("windows","spiderChuapp",0,"no");
-
-
-//        SpiderUtils.getElements("windows", "spiderChuapp", 0, "no");
-
-
-/*        Connection.Response res=Jsoup.connect("https://maimai.cn/static/scripts/mm__node.bundle.min.js?a348d5f185d822306f21abc35824b9cb")
-                                        .userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36")
-                                        .ignoreContentType(true)
-                .execute();
-        String body=res.body();
-        System.out.println(body);*/
-
-//        org.jsoup.nodes.Document doc=Jsoup.connect("http://www.3h3.com/new/nc_1_1.html").get();
-//        JXDocument jxDocument=new JXDocument(doc);
-//        System.out.println(doc.outerHtml());
 
 
 
@@ -135,22 +119,32 @@ public class test {
 //            });
 //        }
 
+<<<<<<< HEAD
 //http://chanye.07073.com/     http://chanye.07073.com/shuju/1560716.html
        org.jsoup.nodes.Document doc1=Jsoup.connect("http://news.52pk.com/renwu/tjrw.shtml")
                           .userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36")
                          .get();
      System.out.println(doc1.outerHtml());
+=======
+
+
+        /*org.jsoup.nodes.Document doc1=Jsoup.connect("http://news.yzz.cn/ku/shsj/#p=503_132712_713ea.jpg")
+                         .userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36").ignoreContentType(true).get();
+        JXDocument jxDocument=new JXDocument(doc1);
+        System.out.println(doc1.outerHtml());*/
+        //System.out.println(jxDocument.sel("//div[@class='page-number pageNumber']/ul[@class='clearfix']/li/a[text()*='下一页']/@href"));
+>>>>>>> 84951f59356df03a4ec3bc15a5a12e9b020f548a
 
 
 
 
-        /*System.setProperty("webdriver.chrome.driver",SpiderContant.chromeWindowsPath );
+        System.setProperty("webdriver.chrome.driver",SpiderContant.chromeWindowsPath );
         WebDriver driver=new ChromeDriver();
-        driver.get("http://ol.tgbus.com/");
+        driver.get("http://news.yzz.cn/ku/hlsgsd/");
         WebElement webElement=driver.findElement(By.xpath("/html"));
         org.jsoup.nodes.Document doc=Jsoup.parse(webElement.getAttribute("outerHTML"));
         JXDocument jxDocument=new JXDocument(doc);
-        System.out.println(doc.outerHtml());*/
+        System.out.println(doc.outerHtml());
 
 
 
@@ -159,12 +153,12 @@ public class test {
 
      /*System.setProperty("webdriver.chrome.driver",SpiderContant.chromeWindowsPath );
         WebDriver driver=new ChromeDriver();
-        driver.get("http://www.mofang.com/news");
-       JavascriptExecutor executorChildnext = (JavascriptExecutor) driver;
-        executorChildnext.executeScript("$('span.pagecss a.p1.nexe').click()");
+        driver.get("http://news.yzz.cn/ku/shsj/#p=503_132712_713ea.jpg");
         WebElement webElement=driver.findElement(By.xpath("/html"));
         org.jsoup.nodes.Document doc=Jsoup.parse(webElement.getAttribute("outerHTML"));
         JXDocument jxDocument=new JXDocument(doc);
+        System.out.println(doc.outerHtml());
+        System.out.println(jxDocument.sel("//div[@class='nph_photo_next']/a/@href"));*/
 
 //        System.out.println(jxDocument.sel("//dd[@class='public-tabs-title']/a/@href"));
 

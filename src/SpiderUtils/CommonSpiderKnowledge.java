@@ -57,18 +57,18 @@ public class CommonSpiderKnowledge {
                     e.printStackTrace();
                 }
             }
-        });*/
+        });
         pool.submit(new Runnable() {
             @Override
             public void run() {
                 try {
-                    ergodicUrl("spiderYxdg", 0, "no");
+                    ergodicUrl("spiderYxdg", 10, "no");
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
-        });
-        /*pool.submit(new Runnable() {
+        });*/
+        pool.submit(new Runnable() {
             @Override
             public void run() {
                 try {
@@ -78,7 +78,7 @@ public class CommonSpiderKnowledge {
                 }
             }
         });
-        pool.submit(new Runnable() {
+        /*pool.submit(new Runnable() {
             @Override
             public void run() {
                 try {
@@ -164,7 +164,7 @@ public class CommonSpiderKnowledge {
      * @return
      */
     public static JXDocument getJXDocument(String url) throws IOException {
-        return new JXDocument(Jsoup.connect(url).userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36").timeout(100000).get());
+        return new JXDocument(Jsoup.connect(url).userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36").ignoreContentType(true).ignoreHttpErrors(true).timeout(100000).get());
     }
     /**
      * 解析全部配置文件 获取所有的spider节点
@@ -390,6 +390,7 @@ public class CommonSpiderKnowledge {
                 }else{
                     childLink= details.toString();
                 }
+                System.out.println(childLink);
                 System.out.println("Get details page DOM tree");
                 JXDocument childDocumet=getJXDocument(childLink);
                 System.out.println("Start cleaning") ;
@@ -398,7 +399,11 @@ public class CommonSpiderKnowledge {
                 fg++;
             }
             System.out.println("Start storage");
-            storeToDatebaseLocal(orgflag);
+            try {
+                storeToDatebaseLocal(orgflag);
+            }catch (Exception e){
+                System.out.println("exception");
+            }
             try {
                 i++;
                 System.out.println("Start listpage");
@@ -510,7 +515,11 @@ public class CommonSpiderKnowledge {
                 a++;
             }
             System.out.println("Start storage");
-            storeToDatebaseLocal(orgflag);
+            try {
+                storeToDatebaseLocal(orgflag);
+            }catch (Exception e){
+                System.out.println("exception");
+            }
             try {
                 i++;
                 System.out.println("Start listpage");

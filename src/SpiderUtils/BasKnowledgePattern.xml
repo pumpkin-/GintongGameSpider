@@ -411,6 +411,7 @@
         <type></type>>
         <source>前瞻网</source>
         <childLink join="">//div[@class='txt_list']/ul[@id='ulNewsList']/li/div[@class='pic']/a/@href</childLink>>
+
         <nextpage join="http://www.qianzhan.com">//div[@class='page']/a[text()*='下一页']/@href</nextpage>
         <flag>jsoup</flag>>
         <childnext join=""></childnext>>
@@ -615,8 +616,8 @@
         <mainpic>//img/@src</mainpic>>
         <type></type>>
         <source>蚕豆网</source>
-        <childLink join="">//div[@class='newlist1']/dl//dt//a/@href</childLink>>
-        <nextpage join="http://news.candou.com">//div[@class='page']//a[6]</nextpage>
+        <childLink join="">//div[@class='newlist1']/h2/a/@href</childLink>>
+        <nextpage join="http://news.candou.com">//div[@class='page']/a[text()*='下一页']/@href</nextpage>
         <flag>jsoup</flag>>
         <childnext join=""></childnext>>
         <chose demand=""></chose>>
@@ -677,6 +678,277 @@
         </urls>>
 
     </spiderPc25g>
+
+
+
+    <!--腾讯游戏频道（手机游戏）-->
+    <spiderTXSY>
+        <title>//div[@class='qq_article']/div[@class='hd']/h1/text()|//div[@class='hd']/h1/text()</title>
+        <author>//div[@class='a_Info']/span[@class='a_author']/text()</author>
+        <authorurl></authorurl>>
+        <cover>//div[@class='mod newslist clear']/ul[@id='piclist']/li/table[@class='pictab']/tr/td/a/img/@src</cover>>
+        <ptime timeFormat="yyyy MM dd">//div[@class='a_Info']/span[@class='a_time']/text()|//span[@class='article-time']/text()</ptime>>
+        <tag></tag>>
+        <main>//div[@id='Cnt-Main-Article-QQ']/p</main>>
+        <mainpic>//IMG/@src</mainpic>>
+        <type></type>>
+        <source>腾讯手游</source>
+        <childLink join="">//div[@class='mod newslist clear']/ul[@id='piclist']/li/table[@class='pictab']/tbody/tr/td/a/@href</childLink>>
+        <nextpage join="">//div[@class='pageNav']/a[@class='f12']/@href</nextpage>
+        <flag>jsoup</flag>>
+        <childnext join=""></childnext>>
+        <chose demand=""></chose>>
+        <urls>
+            <url>
+                http://games.qq.com/l/mobile/mrxz/mrxz.htm
+            </url>
+            <url>
+                http://games.qq.com/l/mobile/pince/5fen/list2013119145558.htm
+            </url>
+            <url>
+                http://games.qq.com/l/mobile/pince/4fen/list2013119145646.htm
+            </url>
+            <url>
+                http://games.qq.com/l/mobile/pince/3fen/list2013119145806.htm
+            </url>
+            <url>
+                http://games.qq.com/l/mobile/pince/2fen/list201311915102.htm
+            </url>
+            <url>
+                http://games.qq.com/l/mobile/pince/1fen/list201311915130.htm
+            </url>
+        </urls>
+
+    </spiderTXSY>
+    <!--腾讯游戏频道-->
+    <spiderTXYX>
+        <title>//div[@class='qq_main']/div[@class='hd']/h1/text()|//div[@class='qq_article']/div[@class='hd']/h1/text()|</title>
+        <author>//span[@class='a_author']/text()</author>
+        <authorurl></authorurl>>
+        <cover> </cover>>
+        <ptime timeFormat="yyyy MM dd">//div[@class='a_Info']/span[@class='a_time']/text()</ptime>>
+        <tag></tag>>
+        <main>//div[@id='Cnt-Main-Article-QQ']/p|/P</main>>
+        <mainpic>//img/@href</mainpic>>
+        <type></type>>
+        <source>腾讯游戏</source>
+        <childLink join="">//div[@class='mod newslist']/ul/li/a/@href</childLink>>
+        <nextpage join="">//div[@class='pageNav']/a[@class='f12']/@href</nextpage>
+        <flag>jsoup</flag>>
+        <childnext join=""></childnext>>
+        <chose demand=""></chose>>
+        <urls>
+            <url>
+                http://games.qq.com/l/cyfw/08chanye/cyxw.htm
+            </url>
+            <url>
+                http://games.qq.com/l/tvgame/07zxzx/list2010098184725.htm
+            </url>
+            <url>
+                http://games.qq.com/l/pcgame/05pchotnews/djyxpic.htm
+            </url>
+        </urls>>
+
+    </spiderTXYX>
+    <!--4399-->
+    <spider43994>
+        <title>//div[@class='heading']/h1[@class='title']/text()</title>
+        <author>//div[@class='meta clearfix mt20']/span[@class='me2']/text()</author>
+        <authorurl></authorurl>>
+        <cover>//ul[@class='g_medialist']/li/a/img/@src</cover>>
+        <ptime timeFormat="yyyy MM dd">//div[@class='meta clearfix mt20']/span[@class='me1']/text()</ptime>>
+        <tag></tag>>
+        <main>//div[@class='content']/p</main>>
+        <mainpic>//img/@src</mainpic>>
+        <type></type>>
+        <source>4399</source>
+        <childLink join="">//ul[@class='g_medialist']/li/a/@href</childLink>>
+        <nextpage join="http://news.4399.com/gonglue/hangye/zixun/">//div[@class='w_paging']/a[text()*='下一页']/@href</nextpage>
+        <flag>jsoup</flag>>
+        <childnext join=""></childnext>>
+        <chose demand=""></chose>>
+        <urls>
+            <url>
+                http://news.4399.com/gonglue/hangye/zixun/
+            </url>
+        </urls>>
+
+    </spider43994>
+    <spider43991>
+        <title>//div[@class='heading']/h1[@class='title']/text()</title>
+        <author>//div[@class='meta clearfix mt20']/span[@class='me2']/text()</author>
+        <authorurl></authorurl>>
+        <cover>//ul[@class='g_medialist']/li/a/img/@src</cover>>
+        <ptime timeFormat="yyyy MM dd">//div[@class='meta clearfix mt20']/span[@class='me1']/text()</ptime>>
+        <tag></tag>>
+        <main>//div[@class='content']/p</main>>
+        <mainpic>//img/@src</mainpic>>
+        <type></type>>
+        <source>4399</source>
+        <childLink join="">//ul[@class='g_medialist']/li/a/@href</childLink>>
+        <nextpage join="http://news.4399.com/gonglue/hangye/renwu/">//div[@class='w_paging']/a[text()*='下一页']/@href</nextpage>
+        <flag>jsoup</flag>>
+        <childnext join=""></childnext>>
+        <chose demand=""></chose>>
+        <urls>
+
+            <url>
+                http://news.4399.com/gonglue/hangye/renwu/
+            </url>>
+
+
+        </urls>>
+
+    </spider43991>
+    <spider43992>
+        <title>//div[@class='heading']/h1[@class='title']/text()</title>
+        <author>//div[@class='meta clearfix mt20']/span[@class='me2']/text()</author>
+        <authorurl></authorurl>>
+        <cover>//ul[@class='g_medialist']/li/a/img/@src</cover>>
+        <ptime timeFormat="yyyy MM dd">//div[@class='meta clearfix mt20']/span[@class='me1']/text()</ptime>>
+        <tag></tag>>
+        <main>//div[@class='content']/p</main>>
+        <mainpic>//img/@src</mainpic>>
+        <type></type>>
+        <source>4399</source>
+        <childLink join="">//ul[@class='g_medialist']/li/a/@href</childLink>>
+        <nextpage join="http://news.4399.com/gonglue/hangye/shuji/">//div[@class='w_paging']/a[text()*='下一页']/@href</nextpage>
+        <flag>jsoup</flag>>
+        <childnext join=""></childnext>>
+        <chose demand=""></chose>>
+        <urls>
+            <url>
+                http://news.4399.com/gonglue/hangye/shuji/
+            </url>
+        </urls>>
+
+    </spider43992>
+    <spider43993>
+        <title>//div[@class='heading']/h1[@class='title']/text()</title>
+        <author>//div[@class='meta clearfix mt20']/span[@class='me2']/text()</author>
+        <authorurl></authorurl>>
+        <cover>//ul[@class='g_medialist']/li/a/img/@src</cover>>
+        <ptime timeFormat="yyyy MM dd">//div[@class='meta clearfix mt20']/span[@class='me1']/text()</ptime>>
+        <tag></tag>>
+        <main>//div[@class='content']/p</main>>
+        <mainpic>//img/@src</mainpic>>
+        <type></type>>
+        <source>4399</source>
+        <childLink join="">//ul[@class='g_medialist']/li/a/@href</childLink>>
+        <nextpage join="http://news.4399.com/gonglue/hangye/fenxi/">//div[@class='w_paging']/a[text()*='下一页']/@href</nextpage>
+        <flag>jsoup</flag>>
+        <childnext join=""></childnext>>
+        <chose demand=""></chose>>
+        <urls>
+            <url>
+                http://news.4399.com/gonglue/hangye/fenxi/
+            </url>
+
+
+        </urls>>
+
+    </spider43993>
+    <!--40407游戏资讯-->
+    <!--
+    <spider40407>
+        <title>//div[@class='con03_left']/h1/text()</title>
+        <author>//div[@class='zz']/span[1]/text()</author>
+        <authorurl></authorurl>>
+        <cover></cover>>
+        <ptime timeFormat="yyyy MM dd">//div[@class='zz']/span[3]/text()</ptime>>
+        <tag></tag>>
+        <main>//div[@class='con03_left']/p</main>>
+        <mainpic join="http://www.40407.com">//p/preceding-sibling-one::div[@style='text-align: center;']/img/@src</mainpic>>
+        <type></type>>
+        <source>40407</source>
+        <childLink join="http://www.40407.com">//div[@class='con_left_news']/dl/dd/h4/a/@href</childLink>>
+        <nextpage join="http://www.40407.com">//div[@class='manu']/a[text()*='>']/@href</nextpage>
+        <flag>jsoup</flag>>
+        <childnext join=""></childnext>>
+        <chose demand=""></chose>>
+        <urls>
+            <url>
+                http://www.40407.com/news/gamenews/
+            </url>
+
+        </urls>>
+
+    </spider40407>
+    -->
+    <!--40407产业频道-->
+    <spider40407CY>
+    <title>//div[@class='details_tit']/h3/text()</title>
+    <author>//p[@class='time']/text()</author>
+    <authorurl></authorurl>>
+    <cover>//div[@class='list1']/ul/li/div/[@class='list_top']/div[@class='list1_img']a/img/@src</cover>>
+    <ptime timeFormat="yyyy MM dd">//p[@class='time']/text()</ptime>>
+    <tag></tag>
+    <main>//div[@class='details_con']/table/tbody/tr/td[@class='bodyTable']/p</main>>
+    <mainpic>..//img/@href</mainpic>>
+    <type></type>>
+    <source>40407</source>
+    <childLink join="">//div[@class='spgd_con slidesjs-slide']/div[@class='spgd_txt1']/a/@href</childLink>>
+    <nextpage join="">$('div.fanye a')[$('div.fanye a').length-2].click()</nextpage>
+    <flag>selenium</flag>>
+    <childnext join="Chrome">$('body > div.content > div.con_r > div.fanye > a:nth-child(7)')[0].click()</childnext>>
+    <chose demand=""></chose>>
+    <urls>
+        <url>
+            http://cy.40407.com/xinwenchanye/
+        </url>
+        <url>
+            http://cy.40407.com/chanyeshuju/
+        </url>>
+        <url>
+            http://cy.40407.com/shipingguandian/
+        </url>
+        <url>
+            http://cy.40407.com/chanyepandian/
+        </url>
+
+    </urls>>
+
+</spider40407CY>
+    <!--40407新游戏-->
+    <spider40407XYX>
+        <title>//|div[@class='con_left']/h1/text()</title>
+        <author>//div[@class='zz']/span[1]/text()</author>
+        <authorurl></authorurl>>
+        <cover></cover>>
+        <ptime timeFormat="yyyy MM dd">//div[@class='zz']/span[3]/text()</ptime>>
+        <tag></tag>>
+        <main>//div[@class='con_left']/p</main>>
+        <mainpic>..//img/@src</mainpic>>
+        <type></type>>
+        <source>40407</source>
+        <childLink join="http://www.40407.com">//div[@class='con']/div[@class='con_left_xinyou']/dl/dd/h2/a/@href</childLink>>
+        <nextpage join="http://www.40407.com">//div[@class='manu']/a[text()*='>']/@href</nextpage>
+        <flag>jsoup</flag>>
+        <childnext join=""></childnext>>
+        <chose demand=""></chose>>
+        <urls>
+            <url>
+                http://www.40407.com/newgame/dongtai/
+            </url>
+            <url>
+                http://www.40407.com/newgame/pingce/
+            </url>
+        </urls>>
+
+    </spider40407XYX>
+
+
+    <!---->
+
+
+
+
+
+
+
+
+
+
 
     <!--178游戏网  刘雪明 2.27-->
     <spider178>
@@ -989,5 +1261,6 @@
             </url>
         </urls>>
     </spider52PK>
+
 
 </BasKnowledgeSpiderPattern>
