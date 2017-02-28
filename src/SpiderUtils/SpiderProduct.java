@@ -1,16 +1,12 @@
 package SpiderUtils;
 
-import JavaBean.BasProGameInfo;
-import JavaBean.ProGamePlatform;
-import JavaBean.ProGameType;
+import JavaBean.*;
 import cn.wanghaomiao.xpath.exception.XpathSyntaxErrorException;
 import cn.wanghaomiao.xpath.model.JXDocument;
 import dao.ProGameInfoDao;
 import dao.ProGamePlatformDao;
 import dao.ProGameTypeDao;
-import dao.impl.ProGameInfoDaoImpl;
-import dao.impl.ProGamePlatformDaoImpl;
-import dao.impl.ProGameTypeDaoImpl;
+import dao.impl.*;
 import org.apache.commons.lang3.StringUtils;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
@@ -605,12 +601,25 @@ class Spider{
         BasProGameInfo gameInfo=new BasProGameInfo();
         ProGamePlatform proPlatform=new ProGamePlatform();
         ProGameType progtypes=new ProGameType();
+        BasOrganizeInfo basOrganizeInfo=new BasOrganizeInfo();
+        OrgProduct orgProduct=new OrgProduct();
+        BasOrganizeInfo basOrganizeInfo2=new BasOrganizeInfo();
+        OrgProduct orgProduct2=new OrgProduct();
+        BasOrganizeInfo basOrganizeInfo3=new BasOrganizeInfo();
+        OrgProduct orgProduct3=new OrgProduct();
+
         try{
             //源网站名称
             if(StringUtils.isNoneEmpty(map.get("source").toString())){
                 source=map.get("source").toString();
                 System.out.println(source);
                 gameInfo.setSource(source);
+                orgProduct.setSource(source);
+                basOrganizeInfo.setSource(source);
+                orgProduct2.setSource(source);
+                basOrganizeInfo2.setSource(source);
+                orgProduct3.setSource(source);
+                basOrganizeInfo3.setSource(source);
             }
             //图标logo
             logo=map.get("contentPath").toString()+getInfomation(document,"logo");
@@ -623,6 +632,9 @@ class Spider{
                 name=document.sel(map.get("gname").toString()).get(0).toString();
                 System.out.println(name);
                 gameInfo.setGname(name);
+                orgProduct.setPname(name);
+                orgProduct2.setPname(name);
+                orgProduct3.setPname(name);
             }
             //版本version
             if(StringUtils.isNoneEmpty(map.get("version").toString())){
@@ -679,7 +691,9 @@ class Spider{
                     develop_com=develop_com.split("\\：")[1];
                 }
                 System.out.println(develop_com);
-                gameInfo.setDevelop_com(develop_com);
+                basOrganizeInfo.setOname(develop_com);
+                orgProduct.setOname(develop_com);
+                orgProduct.setRtype("开发商");
             }
 
             //简介g_desc
@@ -738,6 +752,9 @@ class Spider{
 //            <!--发行商-->
             String publisher=getInfomation(document,"publisher");
             gameInfo.setPublisher(publisher);
+            basOrganizeInfo2.setOname(publisher);
+            orgProduct2.setOname(publisher);
+            orgProduct2.setRtype("发行商");
 //            <!--发行区域-->
             String issue_area=getInfomation(document,"issue_area");
             gameInfo.setIssue_area(issue_area);
@@ -794,6 +811,10 @@ class Spider{
 //            <!--运营商-->
             String operator=getInfomation(document,"operator");
             gameInfo.setOperator(operator);
+            orgProduct3.setOname(operator);
+            basOrganizeInfo3.setOname(operator);
+            orgProduct3.setRtype("运营商");
+
 //            <!--资料片发布时间-->
             String films_time=getInfomation(document,"films_time");
             gameInfo.setFilms_time(films_time);
@@ -839,7 +860,7 @@ class Spider{
                 }
             }
             //存入数据库
-            storeToDataBase(gameInfo,progtypes,proPlatform);
+            storeToDataBase(gameInfo,progtypes,proPlatform,basOrganizeInfo,orgProduct,basOrganizeInfo2,orgProduct2,basOrganizeInfo3,orgProduct3);
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -864,7 +885,26 @@ class Spider{
     /**
      *将数据存入mysql数据库中
      */
-    public static void storeToDataBase(BasProGameInfo gameInfo, ProGameType gtypes, ProGamePlatform platform){
+    public static void storeToDataBase(BasProGameInfo gameInfo, ProGameType gtypes, ProGamePlatform platform,BasOrganizeInfo basOrganizeInfo,OrgProduct orgProduct,BasOrganizeInfo basOrganizeInfo2,OrgProduct orgProduct2,BasOrganizeInfo basOrganizeInfo3,OrgProduct orgProduct3){
+       //插入组织表
+        basOrganizeInfo.setUrl(startUrl);
+       String ouuid=UUID.randomUUID().toString();
+        basOrganizeInfo.setUuid(ouuid);
+
+        basOrganizeInfo2.setUrl(startUrl);
+        String ouuid2=UUID.randomUUID().toString();
+        basOrganizeInfo.setUuid(ouuid2);
+
+        basOrganizeInfo3.setUrl(startUrl);
+        String ouuid3=UUID.randomUUID().toString();
+        basOrganizeInfo.setUuid(ouuid3);
+
+        BasOrganizeInfoImpl basOrganizeInfo1=new BasOrganizeInfoImpl();
+        basOrganizeInfo1.insertSingle(basOrganizeInfo);
+        basOrganizeInfo1.insertSingle(basOrganizeInfo2);
+        basOrganizeInfo1.insertSingle(basOrganizeInfo3);
+
+
         //网站源链接
         gameInfo.setUrl(startUrl);
         String uuid=UUID.randomUUID().toString();
@@ -883,6 +923,19 @@ class Spider{
         platform.setUuid(uuid);
         ProGamePlatformDao platformDao=new ProGamePlatformDaoImpl();
         platformDao.insertPlatform(platform);
+
+
+        //插入组织与产品关系表
+        orgProduct.setOuuid(ouuid);
+        orgProduct2.setOuuid(ouuid2);
+        orgProduct3.setOuuid(ouuid3);
+        orgProduct.setPr_uuid(uuid);
+        orgProduct2.setPr_uuid(uuid);
+        orgProduct3.setPr_uuid(uuid);
+        OrgProductDaoImpl orgProductDao=new OrgProductDaoImpl();
+        orgProductDao.insertOPDuct(orgProduct);
+        orgProductDao.insertOPDuct(orgProduct2);
+        orgProductDao.insertOPDuct(orgProduct3);
 
     }
 

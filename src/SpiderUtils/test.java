@@ -119,6 +119,7 @@ public class test {
 //            });
 //        }
 
+
 //jsoup查看网页源码
 //http://chanye.07073.com/     http://chanye.07073.com/shuju/1560716.html
       org.jsoup.nodes.Document doc1=Jsoup.connect("http://www.gamekezhan.com/news/c16-p1.htm")
@@ -133,10 +134,66 @@ public class test {
                          .userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36").ignoreContentType(true).get();
         JXDocument jxDocument=new JXDocument(doc1);
         System.out.println(doc1.outerHtml());*/
+
+
+
+
+//        org.jsoup.nodes.Document doc1=Jsoup.connect("http://s.weibo.com/user/%25E6%25B8%25B8%25E6%2588%258FHR&Refer=SUer_box")
+//                         .userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36").ignoreContentType(true).ignoreHttpErrors(true).get();
+//        System.out.println(doc1.outerHtml());
+//        Pattern pat=Pattern.compile("<script>.+?\\(");
+//        Matcher mat=pat.matcher(doc1.outerHtml());
+//        String a=null;
+//        for(int x=0;x<5;x++) {
+//            if (mat.find()) {
+//                if(x==2) {
+//                    a=mat.group(0);
+//                }
+//            }
+//        }
+//        Pattern pat1=Pattern.compile("\\\\u[0-9,a-f,A-F]{4}");
+//        Matcher mat1=pat1.matcher(a);
+//        while(mat1.find()) {
+//            String b=mat1.group(0);
+//            int data = Integer.parseInt(b.replaceAll("\\\\u", ""), 16);
+//            a =a.replace(b,String.valueOf((char)data));
+//        }
+//        System.out.println(a);
+        /*while(mat.find()){
+            String a=mat.group(0);
+            Pattern pat1=Pattern.compile("\\\\u[0-9,a-f,A-F]{4}");
+            Matcher mat1=pat1.matcher(a);
+            while(mat1.find()) {
+                String b=mat1.group(0);
+                System.out.println(b);
+                int data = Integer.parseInt(b.replace("\\u", ""), 16);
+                String main =a.replace(b,String.valueOf((char)data));
+            }
+        }*/
+
+
+
+
+
+
+
+
+
+
+
         //System.out.println(jxDocument.sel("//div[@class='page-number pageNumber']/ul[@class='clearfix']/li/a[text()*='下一页']/@href"));
 
 
 
+
+
+        /*System.setProperty("webdriver.chrome.driver",SpiderContant.chromeWindowsPath );
+        WebDriver driver=new ChromeDriver();
+        driver.get("http://news.yzz.cn/ku/hlsgsd/");
+        WebElement webElement=driver.findElement(By.xpath("/html"));
+        org.jsoup.nodes.Document doc=Jsoup.parse(webElement.getAttribute("outerHTML"));
+        JXDocument jxDocument=new JXDocument(doc);
+        System.out.println(doc.outerHtml());*/
 
 
 //        System.setProperty("webdriver.chrome.driver",SpiderContant.chromeWindowsPath );

@@ -330,7 +330,7 @@
     <Spider>
         <!--网站名-->
         <source>游戏观察</source>
-        <!--ContentPath-->
+        <!--ContentPath子链接拼接内容-->
         <contentPath>http://www.youxiguancha.com/file/</contentPath>
         <!--详情页url-->
         <detailurl>//ul[@class='ul_game clearfix']/li/a/@href</detailurl>
@@ -422,6 +422,21 @@
         <!--网络类型-->
         <network_type></network_type>
 
+        <!--下一页链接需要拼接的内容-->
+        <contentPathnext>http://news.yzz.cn/ku/</contentPathnext>
+        <!--游戏截图下一页需要拼接的内容-->
+        <contentPathpic></contentPathpic>>
+        <!--游戏截图下一页的xpath语句-->
+        <nextpic></nextpic>>
+        <!--选择列表页所用驱动-->
+        <flag>jsoup</flag>>
+        <!--选择详情所用驱动-->
+        <flagchild>selenium</flagchild>>
+        <!--点击更多jquery语言-->
+        <moreclick></moreclick>>
+        <!--滑动滚轮次数-->
+        <slidingRoller></slidingRoller>>
+
     </Spider>
 
 
@@ -430,8 +445,8 @@
         <!--ContentPath-->
         <contentPath></contentPath>
         <contentPathnext>http://news.yzz.cn/ku/</contentPathnext>
-        <contentPathpic>http://news.yzz.cn/ku</contentPathpic>>
-        <nextpic>//div[@class='nph_photo_next']/a/@href</nextpic>>
+        <contentPathpic></contentPathpic>>
+        <nextpic></nextpic>>
         <!--图标-->
         <logo>//div[@class='bd clearfix game']/a/img/@src|//div[@class='game_info']/img/@src</logo>
         <!--名称-->
@@ -469,7 +484,7 @@
         <!--介绍-->
         <g_desc>//div[@class='des']/p/text()</g_desc>
         <!--截图urls-->
-        <picture>//div[@class='nph_cnt']/img/@src</picture>
+        <picture>//ul[@class='nph_list_thumb']/li/a/img/@src</picture>
         <flag>jsoup</flag>>
         <flagchild>selenium</flagchild>>
         <moreclick></moreclick>>
