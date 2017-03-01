@@ -165,10 +165,15 @@ public class CommonSpiderKnowledge {
      */
     public static JXDocument getJXDocument(String url) throws IOException {
         JXDocument jxDocument=null;
-        try {
-            jxDocument= new JXDocument(Jsoup.connect(url).userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36").ignoreContentType(true).ignoreHttpErrors(true).timeout(100000).get());
-        }catch (Exception e){
-            System.out.println("read time out");
+        for(int a=1;a>=0;a++) {
+            try {
+                if(jxDocument!=null){
+                    break;
+                }
+                jxDocument = new JXDocument(Jsoup.connect(url).userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36").ignoreContentType(true).ignoreHttpErrors(true).timeout(100000).get());
+            } catch (Exception e) {
+                System.out.println("read time out");
+            }
         }
         return jxDocument;
     }
