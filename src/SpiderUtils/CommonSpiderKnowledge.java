@@ -45,6 +45,7 @@ public class CommonSpiderKnowledge {
     private static BasPersonInfoImpl basperimpl = new BasPersonInfoImpl();
     private static PerKnowledgeImpl perknowimpl = new PerKnowledgeImpl();
     private static BugDataImpl bugDataimpl = new BugDataImpl();
+    private static String oldurl=null;
 
     public static void main(String[] args) throws Exception {
         ExecutorService pool= Executors.newFixedThreadPool(5);
@@ -383,7 +384,7 @@ public class CommonSpiderKnowledge {
         for(int x=1;x<formpage;x++){
             System.out.println("Start page break");
             System.out.println("now"+"  "+x);
-            doc=listPageJsoup(doc, knowledgeSpiderConfig,childLink);
+            doc=listPageJsoup(doc, knowledgeSpiderConfig);
             i=x+1;
         }
         while(true){
@@ -421,7 +422,7 @@ public class CommonSpiderKnowledge {
             try {
                 i++;
                 System.out.println("Start listpage");
-                doc = listPageJsoup(doc, knowledgeSpiderConfig,childLink);
+                doc = listPageJsoup(doc, knowledgeSpiderConfig);
                 if(doc==null){
                     break;
                 }
@@ -440,9 +441,10 @@ public class CommonSpiderKnowledge {
      * @throws XpathSyntaxErrorException
      * @throws IOException
      */
-    public static JXDocument listPageJsoup(JXDocument doc,KnowledgeSpiderConfig knowledgeSpiderConfig,String childLink) throws XpathSyntaxErrorException, IOException {
+    public static JXDocument listPageJsoup(JXDocument doc,KnowledgeSpiderConfig knowledgeSpiderConfig) throws XpathSyntaxErrorException, IOException {
         String nexturl=null;
         String next=null;
+        JXDocument nextDocument=null;
         next = getTagOne(doc, knowledgeSpiderConfig.nextPage.getText()).toString();
         if (StringUtils.isNotEmpty(knowledgeSpiderConfig.nextPage.attributeValue("join"))) {
             if (next.toString().substring(0, 4).equals("http")) {
@@ -453,10 +455,12 @@ public class CommonSpiderKnowledge {
         } else {
             nexturl = next.toString().replace("..", "");
         }
-        JXDocument nextDocument = getJXDocument(nexturl);
-        if(nexturl.equals(childLink)){
+        if(oldurl.equals(nexturl)){
             nextDocument=null;
+        }else{
+            nextDocument = getJXDocument(nexturl);
         }
+        oldurl=nexturl;
         return nextDocument;
     }
 
