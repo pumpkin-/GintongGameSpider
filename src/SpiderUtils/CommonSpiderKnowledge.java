@@ -72,7 +72,7 @@ public class CommonSpiderKnowledge {
             @Override
             public void run() {
                 try {
-                    ergodicUrl("spiderYmxk", 591, "no");
+                    ergodicUrl("spiderYmxk", 642, "no");
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -164,7 +164,13 @@ public class CommonSpiderKnowledge {
      * @return
      */
     public static JXDocument getJXDocument(String url) throws IOException {
-        return new JXDocument(Jsoup.connect(url).userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36").ignoreContentType(true).ignoreHttpErrors(true).timeout(100000).get());
+        JXDocument jxDocument=null;
+        try {
+            jxDocument= new JXDocument(Jsoup.connect(url).userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36").ignoreContentType(true).ignoreHttpErrors(true).timeout(100000).get());
+        }catch (Exception e){
+            System.out.println("read time out");
+        }
+        return jxDocument;
     }
     /**
      * 解析全部配置文件 获取所有的spider节点
@@ -673,7 +679,7 @@ public class CommonSpiderKnowledge {
         //作者
         if(StringUtils.isNotEmpty(knowledgeSpiderConfig.author.getText())) {
             if (map.get("author")==null||map.get("author").size()<=1) {
-                String test[] = getTagOne(childDocumet,knowledgeSpiderConfig.author.getText()).toString().split("\\s+");
+                String test[] = getTagOne(childDocumet,knowledgeSpiderConfig.author.getText()).toString().split(" +");
                 if(test.length>1) {
                     for (int y = 0; y < test.length; y++) {
                         Pattern pat = Pattern.compile(".*作者.*");
