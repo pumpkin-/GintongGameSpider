@@ -1610,10 +1610,10 @@
     </spider52PKRW>
     <!--52pk产业要闻-->
     <spider52PKCY>
-        <title>//div[@id='header']/h1/text()</title>
+        <title>//div[@class='lt contentl']/h1/text()</title>
         <author>//div[@class='m_left lt']/span[3]/text()</author>
         <authorurl></authorurl>>
-        <cover>//</cover>>
+        <cover></cover>>
         <ptime timeFormat="yyyy MM dd">//div[@class='m_left lt']/span[1]/text()</ptime>>
         <tag>//div[@class='tagbox cc']/a/text()</tag>>
         <main>//div[@class='body']/p</main>>

@@ -16,8 +16,8 @@ public class SpiderGameData {
     public static void main(String [] args){
         try {
 
-           CommonSpiderKnowledge.ergodicUrl("spider52PKRW", 0, "no");
-           // CommonSpiderKnowledge.ergodicUrl("spiderTXYX", 0, "no");
+           //CommonSpiderKnowledge.ergodicUrl("spider52PKRW", 0, "no");
+           CommonSpiderKnowledge.ergodicUrl("spider52PKCY", 0, "no");
             
 
         } catch (Exception e) {

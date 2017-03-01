@@ -409,6 +409,8 @@ public class CommonSpiderKnowledge {
                 System.out.println("Start listpage");
                 JXDocument jxDocument=doc;
                 doc = listPageJsoup(doc, knowledgeSpiderConfig);
+                System.out.println(doc);
+                System.out.println(jxDocument);
                 if(doc==jxDocument){
                     break;
                 }
