@@ -407,7 +407,11 @@ public class CommonSpiderKnowledge {
             try {
                 i++;
                 System.out.println("Start listpage");
+                JXDocument jxDocument=doc;
                 doc = listPageJsoup(doc, knowledgeSpiderConfig);
+                if(doc==jxDocument){
+                    break;
+                }
             }catch (Exception e){
                 System.out.println("Page failure or To the last page");
                 break;
