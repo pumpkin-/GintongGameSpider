@@ -1406,7 +1406,7 @@
         </urls>>
 
     </spider522k>
-    <!--html5 刘雪明2.28 小问题-->
+    <!--html5 刘雪明2.28-->
     <spiderHtml5>
         <!--详情页标题-->
         <title>//div[@class='post-hd']/h2[@class='post-title']/text()</title>
@@ -1532,22 +1532,53 @@
         <!--列表页中的下一页-->
         <nextpage join="http://www.gamekezhan.com">//div[@class='page']/a[allText()*='>']/@href</nextpage>
         <urls>
-            <!--<url>-->
-                <!--http://www.gamekezhan.com/news/c16-p1.html-->
-            <!--</url>-->
-            <!--<url>-->
-                <!--http://www.gamekezhan.com/news/c17-p1.html-->
-            <!--</url>-->
-            <!--<url>-->
-                <!--http://www.gamekezhan.com/news/c18-p1.html-->
-            <!--</url>-->
+            <url>
+                http://www.gamekezhan.com/news/c16-p1.html
+            </url>
+            <url>
+                http://www.gamekezhan.com/news/c17-p1.html
+            </url>
+            <url>
+                http://www.gamekezhan.com/news/c18-p1.html
+            </url>
             <url>
                 http://www.gamekezhan.com/news/c28-p1.html
             </url>
         </urls>>
 
     </spiderGameKZ>
-
+    <!--vrzinc  刘雪明 3.1-->
+    <spiderVR>
+        <!--详情页标题-->
+        <title>//h1[@class='title']/text()</title>
+        <!--作者-->
+        <author></author>
+        <authorurl></authorurl>>
+        <!--封面图片-->
+        <cover join="">//div[@class='posts-gallery-img']/a/img[@class='lazy thumbnail']/@src</cover>>
+        <!--时间-->
+        <ptime timeFormat=""></ptime>>
+        <tag></tag>>
+        <!--正文内容-->
+        <main>//div[@class='post-content']/p</main>>
+        <!--正文图片-->
+        <mainpic join="">//img/@src</mainpic>>
+        <type></type>>
+        <source>vrzinc</source>
+        <!--子链接-->
+        <childLink join="">//div[@class='posts-gallery-img']/a/@href</childLink>>
+        <flag>selenium</flag>>
+        <chose demand=""></chose>>
+        <!--详情页面中的下一页-->
+        <childnext></childnext>
+        <!--列表页中的下一页-->
+        <nextpage join="">document.getElementById('fa-loadmore').click()</nextpage>
+        <urls>
+            <url>
+                http://www.vrzinc.com/news/game
+            </url>
+        </urls>>
+    </spiderVR>
 
     <!--52pk网人物专访-->
     <spider52PKRW>
