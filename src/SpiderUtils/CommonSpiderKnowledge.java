@@ -72,7 +72,7 @@ public class CommonSpiderKnowledge {
             @Override
             public void run() {
                 try {
-                    ergodicUrl("spiderYmxk", 52, "no");
+                    ergodicUrl("spiderYmxk", 457, "no");
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -667,7 +667,7 @@ public class CommonSpiderKnowledge {
         //作者
         if(StringUtils.isNotEmpty(knowledgeSpiderConfig.author.getText())) {
             if (map.get("author")==null||map.get("author").size()<=1) {
-                String test[] = getTagOne(childDocumet,knowledgeSpiderConfig.author.getText()).toString().split(" ");
+                String test[] = getTagOne(childDocumet,knowledgeSpiderConfig.author.getText()).toString().split("　");
                 for(int y=0;y<test.length;y++) {
                     Pattern pat = Pattern.compile(".*作者.*");
                     Matcher mat = pat.matcher(test[y]);
@@ -982,11 +982,12 @@ public class CommonSpiderKnowledge {
 
 
 
-    public static void storeBugdata(String key,String value,String uuid){
+    public static void storeBugdata(String key,String value,String uuid,String source){
         BugData bugData=new BugData();
         bugData.setKey(key);
         bugData.setValue(value);
         bugData.setUuid(uuid);
+        bugData.setSource(source);
         bugDataimpl.insert(bugData);
     }
 

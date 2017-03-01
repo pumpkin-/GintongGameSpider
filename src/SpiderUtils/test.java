@@ -129,10 +129,14 @@ public class test {
 
 //jsoup查看网页源码
 //http://chanye.07073.com/     http://chanye.07073.com/shuju/1560716.html
+
       org.jsoup.nodes.Document doc1=Jsoup.connect("http://news.52pk.com/renwu/list_6957_9.shtml")
+
                           .userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36")
                          .get();
      System.out.println(doc1.outerHtml());
+//        JXDocument jxDocument=new JXDocument(doc1);
+//        System.out.println(jxDocument.sel("//div[@class='page']/a[allText()*='>']/@href"));
 
 //        http://www.gamerbbs.cn/news/1706.html
 //        http://www.gamerbbs.cn/news/1707.html
@@ -189,15 +193,15 @@ public class test {
 
 
 
-        System.setProperty("webdriver.chrome.driver",SpiderContant.chromeWindowsPath );
-        WebDriver driver=new ChromeDriver();
-        driver.get("http://games.sina.cn/pc/newslist.d.html?cid=35435,35434,35436,35437,35439,35440,35441&page=1&pagesize=53");
+//        System.setProperty("webdriver.chrome.driver",SpiderContant.chromeWindowsPath );
+//        WebDriver driver=new ChromeDriver();
+//        driver.get("http://games.sina.cn/pc/newslist.d.html?cid=35435,35434,35436,35437,35439,35440,35441&page=1&pagesize=53");
 
 
         /*System.setProperty("webdriver.chrome.driver",SpiderContant.chromeWindowsPath );
         WebDriver driver=new ChromeDriver();
         driver.get("http://news.yzz.cn/ku/hlsgsd/");
->>>>>>> aab6a92320762dfc69834479f358aa63c4613fe6
+
         WebElement webElement=driver.findElement(By.xpath("/html"));
         org.jsoup.nodes.Document doc=Jsoup.parse(webElement.getAttribute("outerHTML"));
         JXDocument jxDocument=new JXDocument(doc);
@@ -216,14 +220,15 @@ public class test {
 
 //
 
+
 //selenium查看网页源码
-//     System.setProperty("webdriver.chrome.driver",SpiderContant.chromeWindowsPath );
-//        WebDriver driver=new ChromeDriver();
-//        driver.get("http://news.shouyou.com/news/dnews.shtml");
-//        WebElement webElement=driver.findElement(By.xpath("/html"));
-//        org.jsoup.nodes.Document doc=Jsoup.parse(webElement.getAttribute("outerHTML"));
-//        JXDocument jxDocument=new JXDocument(doc);
-//        System.out.println(doc.outerHtml());
+     System.setProperty("webdriver.chrome.driver",SpiderContant.chromeWindowsPath );
+        WebDriver driver=new ChromeDriver();
+        driver.get("http://www.vrzinc.com/news/game");
+        WebElement webElement=driver.findElement(By.xpath("/html"));
+        org.jsoup.nodes.Document doc=Jsoup.parse(webElement.getAttribute("outerHTML"));
+        JXDocument jxDocument=new JXDocument(doc);
+        System.out.println(doc.outerHtml());
 //        System.out.println(jxDocument.sel("//div[@class='nph_photo_next']/a/@href"));
 
 //        System.out.println(jxDocument.sel("//dd[@class='public-tabs-title']/a/@href"));
@@ -240,7 +245,12 @@ public class test {
 
 
 
-
+//        System.setProperty("webdriver.chrome.driver",SpiderContant.chromeWindowsPath );
+//        WebDriver driver=new ChromeDriver();
+//        driver.get("");
+//        WebElement webElement=driver.findElement(By.xpath("/html"));
+//        org.jsoup.nodes.Document doc=Jsoup.parse(webElement.getAttribute("outerHTML"));
+//        System.out.println(doc.outerHtml());
 
     }
 
