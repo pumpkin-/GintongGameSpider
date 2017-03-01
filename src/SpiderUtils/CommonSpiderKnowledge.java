@@ -369,7 +369,7 @@ public class CommonSpiderKnowledge {
         for(int x=1;x<formpage;x++){
             System.out.println("Start page break");
             System.out.println("now"+"  "+x);
-            doc=listPageJsoup(doc, knowledgeSpiderConfig);
+            doc=listPageJsoup(doc, knowledgeSpiderConfig,childLink);
             i=x+1;
         }
         while(true){
@@ -407,11 +407,8 @@ public class CommonSpiderKnowledge {
             try {
                 i++;
                 System.out.println("Start listpage");
-                JXDocument jxDocument=doc;
-                doc = listPageJsoup(doc, knowledgeSpiderConfig);
-                System.out.println(doc);
-                System.out.println(jxDocument);
-                if(doc==jxDocument){
+                doc = listPageJsoup(doc, knowledgeSpiderConfig,childLink);
+                if(doc==null){
                     break;
                 }
             }catch (Exception e){
@@ -429,7 +426,7 @@ public class CommonSpiderKnowledge {
      * @throws XpathSyntaxErrorException
      * @throws IOException
      */
-    public static JXDocument listPageJsoup(JXDocument doc,KnowledgeSpiderConfig knowledgeSpiderConfig) throws XpathSyntaxErrorException, IOException {
+    public static JXDocument listPageJsoup(JXDocument doc,KnowledgeSpiderConfig knowledgeSpiderConfig,String childLink) throws XpathSyntaxErrorException, IOException {
         String nexturl=null;
         String next=null;
         next = getTagOne(doc, knowledgeSpiderConfig.nextPage.getText()).toString();
@@ -443,6 +440,9 @@ public class CommonSpiderKnowledge {
             nexturl = next.toString().replace("..", "");
         }
         JXDocument nextDocument = getJXDocument(nexturl);
+        if(nexturl.equals(childLink)){
+            nextDocument=null;
+        }
         return nextDocument;
     }
 
@@ -674,12 +674,16 @@ public class CommonSpiderKnowledge {
         if(StringUtils.isNotEmpty(knowledgeSpiderConfig.author.getText())) {
             if (map.get("author")==null||map.get("author").size()<=1) {
                 String test[] = getTagOne(childDocumet,knowledgeSpiderConfig.author.getText()).toString().split("　");
-                for(int y=0;y<test.length;y++) {
-                    Pattern pat = Pattern.compile(".*作者.*");
-                    Matcher mat = pat.matcher(test[y]);
-                    while(mat.find()){
-                        author=mat.group(0).replace("作者：", "").replace("频道作者：", "");
+                if(test.length>1) {
+                    for (int y = 0; y < test.length; y++) {
+                        Pattern pat = Pattern.compile(".*作者.*");
+                        Matcher mat = pat.matcher(test[y]);
+                        while (mat.find()) {
+                            author = mat.group(0).replace("作者：", "").replace("频道作者：", "");
+                        }
                     }
+                }else{
+                    author=getTagOne(childDocumet,knowledgeSpiderConfig.author.getText()).toString();
                 }
             } else {
                 try {

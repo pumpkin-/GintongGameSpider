@@ -1640,7 +1640,7 @@
         <title>//div[@class='lt contentl']/h1/text()</title>
         <author>//div[@class='m_left lt']/span[3]/text()</author>
         <authorurl></authorurl>>
-        <cover>//</cover>>
+        <cover></cover>>
         <ptime timeFormat="yyyy MM dd">//div[@class='m_left lt']/span[1]/text()</ptime>>
         <tag></tag>>
         <main>//div[@class='body']/p</main>>

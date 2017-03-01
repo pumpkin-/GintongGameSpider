@@ -17,9 +17,10 @@ public class SpiderGameData {
         try {
 
            //CommonSpiderKnowledge.ergodicUrl("spider52PKRW", 0, "no");
-           CommonSpiderKnowledge.ergodicUrl("spider52PKCY", 0, "no");
-            
-
+          // CommonSpiderKnowledge.ergodicUrl("spider52PKCY", 0, "no");
+          // CommonSpiderKnowledge.ergodicUrl("spider52PKDL", 0, "no");
+           // CommonSpiderKnowledge.ergodicUrl("spider52PKQQ", 0, "no");
+            CommonSpiderKnowledge.ergodicUrl("spiderYXC", 0, "no");
         } catch (Exception e) {
             e.printStackTrace();
         }
