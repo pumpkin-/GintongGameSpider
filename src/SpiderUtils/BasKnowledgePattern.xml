@@ -1592,15 +1592,16 @@
         <mainpic>//img/@src</mainpic>>
         <type></type>>
         <source>52PK</source>
-        <childLink join="">//ul[@class='g_medialist']/li/a/@href</childLink>>
-        <nextpage join="">//div[@class='w_paging']/a[text()*='下一页']/@href</nextpage>
+        <childLink join="">//ul[@class='listlb color049']/li/a/@href</childLink>>
+        <nextpage join="">//a[text()*='下一页']/@href</nextpage>
         <flag>jsoup</flag>>
         <childnext join=""></childnext>>
         <chose demand=""></chose>>
         <urls>
 
             <url>
-                http://news.4399.com/gonglue/hangye/renwu/
+                http://news.52pk.com/renwu/tjrw.shtml
+
             </url>>
 
 

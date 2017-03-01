@@ -129,7 +129,9 @@ public class test {
 
 //jsoup查看网页源码
 //http://chanye.07073.com/     http://chanye.07073.com/shuju/1560716.html
-      org.jsoup.nodes.Document doc1=Jsoup.connect("http://shouyoujz.com/content/newgame/6category/yuanchuang")
+
+      org.jsoup.nodes.Document doc1=Jsoup.connect("http://news.52pk.com/renwu/list_6957_9.shtml")
+
                           .userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36")
                          .get();
      System.out.println(doc1.outerHtml());
