@@ -1721,7 +1721,7 @@
         <type></type>>
         <source>91游戏网</source>
         <childLink join="">//div[@class='m_one']/a/@href</childLink>>
-        <nextpage join="http://game.91.com/zixun">//a[text()*='下一页']/@href</nextpage>
+        <nextpage join="http://game.91.com/zixun/">//a[text()*='下一页']/@href</nextpage>
         <flag>jsoup</flag>>
         <childnext join=""></childnext>>
         <chose demand=""></chose>>
@@ -1769,7 +1769,7 @@
     <!--超好玩游戏攻略-->
     <spiderCHWGL>
         <title>//h1[@class='text-center']/text()</title>
-        <author>//address[@class='text-center']/text()</author>
+        <author></author>
         <authorurl></authorurl>>
         <cover join="">//div[@class='media']/a/img/@src</cover>>
         <ptime timeFormat="yyyy MM dd">//address[@class='text-center']/time/text()</ptime>>
@@ -1778,9 +1778,9 @@
         <mainpic>//img/@src</mainpic>>
         <type></type>>
         <source>超好玩</source>
-        <childLink join="">//div[@class='media']/a/@href</childLink>>
-        <nextpage join="">//a[text()*='下一页']/@href</nextpage>
-        <flag>selenium</flag>>
+        <childLink join="http://www.18touch.com">//div[@class='media']/a/@href</childLink>>
+        <nextpage join="http://www.18touch.com">//a[allText()*='下一页']/@href</nextpage>
+        <flag>jsoup</flag>>
         <childnext join=""></childnext>>
         <chose demand=""></chose>>
         <urls>
