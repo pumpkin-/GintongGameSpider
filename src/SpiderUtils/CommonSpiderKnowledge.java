@@ -407,9 +407,8 @@ public class CommonSpiderKnowledge {
             try {
                 i++;
                 System.out.println("Start listpage");
-                JXDocument jxDocument=doc;
-                doc = listPageJsoup(doc, knowledgeSpiderConfig);
-                if(doc==jxDocument){
+                doc = listPageJsoup(doc, knowledgeSpiderConfig,childLink);
+                if(doc==null){
                     break;
                 }
             }catch (Exception e){
@@ -427,7 +426,7 @@ public class CommonSpiderKnowledge {
      * @throws XpathSyntaxErrorException
      * @throws IOException
      */
-    public static JXDocument listPageJsoup(JXDocument doc,KnowledgeSpiderConfig knowledgeSpiderConfig) throws XpathSyntaxErrorException, IOException {
+    public static JXDocument listPageJsoup(JXDocument doc,KnowledgeSpiderConfig knowledgeSpiderConfig,String childLink) throws XpathSyntaxErrorException, IOException {
         String nexturl=null;
         String next=null;
         next = getTagOne(doc, knowledgeSpiderConfig.nextPage.getText()).toString();
@@ -441,6 +440,9 @@ public class CommonSpiderKnowledge {
             nexturl = next.toString().replace("..", "");
         }
         JXDocument nextDocument = getJXDocument(nexturl);
+        if(nexturl.equals(childLink)){
+            nextDocument=null;
+        }
         return nextDocument;
     }
 
