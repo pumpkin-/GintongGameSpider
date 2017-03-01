@@ -1434,7 +1434,7 @@
         <!--正文图片-->
         <mainpic>//img/@src</mainpic>>
         <type></type>>
-        <source>522K</source>
+        <source>html5</source>
         <!--子链接-->
         <childLink join="">//div[@class='card horizontal']/a/@href</childLink>>
         <flag>jsoup</flag>>
@@ -1444,53 +1444,116 @@
         <!--列表页中的下一页-->
         <nextpage join="">//div[@class='wp-pagenavi']/a[@class='nextpostslink']/@href</nextpage>
         <urls>
-            <!--<url>-->
-                <!--http://www.html5dw.com/news-->
-            <!--</url>-->
-            <!--<url>-->
-                <!--http://www.html5dw.com/dev-->
-            <!--</url>-->
-            <!--<url>  问题URL-->
-                <!--http://www.html5dw.com/h5-->
-            <!--</url>-->
-            <!--<url> 有问题-->
-                <!--http://www.html5dw.com/game-->
-            <!--</url>-->
+            <url>
+                http://www.html5dw.com/news
+            </url>
+            <url>
+                http://www.html5dw.com/dev
+            </url>
+            <url>
+                http://www.html5dw.com/game
+            </url>
             <url>
                 http://www.html5dw.com/events
             </url>
         </urls>>
 
     </spiderHtml5>
-    <!--游戏客栈 刘雪明2.28-->
-    <spiderGameKZ>
+    <!--电科技 刘雪明2.28-->
+    <spiderDianKJ>
         <!--详情页标题-->
-        <title></title>
+        <title>//div[@class='arttext']/h1[@class='title']/text()</title>
         <!--作者-->
-        <author></author>
+        <author>//div[@class='arttext']/h5[@class='data']/span[3]/text()</author>
         <authorurl></authorurl>>
         <!--封面图片-->
-        <cover></cover>>
+        <cover join="http://www.diankeji.com">//ul[@class='article-list']/li/a/img/@src</cover>>
         <!--时间-->
-        <ptime timeFormat="yyyy MM dd"></ptime>>
+        <ptime timeFormat="yyyy MM dd HH mm ss">//div[@class='arttext']/h5[@class='data']/span[1]/text()</ptime>>
         <tag></tag>>
         <!--正文内容-->
-        <main></main>>
+        <main>//div[@class='arttext']/p|//div[@id='article_content']/p|//span|//div[@class='arttext']/div</main>>
         <!--正文图片-->
-        <mainpic></mainpic>>
-        <type></type>>
-        <source>522K</source>
+        <mainpic join="http://www.diankeji.com">//img/@src</mainpic>>
+        <type>//div[@class='article-title']/h2/text()</type>>
+        <source>电科技</source>
         <!--子链接-->
-        <childLink join=""></childLink>>
+        <childLink join="">//ul[@class='article-list']/li/a/@href</childLink>>
         <flag>jsoup</flag>>
         <chose demand=""></chose>>
         <!--详情页面中的下一页-->
         <childnext></childnext>
         <!--列表页中的下一页-->
-        <nextpage join=""></nextpage>
+        <nextpage join="">//div[@class='pagebreak']/a[text()*='&gt;']/@href</nextpage>
         <urls>
             <url>
+                http://www.diankeji.com/game/
+            </url>
+            <url>
+                http://www.diankeji.com/news/
+            </url>
+            <url>
+                http://www.diankeji.com/guandian/
+            </url>
+            <url>
+                http://www.diankeji.com/renwu/
+            </url>
+            <url>
+                http://www.diankeji.com/shuju/
+            </url>
+            <url>
+                http://www.diankeji.com/dtv/
+            </url>
+            <url>
+                http://www.diankeji.com/vr/
+            </url>
+            <url>
+                http://www.diankeji.com/car/
+            </url>
+            <url>
+                http://www.diankeji.com/yule/
+            </url>
+        </urls>>
 
+    </spiderDianKJ>
+    <!--游戏客栈  刘雪明2.28-->
+    <spiderGameKZ>
+        <!--详情页标题-->
+        <title>//div[@class='n_title']/span/text()</title>
+        <!--作者-->
+        <author>//div[@class='time']</author>
+        <authorurl></authorurl>>
+        <!--封面图片-->
+        <cover join="">//div[@class='n_pic']/img/@src</cover>>
+        <!--时间-->
+        <ptime timeFormat="yyyy MM dd">//div[@class='time']</ptime>>
+        <tag></tag>>
+        <!--正文内容-->
+        <main>//div[@class='content']/p</main>>
+        <!--正文图片-->
+        <mainpic join="">//img/@src</mainpic>>
+        <type></type>>
+        <source>游戏客栈</source>
+        <!--子链接-->
+        <childLink join="http://www.gamekezhan.com">//a[@class='news_one']/@href</childLink>>
+        <flag>jsoup</flag>>
+        <chose demand=""></chose>>
+        <!--详情页面中的下一页-->
+        <childnext></childnext>
+        <!--列表页中的下一页-->
+        <nextpage join="http://www.gamekezhan.com">//div[@class='page']/a[allText()*='>']/@href</nextpage>
+        <urls>
+            <!--<url>-->
+                <!--http://www.gamekezhan.com/news/c16-p1.html-->
+            <!--</url>-->
+            <!--<url>-->
+                <!--http://www.gamekezhan.com/news/c17-p1.html-->
+            <!--</url>-->
+            <!--<url>-->
+                <!--http://www.gamekezhan.com/news/c18-p1.html-->
+            <!--</url>-->
+            <url>
+                http://www.gamekezhan.com/news/c28-p1.html
             </url>
         </urls>>
 
