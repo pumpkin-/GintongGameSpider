@@ -72,7 +72,7 @@ public class CommonSpiderKnowledge {
             @Override
             public void run() {
                 try {
-                    ergodicUrl("spiderYmxk", 457, "no");
+                    ergodicUrl("spiderYmxk", 591, "no");
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -673,7 +673,7 @@ public class CommonSpiderKnowledge {
         //作者
         if(StringUtils.isNotEmpty(knowledgeSpiderConfig.author.getText())) {
             if (map.get("author")==null||map.get("author").size()<=1) {
-                String test[] = getTagOne(childDocumet,knowledgeSpiderConfig.author.getText()).toString().split("　");
+                String test[] = getTagOne(childDocumet,knowledgeSpiderConfig.author.getText()).toString().split("\\s+");
                 if(test.length>1) {
                     for (int y = 0; y < test.length; y++) {
                         Pattern pat = Pattern.compile(".*作者.*");
