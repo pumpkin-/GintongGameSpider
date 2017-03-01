@@ -170,6 +170,9 @@ public class CommonSpiderKnowledge {
                 if(jxDocument!=null){
                     break;
                 }
+                if(a==100){
+                    break;
+                }
                 jxDocument = new JXDocument(Jsoup.connect(url).userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36").ignoreContentType(true).ignoreHttpErrors(true).timeout(100000).get());
             } catch (Exception e) {
                 System.out.println("read time out");
