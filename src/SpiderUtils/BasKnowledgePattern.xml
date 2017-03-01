@@ -210,6 +210,7 @@
             <url>
                 http://play.163.com/
             </url>
+
         </urls>>
         </spiderAW>
 
@@ -1199,109 +1200,6 @@
         </urls>>
 
     </spiderSYJZ>
-
-    <!--游戏智库  李罡2.28-->
-    <spiderGameZk>
-        <!--详情页的标题-->
-        <title>//div[@class='newsTextBox left']/h4[@class='newsBox01Title font18px color24 fwblod mb20 mt10']/text()</title>
-        <!--详情页作者-->
-        <author></author>
-        <authorurl></authorurl>>
-        <!--列表页封面-->
-        <cover>//div[@class='newsImgBox left']/img/@src</cover>>
-        <!--详情页时间-->
-        <ptime timeFormat="yyyy MM dd HH mm ss">//div[@class='reportDetailTitle bdb1d9 pb10']/p/span[@class='font14px color24 right pr70']/text()</ptime>>
-        <tag></tag>>
-        <!--详情页的正文-->
-        <main>//section[@class='reportDetailContent textident20 font16px color24 bgfff']/p</main>>
-        <!--正文图片-->
-        <mainpic>//img/@src</mainpic>>
-        <type></type>>
-        <source>游戏智库</source>
-        <!--子链接-->
-        <childLink join="http://www.gamethk.com">//div[@class='pcIndexItem bgfff mb20']/a/@href</childLink>>
-        <!--详情页面中的下一页-->
-        <childnext></childnext>>
-        <flag>jsoup</flag>>
-        <chose demand=""></chose>>
-        <!--列表页中的下一页-->
-        <nextpage join="http://www.gamethk.com">//ul[@class='pagination pagination-lg']/li/a[@class='next']/@href</nextpage>
-        <urls>
-            <url>
-                http://www.gamethk.com/news/type/0.html
-            </url>
-        </urls>>
-    </spiderGameZk>
-    <!--游资网(新闻)  李罡2.28-->
-    <spiderYzw>
-        <!--详情页的标题-->
-        <title>//div[@class='h hm']/h1[@class='ph']/text()</title>
-        <!--详情页作者-->
-        <author>//div[@class='h hm']/p[@class='xg1']/text()</author>
-        <authorurl></authorurl>>
-        <!--列表页封面-->
-        <cover join="http://www.gameres.com">//table/tbody/tr/td[1]/img/@src</cover>>
-        <!--详情页时间-->
-        <ptime timeFormat="yyyy MM dd HH mm">//div[@class='h hm']/p[@class='xg1']/text()</ptime>>
-        <tag></tag>>
-        <!--详情页的正文-->
-        <main>//div[@class='t_fsz']//td[node()*='br']</main>>
-        <!--正文图片-->
-        <mainpic join="http://www.gameres.com">//ignore_js_op/img/@src</mainpic>>
-        <type></type>>
-        <source>游资网</source>
-        <!--子链接-->
-        <childLink join="">//table/tbody/tr/td[@style='height:60px;']/a/@href</childLink>>
-        <!--详情页面中的下一页-->
-        <childnext></childnext>>
-        <flag>jsoup</flag>>
-        <chose demand=""></chose>>
-        <!--列表页中的下一页-->
-        <nextpage join="http://www.gameres.com">//div[@class='list-page']/div/a[@class='next']/@href</nextpage>
-        <urls>
-            <url>
-                http://www.gameres.com/zuixin_1.html
-            </url>
-            <!--<url>-->
-                <!--http://www.gameres.com/yanfa_1.html-->
-            <!--</url>-->
-        </urls>>
-    </spiderYzw>
-    <!--游资网two  李罡2.28-->
-    <spiderYzwTwo>
-        <!--详情页的标题-->
-        <title>//h1[@class='ts']/a/text()</title>
-        <!--详情页作者-->
-        <author>//div[class='authi']/a/text()</author>
-        <authorurl></authorurl>>
-        <!--列表页封面-->
-        <cover join=""></cover>>
-        <!--详情页时间-->
-        <ptime timeFormat="yyyy MM dd">//table[@summary='forum_20']/tbody/tr/td[@class='by']/em/span/text()</ptime>>
-        <tag></tag>>
-        <!--详情页的正文-->
-        <main>//div[@class='t_fsz']</main>>
-        <!--正文图片-->
-        <mainpic join="http://bbs.gameres.com">//p/ignore_js_op/img/@src</mainpic>>
-        <type></type>>
-        <source>游资网bbs</source>
-        <!--子链接-->
-        <childLink join="http://bbs.gameres.com/">//table[@id='forum_20']/tbody/tr/th/a[2]/@href</childLink>>
-        <!--详情页面中的下一页-->
-        <childnext></childnext>>
-        <flag>jsoup</flag>>
-        <chose demand=""></chose>>
-        <!--列表页中的下一页-->
-        <nextpage join="http://bbs.gameres.com/">//div[@class='pg']/a[@class='nxt']/@href</nextpage>
-        <urls>
-            <url>
-                http://bbs.gameres.com/forum.php?mod=forumdisplay&amp;fid=20
-            </url>
-        </urls>>
-
-
-    </spiderYzwTwo>
-=======
     <!--52pk网 刘雪明2.28（玩家八卦）-->
     <spider52PK>
         <!--详情页标题-->
@@ -1983,5 +1881,4 @@
             </url>>
         </urls>>
     </spiderXLCY>
-
 </BasKnowledgeSpiderPattern>

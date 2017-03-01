@@ -1,4 +1,4 @@
-package GintongameSpider.SpiderMm;
+package GintongameSpider.SpiderMM;
 
 import JavaBean.BasOrganizeInfo;
 import JavaBean.BasPersonInfo;
@@ -45,7 +45,7 @@ public class SpiderMaimai {
     private static String password="123456";
     //查询的公司名称
     private static String comName="多益";
-    private static List<String> personList=new ArrayList<>();
+    private static List<String> personList=new ArrayList();
     //滚轮共滑动次数
     private static int count=30;
 
