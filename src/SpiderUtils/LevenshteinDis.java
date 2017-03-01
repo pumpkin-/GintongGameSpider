@@ -66,6 +66,7 @@ public class LevenshteinDis {
                 for (int i = 0; i < proKnowledges.size(); i++) {
                     DateInfo daa = new DateInfo();
                     daa.setDate(proKnowledges.get(i).getPtime());
+                    System.out.println(proKnowledges);
                     Date date5 = new Date((simpleDateFormat.parse(proKnowledges.get(i).getPtime()).getTime()) - (5 * (24 * 60 * 60 * 1000)));
                     dd = simpleDateFormat.format(date5);
                     daa.setDatepast(dd);

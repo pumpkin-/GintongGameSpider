@@ -1801,8 +1801,8 @@
         <mainpic>//img/@src</mainpic>>
         <type></type>>
         <source>超好玩</source>
-        <childLink join="">/dl[@class='clearfix']/dt/a/@href</childLink>>
-        <nextpage join="">$('#L_page_nextB').click()</nextpage>
+        <childLink join="">//dl[@class='clearfix']/dt/a/@href</childLink>>
+        <nextpage join="">$('.nextpagebtn')[0].click()</nextpage>
         <flag>selenium</flag>>
         <childnext join=""></childnext>>
         <chose demand=""></chose>>
@@ -1824,7 +1824,7 @@
         <mainpic>//img/@src</mainpic>>
         <type></type>>
         <source>超好玩</source>
-        <childLink join="http://www.18touch.com">//div[@class='media']/a/@href</childLink>>
+        <childLink join="http://www.18touch.com">//a[@class='col-xs-4']/@href</childLink>>
         <nextpage join="">$('#L_page_nextB').click()</nextpage>
         <flag>selenium</flag>>
         <childnext join=""></childnext>>
@@ -1838,7 +1838,7 @@
     <!--超好玩资讯速报-->
     <spiderCHWZX>
         <title>//h1/text()</title>
-        <author>//address[@class='text-center']/text()</author>
+        <author></author>
         <authorurl></authorurl>>
         <cover join="">//div[@class='Z_video_list clearfix']/a/img/@href</cover>>
         <ptime timeFormat="yyyy MM dd">//address[@class='text-center']/time/text()</ptime>>
@@ -1847,8 +1847,8 @@
         <mainpic>//img/@src</mainpic>>
         <type></type>>
         <source>超好玩</source>
-        <childLink join="http://www.18touch.com">//div[@class='Z_video_list clearfix']/a/@href</childLink>>
-        <nextpage join="">$('#L_page_nextB').click()</nextpage>
+        <childLink join="http://www.18touch.com">//div[@class='media']/a/@href</childLink>>
+        <nextpage join="">$('.nextpagebtn')[0].click()</nextpage>
         <flag>selenium</flag>>
         <childnext join=""></childnext>>
         <chose demand=""></chose>>
@@ -1866,8 +1866,8 @@
         <cover join=""></cover>>
         <ptime timeFormat="yyyy MM dd">//div[@class='txtdetail']/text()</ptime>>
         <tag></tag>>
-        <main>//div[@class='artibody']/p</main>>
-        <mainpic>//p/precding-sibling-one::div/img/@src</mainpic>>
+        <main>//div[@id='artibody']/p</main>>
+        <mainpic>//p/preceding-sibling-one::div/img/@src</mainpic>>
         <type></type>>
         <source>新浪产业频道</source>
         <childLink join="">//div[@class='leftPart']/a/@href</childLink>>
