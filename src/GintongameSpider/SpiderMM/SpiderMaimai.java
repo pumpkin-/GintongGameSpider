@@ -35,7 +35,9 @@ import java.util.regex.Pattern;
 /**
  * Created by lenovo on 2017/3/1.
  */
+
 public class SpiderMaimai {
+
     private static WebDriver driver=null;
     //脉脉账号
     private static String username="13267462575";

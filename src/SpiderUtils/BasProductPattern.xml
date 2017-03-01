@@ -44,6 +44,9 @@
         <g_desc>//div[@class='app_detail_infor']/p/text()</g_desc>
         <!--截图urls-->
         <picture>//div[@class='section-body']/div/ul/li/img/@src</picture>
+        <flag>jsoup</flag>>
+        <moreclick></moreclick>>
+        <slidingRoller></slidingRoller>>
         <!--起始页面-->
         <urls>
             <url>
@@ -78,7 +81,7 @@
         <source>安智市场</source>
 
         <!--详情页url-->
-        <detailurl>//span[@class='app_name']/a/@href</detailurl>
+        <detailurl join="">//span[@class='app_name']/a/@href</detailurl>
         <!--下一页-->
         <nextpage>//a[@class='next']/@href</nextpage>
         <!--游戏英语名字-->
@@ -327,7 +330,7 @@
     <Spider>
         <!--网站名-->
         <source>游戏观察</source>
-        <!--ContentPath-->
+        <!--ContentPath子链接拼接内容-->
         <contentPath>http://www.youxiguancha.com/file/</contentPath>
         <!--详情页url-->
         <detailurl>//ul[@class='ul_game clearfix']/li/a/@href</detailurl>
@@ -419,6 +422,125 @@
         <!--网络类型-->
         <network_type></network_type>
 
+        <!--下一页链接需要拼接的内容-->
+        <contentPathnext>http://news.yzz.cn/ku/</contentPathnext>
+        <!--游戏截图下一页需要拼接的内容-->
+        <contentPathpic></contentPathpic>>
+        <!--游戏截图下一页的xpath语句-->
+        <nextpic></nextpic>>
+        <!--选择列表页所用驱动-->
+        <flag>jsoup</flag>>
+        <!--选择详情所用驱动-->
+        <flagchild>selenium</flagchild>>
+        <!--点击更多jquery语言-->
+        <moreclick></moreclick>>
+        <!--滑动滚轮次数-->
+        <slidingRoller></slidingRoller>>
+
     </Spider>
 
+
+
+    <spiderYZZ>
+        <!--ContentPath-->
+        <contentPath></contentPath>
+        <contentPathnext>http://news.yzz.cn/ku/</contentPathnext>
+        <contentPathpic></contentPathpic>>
+        <nextpic></nextpic>>
+        <!--图标-->
+        <logo>//div[@class='bd clearfix game']/a/img/@src|//div[@class='game_info']/img/@src</logo>
+        <!--名称-->
+        <gname>//div[@class='info_hd clearfix']/a/text()|//div[@class='des']/hi[@class='tit']/text()</gname>
+        <!--版本-->
+        <version></version>
+        <!--网络类型-->
+        <network_type></network_type>
+        <!--游戏类型-->
+        <gtypes>
+            <gtype>//ul[@class='clearfix']/li[text()*='类型']/b/a/text()|//ul[@class='clearfix']/li[allText()*='类别']/a/text()</gtype>
+        </gtypes>
+        <!--分类-->
+        <sort></sort>
+        <!--时间-->
+        <web_update_time formatStr=""></web_update_time>
+        <!--大小-->
+        <game_size></game_size>
+        <!--系统-->
+        <platform></platform>
+        <!--资费-->
+        <charge_mode>//ul[@class='clearfix']/li[text()*='收费']/b/a/text()</charge_mode>
+        <!--游戏状态(研发进度)-->
+        <dpprogress>//ul[@class='clearfix']/li[text()*='状态']/b/a/text()</dpprogress>
+        <!--画面风格（游戏风格）-->
+        <gstyle></gstyle>
+        <!--画面方式-->
+        <gamespy>//ul[@class='clearfix']/li[text()*='画面']/b/a/text()</gamespy>
+        <!--开服总数-->
+        <totalServer></totalServer>
+        <!--游戏题材-->
+        <gtheme>//ul[@class='clearfix']/li[text()*='题材']/b/a/text()</gtheme>
+        <!--作者-->
+        <develop_com>//ul[@class='clearfix']/li[text()*='研发']/b/text()</develop_com>
+        <!--介绍-->
+        <g_desc>//div[@class='des']/p/text()</g_desc>
+        <!--截图urls-->
+        <picture>//ul[@class='nph_list_thumb']/li/a/img/@src</picture>
+        <flag>jsoup</flag>>
+        <flagchild>selenium</flagchild>>
+        <moreclick></moreclick>>
+        <slidingRoller></slidingRoller>>
+        <!--起始页面-->
+        <urls>
+            <url>
+                http://news.yzz.cn/ku/s-1-a0-b0-c0-d0-e0-f0-g0-h0-i0-j0-k0-l0.html
+        </url>
+        </urls>
+        <!--网站-->
+        <source>叶子猪</source>
+
+        <!--详情页url-->
+        <detailurl join="">//dl[@class='fl']/dt/a[@class='name fl']/@href</detailurl>
+        <!--下一页-->
+        <nextpage>//div[@class='page-number pageNumber']/ul[@class='clearfix']/li/a[text()*='下一页']/@href</nextpage>
+        <!--游戏英语名字-->
+        <gename></gename>
+        <!--语言-->
+        <language></language>
+        <!--发行商-->
+        <publisher></publisher>
+        <!--发行区域-->
+        <issue_area></issue_area>
+        <!--标签-->
+        <gtags></gtags>
+        <!--游戏视角-->
+        <viewpoint></viewpoint>
+        <!--游戏引擎-->
+        <engine></engine>
+        <!--游戏品级-->
+        <grade></grade>
+        <!--产品团队规模-->
+        <scale></scale>
+        <!--产品需求-->
+        <pdemand></pdemand>
+        <!--价格-->
+        <price></price>
+        <!--初版出售时间-->
+        <ptime formatStr=""></ptime>
+        <!--公测时间-->
+        <beta_time formatStr=""></beta_time>
+        <!--内测时间-->
+        <test_time formatStr=""></test_time>
+        <!--封测时间-->
+        <betatest_time formatStr=""></betatest_time>
+        <!--立项时间-->
+        <set_time formatStr=""></set_time>
+        <!--游戏官网-->
+        <web></web>
+        <!--运营商-->
+        <operator>//ul[@class='clearfix']/li[text()*='运营']/b/text()</operator>
+        <!--资料片发布时间-->
+        <films_time></films_time>
+        <!--下载链接-->
+        <download_link></download_link>
+    </spiderYZZ>
 </BasProductPattern>

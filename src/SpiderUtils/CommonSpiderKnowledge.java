@@ -47,7 +47,7 @@ public class CommonSpiderKnowledge {
     private static BugDataImpl bugDataimpl = new BugDataImpl();
 
     public static void main(String[] args) throws Exception {
-        ExecutorService pool= Executors.newSingleThreadExecutor();
+        ExecutorService pool= Executors.newFixedThreadPool(5);
         /*pool.submit(new Runnable() {
             @Override
             public void run() {
@@ -57,28 +57,28 @@ public class CommonSpiderKnowledge {
                     e.printStackTrace();
                 }
             }
+        });
+        pool.submit(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    ergodicUrl("spiderYxdg", 10, "no");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
         });*/
         pool.submit(new Runnable() {
             @Override
             public void run() {
                 try {
-                    ergodicUrl("spiderYxdg", 0, "no");
+                    ergodicUrl("spiderYmxk", 642, "no");
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         });
         /*pool.submit(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    ergodicUrl("spiderYmxk", 3, "no");
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-        pool.submit(new Runnable() {
             @Override
             public void run() {
                 try {
@@ -164,7 +164,13 @@ public class CommonSpiderKnowledge {
      * @return
      */
     public static JXDocument getJXDocument(String url) throws IOException {
-        return new JXDocument(Jsoup.connect(url).userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36").timeout(100000).get());
+        JXDocument jxDocument=null;
+        try {
+            jxDocument= new JXDocument(Jsoup.connect(url).userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36").ignoreContentType(true).ignoreHttpErrors(true).timeout(100000).get());
+        }catch (Exception e){
+            System.out.println("read time out");
+        }
+        return jxDocument;
     }
     /**
      * 解析全部配置文件 获取所有的spider节点
@@ -369,7 +375,7 @@ public class CommonSpiderKnowledge {
         for(int x=1;x<formpage;x++){
             System.out.println("Start page break");
             System.out.println("now"+"  "+x);
-            doc=listPageJsoup(doc, knowledgeSpiderConfig);
+            doc=listPageJsoup(doc, knowledgeSpiderConfig,childLink);
             i=x+1;
         }
         while(true){
@@ -390,6 +396,7 @@ public class CommonSpiderKnowledge {
                 }else{
                     childLink= details.toString();
                 }
+                System.out.println(childLink);
                 System.out.println("Get details page DOM tree");
                 JXDocument childDocumet=getJXDocument(childLink);
                 System.out.println("Start cleaning") ;
@@ -398,11 +405,18 @@ public class CommonSpiderKnowledge {
                 fg++;
             }
             System.out.println("Start storage");
-            storeToDatebaseLocal(orgflag);
+            try {
+                storeToDatebaseLocal(orgflag);
+            }catch (Exception e){
+                System.out.println("exception");
+            }
             try {
                 i++;
                 System.out.println("Start listpage");
-                doc = listPageJsoup(doc, knowledgeSpiderConfig);
+                doc = listPageJsoup(doc, knowledgeSpiderConfig,childLink);
+                if(doc==null){
+                    break;
+                }
             }catch (Exception e){
                 System.out.println("Page failure or To the last page");
                 break;
@@ -418,7 +432,7 @@ public class CommonSpiderKnowledge {
      * @throws XpathSyntaxErrorException
      * @throws IOException
      */
-    public static JXDocument listPageJsoup(JXDocument doc,KnowledgeSpiderConfig knowledgeSpiderConfig) throws XpathSyntaxErrorException, IOException {
+    public static JXDocument listPageJsoup(JXDocument doc,KnowledgeSpiderConfig knowledgeSpiderConfig,String childLink) throws XpathSyntaxErrorException, IOException {
         String nexturl=null;
         String next=null;
         next = getTagOne(doc, knowledgeSpiderConfig.nextPage.getText()).toString();
@@ -432,6 +446,9 @@ public class CommonSpiderKnowledge {
             nexturl = next.toString().replace("..", "");
         }
         JXDocument nextDocument = getJXDocument(nexturl);
+        if(nexturl.equals(childLink)){
+            nextDocument=null;
+        }
         return nextDocument;
     }
 
@@ -510,7 +527,11 @@ public class CommonSpiderKnowledge {
                 a++;
             }
             System.out.println("Start storage");
-            storeToDatebaseLocal(orgflag);
+            try {
+                storeToDatebaseLocal(orgflag);
+            }catch (Exception e){
+                System.out.println("exception");
+            }
             try {
                 i++;
                 System.out.println("Start listpage");
@@ -658,13 +679,17 @@ public class CommonSpiderKnowledge {
         //作者
         if(StringUtils.isNotEmpty(knowledgeSpiderConfig.author.getText())) {
             if (map.get("author")==null||map.get("author").size()<=1) {
-                String test[] = getTagOne(childDocumet,knowledgeSpiderConfig.author.getText()).toString().split(" ");
-                for(int y=0;y<test.length;y++) {
-                    Pattern pat = Pattern.compile(".*作者.*");
-                    Matcher mat = pat.matcher(test[y]);
-                    while(mat.find()){
-                        author=mat.group(0).replace("作者：", "").replace("频道作者：", "");
+                String test[] = getTagOne(childDocumet,knowledgeSpiderConfig.author.getText()).toString().split(" +");
+                if(test.length>1) {
+                    for (int y = 0; y < test.length; y++) {
+                        Pattern pat = Pattern.compile(".*作者.*");
+                        Matcher mat = pat.matcher(test[y]);
+                        while (mat.find()) {
+                            author = mat.group(0).replace("作者：", "").replace("频道作者：", "");
+                        }
                     }
+                }else{
+                    author=getTagOne(childDocumet,knowledgeSpiderConfig.author.getText()).toString();
                 }
             } else {
                 try {
@@ -714,7 +739,11 @@ public class CommonSpiderKnowledge {
                 }
             } else {
                 try {
-                    cover = map.get("cover").get(fg).toString();
+                    if(StringUtils.isNotEmpty(knowledgeSpiderConfig.cover.attributeValue("join"))) {
+                        cover = knowledgeSpiderConfig.cover.attributeValue("join")+map.get("cover").get(fg).toString();
+                    }else{
+                        cover=map.get("cover").get(fg).toString();
+                    }
                 }catch (Exception e){
                     cover=null;
                 }
@@ -969,11 +998,12 @@ public class CommonSpiderKnowledge {
 
 
 
-    public static void storeBugdata(String key,String value,String uuid){
+    public static void storeBugdata(String key,String value,String uuid,String source){
         BugData bugData=new BugData();
         bugData.setKey(key);
         bugData.setValue(value);
         bugData.setUuid(uuid);
+        bugData.setSource(source);
         bugDataimpl.insert(bugData);
     }
 

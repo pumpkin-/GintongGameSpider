@@ -8,6 +8,15 @@ public class BugData {
     private String key;
     private String value;
     private String exception;
+    private String source;
+
+    public String getSource() {
+        return source;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
+    }
 
     public String getUuid() {
         return uuid;
