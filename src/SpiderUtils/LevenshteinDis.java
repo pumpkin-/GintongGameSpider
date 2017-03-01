@@ -149,6 +149,7 @@ public class LevenshteinDis {
                                 i = i - 1;
                                 break;
                             } else if (dis > 0.95) {
+
                                 CommonSpiderKnowledge.storeBugdata(essay, aticle, list.get(i).getUuid(),proKnowledges.get(i).getSource());
                                 proKnowledges.remove(i);
                                 basPersonInfos.remove(i);

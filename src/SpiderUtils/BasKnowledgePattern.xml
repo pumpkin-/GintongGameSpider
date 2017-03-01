@@ -1779,8 +1779,8 @@
         <type></type>>
         <source>超好玩</source>
         <childLink join="http://www.18touch.com">//div[@class='media']/a/@href</childLink>>
-        <nextpage join="http://www.18touch.com">//a[allText()*='下一页']/@href</nextpage>
-        <flag>jsoup</flag>>
+        <nextpage join="">$('#L_page_nextB').click()</nextpage>
+        <flag>selenium</flag>>
         <childnext join=""></childnext>>
         <chose demand=""></chose>>
         <urls>
@@ -1802,7 +1802,7 @@
         <type></type>>
         <source>超好玩</source>
         <childLink join="">/dl[@class='clearfix']/dt/a/@href</childLink>>
-        <nextpage join="">//a[text()*='下一页']/@href</nextpage>
+        <nextpage join="">$('#L_page_nextB').click()</nextpage>
         <flag>selenium</flag>>
         <childnext join=""></childnext>>
         <chose demand=""></chose>>
@@ -1825,7 +1825,7 @@
         <type></type>>
         <source>超好玩</source>
         <childLink join="http://www.18touch.com">//div[@class='media']/a/@href</childLink>>
-        <nextpage join="http://www.18touch.com/category/news">//a[text()*='下一页']/@href</nextpage>
+        <nextpage join="">$('#L_page_nextB').click()</nextpage>
         <flag>selenium</flag>>
         <childnext join=""></childnext>>
         <chose demand=""></chose>>
@@ -1848,7 +1848,7 @@
         <type></type>>
         <source>超好玩</source>
         <childLink join="http://www.18touch.com">//div[@class='Z_video_list clearfix']/a/@href</childLink>>
-        <nextpage join="http://www.18touch.com">//a[text()*='下一页']/@href</nextpage>
+        <nextpage join="">$('#L_page_nextB').click()</nextpage>
         <flag>selenium</flag>>
         <childnext join=""></childnext>>
         <chose demand=""></chose>>

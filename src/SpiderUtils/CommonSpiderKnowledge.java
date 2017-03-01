@@ -454,6 +454,8 @@ public class CommonSpiderKnowledge {
             nexturl = next.toString().replace("..", "");
         }
         JXDocument nextDocument = getJXDocument(nexturl);
+        System.out.println(childLink);
+        System.out.println(nexturl);
         if(nexturl.equals(childLink)){
             nextDocument=null;
         }
