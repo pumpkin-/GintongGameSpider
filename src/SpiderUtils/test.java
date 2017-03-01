@@ -120,6 +120,13 @@ public class test {
 //        }
 
 
+
+//        String url="http://www.18touch.com/walkthrough/new/page/1";
+//        org.jsoup.nodes.Document doc1=Jsoup.connect(url)
+//                         .userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36").ignoreContentType(true).get();
+//        JXDocument jxDocument=new JXDocument(doc1);
+//        System.out.println(doc1.outerHtml());
+
 //jsoup查看网页源码
 //http://chanye.07073.com/     http://chanye.07073.com/shuju/1560716.html
 //      org.jsoup.nodes.Document doc1=Jsoup.connect("http://www.gamekezhan.com/news/c16-p1.html")
@@ -183,19 +190,20 @@ public class test {
 
 
 
-        //System.out.println(jxDocument.sel("//div[@class='page-number pageNumber']/ul[@class='clearfix']/li/a[text()*='下一页']/@href"));
 
-
-
+        System.setProperty("webdriver.chrome.driver",SpiderContant.chromeWindowsPath );
+        WebDriver driver=new ChromeDriver();
+        driver.get("http://games.sina.cn/pc/newslist.d.html?cid=35435,35434,35436,35437,35439,35440,35441&page=1&pagesize=53");
 
 
         /*System.setProperty("webdriver.chrome.driver",SpiderContant.chromeWindowsPath );
         WebDriver driver=new ChromeDriver();
         driver.get("http://news.yzz.cn/ku/hlsgsd/");
+>>>>>>> aab6a92320762dfc69834479f358aa63c4613fe6
         WebElement webElement=driver.findElement(By.xpath("/html"));
         org.jsoup.nodes.Document doc=Jsoup.parse(webElement.getAttribute("outerHTML"));
         JXDocument jxDocument=new JXDocument(doc);
-        System.out.println(doc.outerHtml());*/
+        System.out.println(doc.outerHtml());
 
 
 //        System.setProperty("webdriver.chrome.driver",SpiderContant.chromeWindowsPath );
@@ -228,6 +236,13 @@ public class test {
         JSONObject json = new JSONObject(true);
         //JSON json1= com.sun.org
         System.out.println(body);*/
+
+
+
+
+
+
+
 
     }
 

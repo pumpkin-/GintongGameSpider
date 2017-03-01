@@ -1,4 +1,4 @@
-package GintongameSpider.SpiderMm;
+package GintongameSpider.SpiderMM;
 
 import JavaBean.BasOrganizeInfo;
 import JavaBean.BasPersonInfo;
@@ -12,6 +12,8 @@ import dao.PerOrganizeDao;
 import dao.impl.BasOrganizeInfoImpl;
 import dao.impl.BasPersonInfoImpl;
 import dao.impl.PerOrganizeImpl;
+
+
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
