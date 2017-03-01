@@ -72,7 +72,7 @@ public class CommonSpiderKnowledge {
             @Override
             public void run() {
                 try {
-                    ergodicUrl("spiderYmxk", 52, "no");
+                    ergodicUrl("spiderYmxk", 448, "no");
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -982,11 +982,12 @@ public class CommonSpiderKnowledge {
 
 
 
-    public static void storeBugdata(String key,String value,String uuid){
+    public static void storeBugdata(String key,String value,String uuid,String source){
         BugData bugData=new BugData();
         bugData.setKey(key);
         bugData.setValue(value);
         bugData.setUuid(uuid);
+        bugData.setSource(source);
         bugDataimpl.insert(bugData);
     }
 
