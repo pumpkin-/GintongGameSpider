@@ -16,8 +16,8 @@ import org.openqa.selenium.chrome.ChromeDriver;
  */
 public class SpiderWm {
     public static void main(String[] args){
-        String username="";
-        String password="";
+        String username="15711490906";
+        String password="a19941031";
         System.setProperty("webdriver.chrome.driver", SpiderContant.chromeWindowsPath);
         WebDriver driver=new ChromeDriver();
         String url="http://weibo.com/login.php";
