@@ -17,7 +17,7 @@ public class SpiderXpath {
             @Override
             public void run() {
                 try {
-                    CommonSpiderKnowledge.ergodicUrl("spiderGameKZ",0,"no");
+                    CommonSpiderKnowledge.ergodicUrl("spiderVR",0,"no");
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
