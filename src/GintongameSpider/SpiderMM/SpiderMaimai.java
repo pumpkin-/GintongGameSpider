@@ -3,8 +3,11 @@ package GintongameSpider.SpiderMM;
 import JavaBean.BasOrganizeInfo;
 import JavaBean.BasPersonInfo;
 import JavaBean.PerOrganize;
+import MaiMaiDataParser.Contact;
+import MaiMaiDataParser.Contacts;
 import MaiMaiDataParser.Maimai;
 import SpiderUtils.SpiderContant;
+import cn.wanghaomiao.xpath.model.JXDocument;
 import com.google.gson.Gson;
 import dao.BasOrganizeInfoDao;
 import dao.BasPersonInfoDao;
@@ -12,35 +15,67 @@ import dao.PerOrganizeDao;
 import dao.impl.BasOrganizeInfoImpl;
 import dao.impl.BasPersonInfoImpl;
 import dao.impl.PerOrganizeImpl;
-
-
-
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import org.openqa.selenium.*;
+import org.jsoup.select.Elements;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import sun.nio.cs.UnicodeEncoder;
 
-import java.net.URLDecoder;
-import java.net.URLEncoder;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Created by lenovo on 2017/1/16.
+ * Created by lenovo on 2017/3/1.
  */
 
-class SpiderMm {
-    private static WebDriver driver=null;
-    private static String username="13267462575";
-    private static String password="123456";
+public class SpiderMaimai {
 
+    private static WebDriver driver=null;
+    //脉脉账号
+    private static String username="13267462575";
+    //脉脉密码
+    private static String password="123456";
+    //查询的公司名称
+    private static String comName="多益";
+    private static List<String> personList=new ArrayList();
+    //滚轮共滑动次数
+    private static int count=30;
+
+    public static void getPerUrl(WebDriver driver,String comName,int count) throws Exception {
+        String comUrl="https://maimai.cn/web/search_center?type=contact&query="+comName+"&highlight=true";
+        driver.get(comUrl);
+        WebElement webElementMain = driver.findElement(By.xpath("/html"));
+        Document docMain = Jsoup.parse(webElementMain.getAttribute("outerHTML"));
+        for(int i=0;i<count;i++) {
+            docMain = slidingRoller(driver);
+            System.out.println("请稍等正在获取数据!滚轮已滑动"+(i+1)+"次，共"+count+"次");
+            Thread.sleep(1000);
+        }
+        Elements elements=docMain.select("div.media-left");
+        for(Element element:elements){
+            String tag=element.attr("data-reactid").split("\\$")[1].split("\\.")[0];
+            String url="https://maimai.cn/contact/detail/"+tag;
+            personList.add(url);
+            System.out.println(url);
+        }
+    }
+
+    public static Document slidingRoller(WebDriver driver) throws InterruptedException {
+        JavascriptExecutor executornext = (JavascriptExecutor) driver;
+        executornext.executeScript("document.body.scrollTop='300000'");
+        Thread.sleep(2000);
+        WebElement webElement=driver.findElement(By.xpath("/html"));
+        Document nextDocument=Jsoup.parse(webElement.getAttribute("outerHTML"));
+        return nextDocument;
+    }
 
 
 
@@ -52,11 +87,13 @@ class SpiderMm {
         return driver;
     }
 
-    public static void getPerInfoDataByList(List<String> urls) throws InterruptedException {
+    public static void getPerInfoDataByList(List<String> urls) throws Exception {
         WebDriver driver =getWebDriver();
         login(username,password);
+        getPerUrl(driver,comName,count);
         for(String url: urls) {
             getPerInfoDataByUrl(driver, url);
+            Thread.sleep(8000);
         }
         closeWebDriver();
     }
@@ -64,6 +101,7 @@ class SpiderMm {
     public static void closeWebDriver() {
         driver.close();
         System.exit(0);
+        personList.clear();
     }
 
     public static void login(String username,String password) throws InterruptedException {
@@ -94,87 +132,7 @@ class SpiderMm {
 
 
 
-//            driver.get(url);
-//            WebElement webElementMain = driver.findElement(By.xpath("/html"));
-//            Document docMain = Jsoup.parse(webElementMain.getAttribute("outerHTML"));
-//            BasPersonInfoDao basPersonInfoDao=new BasPersonInfoImpl();
-//            String uuid= UUID.randomUUID().toString();
-//
-//            //System.out.println(docMain.outerHtml());
-//
-//            //姓名
-//            String name=docMain.select("#react_app > div > div.PCcontainer.clearfix > div.PCcontent.float-l > div > div.list-group-item > div > dl:nth-child(2) > dd:nth-child(2) > span > span").text();
-//            //公司职位
-//            String job=docMain.select("#react_app > div > div.PCcontainer.clearfix > div.PCcontent.float-l > div > div.list-group-item > div > dl:nth-child(2) > dd:nth-child(3) > span:nth-child(1)").text();
-//            //工作类型
-//            String jobStyle=docMain.select("#react_app > div > div.PCcontainer.clearfix > div.PCcontent.float-l > div > div.list-group-item > div > dl:nth-child(2) > dd:nth-child(4) > span:nth-child(1)").text();
-//            //电话
-//            String telephone=docMain.select("#react_app > div > div.PCcontainer.clearfix > div.PCcontent.float-l > div > div.list-group-item > div > dl:nth-child(3) > dd:nth-child(2) > span").text();
-//            //地区
-//            String address=docMain.select("#react_app > div > div.PCcontainer.clearfix > div.PCcontent.float-l > div > div.list-group-item > div > dl:nth-child(3) > dd:nth-child(3) > span").text();
-//            //邮箱
-//            String email=docMain.select("#react_app > div > div.PCcontainer.clearfix > div.PCcontent.float-l > div > div.list-group-item > div > dl:nth-child(3) > dd:nth-child(4) > span").text();
-//            //影响力
-//            String effect=docMain.select("#react_app > div > div.PCcontainer.clearfix > div.PCcontent.float-l > div > div.list-group-item > div > dl:nth-child(2) > dd:nth-child(4) > span.text-primary").text();
-//            System.out.println("基本信息："+name+"-"+job+"-"+jobStyle+"-"+telephone+"-"+address+"-"+email+"-"+effect);
-//            //工作经历
-//            //工作地点名称
-//            String type=docMain.select("div.panel-default").attr("data-reactid").split(":")[0];
-//                String[] workNames = docMain.select("div[data-reactid="+type+":$work] div[class=media-left cursor-pointer] div.title").text().split(" ");
-//                //工作时间
-//                String[] workTypes = docMain.select("div[data-reactid="+type+":$work] div[class=media-left cursor-pointer] span[class=text-muted small]").text().split(" ");
-//                //公司类型
-//                String[] comTypes = docMain.select("div[data-reactid="+type+":$work] div[class=media-left cursor-pointer] div[class=text-content short-text]").text().split(" ");
-//                for(int i=0;i<workNames.length;i++){
-//                    String workName=workNames[i];
-//                    String workDate=workTypes[i].split("，")[0];
-//                    String workType=workTypes[i].split("，")[1];
-//                    String comType=comTypes[i];
-//                    System.out.println("工作经历："+workName+"****"+workDate+"*****"+workType+"*****"+comType);
-//                }
-//
-//            //教育经历
-//                String[] eduNames = docMain.select("div[data-reactid="+type+":$edu] div[class=media-left cursor-pointer] div.title").text().split(" ");
-//                //工作时间
-//                String[] eduTypes = docMain.select("div[data-reactid="+type+":$edu] div[class=media-left cursor-pointer] span[class=text-muted small]").text().split(" ");
-//                //公司类型
-//                for(int i=0;i<eduNames.length;i++){
-//                    String eduName=eduNames[i];
-//                    String eduDate=eduTypes[i].split("，")[0];
-//                    String eduMajor=eduTypes[i].split("，")[1];
-//                    String eduLev=eduTypes[i].split("，")[2];
-//                    System.out.println("教育经历："+eduName+"-"+eduDate+"-"+eduMajor+"-"+eduLev);
-//                }
-//
-//            //更多资料
-//            String tag=docMain.select("div.panel-default").attr("data-reactid").split(":")[0].replace(".8",".9");
-//            System.out.println("tag------"+tag);
-//            String other=docMain.select("div[data-reactid="+tag+"] div[class=media list-group-item-heading list-group-item-text]").text();
-//            System.out.println("other---------"+other);
-//
-//
-//            //标签
-//            String tagOne=docMain.select("div.panel-default").attr("data-reactid").split(":")[0].replace(".8",".b");
-//            System.out.println("tagOne-------------"+tagOne);
-//            String flag=docMain.select("div[data-reactid="+tagOne+"] span b[style=float:left;height:32px;line-height:20px;padding:6px 8px;font-weight:normal;color:#ffffff;]").text();
-//            System.out.println("flag--------------"+flag);
-//
-//            //服务
-//            String tagTwo=docMain.select("div.panel-default").attr("data-reactid").split(":")[0].replace(".8",".c");
-//            String service=docMain.select("div[data-reactid="+tagTwo+"] div.ascInfo").text();
-//            System.out.println(service);
-//
-//        Set<Cookie> cookies=driver.manage().getCookies();
-//        System.out.println("cookies------>"+cookies);
-//        Map<String,Set> map=new HashMap();
-//        map.put("cookies",cookies);
-//        org.jsoup.Connection.Response res = Jsoup.connect("https://maimai.cn/contact/detail/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1IjozMDU4Nzg2LCJsZXZlbCI6MX0.00WZZ-W-x7yNWdvsS_k81qco3Fhi-HG73QUt9dQub-Q?from=webview%23%2Fweb%2Fsearch_center")
-//                .data("m","13267462575","p","123456")
-//                .userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36")
-//                .timeout(200000).ignoreHttpErrors(true).ignoreContentType(true).execute();
-//        System.out.println(res.cookies());
-//       // System.out.println(res.body());
-//        Gson gson = new Gson();
+
 
 
     public static void getPerInfoDataByUrl(WebDriver driver, String perInfoUrl) throws InterruptedException {
@@ -182,6 +140,7 @@ class SpiderMm {
         WebElement webElementMain = driver.findElement(By.xpath("/html"));
         Document docMain = Jsoup.parse(webElementMain.getAttribute("outerHTML"));
         String uuid= UUID.randomUUID().toString();
+
 
         //HTML文本信息
         String main=docMain.outerHtml().split("JSON\\.parse\\(\"")[1].split("\"\\)\\;\\<\\/script\\>")[0];
@@ -233,6 +192,7 @@ class SpiderMm {
         basPersonInfo.setProvince(province);
         basPersonInfo.setCity(city);
         basPersonInfoDao.insertPerInfo(basPersonInfo);
+        System.out.println(name+":数据入库成功！");
 
 
 
@@ -292,10 +252,6 @@ class SpiderMm {
     }
 
     public static void main(String args[]) throws Exception {
-        List<String> urls=new ArrayList<String>();
-        urls.add("https://maimai.cn/contact/detail/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1IjozMDU4Nzg2LCJsZXZlbCI6MX0.00WZZ-W-x7yNWdvsS_k81qco3Fhi-HG73QUt9dQub-Q?from=webview%23%2Fweb%2Fsearch_center");
-        urls.add("https://maimai.cn/contact/detail/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1Ijo2NTU2OTIsImxldmVsIjoxfQ.F3FIQONf8gf_QIeNYSPb9YsrbY25BUKFlNpZa8mVRh4?from=webview%23%2Fweb%2Fsearch_center");
-        SpiderMm.getPerInfoDataByList(urls);
+        getPerInfoDataByList(SpiderMaimai.personList);
     }
 }
-

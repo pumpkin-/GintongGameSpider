@@ -79,7 +79,14 @@ public class test {
         System.out.println("作者：" + title.getText());//获取元素值
         System.out.println("出版社："+urls.getText());
         System.out.println();*/
-
+//
+//        System.setProperty("webdriver.chrome.driver",SpiderContant.chromeWindowsPath);
+//        WebDriver driver=new ChromeDriver();
+//        driver.get("https://maimai.cn/login");
+//        Thread.sleep(10000);
+//        driver.get("https://maimai.cn/web/search_center?type=contact&query=%E5%A4%9A%E7%9B%8A&highlight=true");
+//        WebElement webElement=driver.findElement(By.xpath("/html"));
+//        System.out.println(Jsoup.parse(webElement.getAttribute("outerHTML")));
 
 
 
@@ -129,20 +136,46 @@ public class test {
 
 //jsoup查看网页源码
 //http://chanye.07073.com/     http://chanye.07073.com/shuju/1560716.html
+
       org.jsoup.nodes.Document doc1=Jsoup.connect("http://news.xinhuanet.com/local/2017-03/01/c_1120547441.htm")
                           .userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36")
                          .get();
      System.out.println(doc1.outerHtml());
+
+//
+//       org.jsoup.nodes.Document doc1=Jsoup.connect("http://games.sina.com.cn/y/n/2017-03-01/fycaafp1372689.shtml")
+//                          .userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64thread_702254.html) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36")
+//                         .get();
+//     System.out.println(doc1.outerHtml());
+
+
+
+
+//        System.setProperty("webdriver.chrome.driver",SpiderContant.chromeWindowsPath );
+//        WebDriver driver=new ChromeDriver();
+//        driver.get("http://www.gameres.com/zuixin_1.html");
+
+
+//      org.jsoup.nodes.Document doc1=Jsoup.connect("http://news.52pk.com/cyyw/20170216/6929920.shtml")
+//
+//                          .userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36")
+//                         .get();
+//        JXDocument jxDocument=new JXDocument(doc1);
+//
+//     System.out.println(jxDocument.selOne("//div[@class='lt contentl']/h1/text()"));
+
+
+
 //        JXDocument jxDocument=new JXDocument(doc1);
 //        System.out.println(jxDocument.sel("//div[@class='page']/a[allText()*='>']/@href"));
 
 //        http://www.gamerbbs.cn/news/1706.html
 //        http://www.gamerbbs.cn/news/1707.html
 
-        /*org.jsoup.nodes.Document doc1=Jsoup.connect("http://news.yzz.cn/ku/shsj/#p=503_132712_713ea.jpg")
-                         .userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36").ignoreContentType(true).get();
-        JXDocument jxDocument=new JXDocument(doc1);
-        System.out.println(doc1.outerHtml());*/
+//        org.jsoup.nodes.Document doc1=Jsoup.connect("http://games.sina.com.cn/y/n/2017-03-01/fycaafp1372689.shtml")
+//                         .userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36").ignoreContentType(true).get();
+//        JXDocument jxDocument=new JXDocument(doc1);
+//        System.out.println(doc1.outerHtml());
 
 
 
@@ -209,6 +242,7 @@ public class test {
 //        System.setProperty("webdriver.chrome.driver",SpiderContant.chromeWindowsPath );
 //        WebDriver driver=new ChromeDriver();
 //        driver.get("http://www.html5dw.com/news");
+>>>>>>> d32140d7c5fb572cc6949998fd580002d3e38e94
 //        WebElement webElement=driver.findElement(By.xpath("/html"));
 //        org.jsoup.nodes.Document doc=Jsoup.parse(webElement.getAttribute("outerHTML"));
 //        JXDocument jxDocument=new JXDocument(doc);

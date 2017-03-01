@@ -21,21 +21,21 @@ import java.io.IOException;
  */
 public class TextGame {
     public static void main(String [] args) throws XpathSyntaxErrorException, IOException {
-//        System.setProperty("webdriver.chrome.driver", SpiderContant.chromeWindowsPath );
-//        WebDriver driver= new ChromeDriver();
-//        driver.get("http://cy.40407.com/xinwenchanye/107447.html");
-//        WebElement web = driver.findElement(By.xpath("/html"));
-//        String html = web.getAttribute("outerHTML");
-//        Document doc = Jsoup.parse(html);
-//       System.out.println(doc.outerHtml());
+        System.setProperty("webdriver.chrome.driver", SpiderContant.chromeWindowsPath );
+        WebDriver driver= new ChromeDriver();
+        driver.get("http://games.sina.com.cn/y/n/2017-03-01/fycaafp1372689.shtml");
+        WebElement web = driver.findElement(By.xpath("/html"));
+        String html = web.getAttribute("outerHTML");
+        Document doc = Jsoup.parse(html);
+       System.out.println(doc.outerHtml());
 //        JXDocument document=new JXDocument(doc);
 //           System.out.println(document.sel(""));
 
-        try {
-            CommonSpiderKnowledge.ergodicUrl("spider40407CY", 109, "no");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        try {
+//            CommonSpiderKnowledge.ergodicUrl("spider40407CY", 109, "no");
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
 
 
         //String html = "<html><head><title>开源中国社区</title></head>"
