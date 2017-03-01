@@ -4,9 +4,9 @@
 <mapper namespace="com.gintongame.mapping.BugDataMapper">
 
     <insert id="insert" parameterType="java.lang.String" useGeneratedKeys="true" >
-        insert into bug_data(uuid,`key`,`value`,exception)
+        insert into bug_data(uuid,`key`,`value`,exception,source)
         values
-            (#{uuid},#{key},#{value},#{exception})
+            (#{uuid},#{key},#{value},#{exception},#{source})
 
     </insert>
 
