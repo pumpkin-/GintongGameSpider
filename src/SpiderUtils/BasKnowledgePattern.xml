@@ -1759,7 +1759,7 @@
     <!--互联网沙龙   刘雪明3.1-->
     <spiderTX>
         <!--详情页标题-->
-        <title>//div[@class='bt']/div</title>
+        <title>//div[@class='bt']/div/text()</title>
         <!--作者-->
         <author></author>
         <authorurl></authorurl>>
