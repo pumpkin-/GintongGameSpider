@@ -1,13 +1,31 @@
 package SpiderUtils;
 
+import org.dom4j.Document;
+import org.dom4j.DocumentException;
+import org.dom4j.io.SAXReader;
+import org.jsoup.nodes.Element;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
+
 /**
  * Created by lenovon on 2017/3/1.
  */
 public class BasCommonKnowledgeSpider {
-
+    //1.获取配置文件 xml是什么？怎么写？用处是什么？
+    public static KnowledgeSpiderConfig praseXmlContentByWebName(String webName) throws FileNotFoundException, DocumentException {
+        SAXReader saxReader=new SAXReader();
+//        通过SAXReader读取解析的xml文件
+        Document doc=saxReader.read(new FileInputStream(SpiderUtils.class.getClassLoader().getResource("SpiderData/BasCommonKnowledgePattern.xml").getFile()));
+//        获取xml中的根元素
+        Element element= (Element) doc.getRootElement();
+        KnowledgeSpiderConfig knowledgeSpiderConfig=new KnowledgeSpiderConfig();
+        return knowledgeSpiderConfig;
+    }
     public static void main(String[] args) {
-        //1.获取配置文件 xml是什么？怎么写？用处是什么？
-//        public static void get
+
+
         //2.解析配置文件  dom4j -> SAXReader
         //3.装载到List
         //4.遍历
