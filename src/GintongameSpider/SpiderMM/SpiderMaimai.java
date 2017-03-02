@@ -1,4 +1,4 @@
-package GintongameSpider.SpiderMM;
+package GintongameSpider.SpiderMm;
 
 import JavaBean.BasOrganizeInfo;
 import JavaBean.BasPersonInfo;
