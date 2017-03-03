@@ -17,17 +17,7 @@ public class SpiderGameData {
         try {
 
 
-
-
-
-
-
-
-
-
-
-
-
+            CommonSpiderKnowledge.ergodicUrl("spiderZOL", 0, "no");
         } catch (Exception e) {
             e.printStackTrace();
         }

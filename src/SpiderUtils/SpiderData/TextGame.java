@@ -15,19 +15,25 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 import java.io.IOException;
+import java.util.Date;
 
 /**
  * Created by 123 on 2017/2/23.
  */
 public class TextGame {
     public static void main(String [] args) throws XpathSyntaxErrorException, IOException {
+
+        //
         System.setProperty("webdriver.chrome.driver", SpiderContant.chromeWindowsPath );
         WebDriver driver= new ChromeDriver();
-        driver.get("http://games.sina.com.cn/y/n/2017-03-01/fycaafp1372689.shtml");
+        driver.get("http://syt.4399.cn/game/hot/1.html");
         WebElement web = driver.findElement(By.xpath("/html"));
         String html = web.getAttribute("outerHTML");
         Document doc = Jsoup.parse(html);
-       System.out.println(doc.outerHtml());
+        JXDocument js=new JXDocument(doc);
+        System.out.println(js.sel("//ul[@class='fgl_gamehot_ul j-gamehover clearfix']/li/a/@href"));
+
+
 //        JXDocument document=new JXDocument(doc);
 //           System.out.println(document.sel(""));
 

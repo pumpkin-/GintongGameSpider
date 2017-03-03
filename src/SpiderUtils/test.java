@@ -165,10 +165,11 @@ public class test {
 //        http://www.gamerbbs.cn/news/1706.html
 //        http://www.gamerbbs.cn/news/1707.html
 
-        org.jsoup.nodes.Document doc1=Jsoup.connect("http://games.sina.com.cn/y/n/2017-03-01/fycaafp1372689.shtml")
+        org.jsoup.nodes.Document doc1=Jsoup.connect("http://shouyou.replays.net/index.php?/games/0-0-0-0-0-0-0-0-0-0-0-")
                          .userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36").ignoreContentType(true).get();
-        JXDocument jxDocument=new JXDocument(doc1);
-        System.out.println(doc1.outerHtml());
+        JXDocument jx=new JXDocument(doc1);
+        System.out.println(doc1);
+        System.out.println(jx.sel("//a[text()*='下一页']/@href"));
 
 
 

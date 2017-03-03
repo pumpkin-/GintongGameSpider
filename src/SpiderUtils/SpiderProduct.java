@@ -36,7 +36,7 @@ import java.util.concurrent.Executors;
 public class SpiderProduct {
 
     public static void main(String[] args) throws Exception {
-        ergodicUrl("spiderYZZ",0);
+        ergodicUrl("SpiderRPYX",0);
     }
 
     /**
@@ -532,7 +532,7 @@ class Spider{
         }
     }
 
-    public static JXDocument listPageJsoup(JXDocument doc){
+        public static JXDocument listPageJsoup(JXDocument doc){
         String next=null;
         //进入下一页
         try{
@@ -540,6 +540,7 @@ class Spider{
             try {
                 //若获取下一页失败，则停止当前线程
                 nextUrl = doc.sel(map.get("nextpage").toString()).get(0).toString();
+                System.out.println(nextUrl);
             }catch (Exception e){
                 return doc;
             }

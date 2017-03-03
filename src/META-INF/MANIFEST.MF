@@ -16,4 +16,5 @@ Class-Path: cglib-nodep-2.1_3.jar commons-codec-1.9.jar commons-collec
  core-1.3.2.jar classes12.jar db2java.jar mysql.jar Opta.jar SQL Serve
  r 2000 JDBC.jar gson-2.7.jar jsoup-1.8.1.jar mybatis-3.2.7.jar dom4j-
  1.6.1.jar jaxen-1.1-beta-7.jar sitemesh-2.2.1.jar
+Main-Class: SpiderUtils.SpiderData.Hello
 
