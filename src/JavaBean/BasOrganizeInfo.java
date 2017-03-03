@@ -19,7 +19,7 @@ public class BasOrganizeInfo {
     private String url;
     private String uuid;
     private String type;
-    private String financing_info;
+    private String financing_round;
     private String picture;
     private String development_history;
     private String financing_stage;
@@ -194,11 +194,11 @@ public class BasOrganizeInfo {
     }
 
     public String getFinancing_info() {
-        return financing_info;
+        return financing_round;
     }
 
     public void setFinancing_info(String financing_info) {
-        this.financing_info = financing_info;
+        this.financing_round = financing_info;
     }
 
     public String getPicture() {
