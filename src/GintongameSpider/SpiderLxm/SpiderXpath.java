@@ -13,21 +13,11 @@ public class SpiderXpath {
     public static void main(String[] args){
         ExecutorService pool= Executors.newSingleThreadExecutor();
 
-        pool.submit(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    CommonSpiderKnowledge.ergodicUrl("spiderVR",0,"no");
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
 //        pool.submit(new Runnable() {
 //            @Override
 //            public void run() {
 //                try {
-//                    CommonSpiderKnowledge.ergodicUrl("spiderYouXiPing",153,"no");
+//                    CommonSpiderKnowledge.ergodicUrl("spiderTX",0,"no");
 //                } catch (Exception e) {
 //                    e.printStackTrace();
 //                }
@@ -37,12 +27,113 @@ public class SpiderXpath {
 //            @Override
 //            public void run() {
 //                try {
-//                    CommonSpiderKnowledge.ergodicUrl("spiderSYJZ",0,"no");
+//                    CommonSpiderKnowledge.ergodicUrl("spiderShouYou",0,"no");
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        });
+//        pool.submit(new Runnable() {
+//            @Override
+//            public void run() {
+//                try {
+//                    CommonSpiderKnowledge.ergodicUrl("spiderGameBBS",0,"no");
 //                } catch (Exception e) {
 //                    e.printStackTrace();
 //                }
 //            }
 //        });
 //
+//        pool.submit(new Runnable() {
+//            @Override
+//            public void run() {
+//                try {
+//                    CommonSpiderKnowledge.ergodicUrl("spider522k",0,"no");
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        });
+//        pool.submit(new Runnable() {
+//            @Override
+//            public void run() {
+//                try {
+//                    CommonSpiderKnowledge.ergodicUrl("spiderHtml5",0,"no");
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        });
+//        pool.submit(new Runnable() {
+//            @Override
+//            public void run() {
+//                try {
+//                    CommonSpiderKnowledge.ergodicUrl("spiderDianKJ",0,"no");
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        });
+//        pool.submit(new Runnable() {
+//            @Override
+//            public void run() {
+//                try {
+//                    CommonSpiderKnowledge.ergodicUrl("spiderGameKZ",0,"no");
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        });
+//        pool.submit(new Runnable() {
+//            @Override
+//            public void run() {
+//                try {
+//                    CommonSpiderKnowledge.ergodicUrl("spiderVR",0,"no");
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        });
+//        pool.submit(new Runnable() {
+//            @Override
+//            public void run() {
+//                try {
+//                    CommonSpiderKnowledge.ergodicUrl("spiderYXH",0,"no");
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        });
+//        pool.submit(new Runnable() {
+//            @Override
+//            public void run() {
+//                try {
+//                    CommonSpiderKnowledge.ergodicUrl("spiderDN",0,"no");
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        });
+//        pool.submit(new Runnable() {
+//            @Override
+//            public void run() {
+//                try {
+//                    CommonSpiderKnowledge.ergodicUrl("spiderKC",0,"no");
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        });
+//        pool.submit(new Runnable() {
+//            @Override
+//            public void run() {
+//                try {
+//                    CommonSpiderKnowledge.ergodicUrl("spiderTX",22,"no");
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        });
+
     }
 }
