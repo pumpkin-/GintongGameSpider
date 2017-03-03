@@ -30,6 +30,32 @@ public class BasOrganizeInfo {
     private String scale;
     private String introduce;
     private String item;
+    private String financing_total;
+    private String business_plan;
+
+    public String getItem() {
+        return item;
+    }
+
+    public void setItem(String item) {
+        this.item = item;
+    }
+
+    public String getFinancing_total() {
+        return financing_total;
+    }
+
+    public void setFinancing_total(String financing_total) {
+        this.financing_total = financing_total;
+    }
+
+    public String getBusiness_plan() {
+        return business_plan;
+    }
+
+    public void setBusiness_plan(String business_plan) {
+        this.business_plan = business_plan;
+    }
 
     public String getIntroduce() {
         return introduce;

@@ -13,9 +13,9 @@
     </insert>
     <!--单条插入 丁全彬-->
     <insert id="insertSingle" parameterType="JavaBean.BasOrganizeInfo"  useGeneratedKeys="true">
-        insert into bas_organize_info(oname,ename,shortname,fullname,web,con_way,industry,scale,introduce,address,logo,stime,other,source,url,uuid,financing_info,picture,development_history,financing_stage,company_nature,corporate_culture,tag,management_field)
+        insert into bas_organize_info(oname,ename,shortname,fullname,web,con_way,industry,scale,introduce,address,logo,stime,other,source,url,uuid,financing_info,picture,development_history,financing_stage,company_nature,corporate_culture,tag,management_field,financing_tota,business_plan)
         values
-        (#{oname},#{ename},#{shortname},#{fullname},#{web},#{con_way},#{industry},#{scale},#{introduce},#{address},#{logo},#{stime},#{other},#{source},#{url},#{uuid},#{financing_info},#{picture},#{development_history},#{financing_stage},#{company_nature},#{corporate_culture},#{tag},#{management_field})
+        (#{oname},#{ename},#{shortname},#{fullname},#{web},#{con_way},#{industry},#{scale},#{introduce},#{address},#{logo},#{stime},#{other},#{source},#{url},#{uuid},#{financing_round},#{picture},#{development_history},#{financing_stage},#{company_nature},#{corporate_culture},#{tag},#{management_field},#{financing_tota},#{business_plan})
 
     </insert>
 

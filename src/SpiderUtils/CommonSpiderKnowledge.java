@@ -455,7 +455,7 @@ public class CommonSpiderKnowledge {
         } else {
             nexturl = next.toString().replace("..", "");
         }
-        if(oldurl.equals(nexturl)){
+        if(nexturl.equals(oldurl)){
             nextDocument=null;
         }else{
             nextDocument = getJXDocument(nexturl);
