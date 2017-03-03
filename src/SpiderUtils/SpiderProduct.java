@@ -116,7 +116,7 @@ public class SpiderProduct {
             //大小
             String game_size=target.selectSingleNode("//"+targetNode+"/game_size").getText();
             //系统
-            List<Element> platforms=target.selectNodes("//"+targetNode+"/platform");
+            List<Element> platforms=target.selectNodes("//" + targetNode + "/platform");
             //资费
             String charge_mode=target.selectSingleNode("//"+targetNode+"/charge_mode").getText();
             //作者
@@ -130,7 +130,7 @@ public class SpiderProduct {
             //下一页
             String nextpage=target.selectSingleNode("//"+targetNode+"/nextpage").getText();
             //游戏类型
-            List gtypes=target.selectNodes("//"+targetNode+"//gtype");
+            List gtypes=target.selectNodes("//" + targetNode + "//gtype");
             //游戏状态
             String dpprogress=target.selectSingleNode("//"+targetNode+"/dpprogress").getText();
             //画面风格
