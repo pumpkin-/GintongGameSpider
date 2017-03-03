@@ -16,14 +16,48 @@ public class SpiderGameData {
     public static void main(String [] args){
         try {
 
-           //CommonSpiderKnowledge.ergodicUrl("spider52PKRW", 0, "no");
-          // CommonSpiderKnowledge.ergodicUrl("spider52PKCY", 0, "no");
-          // CommonSpiderKnowledge.ergodicUrl("spider52PKDL", 0, "no");
-           // CommonSpiderKnowledge.ergodicUrl("spider52PKQQ", 0, "no");
-            //CommonSpiderKnowledge.ergodicUrl("spiderYXC", 0, "no");
-             // CommonSpiderKnowledge.ergodicUrl("spiderYXW", 0, "no");
-            // CommonSpiderKnowledge.ergodicUrl("spiderYYNDS", 0, "no");
-            CommonSpiderKnowledge.ergodicUrl("spiderCHWGL", 0, "no");
+
+             //跑完
+          //  CommonSpiderKnowledge.ergodicUrl("spider52PKRW", 0, "no");
+//
+//           CommonSpiderKnowledge.ergodicUrl("spider52PKQQ", 0, "no");
+//            Thread t1=new Thread(){
+//                @Override
+//                public void run() {
+//                    try {
+                          //有null 需要模版｜｜
+//                        CommonSpiderKnowledge.ergodicUrl("spider52PKDL", 0, "no");
+//                    } catch (Exception e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//            };
+          Thread t2=new Thread(){
+               @Override
+               public void run() {
+                    try {
+                        CommonSpiderKnowledge.ergodicUrl("spider52PKCY", 158, "no");
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                   }
+                }
+            };
+//           t1.start();
+            t2.start();
+           // CommonSpiderKnowledge.ergodicUrl("spiderYXC", 0, "no");
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         } catch (Exception e) {
             e.printStackTrace();

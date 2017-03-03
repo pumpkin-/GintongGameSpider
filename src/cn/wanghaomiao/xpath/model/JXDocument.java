@@ -94,4 +94,12 @@ public class JXDocument {
     	}
     	return null;
     }
+
+    @Override
+    public String toString() {
+        return "JXDocument{" +
+                "elements=" + elements +
+                ", xpathEva=" + xpathEva +
+                '}';
+    }
 }

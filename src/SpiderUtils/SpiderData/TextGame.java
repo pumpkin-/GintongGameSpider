@@ -23,7 +23,7 @@ public class TextGame {
     public static void main(String [] args) throws XpathSyntaxErrorException, IOException {
         System.setProperty("webdriver.chrome.driver", SpiderContant.chromeWindowsPath );
         WebDriver driver= new ChromeDriver();
-        driver.get(" http://www.18touch.com/walkthrough/new/page/1");
+        driver.get("http://games.sina.com.cn/y/n/2017-03-01/fycaafp1372689.shtml");
         WebElement web = driver.findElement(By.xpath("/html"));
         String html = web.getAttribute("outerHTML");
         Document doc = Jsoup.parse(html);

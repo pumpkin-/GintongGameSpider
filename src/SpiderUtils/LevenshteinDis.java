@@ -66,6 +66,7 @@ public class LevenshteinDis {
                 for (int i = 0; i < proKnowledges.size(); i++) {
                     DateInfo daa = new DateInfo();
                     daa.setDate(proKnowledges.get(i).getPtime());
+                    System.out.println(proKnowledges);
                     Date date5 = new Date((simpleDateFormat.parse(proKnowledges.get(i).getPtime()).getTime()) - (5 * (24 * 60 * 60 * 1000)));
                     dd = simpleDateFormat.format(date5);
                     daa.setDatepast(dd);
@@ -149,6 +150,7 @@ public class LevenshteinDis {
                                 i = i - 1;
                                 break;
                             } else if (dis > 0.95) {
+
                                 CommonSpiderKnowledge.storeBugdata(essay, aticle, list.get(i).getUuid(),proKnowledges.get(i).getSource());
                                 proKnowledges.remove(i);
                                 basPersonInfos.remove(i);
