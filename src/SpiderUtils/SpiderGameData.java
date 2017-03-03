@@ -17,6 +17,9 @@ public class SpiderGameData {
         try {
 
 
+
+            CommonSpiderKnowledge.ergodicUrl("spiderZOL", 0, "no");
+
              //跑完
           //  CommonSpiderKnowledge.ergodicUrl("spider52PKRW", 0, "no");
 //
@@ -45,6 +48,7 @@ public class SpiderGameData {
 //           t1.start();
             t2.start();
            // CommonSpiderKnowledge.ergodicUrl("spiderYXC", 0, "no");
+
 
 
 

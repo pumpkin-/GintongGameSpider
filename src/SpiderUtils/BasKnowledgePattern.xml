@@ -2119,4 +2119,72 @@
             </url>>
         </urls>>
     </spiderXLCY>
+    <!--游戏坛子-->
+    <spiderYXTZ>
+        <title>//h1/text()</title>
+        <author>//div[@class='news_detail_title']/span[3]/text()</author>
+        <authorurl></authorurl>
+        <cover join="">//div[@class='newslist_img']/a/img/@src</cover>
+        <ptime timeFormat="yyyy MM dd">//div[@class='news_detail_title']/span[1]/text()</ptime>>
+        <tag></tag>
+        <main>//div[@class='post_content']/p</main>>
+        <mainpic>//img/@src</mainpic>>
+        <type></type>>
+        <source>游戏坛子</source>
+        <childLink join="http://www.gametanzi.com">//div[@class='newslist_img']/a/@href</childLink>>
+        <nextpage join="http://www.gametanzi.com">//a[text()*='下一页']/@href</nextpage>
+        <flag>jsoup</flag>>
+        <childnext join=""></childnext>>
+        <chose demand=""></chose>
+        <urls>
+            <url>
+                http://www.gametanzi.com/yxdt/p/1.html
+            </url>
+            <url>
+                http://www.gametanzi.com/syhd.html
+            </url>
+            <url>
+                http://www.gametanzi.com/xyqz.html
+            </url>
+            <url>
+                http://www.gametanzi.com/syhy.html
+            </url>
+        </urls>
+    </spiderYXTZ>
+    <!--ZOL游戏-->
+    <spiderZOL>
+        <title>//h1/text()</title>
+        <author>//div[@class='article-aboute']/span[3]/div/a/text()|//div[@calss='editor']/a/text()</author>
+        <authorurl>//div[@class='article-aboute']/span[3]/div/a/@href|//div[@calss='editor']/a/@href</authorurl>
+        <cover join="">//a[@class=info-pic']img/@src</cover>
+        <ptime timeFormat="yyyy MM dd">//div[@class='article-aboute']/span[1]/text()</ptime>>
+        <tag></tag>
+        <main>//p</main>>
+        <mainpic>//img/@src</mainpic>>
+        <type></type>>
+        <source>ZOL</source>
+        <childLink join="">//div[@class='info-head']/a/@href|//a[@class='info-pic']/@src</childLink>>
+        <nextpage join="http://game.zol.com.cn">//a[text()*='下一页']/@href</nextpage>
+        <flag>jsoup</flag>>
+        <childnext join=""></childnext>>
+        <chose demand=""></chose>>
+        <urls>
+            <url>
+                http://game.zol.com.cn/more/2_1133.shtml
+            </url>
+            <url>
+                http://game.zol.com.cn/more/3_2093.shtml
+            </url>
+            <url>
+                http://game.zol.com.cn/keyword/list_13257.shtml
+            </url>
+            <url>
+                http://game.zol.com.cn/keyword/list_9082.shtml
+            </url>
+        </urls>
+    </spiderZOL>
+
+
+
+
 </BasKnowledgeSpiderPattern>
