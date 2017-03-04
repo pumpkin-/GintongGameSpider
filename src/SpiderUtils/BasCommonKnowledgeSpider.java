@@ -20,10 +20,13 @@ import org.openqa.selenium.phantomjs.PhantomJSDriver;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 /**
@@ -51,18 +54,24 @@ public class BasCommonKnowledgeSpider {
                 knowledgeSpiderConfig.webUrls.add(ele);
             }
         }
+//        判断ptime是否为空
+        if(childElement.element("ptime")==null || childElement.element("ptiem").elements().size()==0){
+
+        }else{
+
+        }
         return knowledgeSpiderConfig;
     }
 //创建网络爬虫引擎
 
 //    selenium驱动器
-    public static WebDriver getChromeDriver(){
+        public static WebDriver getChromeDriver(){
         System.setProperty("webdriver.chrome.driver",SpiderContant.chromeWindowsPath);
         return new ChromeDriver();
     }
 //    phantomjs驱动器
     public static WebDriver getPhantomjsDriver(){
-        System.setProperty("phantomjs.binary.path","/Spider/phantomjs-2.1.1-linux-x86_64/bin/phantomjs");
+        System.setProperty("phantomjs.binary.path",SpiderContant.phantomjsLinuxPath);
         return new PhantomJSDriver();
     }
 //    通过驱动器获取当前页面的document树
@@ -73,14 +82,17 @@ public class BasCommonKnowledgeSpider {
     }
 //    抓取文章的标题
     public static void ergodicUrl(WebDriver driver,String webName) throws FileNotFoundException, DocumentException, XpathSyntaxErrorException {
-        JXDocument doc = getJXDocument(driver, "http://www.diankeji.com/news/31184.html");
-//        System.out.println(doc.selNOne("//title"));
-//        System.out.println(doc.selN("//p"));
-//        System.out.println(doc.selNOne(Match()));
-//        doc.selN("//p");
-//        for(){
-//
-//        }
+        KnowledgeSpiderConfig knowledgeSpiderConfig= BasCommonKnowledgeSpider.praseXmlContentByWebName(webName);
+        for(Element url: knowledgeSpiderConfig.webUrls) {
+            JXDocument doc = getJXDocument(driver, url.getText());
+            System.out.println(doc.selNOne("//title/text()"));
+            System.out.println(doc.selN("//p"));
+            Pattern pattern = Pattern.compile("[0-9]{4}\\D[0-9]{1,2}\\D[0-9]{1,2}\\D\\d{1,2}\\D\\d{1,2}\\D\\d{0,2}|[0-9]{4}\\D[0-9]{1,2}\\D[0-9]{1,2}");
+            Matcher match = pattern.matcher(doc.selN("//body/allText()").toString());
+            if (match.find()) {
+                System.out.println(match.group(0));
+            }
+        }
     }
     public static void main(String[] args) throws FileNotFoundException, DocumentException, XpathSyntaxErrorException {
 
@@ -98,21 +110,13 @@ public class BasCommonKnowledgeSpider {
         //10封装到javaBean -> list集合
         //10.5去重  编辑距离
         //11入库 mybatis
-//        KnowledgeSpiderConfig knowledgeSpiderConfig=BasCommonKnowledgeSpider.praseXmlContentByWebName("spiderUrl");
-//        System.out.println(knowledgeSpiderConfig);
-//        JXDocument doc=BasCommonKnowledgeSpider.getJXDocument(getChromeDriver(), "http://mini.eastday.com/a/170302085910266.html?qid=zhinengsrf2037&vqid=znykb054");
-//        System.out.println(doc);
         ExecutorService pool= Executors.newSingleThreadExecutor();
         pool.submit(new Runnable() {
             @Override
             public void run() {
                 try {
                     BasCommonKnowledgeSpider.ergodicUrl(getChromeDriver(), "spiderUrl");
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                } catch (DocumentException e) {
-                    e.printStackTrace();
-                } catch (XpathSyntaxErrorException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
