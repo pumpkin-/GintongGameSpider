@@ -253,8 +253,6 @@ public class SpiderUtils {
 
                     String source = organizeConfigure.getSourcei().getText();
 
-
-
                     System.out.println(author);
                     System.out.println(title);
                     System.out.println(cover);

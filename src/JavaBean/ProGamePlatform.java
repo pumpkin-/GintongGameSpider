@@ -9,6 +9,16 @@ public class ProGamePlatform {
 
     private String downloadLink;
 
+    private String game_size;
+
+    public String getGame_size() {
+        return game_size;
+    }
+
+    public void setGame_size(String game_size) {
+        this.game_size = game_size;
+    }
+
     public String getUuid() {
         return uuid;
     }

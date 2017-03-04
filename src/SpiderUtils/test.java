@@ -1,6 +1,4 @@
-
 package SpiderUtils;
-
 import JavaBean.ProKnowledge;
 import cn.wanghaomiao.xpath.exception.XpathSyntaxErrorException;
 import cn.wanghaomiao.xpath.model.JXDocument;
@@ -172,6 +170,8 @@ public class test {
 //        http://www.gamerbbs.cn/news/1706.html
 //        http://www.gamerbbs.cn/news/1707.html
 
+
+
 //        org.jsoup.nodes.Document doc1=Jsoup.connect("http://games.sina.com.cn/y/n/2017-03-01/fycaafp1372689.shtml")
 //                         .userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36").ignoreContentType(true).get();
 //        JXDocument jxDocument=new JXDocument(doc1);
@@ -278,6 +278,4 @@ public class test {
 
 
     }
-
 }
-
