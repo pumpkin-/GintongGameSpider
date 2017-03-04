@@ -774,6 +774,117 @@
 
     </SpiderRPYX>
 
+    <!--游戏狗-->
+    <SpiderYxg>
+        <!--网站名-->
+        <source>游戏狗</source>
+        <!--ContentPath子链接拼接内容-->
+        <contentPath></contentPath>
+        <!--详情页url-->
+        <detailurl>//div[@class='list_ol mt10']/ul/li/a/@href</detailurl>
+        <!--下一页-->
+        <nextpage>//div[@class='fenye page']/div[@class='page']/a[last()]/@href</nextpage>
+        <!--起始页面-->
+        <urls>
+            <url>
+                http://online.gamedog.cn/list_0_0_0_pubdate_1.html
+            </url>
+        </urls>
+
+        <!--游戏名-->
+        <gname>//div[@class='libtit']/h2/text()</gname>
+        <!--游戏英语名字-->
+        <gename></gename>
+        <!--产品logo-->
+        <logo>//div[@class='libtit']/img/@src</logo>
+        <!--游戏版本-->
+        <version></version>
+        <!--语言-->
+        <language></language>
+        <!--是否联网0未知，1不需要联网，2需要联网'-->
+        <sort></sort>
+        <!--适合年龄-->
+        <suitable_age></suitable_age>
+        <!--发行商-->
+        <publisher>//div[@class='liblist']/ul/li[2]/span[2]/text()</publisher>
+        <!--发行区域-->
+        <issue_area></issue_area>
+        <!--游戏风格-->
+        <gstyle>//div[@class='liblist']/ul/li/span[2]/text()</gstyle>
+        <!--标签-->
+        <gtags></gtags>
+        <!--游戏截图-->
+        <picture>//div[@class='screenimg']/ul/li/a/@href</picture>
+        <!--游戏视角-->
+        <viewpoint></viewpoint>
+        <!--游戏引擎-->
+        <engine></engine>
+        <!--游戏品级-->
+        <grade>//span[@class='wd156']/code[2]/img/@src</grade>
+        <!--研发进度-->
+        <dpprogress></dpprogress>
+        <!--游戏题材-->
+        <gtheme></gtheme>
+        <!--产品团队规模-->
+        <scale></scale>
+        <!--产品需求-->
+        <pdemand></pdemand>
+        <!--价格-->
+        <price></price>
+        <!--付费方式-->
+        <charge_mode></charge_mode>
+        <!--研发公司-->
+        <develop_com></develop_com>
+        <!--游戏介绍-->
+        <g_desc>//div[@class='lbncon']/p/text()</g_desc>
+        <!--初版出售时间-->
+        <ptime formatStr=""></ptime>
+        <!--公测时间-->
+        <beta_time formatStr=""></beta_time>
+        <!--内测时间-->
+        <test_time formatStr=""></test_time>
+        <!--封测时间-->
+        <betatest_time formatStr=""></betatest_time>
+        <!--立项时间-->
+        <set_time formatStr=""></set_time>
+        <!--游戏官网-->
+        <web></web>
+        <!--运营商-->
+        <operator></operator>
+        <!--资料片发布时间-->
+        <films_time></films_time>
+        <!--游戏画面（2D,3D）-->
+        <gamespy></gamespy>
+        <!--游戏大小-->
+        <game_size></game_size>
+        <!--网站更新时间-->
+        <web_update_time></web_update_time>
+        <!--下载链接-->
+        <download_link></download_link>
+        <!--游戏类型-->
+        <gtypes>
+            <gtype></gtype>
+        </gtypes>
+        <!--游戏平台（操作系统）-->
+        <platform></platform>
+        <!--网络类型-->
+        <network_type></network_type>
+
+        <!--下一页链接需要拼接的内容-->
+        <contentPathnext>http://online.gamedog.cn</contentPathnext>
+        <!--游戏截图下一页需要拼接的内容-->
+        <contentPathpic></contentPathpic>>
+        <!--游戏截图下一页的xpath语句-->
+        <nextpic></nextpic>>
+        <!--选择列表页所用驱动-->
+        <flag>jsoup</flag>>
+        <!--选择详情所用驱动-->
+        <flagchild>jsoup</flagchild>>
+        <!--点击更多jquery语言-->
+        <moreclick></moreclick>>
+        <!--滑动滚轮次数-->
+        <slidingRoller></slidingRoller>>
+    </SpiderYxg>
 
     <!--飞鹏网-->
     <SpiderFpw>
