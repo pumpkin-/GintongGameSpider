@@ -3,9 +3,25 @@
 
     <!-- 命名跟数据库字段一致 -->
     <spiderUrl>
+        <ptime></ptime>
         <urls>
+            <!--<url>-->
+                <!--http://www.gamerbbs.cn/news/1431.html-->
+            <!--</url>-->
+            <!--<url>-->
+                <!--http://www.diankeji.com/news/31184.html-->
+            <!--</url>-->
+            <!--<url>-->
+                <!--http://mini.eastday.com/a/170303081245613.html-->
+            <!--</url>-->
+            <!--<url>-->
+                <!--http://mini.eastday.com/a/170303151556451.html?qid=zhinengsrf2037&amp;vqid=znykb054-->
+            <!--</url>-->
+            <!--<url>-->
+                <!--http://www.cnblogs.com/shenba/archive/2009/12/18/1626898.html-->
+            <!--</url>-->
             <url>
-                http://www.diankeji.com/news/
+                http://mini.eastday.com/a/170303101320842.html?qid=zhinengsrf2037&amp;vqid=znykb054
             </url>
         </urls>
     </spiderUrl>
