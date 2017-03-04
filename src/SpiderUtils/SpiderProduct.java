@@ -53,7 +53,7 @@ public class SpiderProduct {
             if(map.get("flag").equals("jsoup")) {
                 Element element= (Element) ele;
                 String url=element.getText().trim();
-                System.out.println(url);
+                System.out.println("详情页Url："+url);
                 final Spider s=new Spider(map, url,fromPageNum);
                 //运行线程
                 pool.submit(new Runnable() {
@@ -617,6 +617,7 @@ class Spider{
                 orgProduct3.setSource(source);
                 basOrganizeInfo3.setSource(source);
             }
+
             //图标logo
             logo=map.get("contentPath").toString()+getInfomation(document,"logo");
             if(map.get("source").toString()=="安智市场"||"安智市场".equals(map.get("source").toString())) {
@@ -885,7 +886,7 @@ class Spider{
                 }
             }
             //存入数据库
-            storeToDataBase(gameInfo,progtypes,list1,basOrganizeInfo,orgProduct,basOrganizeInfo2,orgProduct2,basOrganizeInfo3,orgProduct3);
+            storeToDataBase(gameInfo,progtypes,list1,basOrganizeInfo,orgProduct,basOrganizeInfo2,orgProduct2,basOrganizeInfo3,orgProduct3,childLink);
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -909,9 +910,9 @@ class Spider{
     /**
      *将数据存入mysql数据库中
      */
-    public static void storeToDataBase(BasProGameInfo gameInfo, ProGameType gtypes, List<ProGamePlatform> list,BasOrganizeInfo basOrganizeInfo,OrgProduct orgProduct,BasOrganizeInfo basOrganizeInfo2,OrgProduct orgProduct2,BasOrganizeInfo basOrganizeInfo3,OrgProduct orgProduct3){
+    public static void storeToDataBase(BasProGameInfo gameInfo, ProGameType gtypes, List<ProGamePlatform> list,BasOrganizeInfo basOrganizeInfo,OrgProduct orgProduct,BasOrganizeInfo basOrganizeInfo2,OrgProduct orgProduct2,BasOrganizeInfo basOrganizeInfo3,OrgProduct orgProduct3,String childLink){
         //网站源链接
-        gameInfo.setUrl(startUrl);
+        gameInfo.setUrl(childLink);
         String uuid=UUID.randomUUID().toString();
         //uuid
         gameInfo.setUuid(uuid);
@@ -925,15 +926,15 @@ class Spider{
         typeDao.insertType(gtypes);
 
         //插入组织表
-        basOrganizeInfo.setUrl(startUrl);
+        basOrganizeInfo.setUrl(childLink);
        String ouuid=UUID.randomUUID().toString();
         basOrganizeInfo.setUuid(ouuid);
 
-        basOrganizeInfo2.setUrl(startUrl);
+        basOrganizeInfo2.setUrl(childLink);
         String ouuid2=UUID.randomUUID().toString();
         basOrganizeInfo2.setUuid(ouuid2);
 
-        basOrganizeInfo3.setUrl(startUrl);
+        basOrganizeInfo3.setUrl(childLink);
         String ouuid3=UUID.randomUUID().toString();
         basOrganizeInfo3.setUuid(ouuid3);
 
