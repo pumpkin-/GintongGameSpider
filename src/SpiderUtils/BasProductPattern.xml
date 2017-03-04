@@ -551,7 +551,7 @@
         <!--ContentPath子链接拼接内容-->
         <contentPath>http://syt.4399.cn</contentPath>
         <!--详情页url-->
-        <detailurl join="">//ul[@class='fgl_gamehot_ul j-gamehover clearfix']/li/a/@href</detailurl>
+        <detailurl join="">//ul[@class='fgl_gamehot_ul j-gamehover clearfix']/li/a[1]/@href</detailurl>
         <!--下一页-->
         <nextpage >//a[text()*='下一页']/@href</nextpage>
         <!--起始页面-->
@@ -569,7 +569,7 @@
         <!--产品logo-->
         <logo>//div[@class='m_icon_eva']/img/@src</logo>
         <!--游戏版本-->
-        <version>//div[@class='m_info_eva']/p[2]/text()</version>
+        <version></version>
         <!--语言-->
         <language></language>
         <!--是否联网0未知，1不需要联网，2需要联网'-->
@@ -774,7 +774,462 @@
 
     </SpiderRPYX>
 
+    <!--逗游-->
+    <SpiderDY>
+        <!--网站名-->
+        <source>逗游</source>
+        <!--ContentPath子链接拼接内容-->
+        <contentPath>http://www.doyo.cn</contentPath>
+        <!--详情页url-->
+        <detailurl>//div[@class='list']/a/@href</detailurl>
+        <!--下一页-->
+        <nextpage >//a[text()*='下一页']/@href</nextpage>
+        <!--起始页面-->
+        <urls>
+            <url>
+                http://www.doyo.cn/danji/list
+            </url>
+        </urls>
 
+        <!--游戏名-->
+        <gname>//h1/text()</gname>
+        <!--游戏英语名字-->
+        <gename></gename>
+        <!--开服总数-->
+        <totalServer></totalServer>
+        <!--产品logo-->
+        <logo>//div[@class='l']/img/@src</logo>
+        <!--游戏版本-->
+        <version></version>
+        <!--语言-->
+        <language></language>
+        <!--是否联网0未知，1不需要联网，2需要联网'-->
+        <sort>0</sort>
+        <!--适合年龄-->
+        <suitable_age></suitable_age>
+        <!--发行商-->
+        <publisher></publisher>
+        <!--发行区域-->
+        <issue_area></issue_area>
+        <!--游戏风格-->
+        <gstyle></gstyle>
+        <!--标签-->
+        <gtags>//div[@class='b']/a/text()</gtags>
+        <!--游戏截图-->
+        <picture>//div[@class='list']/a/img/@ssrc</picture>
+        <!--游戏视角-->
+        <viewpoint></viewpoint>
+        <!--游戏引擎-->
+        <engine></engine>
+        <!--游戏品级-->
+        <grade></grade>
+        <!--研发进度-->
+        <dpprogress></dpprogress>
+        <!--游戏题材-->
+        <gtheme>//div[@class='info']/div[4]/a/text()</gtheme>
+        <!--产品团队规模-->
+        <scale></scale>
+        <!--产品需求-->
+        <pdemand></pdemand>
+        <!--价格-->
+        <price></price>
+        <!--付费方式-->
+        <charge_mode></charge_mode>
+        <!--研发公司-->
+        <develop_com></develop_com>
+        <!--游戏介绍-->
+        <g_desc>//div[@class='content']/p/text()|//div[@class='all']/p/text()</g_desc>
+        <!--初版出售时间-->
+        <ptime formatStr=""></ptime>
+        <!--公测时间-->
+        <beta_time formatStr=""></beta_time>
+        <!--内测时间-->
+        <test_time formatStr=""></test_time>
+        <!--封测时间-->
+        <betatest_time formatStr=""></betatest_time>
+        <!--立项时间-->
+        <set_time formatStr=""></set_time>
+        <!--游戏官网-->
+        <web></web>
+        <!--运营商-->
+        <operator></operator>
+        <!--资料片发布时间-->
+        <films_time></films_time>
+        <!--游戏画面（2D,3D）-->
+        <gamespy>//div[@class='info']/div[3]/a/text()</gamespy>
+        <!--游戏大小-->
+        <game_size></game_size>
+        <!--网站更新时间-->
+        <web_update_time formatStr=""></web_update_time>
+        <!--下载链接-->
+        <download_link></download_link>
+        <!--游戏类型-->
+        <gtypes>
+            <gtype>//div[@class='info']/div[1]/a/text()</gtype>
+        </gtypes>
+        <!--游戏平台（操作系统）-->
+        <platform></platform>
+        <!--网络类型-->
+        <network_type></network_type>
+
+        <!--下一页链接需要拼接的内容-->
+        <contentPathnext>http://www.doyo.cn</contentPathnext>
+        <!--游戏截图下一页需要拼接的内容-->
+        <contentPathpic></contentPathpic>>
+        <!--游戏截图下一页的xpath语句-->
+        <nextpic></nextpic>>
+        <!--选择列表页所用驱动-->
+        <flag>jsoup</flag>>
+        <!--选择详情所用驱动-->
+        <flagchild>jsoup</flagchild>
+        <!--点击更多jquery语言-->
+        <moreclick></moreclick>>
+        <!--滑动滚轮次数-->
+        <slidingRoller></slidingRoller>>
+
+    </SpiderDY>
+    <SpiderDYWY>
+        <!--网站名-->
+        <source>逗游</source>
+        <!--ContentPath子链接拼接内容-->
+        <contentPath>http://www.doyo.cn</contentPath>
+        <!--详情页url-->
+        <detailurl>//div[@class='list']/a/@href</detailurl>
+        <!--下一页-->
+        <nextpage >//a[text()*='下一页']/@href</nextpage>
+        <!--起始页面-->
+        <urls>
+            <url>
+                http://www.doyo.cn/wangluo/list
+            </url>
+        </urls>
+
+        <!--游戏名-->
+        <gname>//h1/text()</gname>
+        <!--游戏英语名字-->
+        <gename></gename>
+        <!--开服总数-->
+        <totalServer></totalServer>
+        <!--产品logo-->
+        <logo>//div[@class='l']/img/@src</logo>
+        <!--游戏版本-->
+        <version></version>
+        <!--语言-->
+        <language></language>
+        <!--是否联网0未知，1不需要联网，2需要联网'-->
+        <sort>0</sort>
+        <!--适合年龄-->
+        <suitable_age></suitable_age>
+        <!--发行商-->
+        <publisher></publisher>
+        <!--发行区域-->
+        <issue_area></issue_area>
+        <!--游戏风格-->
+        <gstyle></gstyle>
+        <!--标签-->
+        <gtags></gtags>
+        <!--游戏截图-->
+        <picture>//div[@class='list']/a/img/@ssrc</picture>
+        <!--游戏视角-->
+        <viewpoint></viewpoint>
+        <!--游戏引擎-->
+        <engine></engine>
+        <!--游戏品级-->
+        <grade></grade>
+        <!--研发进度-->
+        <dpprogress></dpprogress>
+        <!--游戏题材-->
+        <gtheme>//div[@class='info']/div[2]/a/text()</gtheme>
+        <!--产品团队规模-->
+        <scale></scale>
+        <!--产品需求-->
+        <pdemand></pdemand>
+        <!--价格-->
+        <price></price>
+        <!--付费方式-->
+        <charge_mode></charge_mode>
+        <!--研发公司-->
+        <develop_com></develop_com>
+        <!--游戏介绍-->
+        <g_desc>//div[@class='content']/p/text()|//div[@class='all']/p/text()</g_desc>
+        <!--初版出售时间-->
+        <ptime formatStr=""></ptime>
+        <!--公测时间-->
+        <beta_time formatStr=""></beta_time>
+        <!--内测时间-->
+        <test_time formatStr=""></test_time>
+        <!--封测时间-->
+        <betatest_time formatStr=""></betatest_time>
+        <!--立项时间-->
+        <set_time formatStr=""></set_time>
+        <!--游戏官网-->
+        <web></web>
+        <!--运营商-->
+        <operator>//div[@class='info']/div[]/span/text()</operator>
+        <!--资料片发布时间-->
+        <films_time></films_time>
+        <!--游戏画面（2D,3D）-->
+        <gamespy>//div[@class='info']/div[3]/a/text()</gamespy>
+        <!--游戏大小-->
+        <game_size></game_size>
+        <!--网站更新时间-->
+        <web_update_time formatStr=""></web_update_time>
+        <!--下载链接-->
+        <download_link></download_link>
+        <!--游戏类型-->
+        <gtypes>
+            <gtype>//div[@class='info']/div[1]/a/text()</gtype>
+        </gtypes>
+        <!--游戏平台（操作系统）-->
+        <platform></platform>
+        <!--网络类型-->
+        <network_type></network_type>
+
+        <!--下一页链接需要拼接的内容-->
+        <contentPathnext>http://www.doyo.cn</contentPathnext>
+        <!--游戏截图下一页需要拼接的内容-->
+        <contentPathpic></contentPathpic>>
+        <!--游戏截图下一页的xpath语句-->
+        <nextpic></nextpic>>
+        <!--选择列表页所用驱动-->
+        <flag>jsoup</flag>>
+        <!--选择详情所用驱动-->
+        <flagchild>jsoup</flagchild>
+        <!--点击更多jquery语言-->
+        <moreclick></moreclick>>
+        <!--滑动滚轮次数-->
+        <slidingRoller></slidingRoller>>
+
+    </SpiderDYWY>
+    <SpiderDYYY>
+        <!--网站名-->
+        <source>逗游</source>
+        <!--ContentPath子链接拼接内容-->
+        <contentPath>http://www.doyo.cn</contentPath>
+        <!--详情页url-->
+        <detailurl>//div[@class='list']/a/@href</detailurl>
+        <!--下一页-->
+        <nextpage >//a[text()*='下一页']/@href</nextpage>
+        <!--起始页面-->
+        <urls>
+            <url>
+                http://www.doyo.cn/wangye/list
+            </url>
+        </urls>
+
+        <!--游戏名-->
+        <gname>//h1/text()</gname>
+        <!--游戏英语名字-->
+        <gename></gename>
+        <!--开服总数-->
+        <totalServer></totalServer>
+        <!--产品logo-->
+        <logo>//div[@class='l']/img/@src</logo>
+        <!--游戏版本-->
+        <version></version>
+        <!--语言-->
+        <language></language>
+        <!--是否联网0未知，1不需要联网，2需要联网'-->
+        <sort>0</sort>
+        <!--适合年龄-->
+        <suitable_age></suitable_age>
+        <!--发行商-->
+        <publisher></publisher>
+        <!--发行区域-->
+        <issue_area></issue_area>
+        <!--游戏风格-->
+        <gstyle></gstyle>
+        <!--标签-->
+        <gtags></gtags>
+        <!--游戏截图-->
+        <picture>//div[@class='list']/a/img/@ssrc</picture>
+        <!--游戏视角-->
+        <viewpoint></viewpoint>
+        <!--游戏引擎-->
+        <engine></engine>
+        <!--游戏品级-->
+        <grade></grade>
+        <!--研发进度-->
+        <dpprogress></dpprogress>
+        <!--游戏题材-->
+        <gtheme>//div[@class='info']/div[2]/a/text()</gtheme>
+        <!--产品团队规模-->
+        <scale></scale>
+        <!--产品需求-->
+        <pdemand></pdemand>
+        <!--价格-->
+        <price></price>
+        <!--付费方式-->
+        <charge_mode></charge_mode>
+        <!--研发公司-->
+        <develop_com></develop_com>
+        <!--游戏介绍-->
+        <g_desc>//div[@class='content']/p/text()|//div[@class='all']/p/text()|//div[@class='content']/text()</g_desc>
+        <!--初版出售时间-->
+        <ptime formatStr=""></ptime>
+        <!--公测时间-->
+        <beta_time formatStr=""></beta_time>
+        <!--内测时间-->
+        <test_time formatStr=""></test_time>
+        <!--封测时间-->
+        <betatest_time formatStr=""></betatest_time>
+        <!--立项时间-->
+        <set_time formatStr=""></set_time>
+        <!--游戏官网-->
+        <web></web>
+        <!--运营商-->
+        <operator>//div[@class='info']/div[]/span/text()</operator>
+        <!--资料片发布时间-->
+        <films_time></films_time>
+        <!--游戏画面（2D,3D）-->
+        <gamespy>//div[@class='info']/div[3]/a/text()</gamespy>
+        <!--游戏大小-->
+        <game_size></game_size>
+        <!--网站更新时间-->
+        <web_update_time formatStr=""></web_update_time>
+        <!--下载链接-->
+        <download_link></download_link>
+        <!--游戏类型-->
+        <gtypes>
+            <gtype>//div[@class='info']/div[1]/a/text()</gtype>
+        </gtypes>
+        <!--游戏平台（操作系统）-->
+        <platform></platform>
+        <!--网络类型-->
+        <network_type></network_type>
+
+        <!--下一页链接需要拼接的内容-->
+        <contentPathnext>http://www.doyo.cn</contentPathnext>
+        <!--游戏截图下一页需要拼接的内容-->
+        <contentPathpic></contentPathpic>>
+        <!--游戏截图下一页的xpath语句-->
+        <nextpic></nextpic>>
+        <!--选择列表页所用驱动-->
+        <flag>jsoup</flag>>
+        <!--选择详情所用驱动-->
+        <flagchild>jsoup</flagchild>
+        <!--点击更多jquery语言-->
+        <moreclick></moreclick>>
+        <!--滑动滚轮次数-->
+        <slidingRoller></slidingRoller>>
+
+    </SpiderDYYY>
+    <!--3dm-->
+    <Spider3md>
+        <!--网站名-->
+        <source>3md</source>
+        <!--ContentPath子链接拼接内容-->
+        <contentPath></contentPath>
+        <!--详情页url-->
+        <detailurl>//div[@class='text']/h2/a/@href</detailurl>
+        <!--下一页-->
+        <nextpage ></nextpage>
+        <!--起始页面-->
+        <urls>
+            <url>
+                http://dl.3dmgame.com/zlist-15-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-1
+            </url>
+
+        </urls>
+
+        <!--游戏名-->
+        <gname>//h1[1]/text()</gname>
+        <!--游戏英语名字-->
+        <gename></gename>
+        <!--开服总数-->
+        <totalServer></totalServer>
+        <!--产品logo-->
+        <logo>//div[@class='game_gallery']/img/@src</logo>
+        <!--游戏版本-->
+        <version></version>
+        <!--语言-->
+        <language>//div[@itemprop='inLanguage']/text()</language>
+        <!--是否联网0未知，1不需要联网，2需要联网'-->
+        <sort>0</sort>
+        <!--适合年龄-->
+        <suitable_age></suitable_age>
+        <!--发行商-->
+        <publisher></publisher>
+        <!--发行区域-->
+        <issue_area></issue_area>
+        <!--游戏风格-->
+        <gstyle></gstyle>
+        <!--标签-->
+        <gtags>//dd[@class='tag_con']/ul/li/a/text()</gtags>
+        <!--游戏截图-->
+        <picture>//a[@target='_self']/img/@src</picture>
+        <!--游戏视角-->
+        <viewpoint></viewpoint>
+        <!--游戏引擎-->
+        <engine></engine>
+        <!--游戏品级-->
+        <grade></grade>
+        <!--研发进度-->
+        <dpprogress></dpprogress>
+        <!--游戏题材-->
+        <gtheme></gtheme>
+        <!--产品团队规模-->
+        <scale></scale>
+        <!--产品需求-->
+        <pdemand></pdemand>
+        <!--价格-->
+        <price></price>
+        <!--付费方式-->
+        <charge_mode></charge_mode>
+        <!--研发公司-->
+        <develop_com>//div[@itemprop='author']/text()</develop_com>
+        <!--游戏介绍-->
+        <g_desc>//div[@class='jieshao']/p/allText()</g_desc>
+        <!--初版出售时间-->
+        <ptime formatStr=""></ptime>
+        <!--公测时间-->
+        <beta_time formatStr=""></beta_time>
+        <!--内测时间-->
+        <test_time formatStr=""></test_time>
+        <!--封测时间-->
+        <betatest_time formatStr=""></betatest_time>
+        <!--立项时间-->
+        <set_time formatStr=""></set_time>
+        <!--游戏官网-->
+        <web></web>
+        <!--运营商-->
+        <operator></operator>
+        <!--资料片发布时间-->
+        <films_time></films_time>
+        <!--游戏画面（2D,3D）-->
+        <gamespy></gamespy>
+        <!--游戏大小-->
+        <game_size>//div[@itemprop='fileSize']/text()</game_size>
+        <!--网站更新时间-->
+        <web_update_time formatStr=""></web_update_time>
+        <!--下载链接-->
+        <download_link></download_link>
+        <!--游戏类型-->
+        <gtypes>
+            <gtype>//div[class='icontent']/a/text()</gtype>
+        </gtypes>
+        <!--游戏平台（操作系统）-->
+        <platform></platform>
+        <!--网络类型-->
+        <network_type></network_type>
+
+        <!--下一页链接需要拼接的内容-->
+        <contentPathnext></contentPathnext>
+        <!--游戏截图下一页需要拼接的内容-->
+        <contentPathpic></contentPathpic>>
+        <!--游戏截图下一页的xpath语句-->
+        <nextpic></nextpic>>
+        <!--选择列表页所用驱动-->
+        <flag>jsoup
+        </flag>
+        <!--选择详情所用驱动-->
+        <flagchild>jsoup</flagchild>
+        <!--点击更多jquery语言-->
+        <moreclick></moreclick>>
+        <!--滑动滚轮次数-->
+        <slidingRoller></slidingRoller>>
+
+    </Spider3md>
 
 
 
