@@ -36,13 +36,22 @@ import java.util.concurrent.Executors;
 public class SpiderProduct {
 
     public static void main(String[] args) throws Exception {
-        ergodicUrl("SpiderDYYY",0);
+
+        //ergodicUrl("SpiderRPYX",0);
+        //ergodicUrl("SpiderYYW",0);
+        //ergodicUrl("Spider52PK",0);
+
+       ergodicUrl("SpiderFpw", 0,0);
+
+       //ergodicUrl("SpiderRPYX",0);
+
+
     }
 
     /**
      * 遍历urls内部url
      */
-    public static void ergodicUrl(String webname,int fromPageNum) throws Exception {
+    public static void ergodicUrl(String webname,int fromPageNum,int isImport) throws Exception {
         System.out.println("Start parsing XML file");
         Map<String, Object> map = getElement(webname);
         ExecutorService pool= Executors.newFixedThreadPool(3);
@@ -52,7 +61,7 @@ public class SpiderProduct {
                 Element element= (Element) ele;
                 String url=element.getText().trim();
                 System.out.println(url);
-                final Spider s=new Spider(map, url,fromPageNum);
+                final Spider s=new Spider(map, url,fromPageNum,isImport);
                 //运行线程
                 pool.submit(new Runnable() {
                     @Override
@@ -65,9 +74,9 @@ public class SpiderProduct {
                 Element element= (Element) ele;
                 String url=element.getText().trim();
                 System.out.println("Get details page");
-                final Spider s=new Spider(map, url,fromPageNum);
+                final Spider s=new Spider(map, url,fromPageNum,isImport);
                 WebDriver driver=s.getChromeDriver();
-                s.ergodicDetails(map, driver, url, fromPageNum);
+                s.ergodicDetails(map, driver, url, fromPageNum,isImport);
                 fromPageNum=0;
                 driver.close();
             }else{
@@ -254,10 +263,12 @@ class Spider{
     private static Map<String, Object> map=null;
     private static String startUrl;
     private static int formpage;
-    public Spider(Map<String, Object> map,String startUrl,int formpage) {
+    private static int isImport;
+    public Spider(Map<String, Object> map,String startUrl,int formpage,int isImport) {
         this.map=map;
         this.startUrl=startUrl;
         this.formpage=formpage;
+        this.isImport=isImport;
     }
 
     /**
@@ -299,7 +310,7 @@ class Spider{
     /**
      * 根据url获取详情页 selenium
      */
-    public static void ergodicDetails(Map<String, Object> map,WebDriver driver,String startUrl,int formpage) throws Exception {
+    public static void ergodicDetails(Map<String, Object> map,WebDriver driver,String startUrl,int formpage,int isImport) throws Exception {
         JXDocument doc=null;
         System.out.println("Start getting starturl's DOM tree");
         doc=getJXDocument(driver,startUrl);
@@ -367,7 +378,7 @@ class Spider{
                     childDocumet = getJXDocument(driver,childLink);
                 }
                 System.out.println("Start cleaning");
-                Spider.parsePage(childDocumet, map,childLink);
+                Spider.parsePage(childDocumet, map,childLink,isImport);
                 System.out.println(a+"+"+i);
                 a++;
                 System.out.println("-------------------------------");
@@ -502,12 +513,12 @@ class Spider{
                     if(map.get("flagchild").toString().equals("jsoup")) {
                         org.jsoup.nodes.Document document1 = getDocument(map.get("contentPath").toString() + detailUrl);
                         //解析详情页面并且存储进数据库
-                        parsePage(new JXDocument(document1), map,map.get("contentPath").toString() + detailUrl);
+                        parsePage(new JXDocument(document1), map,map.get("contentPath").toString() + detailUrl,isImport);
                         System.out.println(Thread.currentThread().getName());
                     }else{
                         System.out.println(map.get("contentPath").toString() + detailUrl);
                         JXDocument childDocumet = getJXDocument(driver,map.get("contentPath").toString() + detailUrl);
-                        parsePage(childDocumet, map,map.get("contentPath").toString() + detailUrl);
+                        parsePage(childDocumet, map,map.get("contentPath").toString() + detailUrl,isImport);
                         System.out.println(Thread.currentThread().getName());
                     }
                 }catch(Exception e){
@@ -572,7 +583,7 @@ class Spider{
      *
      * @param document
      */
-    public static void parsePage(JXDocument document, Map map,String childLink){
+    public static void parsePage(JXDocument document, Map map,String childLink,int isImport){
         String logo=null;
         String name=null;
         String version=null;
@@ -615,6 +626,7 @@ class Spider{
                 orgProduct3.setSource(source);
                 basOrganizeInfo3.setSource(source);
             }
+
             //图标logo
             logo=map.get("contentPath").toString()+getInfomation(document,"logo");
             if(map.get("source").toString()=="安智市场"||"安智市场".equals(map.get("source").toString())) {
@@ -883,7 +895,7 @@ class Spider{
                 }
             }
             //存入数据库
-            storeToDataBase(gameInfo,progtypes,list1,basOrganizeInfo,orgProduct,basOrganizeInfo2,orgProduct2,basOrganizeInfo3,orgProduct3);
+            storeToDataBase(gameInfo,progtypes,list1,basOrganizeInfo,orgProduct,basOrganizeInfo2,orgProduct2,basOrganizeInfo3,orgProduct3,childLink,isImport);
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -907,9 +919,10 @@ class Spider{
     /**
      *将数据存入mysql数据库中
      */
-    public static void storeToDataBase(BasProGameInfo gameInfo, ProGameType gtypes, List<ProGamePlatform> list,BasOrganizeInfo basOrganizeInfo,OrgProduct orgProduct,BasOrganizeInfo basOrganizeInfo2,OrgProduct orgProduct2,BasOrganizeInfo basOrganizeInfo3,OrgProduct orgProduct3){
+    public static void storeToDataBase(BasProGameInfo gameInfo, ProGameType gtypes, List<ProGamePlatform> list,BasOrganizeInfo basOrganizeInfo,OrgProduct orgProduct,BasOrganizeInfo basOrganizeInfo2,OrgProduct orgProduct2,BasOrganizeInfo basOrganizeInfo3,OrgProduct orgProduct3,String childLink,int isImport){
+        if(isImport==1) {
         //网站源链接
-        gameInfo.setUrl(startUrl);
+        gameInfo.setUrl(childLink);
         String uuid=UUID.randomUUID().toString();
         //uuid
         gameInfo.setUuid(uuid);
@@ -923,15 +936,15 @@ class Spider{
         typeDao.insertType(gtypes);
 
         //插入组织表
-        basOrganizeInfo.setUrl(startUrl);
+        basOrganizeInfo.setUrl(childLink);
        String ouuid=UUID.randomUUID().toString();
         basOrganizeInfo.setUuid(ouuid);
 
-        basOrganizeInfo2.setUrl(startUrl);
+        basOrganizeInfo2.setUrl(childLink);
         String ouuid2=UUID.randomUUID().toString();
         basOrganizeInfo2.setUuid(ouuid2);
 
-        basOrganizeInfo3.setUrl(startUrl);
+        basOrganizeInfo3.setUrl(childLink);
         String ouuid3=UUID.randomUUID().toString();
         basOrganizeInfo3.setUuid(ouuid3);
 
@@ -944,27 +957,27 @@ class Spider{
         orgProduct3.setPr_uuid(uuid);
 
         BasOrganizeInfoImpl basOrganizeInfo1=new BasOrganizeInfoImpl();
-        OrgProductDaoImpl orgProductDao=new OrgProductDaoImpl();
-        if(StringUtils.isNotEmpty(basOrganizeInfo.getOname())){
-            basOrganizeInfo1.insertSingle(basOrganizeInfo);
-            orgProductDao.insertOPDuct(orgProduct);
-        }
-        if(StringUtils.isNotEmpty(basOrganizeInfo2.getOname())){
-            basOrganizeInfo1.insertSingle(basOrganizeInfo2);
-            orgProductDao.insertOPDuct(orgProduct2);
-        }
-        if(StringUtils.isNotEmpty(basOrganizeInfo3.getOname())){
-            basOrganizeInfo1.insertSingle(basOrganizeInfo3);
-            orgProductDao.insertOPDuct(orgProduct3);
-        }
-
-
-
-        //插入游戏平台（研发公司）
-        ProGamePlatformDao platformDao = new ProGamePlatformDaoImpl();
-        for(int x=0;x<list.size();x++) {
-            list.get(x).setUuid(uuid);
-            platformDao.insertPlatform(list.get(x));
+            OrgProductDaoImpl orgProductDao = new OrgProductDaoImpl();
+            if (StringUtils.isNotEmpty(basOrganizeInfo.getOname())) {
+                basOrganizeInfo1.insertSingle(basOrganizeInfo);
+                orgProductDao.insertOPDuct(orgProduct);
+            }
+            if (StringUtils.isNotEmpty(basOrganizeInfo2.getOname())) {
+                basOrganizeInfo1.insertSingle(basOrganizeInfo2);
+                orgProductDao.insertOPDuct(orgProduct2);
+            }
+            if (StringUtils.isNotEmpty(basOrganizeInfo3.getOname())) {
+                basOrganizeInfo1.insertSingle(basOrganizeInfo3);
+                orgProductDao.insertOPDuct(orgProduct3);
+            }
+            //插入游戏平台（研发公司）
+            ProGamePlatformDao platformDao = new ProGamePlatformDaoImpl();
+            for (int x = 0; x < list.size(); x++) {
+                list.get(x).setUuid(uuid);
+                platformDao.insertPlatform(list.get(x));
+            }
+        }else {
+            System.out.println("并未往数据库中存入数据");
         }
 
     }

@@ -34,15 +34,31 @@ import java.util.regex.Pattern;
 
 
 /**
+ * 爬取微博信息
  * Created by lenovo on 2017/3/1.
  */
 public class SpiderWm {
-    private static String username="";
-    private static String password="";
+    //微博用户名
+<<<<<<< HEAD
+    private static String username="18809463956";
+    //微博密码
+    private static String password="jhy136825";
+=======
+    private static String username="15711490906";
+    //微博密码
+    private static String password="a19941031";
+>>>>>>> fdcd896c93d63d1376dc91a3cb12fd1f93be2a0f
     private static List<String> perUrlList=new ArrayList<String>();
     private static WebDriver driver=null;
-    private static String comName="多益";
+    //爬取公司人名信息
+    private static String comName="腾讯";
 
+    /**
+     * 爬取列表页
+     * @param driver
+     * @param comName
+     * @throws Exception
+     */
     public static void getPerUrl(WebDriver driver,String comName) throws Exception {
         int page=0;
         String comUrl="http://s.weibo.com/user/"+comName+"&auth=per_vip";
@@ -74,10 +90,14 @@ public class SpiderWm {
                 Thread.sleep(5000);
             }
         }
-
-       // System.out.println(docMain);
     }
 
+    /**
+     * 翻页
+     * @param driver
+     * @return
+     * @throws InterruptedException
+     */
     public static Document listPageSelenium(WebDriver driver) throws InterruptedException {
         JavascriptExecutor executornext = (JavascriptExecutor) driver;
         executornext.executeScript("document.getElementsByClassName('page next S_txt1 S_line1')[0].click()");
@@ -96,6 +116,10 @@ public class SpiderWm {
         return Document;
     }
 
+    /**
+     * 获取驱动器
+     * @return
+     */
     public static WebDriver getWebDriver(){
         System.setProperty("webdriver.chrome.driver", SpiderContant.chromeWindowsPath);
         if(driver == null) {
@@ -104,8 +128,15 @@ public class SpiderWm {
         return driver;
     }
 
-    public static void login(String username,String password) throws InterruptedException {
+    /**
+     * 登陆微博
+     * @param username
+     * @param password
+     * @throws InterruptedException
+     */
+    public static String loginWeiBo(String username,String password) throws InterruptedException {
         String url="http://weibo.com/login.php";
+        String result="登录失败";
         driver.get(url);
         JavascriptExecutor executornext = (JavascriptExecutor)driver;
         WebElement webElementMain=driver.findElement(By.xpath("/html"));
@@ -113,9 +144,34 @@ public class SpiderWm {
         driver.findElement(By.xpath("//*[@id=\"loginname\"]")).sendKeys(username);
         driver.findElement(By.xpath("//*[@id=\"pl_login_form\"]/div/div[3]/div[2]/div/input")).sendKeys(password);
         executornext.executeScript("document.getElementsByClassName('W_btn_a btn_32px ')[0].click()");
+        String handle = driver.getWindowHandle();
+        for (String handles : driver.getWindowHandles()) {
+            if (handles.equals(handle)) {
+                continue;
+            }else {
+                driver.close();
+                driver.switchTo().window(handles);
+            }
+        }
+        WebElement element=driver.findElement(By.xpath("/html"));
+        Document doca= Jsoup.parse(element.getAttribute("outerHTML"));
+        String login=doca.select("#pl_login_form > div > div:nth-child(3) > div.info_list.login_btn > a").text();
+        System.out.println(login);
+        if(login==null||login.equals("")){
+            result="登录成功";
+            return result;
+        }else{
+            return result;
+        }
+
     }
 
-
+    /**
+     * 爬取单条网页
+     * @param driver
+     * @param perInfoUrl
+     * @throws InterruptedException
+     */
     public static void getPerInfoDataByUrl(WebDriver driver, String perInfoUrl) throws InterruptedException {
         String uuid= UUID.randomUUID().toString();
         String ouuid=UUID.randomUUID().toString();
@@ -246,7 +302,9 @@ public class SpiderWm {
         }
     }
 
-
+    /**
+     * 网页爬取完成后自动关闭
+     */
     public static void closeWebDriver(){
         driver.close();
         System.exit(0);
@@ -254,16 +312,25 @@ public class SpiderWm {
     }
 
 
-
+    /**
+     * 程序主流程
+     * @param urls
+     * @throws Exception
+     */
     public static void getPerInfoDataByList(List<String> urls) throws Exception {
         WebDriver driver =getWebDriver();
-        login(username,password);
-        getPerUrl(driver,comName);
-        for(String url: urls) {
-            getPerInfoDataByUrl(driver, url);
-            Thread.sleep(8000);
+        String result=loginWeiBo(username, password);
+        if(result.equals("登录成功")) {
+            getPerUrl(driver, comName);
+            for (String url : urls) {
+                getPerInfoDataByUrl(driver, url);
+                Thread.sleep(8000);
+            }
+            closeWebDriver();
+        }else{
+            System.out.println("账号或者密码错误，登录失败!");
+            closeWebDriver();
         }
-        closeWebDriver();
     }
 
 

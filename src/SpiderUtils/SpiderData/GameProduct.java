@@ -9,7 +9,7 @@ import static SpiderUtils.SpiderProduct.ergodicUrl;
 public class GameProduct {
     public static void main(String[]args){
         try {
-            ergodicUrl("spiderAZSC",0);
+            ergodicUrl("spiderAZSC",0,0);
         } catch (Exception e) {
             e.printStackTrace();
         }

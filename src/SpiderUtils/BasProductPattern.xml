@@ -1220,8 +1220,7 @@
         <!--游戏截图下一页的xpath语句-->
         <nextpic></nextpic>>
         <!--选择列表页所用驱动-->
-        <flag>jsoup
-        </flag>
+        <flag>jsoup</flag>>
         <!--选择详情所用驱动-->
         <flagchild>jsoup</flagchild>
         <!--点击更多jquery语言-->
