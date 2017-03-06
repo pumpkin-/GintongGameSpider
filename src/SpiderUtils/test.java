@@ -135,12 +135,12 @@ public class test {
 //jsoup查看网页源码
 //http://chanye.07073.com/     http://chanye.07073.com/shuju/1560716.html
 
-      org.jsoup.nodes.Document doc1=Jsoup.connect("http://dl.3dmgame.com/zlist-15-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-1")
-                          .userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36")
-                         .get();
-        JXDocument doc=new JXDocument(doc1);
-       System.out.println(doc1);
-       System.out.println(doc.sel("//div[@class='b']/a[1]text()"));
+//      org.jsoup.nodes.Document doc1=Jsoup.connect("")
+//                          .userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36")
+//                         .get();
+//        JXDocument doc=new JXDocument(doc1);
+//       System.out.println(doc1);
+//       System.out.println(doc.sel("//div[@class='b']/a[1]text()"));
 
 //
 //       org.jsoup.nodes.Document doc1=Jsoup.connect("http://games.sina.com.cn/y/n/2017-03-01/fycaafp1372689.shtml")
@@ -174,7 +174,7 @@ public class test {
 
 
 
-//        org.jsoup.nodes.Document doc1=Jsoup.connect("http://games.sina.com.cn/y/n/2017-03-01/fycaafp1372689.shtml")
+//        org.jsoup.nodes.Document doc1=Jsoup.connect("")
 //                         .userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36").ignoreContentType(true).get();
 //        JXDocument jxDocument=new JXDocument(doc1);
 //        System.out.println(doc1.outerHtml());
@@ -251,7 +251,6 @@ public class test {
 //        System.out.println(doc.outerHtml());
 
 
-
 //
 
 
@@ -261,23 +260,32 @@ public class test {
 //        System.out.println(jxDocument.sel("//dd[@class='public-tabs-title']/a/@href"));
 
 
-        /*Connection.Response res=Jsoup.connect("http://www.appgame.com/archives/620651.html").ignoreContentType(true).execute();
+        /*Connection.Response res=Jsoup.connect("http://zhushou.360.cn/detail/index/soft_id/3485062").ignoreContentType(true).execute();
         String body = res.body();
         JSONObject json = new JSONObject(true);
         //JSON json1= com.sun.org
         System.out.println(body);*/
 
 //selenium查看网页源码
-//        System.setProperty("webdriver.chrome.driver",SpiderContant.chromeWindowsPath );
-//        WebDriver driver=new ChromeDriver();
-//        driver.get("http://www.donews.com/idonews/");
-//        WebElement webElement=driver.findElement(By.xpath("/html"));
-//        org.jsoup.nodes.Document doc=Jsoup.parse(webElement.getAttribute("outerHTML"));
-//        JXDocument jxDocument=new JXDocument(doc);
-//        System.out.println(doc.outerHtml());
+        System.setProperty("webdriver.chrome.driver",SpiderContant.chromeWindowsPath );
+        WebDriver driver=new ChromeDriver();
+//        driver.get("http://zhushou.360.cn/list/index/cid/2?page=1");
+        driver.get("http://zhushou.360.cn/list/index/cid/2)");
+        WebElement webElement=driver.findElement(By.xpath("/html"));
+        org.jsoup.nodes.Document doc2=Jsoup.parse(webElement.getAttribute("outerHTML"));
+        JXDocument jxDocument=new JXDocument(doc2);
+        System.out.println(doc2.outerHtml());
 
-
-
-
+        // 要验证的字符串
+//        String str = "http://sdw12/4344/fdfd/434fd/abc.html";
+//
+//        String re = "(h|t|t|p)/:(//{1}[a-zA-Z0-9]{2,}{3,}//$)";
+//        // 编译正则表达式
+//        Pattern pattern = Pattern.compile(re);
+//
+//        Matcher matcher = pattern.matcher(str);
+//        // 字符串是否与正则表达式相匹配
+//        boolean rs = matcher.matches();
+//        System.out.println(rs);
     }
 }
