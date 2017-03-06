@@ -21,6 +21,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.phantomjs.PhantomJSDriver;
 
+import javax.xml.bind.SchemaOutputResolver;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
@@ -41,12 +42,13 @@ public class SpiderProduct {
         //ergodicUrl("SpiderYYW",0);
         //ergodicUrl("Spider52PK",0);
 
-       ergodicUrl("SpiderFpw", 0,0);
+      // ergodicUrl("SpiderFpw", 0,1);
 
        //ergodicUrl("SpiderRPYX",0);
-
+        ergodicUrl("Spider360助手",0,1);
 
     }
+
 
     /**
      * 遍历urls内部url
@@ -63,12 +65,12 @@ public class SpiderProduct {
                 System.out.println(url);
                 final Spider s=new Spider(map, url,fromPageNum,isImport);
                 //运行线程
-                pool.submit(new Runnable() {
-                    @Override
-                    public void run() {
+//                pool.submit(new Runnable() {
+//                    @Override
+//                    public void run() {
                         s.run();
-                    }
-                });
+//                    }
+//                });
                 fromPageNum=0;
             }else if(map.get("flag").equals("selenium")){
                 Element element= (Element) ele;
@@ -353,6 +355,7 @@ class Spider{
         while(true){
             //获取详情页列表
             List<Object> detailsUrls=doc.sel(map.get("detailurl").toString());
+            System.out.println("detail urls size：" + detailsUrls.size());
             System.out.println("Start traversal details page");
             for(Object details:detailsUrls){
                 String childLink=null;

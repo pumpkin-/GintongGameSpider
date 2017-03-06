@@ -46,6 +46,7 @@ public class SpiderWm {
 
     private static List<String> perUrlList=new ArrayList<String>();
     private static WebDriver driver=null;
+
     //爬取公司人名信息
     private static String comName="腾讯";
 
