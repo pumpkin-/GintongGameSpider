@@ -774,59 +774,57 @@
 
     </SpiderRPYX>
 
-    <!--逗游-->
-    <SpiderDY>
+    <!--游戏狗-->
+    <SpiderYxg>
         <!--网站名-->
-        <source>逗游</source>
+        <source>游戏狗</source>
         <!--ContentPath子链接拼接内容-->
-        <contentPath>http://www.doyo.cn</contentPath>
+        <contentPath></contentPath>
         <!--详情页url-->
-        <detailurl>//div[@class='list']/a/@href</detailurl>
+        <detailurl>//div[@class='list_ol mt10']/ul/li/a/@href</detailurl>
         <!--下一页-->
-        <nextpage >//a[text()*='下一页']/@href</nextpage>
+        <nextpage>//div[@class='fenye page']/div[@class='page']/a[last()]/@href</nextpage>
         <!--起始页面-->
         <urls>
             <url>
-                http://www.doyo.cn/danji/list
+                http://online.gamedog.cn/list_0_0_0_pubdate_1.html
             </url>
         </urls>
 
         <!--游戏名-->
-        <gname>//h1/text()</gname>
+        <gname>//div[@class='libtit']/h2/text()</gname>
         <!--游戏英语名字-->
         <gename></gename>
-        <!--开服总数-->
-        <totalServer></totalServer>
         <!--产品logo-->
-        <logo>//div[@class='l']/img/@src</logo>
+        <logo>//div[@class='libtit']/img/@src</logo>
         <!--游戏版本-->
         <version></version>
         <!--语言-->
         <language></language>
         <!--是否联网0未知，1不需要联网，2需要联网'-->
-        <sort>0</sort>
+        <sort></sort>
         <!--适合年龄-->
         <suitable_age></suitable_age>
         <!--发行商-->
-        <publisher></publisher>
+        <publisher>//div[@class='liblist']/ul/li[2]/span[2]/text()</publisher>
         <!--发行区域-->
         <issue_area></issue_area>
         <!--游戏风格-->
-        <gstyle></gstyle>
+        <gstyle>//div[@class='liblist']/ul/li/span[2]/text()</gstyle>
         <!--标签-->
-        <gtags>//div[@class='b']/a/text()</gtags>
+        <gtags></gtags>
         <!--游戏截图-->
-        <picture>//div[@class='list']/a/img/@ssrc</picture>
+        <picture>//div[@class='screenimg']/ul/li/a/@href</picture>
         <!--游戏视角-->
         <viewpoint></viewpoint>
         <!--游戏引擎-->
         <engine></engine>
         <!--游戏品级-->
-        <grade></grade>
+        <grade>//span[@class='wd156']/code[2]/img/@src</grade>
         <!--研发进度-->
         <dpprogress></dpprogress>
         <!--游戏题材-->
-        <gtheme>//div[@class='info']/div[4]/a/text()</gtheme>
+        <gtheme></gtheme>
         <!--产品团队规模-->
         <scale></scale>
         <!--产品需求-->
@@ -886,8 +884,8 @@
         <moreclick></moreclick>>
         <!--滑动滚轮次数-->
         <slidingRoller></slidingRoller>>
+    </SpiderYxg>
 
-    </SpiderDY>
     <SpiderDYWY>
         <!--网站名-->
         <source>逗游</source>
