@@ -5,9 +5,6 @@ package SpiderUtils.SpiderData;
  */
 public class Hello {
     public  static void main(String [] args){
-        System.out.println();
-        double a=getEditDistance("123","123")/("123").length();
-        System.out.println(a);
 
     }
     private static int Minimum(int a, int b, int c) {

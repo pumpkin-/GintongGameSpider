@@ -1011,7 +1011,7 @@
         <!--下一页-->
         <nextpage >//a[text()*='下一页']/@href</nextpage>
         <!--起始页面-->
-        <urls>
+        <urls page="">
             <url>
                 http://www.doyo.cn/wangye/list
             </url>
@@ -1124,11 +1124,12 @@
         <detailurl>//div[@class='text']/h2/a/@href</detailurl>
         <!--下一页-->
         <nextpage ></nextpage>
-        <!--起始页面-->
-        <urls>
-            <url>
-                http://dl.3dmgame.com/zlist-15-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-1
+        <!--起始页面||动态的页数（页数的链接以$(page)替换）-->
+        <urls  >
+            <url page="4">
+                http://dl.3dmgame.com/zlist-15-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-$(page)
             </url>
+
 
         </urls>
 
@@ -1229,6 +1230,8 @@
         <slidingRoller></slidingRoller>>
 
     </Spider3md>
+
+
 
 
 
