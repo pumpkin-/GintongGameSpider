@@ -3,7 +3,8 @@
 
     <!-- 命名跟数据库字段一致 -->
     <spiderUrl>
-        <ptime></ptime>
+        <flag></flag>
+        <ptime>//div[@class='fl']/i/text()</ptime>
         <urls>
             <!--<url>-->
                 <!--http://www.gamerbbs.cn/news/1431.html-->
@@ -23,6 +24,21 @@
             <url>
                 http://mini.eastday.com/a/170303101320842.html?qid=zhinengsrf2037&amp;vqid=znykb054
             </url>
+            <!--<url>-->
+                <!--http://www.youxituoluo.com/504927.html-->
+            <!--</url>-->
+            <!--<url>-->
+                <!--http://gamerboom.com/archives/92910-->
+            <!--</url>-->
+            <!--<url>-->
+                <!--http://item.btime.com/455e6b55l1a8lqpjmfgtku6qt8v?from=mini-->
+            <!--</url>-->
+            <!--<url>-->
+                <!--http://www.qianzhan.com/game/detail/381/170209-3d22dbfa.html-->
+            <!--</url>-->
+            <!--<url>-->
+                <!--http://www.qianzhan.com/game/detail/381/170204-3b2a1afa.html-->
+            <!--</url>-->
         </urls>
     </spiderUrl>
 
