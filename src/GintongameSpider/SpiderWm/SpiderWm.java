@@ -39,11 +39,9 @@ import java.util.regex.Pattern;
  */
 public class SpiderWm {
     //微博用户名
-
-    private static String username="15711490906";
+    private static String username="";
     //微博密码
-    private static String password="a19941031";
-
+    private static String password="";
     private static List<String> perUrlList=new ArrayList<String>();
     private static WebDriver driver=null;
     //爬取公司人名信息
