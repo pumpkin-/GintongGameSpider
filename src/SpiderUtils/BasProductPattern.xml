@@ -1122,9 +1122,11 @@
         <detailurl>//div[@class='text']/h2/a/@href</detailurl>
         <!--下一页-->
         <nextpage ></nextpage>
+
         <!--起始页面||动态的页数（页数的链接以$(page)替换）-->
         <urls  >
             <url page="4">
+
                 http://dl.3dmgame.com/zlist-15-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-$(page)
             </url>
 
@@ -1684,6 +1686,7 @@
         <slidingRoller></slidingRoller>>
 
     </SpiderDlw>
+
 
 
 

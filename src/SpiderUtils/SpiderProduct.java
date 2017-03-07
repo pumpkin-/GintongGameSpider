@@ -137,7 +137,7 @@ public class SpiderProduct {
      * 获取配置文件中要爬取的信息
      *
      * @param targetNode 目标节点
-     * @throws FileNotFoundException
+     * @throws java.io.FileNotFoundException
      */
     public static Map<String, Object> getElement(String targetNode){
         try{
