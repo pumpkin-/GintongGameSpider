@@ -270,7 +270,7 @@ public class test {
         System.setProperty("webdriver.chrome.driver",SpiderContant.chromeWindowsPath );
         WebDriver driver=new ChromeDriver();
 //        driver.get("http://zhushou.360.cn/list/index/cid/2?page=1");
-        driver.get("http://zhushou.360.cn/list/index/cid/2)");
+        driver.get("http://play.91.com/iphone/Game/");
         WebElement webElement=driver.findElement(By.xpath("/html"));
         org.jsoup.nodes.Document doc2=Jsoup.parse(webElement.getAttribute("outerHTML"));
         JXDocument jxDocument=new JXDocument(doc2);
