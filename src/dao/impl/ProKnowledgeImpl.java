@@ -62,13 +62,21 @@ public class ProKnowledgeImpl extends BaseDaoImpl<List> implements ProKnowledgeD
     }
 
 
-
+    /**
+     * 单条插入数据
+     * @param proKnowledge
+     * @throws FormatEexception
+     */
     public void insert(ProKnowledge proKnowledge) throws FormatEexception {
-
+        this.getSqlSession().insert(getNs() + "insert", proKnowledge);
     }
 
 
-
+    /**
+     * 批量插入数据
+     * @param date
+     * @return
+     */
     public List<ProKnowledge> selectList(DateInfo date) {
         return this.getSqlSession().selectList(getNs() + "selectList", date);
     }

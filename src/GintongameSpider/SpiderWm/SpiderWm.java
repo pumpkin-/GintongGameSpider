@@ -39,9 +39,11 @@ import java.util.regex.Pattern;
  */
 public class SpiderWm {
     //微博用户名
+
     private static String username="";
     //微博密码
     private static String password="";
+
     private static List<String> perUrlList=new ArrayList<String>();
     private static WebDriver driver=null;
 
