@@ -41,11 +41,11 @@ public class SpiderProduct {
         //ergodicUrl("SpiderRPYX",0);
         //ergodicUrl("SpiderYYW",0);
         //ergodicUrl("Spider52PK",0);
-
-      // ergodicUrl("SpiderFpw", 0,1);
+       // ergodicUrl("spiderAZSC",0,1);
+      //ergodicUrl("SpiderFpw", 0,1);
 
        //ergodicUrl("SpiderRPYX",0);
-        ergodicUrl("Spider360助手",0,1);
+      ergodicUrl("Spider360助手",0,0);
 
     }
 
