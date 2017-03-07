@@ -43,6 +43,12 @@ public class SpiderProduct {
         //ergodicUrl("SpiderYYW",0);
         //ergodicUrl("Spider52PK",0);
 
+       // ergodicUrl("spiderAZSC",0,1);
+      //ergodicUrl("SpiderFpw", 0,1);
+
+       //ergodicUrl("SpiderRPYX",0);
+      //ergodicUrl("Spider360助手",0,0);
+        ergodicUrl("Spider91助手",0,0);
 
     }
 
@@ -64,7 +70,7 @@ public class SpiderProduct {
 
 
                     String url=elements.getText().trim();
-                List<String> list = allpage(url, elements.attributeValue("page"),fromPageNum);
+                List<String> list = allpage(url, elements.attributeValue("page"), fromPageNum);
                     i++;
                     for(String uri:list){
                         final Spider s=new Spider(map, uri,0,isImport);
@@ -131,7 +137,7 @@ public class SpiderProduct {
      * 获取配置文件中要爬取的信息
      *
      * @param targetNode 目标节点
-     * @throws FileNotFoundException
+     * @throws java.io.FileNotFoundException
      */
     public static Map<String, Object> getElement(String targetNode){
         try{
@@ -295,6 +301,7 @@ public class SpiderProduct {
             return map;
         }catch(DocumentException e){
             System.out.println("配置文件获取错误！");
+            e.printStackTrace();
             return null;
         }
     }
