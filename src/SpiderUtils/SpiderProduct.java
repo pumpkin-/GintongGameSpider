@@ -7,6 +7,7 @@ import dao.ProGameInfoDao;
 import dao.ProGamePlatformDao;
 import dao.ProGameTypeDao;
 import dao.impl.*;
+import org.apache.bcel.generic.RETURN;
 import org.apache.commons.lang3.StringUtils;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
@@ -21,6 +22,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.phantomjs.PhantomJSDriver;
 
+import javax.xml.bind.SchemaOutputResolver;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
@@ -30,9 +32,9 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 /**
- * 游戏产品信息爬取
- * Created by gao on 2017/2/21.
- */
+* 游戏产品信息爬取
+* Created by gao on 2017/2/21.
+*/
 public class SpiderProduct {
 
     public static void main(String[] args) throws Exception {
@@ -41,12 +43,9 @@ public class SpiderProduct {
         //ergodicUrl("SpiderYYW",0);
         //ergodicUrl("Spider52PK",0);
 
-       ergodicUrl("SpiderFpw", 0,0);
-
-       //ergodicUrl("SpiderRPYX",0);
-
 
     }
+
 
     /**
      * 遍历urls内部url
@@ -54,21 +53,37 @@ public class SpiderProduct {
     public static void ergodicUrl(String webname,int fromPageNum,int isImport) throws Exception {
         System.out.println("Start parsing XML file");
         Map<String, Object> map = getElement(webname);
-        ExecutorService pool= Executors.newFixedThreadPool(3);
+        ExecutorService pool= Executors.newFixedThreadPool(1);
         List urlNodes= (List) map.get("urls");
+        //String dynamicURL= (String) map.get("page");
+        List  dynamicURL= (List) map.get("urlpage");
+        int i=0;
         for(Object ele:urlNodes){
-            if(map.get("flag").equals("jsoup")) {
+            Element elements= (Element) ele;
+            if(map.get("flag").equals("jsoup")&&elements.attributeValue("page")!=null&& !elements.attributeValue("page").isEmpty()) {
+
+
+                    String url=elements.getText().trim();
+                List<String> list = allpage(url, elements.attributeValue("page"),fromPageNum);
+                    i++;
+                    for(String uri:list){
+                        final Spider s=new Spider(map, uri,0,isImport);
+                        s.run();
+                        System.out.println(uri);
+                    }
+                    fromPageNum=0;
+            } else if(map.get("flag").equals("jsoup")) {
                 Element element= (Element) ele;
                 String url=element.getText().trim();
                 System.out.println(url);
                 final Spider s=new Spider(map, url,fromPageNum,isImport);
                 //运行线程
-                pool.submit(new Runnable() {
-                    @Override
-                    public void run() {
+//                pool.submit(new Runnable() {
+//                    @Override
+//                    public void run() {
                         s.run();
-                    }
-                });
+//                    }
+//                });
                 fromPageNum=0;
             }else if(map.get("flag").equals("selenium")){
                 Element element= (Element) ele;
@@ -85,14 +100,38 @@ public class SpiderProduct {
         }
     }
 
+    /**
+     * 获取全部的链接
+     * @param dynamicURL 链接
+     * @param allpage 页数
+     * @return 全部的链接
+     */
+    public static List  allpage(String dynamicURL,String allpage,int fromPageNum){
+        List<String>list=new ArrayList<String>();
+        int pages=Integer.parseInt(allpage);
+        String page;
+        if(fromPageNum==0){
+            fromPageNum=fromPageNum+1;
+        }
+        for(int i=fromPageNum;i<pages+1;i++) {
+            page = i+ "";
+            try {
+                list.add(dynamicURL.replace("$(page)", page));
+            }catch (Exception e){
+                e.printStackTrace();
+            }
 
+        }
+            return list;
+
+    }
 
 
     /**
      * 获取配置文件中要爬取的信息
      *
      * @param targetNode 目标节点
-     * @throws FileNotFoundException
+     * @throws java.io.FileNotFoundException
      */
     public static Map<String, Object> getElement(String targetNode){
         try{
@@ -103,6 +142,8 @@ public class SpiderProduct {
             Node target=dom.selectSingleNode("//"+targetNode);
             //获取起始url
             List urls=target.selectNodes("//"+targetNode+"//url");
+            //String page=target.selectSingleNode("//"+targetNode+"/urls/@page").getText();
+            List urlpage=target.selectNodes("//"+targetNode+"//url/@page");
             //获取网站源名称
             String source=target.selectSingleNode("//"+targetNode+"/source").getText();
             //获取ContentPath
@@ -197,7 +238,8 @@ public class SpiderProduct {
 
             //将上面读到的配置文件中的xpath信息返回main方法
             Map<String, Object>map=new HashMap();
-
+            //map.put("page",page);
+            map.put("urlpage",urlpage);
             map.put("nextpic",nextpic);
             map.put("contentPathpic",contentPathpic);
             map.put("flagchild",flagchild);
@@ -256,7 +298,11 @@ public class SpiderProduct {
             return null;
         }
     }
+
 }
+
+
+
 
 //爬虫内部线程类
 class Spider{
@@ -353,6 +399,7 @@ class Spider{
         while(true){
             //获取详情页列表
             List<Object> detailsUrls=doc.sel(map.get("detailurl").toString());
+            System.out.println("detail urls size：" + detailsUrls.size());
             System.out.println("Start traversal details page");
             for(Object details:detailsUrls){
                 String childLink=null;
@@ -531,8 +578,14 @@ class Spider{
             if(map.get("flagchild").toString().equals("selenium")){
                 driver.close();
             }
+            List page= (List) map.get("urlpage");
+            if(!page.isEmpty()){
+                break;
+            }
             doc=listPageJsoup(doc);
             i++;
+
+
         }
     }
 

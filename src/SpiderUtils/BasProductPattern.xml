@@ -1124,8 +1124,8 @@
         <nextpage ></nextpage>
         <!--起始页面-->
         <urls>
-            <url>
-                http://dl.3dmgame.com/zlist-15-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-1
+            <url page="10">
+                http://dl.3dmgame.com/zlist-15-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-$(page)
             </url>
 
         </urls>
@@ -1227,6 +1227,8 @@
         <slidingRoller></slidingRoller>>
 
     </Spider3md>
+
+    <!--PP助手-->
 
 
 
