@@ -7,7 +7,7 @@ import dao.ProGameInfoDao;
 import dao.ProGamePlatformDao;
 import dao.ProGameTypeDao;
 import dao.impl.*;
-import org.apache.bcel.generic.RETURN;
+
 import org.apache.commons.lang3.StringUtils;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
@@ -22,8 +22,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.phantomjs.PhantomJSDriver;
 
-import javax.xml.bind.SchemaOutputResolver;
-import java.io.FileNotFoundException;
+
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -232,6 +231,7 @@ public class SpiderProduct {
 //            <!--资料片发布时间-->
             String films_time=target.selectSingleNode("//"+targetNode+"/films_time").getText();
 //            <!--下载链接-->
+            String joinlink=target.selectSingleNode("//"+targetNode+"/download_link/@join").getText();
             String download_link=target.selectSingleNode("//"+targetNode+"/download_link").getText();
             String flag=target.selectSingleNode("//"+targetNode+"/flag").getText();
             String moreclick= target.selectSingleNode("//"+targetNode+"/moreclick").getText();
@@ -298,6 +298,7 @@ public class SpiderProduct {
             map.put("set_timeStr",set_timeStr);
             map.put("gtheme",gtheme);
             map.put("engine",engine);
+            map.put("joinlink",joinlink);
             return map;
         }catch(DocumentException e){
             System.out.println("配置文件获取错误！");
@@ -521,7 +522,7 @@ class Spider{
     /**
      * 获取dom
      */
-    public org.jsoup.nodes.Document getDocument(String url){
+    public static org.jsoup.nodes.Document getDocument(String url){
         try{
             org.jsoup.nodes.Document document=Jsoup.connect(url)
                     .userAgent("Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; .NET CLR 2.0.50727)")
@@ -709,7 +710,7 @@ class Spider{
                 if(document.sel(map.get("version").toString()).size()>0) {
                     version = document.sel(map.get("version").toString()).get(0).toString();
                 }
-                version=version.substring(1,version.lastIndexOf(")"));
+//                version=version.substring(1,version.lastIndexOf(")"));
                 System.out.println(version);
                 gameInfo.setVersion(version);
             }
@@ -904,18 +905,18 @@ class Spider{
             String films_time=getInfomation(document,"films_time");
             gameInfo.setFilms_time(films_time);
 //            <!--下载链接-->
-            if(StringUtils.isNotEmpty(map.get("download_link").toString())){
-                if(document.sel(map.get("download_link").toString()).size()>0) {
-                    List<Object> list= document.sel(map.get("download_link").toString());
-                    for(int x=0;x<list.size();x++){
-                        if(list1!=null&&list1.size()>0) {
-                            list1.get(x).setDownloadLink(list.get(x).toString());
+                if (StringUtils.isNotEmpty(map.get("download_link").toString())) {
+                    if (document.sel(map.get("download_link").toString()).size() > 0) {
+                        List<Object> list = document.sel(map.get("download_link").toString());
+                        for (int x = 0; x < list.size(); x++) {
+                            if (list1 != null && list1.size() > 0) {
+                                list1.get(x).setDownloadLink(map.get("joinlink")+list.get(x).toString());
+                            }
+                            System.out.println(map.get("joinlink").toString()+list.get(x).toString());
+                            gameInfo.setDownload_link(list.get(x).toString());
                         }
-                        System.out.println(list.get(x).toString());
-                        gameInfo.setDownload_link(list.get(x).toString());
                     }
                 }
-            }
             //游戏截图picture
             if(StringUtils.isNotEmpty(map.get("picture").toString())){
                 if(StringUtils.isEmpty(map.get("nextpic").toString())) {

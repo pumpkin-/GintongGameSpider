@@ -124,16 +124,16 @@ public class SpiderXpath {
 //                }
 //            }
 //        });
-//        pool.submit(new Runnable() {
-//            @Override
-//            public void run() {
-//                try {
-//                    CommonSpiderKnowledge.ergodicUrl("spiderTX",22,"no");
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        });
+        pool.submit(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    CommonSpiderKnowledge.ergodicUrl("spiderFL",0,"no");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
 
     }
 }

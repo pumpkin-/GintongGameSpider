@@ -146,7 +146,6 @@ public class BasCommonKnowledgeSpider {
             System.out.println("正文:"+content);
             System.out.println("时间："+ptime);
         }
-
         storeToDatabase(depositJavabean(title,ptime,content,"null"));
     }
 
