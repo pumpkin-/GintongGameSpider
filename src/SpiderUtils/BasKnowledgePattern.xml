@@ -2184,6 +2184,7 @@
         </urls>
     </spiderZOL>
 
+
     <!--CoCoaChina-->
     <SpiderCoCoaChina>
         <title>//div[@class='detail-main']/h2/text()</title>
@@ -2240,33 +2241,34 @@
                 https://www.189store.com/proftrend/toProftrend
             </url>
         </urls>
-
-
     </SpiderTykj>
 
-    <!--搜狐手游-->
-    <SpiderShsy>
-        <title>//h1/text()</title>
-        <author>//div[@class='source']/span[2]/text()</author>
+
+    http://www.feiliu.com/news
+    <!--飞流  刘雪明3.7-->
+    <spiderFL>
+        <title>//div[@class='art-tit']</title>
+        <author></author>
         <authorurl></authorurl>
         <cover join=""></cover>
-        <ptime timeFormat="yyyy MM dd HH mm ss">//div[@class='time']/text()</ptime>>
+        <ptime timeFormat="yyyy MM dd">//span[@class='date']/text()</ptime>>
         <tag></tag>
-        <main>//p</main>>
-        <mainpic>//div[@class='text-pic']/table/tbody/tr/td/img/@src</mainpic>>
+        <main>//div[@class='con art-con']/p</main>>
+        <mainpic>//img/@src</mainpic>>
         <type></type>>
-        <source>新浪手游</source>
-        <childLink join="">//div[@class='list14']/ul/li/a/@href</childLink>>
-        <nextpage>//div[@class='pages']/table/tbody/tr/td/a/allText()</nextpage>
+        <source>飞流</source>
+        <childLink join="">//ul[@class='newslist']/li/a/@href</childLink>>
+        <nextpage join="">//li[@class='next']/a[text()*='下一页']/@href</nextpage>
         <flag>jsoup</flag>>
         <childnext join=""></childnext>>
         <chose demand=""></chose>>
         <urls>
             <url>
-                http://mgame.sohu.com/chanye/index.shtml
+                http://www.feiliu.com/news
             </url>
         </urls>
-    </SpiderShsy>
+    </spiderFL>
+
 
 
 
