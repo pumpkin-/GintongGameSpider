@@ -897,7 +897,7 @@
         <nextpage >//a[text()*='下一页']/@href</nextpage>
         <!--起始页面-->
         <urls>
-            <url>
+            <url page="">
                 http://www.doyo.cn/wangluo/list
             </url>
         </urls>
@@ -935,7 +935,7 @@
         <!--游戏品级-->
         <grade></grade>
         <!--研发进度-->
-        <dpprogress></dpprogress>
+        <dpprogress>//div[@class='info']/div[4]/a/text()</dpprogress>
         <!--游戏题材-->
         <gtheme>//div[@class='info']/div[2]/a/text()</gtheme>
         <!--产品团队规模-->
@@ -947,7 +947,7 @@
         <!--付费方式-->
         <charge_mode></charge_mode>
         <!--研发公司-->
-        <develop_com></develop_com>
+        <develop_com>//div[@class='info']/div[5]/a/text()</develop_com>
         <!--游戏介绍-->
         <g_desc>//div[@class='content']/p/text()|//div[@class='all']/p/text()</g_desc>
         <!--初版出售时间-->
@@ -963,7 +963,7 @@
         <!--游戏官网-->
         <web></web>
         <!--运营商-->
-        <operator>//div[@class='info']/div[]/span/text()</operator>
+        <operator>//div[@class='info']/div[6]/span/text()</operator>
         <!--资料片发布时间-->
         <films_time></films_time>
         <!--游戏画面（2D,3D）-->
@@ -1048,7 +1048,7 @@
         <!--游戏品级-->
         <grade></grade>
         <!--研发进度-->
-        <dpprogress></dpprogress>
+        <dpprogress>//div[@class='info']/div[4]/a/text()</dpprogress>
         <!--游戏题材-->
         <gtheme>//div[@class='info']/div[2]/a/text()</gtheme>
         <!--产品团队规模-->
@@ -1060,7 +1060,7 @@
         <!--付费方式-->
         <charge_mode></charge_mode>
         <!--研发公司-->
-        <develop_com></develop_com>
+        <develop_com>//div[@class='info']/div[5]/a/text()</develop_com>
         <!--游戏介绍-->
         <g_desc>//div[@class='content']/p/text()|//div[@class='all']/p/text()|//div[@class='content']/text()</g_desc>
         <!--初版出售时间-->
@@ -1076,7 +1076,7 @@
         <!--游戏官网-->
         <web></web>
         <!--运营商-->
-        <operator>//div[@class='info']/div[]/span/text()</operator>
+        <operator>//div[@class='info']/div[6]/span/text()</operator>
         <!--资料片发布时间-->
         <films_time></films_time>
         <!--游戏画面（2D,3D）-->
@@ -1458,7 +1458,372 @@
 
     </Spider360助手>
 
+    <!--优亿市场-->
+    <SpiderYY>
+        <!--网站名-->
+        <source>优亿市场</source>
+        <!--ContentPath子链接拼接内容-->
+        <contentPath>http://www.eoemarket.com</contentPath>
+        <!--详情页url-->
+        <detailurl>//div[@class='classf_list_item_c']/a/@href</detailurl>
+        <!--下一页-->
+        <nextpage ></nextpage>
+        <!--起始页面||动态的页数（页数的链接以$(page)替换）-->
+        <urls  >
+            <url page="20">
+                http://www.eoemarket.com/game/2_new_unofficial_hasad_2_$(page).html
+            </url>
 
+
+        </urls>
+
+        <!--游戏名-->
+        <gname>//div[@class='float_download']//span[@class='name_appintr']/text()</gname>
+        <!--游戏英语名字-->
+        <gename></gename>
+        <!--开服总数-->
+        <totalServer></totalServer>
+        <!--产品logo-->
+        <logo>//div[@class='float_download']//div[@class='appicon_intr']//img/@src</logo>
+        <!--游戏版本-->
+        <version>>//div[@class='float_download']//span[@class='info_appintr clearfix']/span[1]/em[2]/text()</version>
+        <!--语言-->
+        <language></language>
+        <!--是否联网0未知，1不需要联网，2需要联网'-->
+        <sort>0</sort>
+        <!--适合年龄-->
+        <suitable_age></suitable_age>
+        <!--发行商-->
+        <publisher></publisher>
+        <!--发行区域-->
+        <issue_area></issue_area>
+        <!--游戏风格-->
+        <gstyle></gstyle>
+        <!--标签-->
+        <gtags></gtags>
+        <!--游戏截图-->
+        <picture>//ul[@class='introd_imgs_c clearfix']/li/img/@data-original</picture>
+        <!--游戏视角-->
+        <viewpoint></viewpoint>
+        <!--游戏引擎-->
+        <engine></engine>
+        <!--游戏品级-->
+        <grade></grade>
+        <!--研发进度-->
+        <dpprogress></dpprogress>
+        <!--游戏题材-->
+        <gtheme></gtheme>
+        <!--产品团队规模-->
+        <scale></scale>
+        <!--产品需求-->
+        <pdemand></pdemand>
+        <!--价格-->
+        <price></price>
+        <!--付费方式-->
+        <charge_mode></charge_mode>
+        <!--研发公司-->
+        <develop_com></develop_com>
+        <!--游戏介绍-->
+        <g_desc>//div[@class='profilecon_c']/text()</g_desc>
+        <!--初版出售时间-->
+        <ptime formatStr=""></ptime>
+        <!--公测时间-->
+        <beta_time formatStr=""></beta_time>
+        <!--内测时间-->
+        <test_time formatStr=""></test_time>
+        <!--封测时间-->
+        <betatest_time formatStr=""></betatest_time>
+        <!--立项时间-->
+        <set_time formatStr=""></set_time>
+        <!--游戏官网-->
+        <web></web>
+        <!--运营商-->
+        <operator></operator>
+        <!--资料片发布时间-->
+        <films_time></films_time>
+        <!--游戏画面（2D,3D）-->
+        <gamespy></gamespy>
+        <!--游戏大小-->
+        <game_size>//div[@class='float_download']//span[@class='info_appintr clearfix']/span[1]/em[1]/text()</game_size>
+        <!--网站更新时间-->
+        <web_update_time formatStr=""></web_update_time>
+        <!--下载链接-->
+        <download_link></download_link>
+        <!--游戏类型-->
+        <gtypes>
+            <gtype></gtype>
+        </gtypes>
+        <!--游戏平台（操作系统）-->
+        <platform></platform>
+        <!--网络类型-->
+        <network_type></network_type>
+
+        <!--下一页链接需要拼接的内容-->
+        <contentPathnext></contentPathnext>
+        <!--游戏截图下一页需要拼接的内容-->
+        <contentPathpic></contentPathpic>>
+        <!--游戏截图下一页的xpath语句-->
+        <nextpic></nextpic>>
+        <!--选择列表页所用驱动-->
+        <flag>jsoup</flag>>
+        <!--选择详情所用驱动-->
+        <flagchild>jsoup</flagchild>
+        <!--点击更多jquery语言-->
+        <moreclick></moreclick>>
+        <!--滑动滚轮次数-->
+        <slidingRoller></slidingRoller>>
+
+    </SpiderYY>
+    <!--搞趣网-->
+    <SpiderGQW>
+        <!--网站名-->
+        <source>搞趣网</source>
+        <!--ContentPath子链接拼接内容-->
+        <contentPath></contentPath>
+        <!--详情页url-->
+        <detailurl>//ul[@class='f-game-ul']/li/a/@href</detailurl>
+        <!--下一页-->
+        <nextpage ></nextpage>
+        <!--起始页面||动态的页数（页数的链接以$(page)替换）-->
+        <urls  >
+            <url page="407">
+                http://www.gao7.com/newgame/search/0-0-0-0-0-0-$(page)
+            </url>
+        </urls>
+
+        <!--游戏名-->
+        <gname>//dl[@class='m-top-dl fl']//dd/h1/text()</gname>
+        <!--游戏英语名字-->
+        <gename></gename>
+        <!--开服总数-->
+        <totalServer></totalServer>
+        <!--产品logo-->
+        <logo>//dl[@class='m-top-dl fl']//dt/img/@src</logo>
+        <!--游戏版本-->
+        <version></version>
+        <!--语言-->
+        <language>//dl[@class='m-top-dl fl']/dd/p[1]/span[3]/text()</language>
+        <!--是否联网0未知，1不需要联网，2需要联网'-->
+        <sort>0</sort>
+        <!--适合年龄-->
+        <suitable_age></suitable_age>
+        <!--发行商-->
+        <publisher></publisher>
+        <!--发行区域-->
+        <issue_area>//dl[@class='m-top-dl fl']/p[5]/text()</issue_area>
+        <!--游戏风格-->
+        <gstyle></gstyle>
+        <!--标签-->
+        <gtags></gtags>
+        <!--游戏截图-->
+        <picture>//ul[@class='ad-thumb-list']/li//img/@src</picture>
+        <!--游戏视角-->
+        <viewpoint></viewpoint>
+        <!--游戏引擎-->
+        <engine></engine>
+        <!--游戏品级-->
+        <grade></grade>
+        <!--研发进度-->
+        <dpprogress></dpprogress>
+        <!--游戏题材-->
+        <gtheme></gtheme>
+        <!--产品团队规模-->
+        <scale></scale>
+        <!--产品需求-->
+        <pdemand></pdemand>
+        <!--价格-->
+        <price>//dl[@class='m-top-dl fl']/dd/p[1]/span[4]/text()</price>
+        <!--付费方式-->
+        <charge_mode></charge_mode>
+        <!--研发公司-->
+        <develop_com>//dl[@class='m-top-dl fl']/dd/p[3]//a/text()</develop_com>
+        <!--游戏介绍-->
+        <g_desc>//div[@class='game-base']/p/text()</g_desc>
+        <!--初版出售时间-->
+        <ptime formatStr=""></ptime>
+        <!--公测时间-->
+        <beta_time formatStr=""></beta_time>
+        <!--内测时间-->
+        <test_time formatStr=""></test_time>
+        <!--封测时间-->
+        <betatest_time formatStr=""></betatest_time>
+        <!--立项时间-->
+        <set_time formatStr=""></set_time>
+        <!--游戏官网-->
+        <web></web>
+        <!--运营商-->
+        <operator>//dl[@class='m-top-dl fl']/dd/p[3]/span[2]//text()</operator>
+        <!--资料片发布时间-->
+        <films_time></films_time>
+        <!--游戏画面（2D,3D）-->
+        <gamespy></gamespy>
+        <!--游戏大小-->
+        <game_size>//dl[@class='m-top-dl fl']/dd/p[1]/span[2]/text()</game_size>
+        <!--网站更新时间-->
+        <web_update_time formatStr=""></web_update_time>
+        <!--下载链接-->
+        <download_link></download_link>
+        <!--游戏类型-->
+        <gtypes>
+            <gtype></gtype>
+        </gtypes>
+        <!--游戏平台（操作系统）-->
+        <platform>//dl[@class='m-top-dl fl']/dd/p[2]/span[1]/a/text()</platform>
+        <!--网络类型-->
+        <network_type></network_type>
+
+        <!--下一页链接需要拼接的内容-->
+        <contentPathnext></contentPathnext>
+        <!--游戏截图下一页需要拼接的内容-->
+        <contentPathpic></contentPathpic>>
+        <!--游戏截图下一页的xpath语句-->
+        <nextpic></nextpic>>
+        <!--选择列表页所用驱动-->
+        <flag>jsoup</flag>>
+        <!--选择详情所用驱动-->
+        <flagchild>jsoup</flagchild>
+        <!--点击更多jquery语言-->
+        <moreclick></moreclick>>
+        <!--滑动滚轮次数-->
+        <slidingRoller></slidingRoller>>
+
+    </SpiderGQW>
+    <!--pp手机助手-->
+    <SpiderPP>
+        <!--网站名-->
+        <source>pp手机助手</source>
+        <!--ContentPath子链接拼接内容-->
+        <contentPath></contentPath>
+        <!--详情页url-->
+        <detailurl>//ul[@class='app-list clearfix']/li/a/@href</detailurl>
+        <!--下一页-->
+        <nextpage ></nextpage>
+        <!--起始页面||动态的页数（页数的链接以$(page)替换）-->
+        <urls  >
+            <url page="84">
+                http://www.25pp.com/ios/game/fenlei/3/10_0_2/$(page)
+            </url>
+            <url page="72">
+                http://www.25pp.com/ios/game/fenlei/3/12_0_2/$(page)
+            </url>
+            <url page="74">
+                http://www.25pp.com/ios/game/fenlei/3/13_0_2/$(page)
+            </url>
+            <url page="32">
+                http://www.25pp.com/ios/game/fenlei/3/14_0_2/$(page)
+            </url>
+            <url page="52">
+                http://www.25pp.com/ios/game/fenlei/3/11_0_2/$(page)
+            </url>
+            <url page="10">
+                http://www.25pp.com/ios/game/fenlei/3/17_0_2/$(page)
+            </url>
+            <url page="10">
+                http://www.25pp.com/ios/game/fenlei/3/16_0_2/$(page)
+            </url>
+            <url page="14">
+                http://www.25pp.com/ios/game/fenlei/3/15_0_2/$(page)
+            </url>
+        </urls>
+
+        <!--游戏名-->
+        <gname>//div[@class='app-info']/h2/text()</gname>
+        <!--游戏英语名字-->
+        <gename></gename>
+        <!--开服总数-->
+        <totalServer></totalServer>
+        <!--产品logo-->
+        <logo>//div[@class='app-icon']/img/@src</logo>
+        <!--游戏版本-->
+        <version>//div[@class='app-detail-info']/p[2]/span[1]/strong/text()</version>
+        <!--语言-->
+        <language></language>
+        <!--是否联网0未知，1不需要联网，2需要联网'-->
+        <sort>0</sort>
+        <!--适合年龄-->
+        <suitable_age></suitable_age>
+        <!--发行商-->
+        <publisher></publisher>
+        <!--发行区域-->
+        <issue_area></issue_area>
+        <!--游戏风格-->
+        <gstyle></gstyle>
+        <!--标签-->
+        <gtags></gtags>
+        <!--游戏截图-->
+        <picture>//ul[@class='gallery clearfix']/li//img/@src</picture>
+        <!--游戏视角-->
+        <viewpoint></viewpoint>
+        <!--游戏引擎-->
+        <engine></engine>
+        <!--游戏品级-->
+        <grade></grade>
+        <!--研发进度-->
+        <dpprogress></dpprogress>
+        <!--游戏题材-->
+        <gtheme></gtheme>
+        <!--产品团队规模-->
+        <scale></scale>
+        <!--产品需求-->
+        <pdemand></pdemand>
+        <!--价格-->
+        <price></price>
+        <!--付费方式-->
+        <charge_mode></charge_mode>
+        <!--研发公司-->
+        <develop_com></develop_com>
+        <!--游戏介绍-->
+        <g_desc>//div[@class='app-detail-intro expand-panel']/text()</g_desc>
+        <!--初版出售时间-->
+        <ptime formatStr=""></ptime>
+        <!--公测时间-->
+        <beta_time formatStr=""></beta_time>
+        <!--内测时间-->
+        <test_time formatStr=""></test_time>
+        <!--封测时间-->
+        <betatest_time formatStr=""></betatest_time>
+        <!--立项时间-->
+        <set_time formatStr=""></set_time>
+        <!--游戏官网-->
+        <web></web>
+        <!--运营商-->
+        <operator></operator>
+        <!--资料片发布时间-->
+        <films_time></films_time>
+        <!--游戏画面（2D,3D）-->
+        <gamespy></gamespy>
+        <!--游戏大小-->
+        <game_size>//div[@class='app-detail-info']/p[1]/span[2]//text()</game_size>
+        <!--网站更新时间-->
+        <web_update_time formatStr=""></web_update_time>
+        <!--下载链接-->
+        <download_link></download_link>
+        <!--游戏类型-->
+        <gtypes>
+            <gtype></gtype>
+        </gtypes>
+        <!--游戏平台（操作系统）-->
+        <platform></platform>
+        <!--网络类型-->
+        <network_type></network_type>
+
+        <!--下一页链接需要拼接的内容-->
+        <contentPathnext></contentPathnext>
+        <!--游戏截图下一页需要拼接的内容-->
+        <contentPathpic></contentPathpic>>
+        <!--游戏截图下一页的xpath语句-->
+        <nextpic></nextpic>>
+        <!--选择列表页所用驱动-->
+        <flag>jsoup</flag>>
+        <!--选择详情所用驱动-->
+        <flagchild>jsoup</flagchild>
+        <!--点击更多jquery语言-->
+        <moreclick></moreclick>>
+        <!--滑动滚轮次数-->
+        <slidingRoller></slidingRoller>>
+
+    </SpiderPP>
+    <!---->
 
 
 </BasProductPattern>
