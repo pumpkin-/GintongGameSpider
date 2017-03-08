@@ -26,6 +26,16 @@ public class LevenshteinDis {
         }
     }
 
+    /**
+     * 判断当前页面的所有数据重复问题
+     * @param proKnowledges
+     * @param basPersonInfos
+     * @param perKnowledges
+     * @return
+     * @throws SpiderUtils.FormatEexception
+     * @throws ParseException
+     * @throws FormatEexception
+     */
     public static Map<Integer, List> isExist(List<ProKnowledge> proKnowledges, List<BasPersonInfo> basPersonInfos, List<PerKnowledge> perKnowledges) throws SpiderUtils.FormatEexception, ParseException, FormatEexception {
         ProKnowledgeImpl pro=new ProKnowledgeImpl();
         //System.out.println(pro.selectList(dateformat.format(date).toString()));
@@ -197,6 +207,57 @@ public class LevenshteinDis {
             map.put(5, proKnowledges);
         }
         return map;
+    }
+
+    /**
+     * 判断单条数据是否重复
+     * @param proKnowledge
+     * @throws SpiderUtils.FormatEexception
+     * @throws ParseException
+     * @throws FormatEexception
+     */
+    public static boolean isExist(ProKnowledge proKnowledge) throws SpiderUtils.FormatEexception, ParseException, FormatEexception {
+        ProKnowledgeImpl pro=new ProKnowledgeImpl();
+        //System.out.println(pro.selectList(dateformat.format(date).toString()));
+        String essay = null;
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+//        System.out.println(proKnowledge.getPtime());
+        Date dd = simpleDateFormat.parse(proKnowledge.getPtime());
+        DateInfo daa = new DateInfo();
+        daa.setDate(proKnowledge.getPtime());
+//        System.out.println(proKnowledge);
+        Date date5 = new Date((simpleDateFormat.parse(proKnowledge.getPtime()).getTime()) - (5 * (24 * 60 * 60 * 1000)));
+//        System.out.println("------" + date5);
+        dd = simpleDateFormat.parse(date5.toLocaleString());
+//        System.out.println(dd.toLocaleString());
+        daa.setDatepast(dd.toLocaleString());
+//        System.out.println(daa.toString());
+        List<ProKnowledge> list = pro.selectList(daa);
+//        System.out.println(list);
+        System.out.println("从数据库中抽出：" + list.size() + "条数据做对比");
+        if (list != null && list.size() > 0) {
+            for (int x = 0; x < list.size(); x++) {
+                essay = list.get(x).getMain();
+                double dis;
+                //修改为错误代码
+                try {
+                    dis = getSimilarity(essay, proKnowledge.getMain());
+                } catch (Exception e) {
+                    dis = 0;
+                }
+                if (StringUtils.isEmpty(proKnowledge.getMain())) {
+                    System.out.println("this is the null");
+                } else if (dis > 0.95) {
+                    CommonSpiderKnowledge.storeBugdata(essay, proKnowledge.getMain(), proKnowledge.getUuid(),proKnowledge.getSource());
+                    System.out.println("--------------This data should be delete------------------");
+                    return false;
+                } else {
+                    fg = 0;
+                }
+
+            }
+        }
+        return true;
     }
 
     /**

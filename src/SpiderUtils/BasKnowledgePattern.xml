@@ -2183,7 +2183,30 @@
             </url>
         </urls>
     </spiderZOL>
-
+    http://www.feiliu.com/news
+    <!--飞流  刘雪明3.7-->
+    <spiderFL>
+        <title>//div[@class='art-tit']</title>
+        <author></author>
+        <authorurl></authorurl>
+        <cover join=""></cover>
+        <ptime timeFormat="yyyy MM dd">//span[@class='date']/text()</ptime>>
+        <tag></tag>
+        <main>//div[@class='con art-con']/p</main>>
+        <mainpic>//img/@src</mainpic>>
+        <type></type>>
+        <source>飞流</source>
+        <childLink join="">//ul[@class='newslist']/li/a/@href</childLink>>
+        <nextpage join="">//li[@class='next']/a[text()*='下一页']/@href</nextpage>
+        <flag>jsoup</flag>>
+        <childnext join=""></childnext>>
+        <chose demand=""></chose>>
+        <urls>
+            <url>
+                http://www.feiliu.com/news
+            </url>
+        </urls>
+    </spiderFL>
 
 
 

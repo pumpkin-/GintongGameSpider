@@ -1,28 +1,25 @@
 package SpiderUtils;
 
+import JavaBean.ProKnowledge;
 import cn.wanghaomiao.xpath.exception.XpathSyntaxErrorException;
 import cn.wanghaomiao.xpath.model.JXDocument;
 import cn.wanghaomiao.xpath.model.JXNode;
-import org.apache.xerces.impl.xpath.regex.Match;
+import dao.impl.ProKnowledgeImpl;
+import org.apache.commons.lang3.StringUtils;
 import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.DocumentException;
-import org.dom4j.QName;
 import org.dom4j.io.SAXReader;
 import org.jsoup.Jsoup;
-
-
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.phantomjs.PhantomJSDriver;
-
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.regex.Matcher;
@@ -54,11 +51,11 @@ public class BasCommonKnowledgeSpider {
                 knowledgeSpiderConfig.webUrls.add(ele);
             }
         }
-//        判断ptime是否为空
-        if(childElement.element("ptime")==null || childElement.element("ptiem").elements().size()==0){
-
-        }else{
-
+        if(childElement.element("ptime")!=null){
+            knowledgeSpiderConfig.ptime = childElement.element("ptime");
+        }
+        if(childElement.element("flag")!=null){
+            knowledgeSpiderConfig.flag=childElement.element("flag");
         }
         return knowledgeSpiderConfig;
     }
@@ -81,41 +78,112 @@ public class BasCommonKnowledgeSpider {
        return  doc;
     }
 //    抓取文章的标题
-    public static void ergodicUrl(WebDriver driver,String webName) throws FileNotFoundException, DocumentException, XpathSyntaxErrorException {
+    public static void ergodicUrl(WebDriver driver,String webName) throws Exception {
+        String title=null;
+        String content=null;
+        String ptime=null;
+        String contentImgUrl=null;
         KnowledgeSpiderConfig knowledgeSpiderConfig= BasCommonKnowledgeSpider.praseXmlContentByWebName(webName);
         for(Element url: knowledgeSpiderConfig.webUrls) {
             JXDocument doc = getJXDocument(driver, url.getText());
-            System.out.println(doc.selNOne("//title/text()"));
-            System.out.println(doc.selN("//p"));
-            Pattern pattern = Pattern.compile("[0-9]{4}\\D[0-9]{1,2}\\D[0-9]{1,2}\\D\\d{1,2}\\D\\d{1,2}\\D\\d{0,2}|[0-9]{4}\\D[0-9]{1,2}\\D[0-9]{1,2}");
-            Matcher match = pattern.matcher(doc.selN("//body/allText()").toString());
-            if (match.find()) {
-                System.out.println(match.group(0));
+            title =doc.selNOne("//title/text()").toString();
+           content=doc.selN("//p//text()").toString();
+           String partUrl= url.getText().trim().replaceAll("(http:)\\/\\/(.*)\\/(.*)", "$2");
+            String[] sbuUrl=partUrl.split("/");
+            System.out.println(sbuUrl[0]);
+           List<JXNode> list= doc.selN("//p/parent::div//img/@src");
+            for(JXNode lists:list){
+                if(!(lists.toString().substring(0, 4).equals("http"))){
+                    if(lists.toString().contains("//")){
+                        System.out.println("图片路径："+lists);
+                    }else{
+                        contentImgUrl=sbuUrl[0]+lists;
+                        System.out.println("补充图片路径："+contentImgUrl);
+                    }
+                }else{
+                    contentImgUrl=lists.toString();
+                    System.out.println("全图片路径："+contentImgUrl);
+                }
             }
+
+
+            if(StringUtils.isEmpty(knowledgeSpiderConfig.ptime.getText())){
+                Pattern pattern = Pattern.compile("[0-9]{4}\\D[0-9]{1,2}\\D[0-9]{1,2}\\D\\d{1,2}\\D\\d{1,2}\\D\\d{0,2}|[0-9]{4}\\D[0-9]{1,2}\\D[0-9]{1,2}");
+                Matcher match = pattern.matcher(doc.selN("//body/allText()").toString());
+                if (match.find()) {
+                    ptime=match.group(0);
+                    if(ptime.contains("/")||ptime.contains("年")||ptime.contains("月")||ptime.contains("日")){
+                        ptime=ptime.replaceAll("/","-");
+                        ptime=ptime.replace("年", "-");
+                        ptime=ptime.replace("月", "-");
+                        ptime=ptime.replace("日", "-");
+                    }
+                }
+            }else{
+                if((String) doc.selOne(knowledgeSpiderConfig.ptime.getText())==null){
+                    Pattern pattern = Pattern.compile("[0-9]{4}\\D[0-9]{1,2}\\D[0-9]{1,2}\\D\\d{1,2}\\D\\d{1,2}\\D\\d{0,2}|[0-9]{4}\\D[0-9]{1,2}\\D[0-9]{1,2}");
+                    Matcher match = pattern.matcher(doc.selN("//body/allText()").toString());
+                    if (match.find()) {
+                        ptime=match.group(0);
+                        if(ptime.contains("/")||ptime.contains("年")||ptime.contains("月")||ptime.contains("日")){
+                            ptime=ptime.replaceAll("/","-");
+                            ptime=ptime.replace("年", "-");
+                            ptime=ptime.replace("月", "-");
+                            ptime=ptime.replace("日", "-");
+                        }
+                    }
+                }else {
+                    ptime=doc.selOne(knowledgeSpiderConfig.ptime.getText()).toString();
+                    if(ptime.contains("/")||ptime.contains("年")||ptime.contains("月")||ptime.contains("日")){
+                        ptime=ptime.replaceAll("/","-");
+                        ptime=ptime.replace("年", "-");
+                        ptime=ptime.replace("月", "-");
+                        ptime=ptime.replace("日", "-");
+                    }
+                }
+            }
+            System.out.println("标题：" + title);
+            System.out.println("正文:"+content);
+            System.out.println("时间："+ptime);
         }
+        storeToDatabase(depositJavabean(title,ptime,content,"null"));
     }
+
+    /**
+     * 向JavaBean中放数据
+     * @param title
+     * @param ptime
+     * @param main
+     * @param source
+     */
+    public static ProKnowledge depositJavabean(String title, String ptime, String main, String source ){
+        ProKnowledge proKnowledge = new ProKnowledge();
+        proKnowledge.setTitle(title);
+        proKnowledge.setPtime(ptime);
+        proKnowledge.setMain(main);
+        proKnowledge.setSource(source);
+        proKnowledge.setUuid(UUID.randomUUID().toString());
+        return proKnowledge;
+    }
+
+    /**
+     * 写入数据库
+     * @param knowledge
+     * @throws ProKnowledgeImpl.FormatEexception
+     */
+    public static void storeToDatabase(ProKnowledge knowledge) throws Exception {
+        ProKnowledgeImpl proImpl = new ProKnowledgeImpl();
+        if(LevenshteinDis.isExist(knowledge))
+             proImpl.insert(knowledge);
+    }
+
     public static void main(String[] args) throws FileNotFoundException, DocumentException, XpathSyntaxErrorException {
-
-
-        //3.装载到List
-        //4.遍历
-        //5.创建线程池  ThreadPooL
-        //6.创建单线程   两种实现方式
-        //7.创建爬虫引擎（Jsoup， phantomjs， chromedriver）(完成)
-        //8.连接网络，并获取dom树   JXDomcument（完成）
-        //9.复杂的解析过程
-        //9.1 自动抓取标题  思路：h1-h4标签
-        //9.2 自动抓取时间   思路：正则表达式
-        //9.3.自动抓取正文    思路：自己配配置文件、 默认情况垃圾数据一把抓
-        //10封装到javaBean -> list集合
-        //10.5去重  编辑距离
-        //11入库 mybatis
         ExecutorService pool= Executors.newSingleThreadExecutor();
         pool.submit(new Runnable() {
             @Override
             public void run() {
                 try {
-                    BasCommonKnowledgeSpider.ergodicUrl(getChromeDriver(), "spiderUrl");
+                    BasCommonKnowledgeSpider.ergodicUrl(getChromeDriver(),"spiderUrl");
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

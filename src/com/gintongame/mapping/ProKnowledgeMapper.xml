@@ -13,7 +13,7 @@
 
     </insert>
 
-	<insert id="insert" parameterType="java.lang.String" useGeneratedKeys="true" >
+	<insert id="insert" parameterType="JavaBean.ProKnowledge" useGeneratedKeys="true" >
         insert into pro_knowledge(uuid,author,title,cover,tag,main,ptime,type,url,source)
         values
             (#{uuid},#{author},#{title},#{cover},#{tag},#{main},#{ptime},#{type},#{url},#{source})
