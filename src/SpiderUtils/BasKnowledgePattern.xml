@@ -2184,6 +2184,89 @@
         </urls>
     </spiderZOL>
 
+    <!--CoCoaChina-->
+    <SpiderCoCoaChina>
+        <title>//div[@class='detail-main']/h2/text()</title>
+        <author>//div[@class='p-ico clearfix']/div/span[2]/a/text()</author>
+        <authorurl></authorurl>
+        <cover join="">//div[@class='clearfix']/a/img/@src</cover>
+        <ptime timeFormat="yyyy MM dd HH mm ss">//div[@class='p-ico clearfix']/div/span[1]/text()</ptime>>
+        <tag></tag>
+        <main>//p</main>>
+        <mainpic>//img/@src</mainpic>>
+        <type></type>>
+        <source>CoCoaChina</source>
+        <childLink join="http://www.cocoachina.com">//div[@class='clearfix newstitle']/a/@href</childLink>>
+        <nextpage join="http://game.zol.com.cn">//a[text()*='下一页']/@href</nextpage>
+        <flag>jsoup</flag>>
+        <childnext join=""></childnext>>
+        <chose demand=""></chose>>
+        <urls>
+            <url>
+                http://game.zol.com.cn/more/2_1133.shtml
+            </url>
+            <url>
+                http://game.zol.com.cn/more/3_2093.shtml
+            </url>
+            <url>
+                http://game.zol.com.cn/keyword/list_13257.shtml
+            </url>
+            <url>
+                http://game.zol.com.cn/keyword/list_9082.shtml
+            </url>
+        </urls>
+
+    </SpiderCoCoaChina>
+
+    <!--天翼空间-->
+    <SpiderTykj>
+        <title>//h3/text()</title>
+        <author></author>
+        <authorurl></authorurl>
+        <cover join=""></cover>
+        <ptime timeFormat="yyyy MM dd">//h4/text()</ptime>>
+        <tag></tag>
+        <main>//p</main>>
+        <mainpic>//img/@src</mainpic>>
+        <type></type>>
+        <source>天翼空间</source>
+        <childLink join="https://www.189store.com">//div[@class='d-cny']/ul/li/a/@href</childLink>>
+        <nextpage>//a[text()*='下一页']/@href</nextpage>
+        <flag>jsoup</flag>>
+        <childnext join=""></childnext>>
+        <chose demand=""></chose>>
+        <urls>
+            <url>
+                https://www.189store.com/proftrend/toProftrend
+            </url>
+        </urls>
+
+
+    </SpiderTykj>
+
+    <!--搜狐手游-->
+    <SpiderShsy>
+        <title>//h1/text()</title>
+        <author>//div[@class='source']/span[2]/text()</author>
+        <authorurl></authorurl>
+        <cover join=""></cover>
+        <ptime timeFormat="yyyy MM dd HH mm ss">//div[@class='time']/text()</ptime>>
+        <tag></tag>
+        <main>//p</main>>
+        <mainpic>//div[@class='text-pic']/table/tbody/tr/td/img/@src</mainpic>>
+        <type></type>>
+        <source>新浪手游</source>
+        <childLink join="">//div[@class='list14']/ul/li/a/@href</childLink>>
+        <nextpage>//div[@class='pages']/table/tbody/tr/td/a/allText()</nextpage>
+        <flag>jsoup</flag>>
+        <childnext join=""></childnext>>
+        <chose demand=""></chose>>
+        <urls>
+            <url>
+                http://mgame.sohu.com/chanye/index.shtml
+            </url>
+        </urls>
+    </SpiderShsy>
 
 
 

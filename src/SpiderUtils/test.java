@@ -135,7 +135,7 @@ public class test {
 //jsoup查看网页源码
 //http://chanye.07073.com/     http://chanye.07073.com/shuju/1560716.html
 
-//      org.jsoup.nodes.Document doc1=Jsoup.connect("")
+//      org.jsoup.nodes.Document doc1=Jsoup.connect("http://mgame.sohu.com/chanye/index.shtml")
 //                          .userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36")
 //                         .get();
 //        JXDocument doc=new JXDocument(doc1);
@@ -270,7 +270,7 @@ public class test {
         System.setProperty("webdriver.chrome.driver",SpiderContant.chromeWindowsPath );
         WebDriver driver=new ChromeDriver();
 //        driver.get("http://zhushou.360.cn/list/index/cid/2?page=1");
-        driver.get("http://zhushou.360.cn/list/index/cid/2)");
+        driver.get("http://appstore.huawei.com/game/list_2_2_1");
         WebElement webElement=driver.findElement(By.xpath("/html"));
         org.jsoup.nodes.Document doc2=Jsoup.parse(webElement.getAttribute("outerHTML"));
         JXDocument jxDocument=new JXDocument(doc2);
