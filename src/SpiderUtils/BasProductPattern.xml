@@ -1813,7 +1813,11 @@
         <!--起始页面-->
         <urls>
             <url>
+<<<<<<< HEAD
                 http://game.open.uc.cn/
+=======
+                http://ng.d.cn/channel/list_0_0_0_0_0_0_1_0.html?sort=0&amp;keyword=
+>>>>>>> 5b28fd260e593c051909f1399078cb4fc8875e4b
             </url>
         </urls>
 
@@ -1914,6 +1918,474 @@
     </SpiderUc>
 
 
+    <!--安卓游戏  刘雪明3.7-->
+    <spiderAZYX>
+    <!--网站名-->
+    <source>安卓游戏</source>
+    <!--ContentPath子链接拼接内容-->
+    <contentPath></contentPath>
+    <!--详情页url-->
+    <detailurl>//div[@class='fr det']/p[@class='tit']/a/@href</detailurl>
+    <!--下一页-->
+    <nextpage></nextpage>
+    <!--起始页面-->
+    <urls>
+        <url >
+            http://game.hiapk.com/classified/
+        </url>
+        <!--<url>-->
+            <!--http://hao.hiapk.com/game-list.html-->
+        <!--</url>-->
+    </urls>
 
+    <!--游戏名-->
+    <gname>//h1[@class='article_title']/text()</gname>
+    <!--游戏英语名字-->
+    <gename></gename>
+    <!--产品logo-->
+    <logo>//div[@class='fl img']/a/img/@src</logo>
+    <!--游戏版本-->
+    <version>//div[@class='clearfix mt10 type']/span[2]/text()</version>
+    <!--语言-->
+    <language></language>
+    <!--是否联网0未知，1不需要联网，2需要联网'-->
+    <sort>2</sort>
+    <!--适合年龄-->
+    <suitable_age></suitable_age>
+    <!--发行商-->
+    <publisher></publisher>
+    <!--发行区域-->
+    <issue_area></issue_area>
+    <!--游戏风格-->
+    <gstyle></gstyle>
+    <!--标签-->
+    <gtags>//div[@class='fl tags']/a/text()</gtags>
+    <!--游戏截图-->
+    <picture>//div[@class='article_con clearfix']/p/img/@src</picture>
+    <!--游戏视角-->
+    <viewpoint></viewpoint>
+    <!--游戏引擎-->
+    <engine></engine>
+    <!--游戏品级-->
+    <grade>//div[@class='article_con clearfix']/p[4]/text()</grade>
+    <!--研发进度-->
+    <dpprogress></dpprogress>
+    <!--游戏题材-->
+    <gtheme></gtheme>
+    <!--产品团队规模-->
+    <scale></scale>
+    <!--产品需求-->
+    <pdemand></pdemand>
+    <!--价格-->
+    <price></price>
+    <!--付费方式-->
+    <charge_mode></charge_mode>
+    <!--研发公司-->
+    <develop_com></develop_com>
+    <!--游戏介绍-->
+    <g_desc>//div[@class='article_con clearfix']/p</g_desc>
+    <!--初版出售时间-->
+    <ptime formatStr=""></ptime>
+    <!--公测时间-->
+    <beta_time formatStr=""></beta_time>
+    <!--内测时间-->
+    <test_time formatStr=""></test_time>
+    <!--封测时间-->
+    <betatest_time formatStr=""></betatest_time>
+    <!--立项时间-->
+    <set_time formatStr=""></set_time>
+    <!--游戏官网-->
+    <web></web>
+    <!--运营商-->
+    <operator></operator>
+    <!--资料片发布时间-->
+    <films_time></films_time>
+    <!--游戏画面（2D,3D）-->
+    <gamespy></gamespy>
+    <!--游戏大小-->
+    <game_size></game_size>
+    <!--网站更新时间-->
+    <web_update_time></web_update_time>
+    <!--下载链接-->
+    <download_link join="">//a[@class='fl article_downbtn']/@href</download_link>
+    <!--游戏类型-->
+    <gtypes>
+        <gtype></gtype>
+    </gtypes>
+    <!--游戏平台（操作系统）-->
+    <platform></platform>
+    <!--网络类型-->
+    <network_type></network_type>
+
+    <!--下一页链接需要拼接的内容-->
+    <contentPathnext></contentPathnext>
+    <!--游戏截图下一页需要拼接的内容-->
+    <contentPathpic></contentPathpic>>
+    <!--游戏截图下一页的xpath语句-->
+    <nextpic></nextpic>>
+    <!--选择列表页所用驱动-->
+    <flag>jsoup</flag>>
+    <!--选择详情所用驱动-->
+    <flagchild>jsoup</flagchild>>
+    <!--点击更多jquery语言-->
+    <moreclick></moreclick>>
+    <!--滑动滚轮次数-->
+    <slidingRoller>100</slidingRoller>>
+</spiderAZYX>
+    <!--应用汇  刘雪明3.7-->
+    <spiderYYH>
+        <!--网站名-->
+        <source>应用汇</source>
+        <!--ContentPath子链接拼接内容-->
+        <contentPath>http://www.appchina.com</contentPath>
+        <!--详情页url-->
+        <detailurl>//h1[@class='app-name']/a/@href</detailurl>
+        <!--下一页-->
+        <nextpage>//a[@class='next']/@href</nextpage>
+        <!--起始页面-->
+        <urls>
+            <url>
+                http://www.appchina.com/game
+            </url>
+        </urls>
+
+        <!--游戏名-->
+        <gname>//h1[@class='app-name']/text()</gname>
+        <!--游戏英语名字-->
+        <gename></gename>
+        <!--产品logo-->
+        <logo>//img[@class='Content_Icon']/@src</logo>
+        <!--游戏版本-->
+        <version>//div[@class='intro app-other-info-intro']/p[4]/text()</version>
+        <!--语言-->
+        <language>//div[@class='detail-app-other-info']/ul/li[3]/span/text()</language>
+        <!--是否联网0未知，1不需要联网，2需要联网'-->
+        <sort>2</sort>
+        <!--适合年龄-->
+        <suitable_age></suitable_age>
+        <!--发行商-->
+        <publisher></publisher>
+        <!--发行区域-->
+        <issue_area></issue_area>
+        <!--游戏风格-->
+        <gstyle>//p[@class='art-content']/a[3]/text()</gstyle>
+        <!--标签-->
+        <gtags></gtags>
+        <!--游戏截图-->
+        <picture>//ul[@class='app-screenshot-list']/li/a[@class='<example-image-link></example-image-link>']/img/@src</picture>
+        <!--游戏视角-->
+        <viewpoint></viewpoint>
+        <!--游戏引擎-->
+        <engine></engine>
+        <!--游戏品级-->
+        <grade></grade>
+        <!--研发进度-->
+        <dpprogress></dpprogress>
+        <!--游戏题材-->
+        <gtheme></gtheme>
+        <!--产品团队规模-->
+        <scale></scale>
+        <!--产品需求-->
+        <pdemand></pdemand>
+        <!--价格-->
+        <price></price>
+        <!--付费方式-->
+        <charge_mode></charge_mode>
+        <!--研发公司-->
+        <develop_com></develop_com>
+        <!--游戏介绍-->
+        <g_desc></g_desc>
+        <!--初版出售时间-->
+        <ptime formatStr=""></ptime>
+        <!--公测时间-->
+        <beta_time formatStr=""></beta_time>
+        <!--内测时间-->
+        <test_time formatStr=""></test_time>
+        <!--封测时间-->
+        <betatest_time formatStr=""></betatest_time>
+        <!--立项时间-->
+        <set_time formatStr=""></set_time>
+        <!--游戏官网-->
+        <web></web>
+        <!--运营商-->
+        <operator></operator>
+        <!--资料片发布时间-->
+        <films_time></films_time>
+        <!--游戏画面（2D,3D）-->
+        <gamespy></gamespy>
+        <!--游戏大小-->
+        <game_size>//div[@class='intro app-other-info-intro']/p[2]/text()</game_size>
+        <!--网站更新时间-->
+        <web_update_time>//div[@class='intro app-other-info-intro']/p[3]/text()</web_update_time>
+        <!--下载链接-->
+        <download_link></download_link>
+        <!--游戏类型-->
+        <gtypes>
+            <gtype></gtype>
+        </gtypes>
+        <!--游戏平台（操作系统）-->
+        <platform></platform>
+        <!--网络类型-->
+        <network_type></network_type>
+
+        <!--下一页链接需要拼接的内容-->
+        <contentPathnext></contentPathnext>
+        <!--游戏截图下一页需要拼接的内容-->
+        <contentPathpic></contentPathpic>>
+        <!--游戏截图下一页的xpath语句-->
+        <nextpic></nextpic>>
+        <!--选择列表页所用驱动-->
+        <flag>jsoup</flag>>
+        <!--选择详情所用驱动-->
+        <flagchild>jsoup</flagchild>>
+        <!--点击更多jquery语言-->
+        <moreclick></moreclick>>
+        <!--滑动滚轮次数-->
+        <slidingRoller></slidingRoller>>
+    </spiderYYH>
+    <!--小米应用商店  刘雪明3.7-->
+    <spiderXMSD>
+        <!--网站名-->
+        <source>小米应用商店 </source>
+        <!--ContentPath子链接拼接内容-->
+        <contentPath>http://app.mi.com</contentPath>
+        <!--详情页url-->
+        <detailurl>//ul[@class='applist']/li/a/@href</detailurl>
+        <!--下一页-->
+        <nextpage>//a[@class='next']/allText()</nextpage>
+        <!--起始页面-->
+        <urls>
+            <url>
+                http://app.mi.com/category/15
+            </url>
+        </urls>
+
+        <!--游戏名-->
+        <gname>//h3/text()</gname>
+        <!--游戏英语名字-->
+        <gename></gename>
+        <!--产品logo-->
+        <logo>//img[@class='yellow-flower']/@src</logo>
+        <!--游戏版本-->
+        <version>//ul[@class=' cf']/li[4]/text()</version>
+        <!--语言-->
+        <language></language>
+        <!--是否联网0未知，1不需要联网，2需要联网'-->
+        <sort>2</sort>
+        <!--适合年龄-->
+        <suitable_age></suitable_age>
+        <!--发行商-->
+        <publisher></publisher>
+        <!--发行区域-->
+        <issue_area></issue_area>
+        <!--游戏风格-->
+        <gstyle></gstyle>
+        <!--标签-->
+        <gtags>//h3/text()</gtags>
+        <!--游戏截图-->
+        <picture>//div[@id='J_thumbnail_wrap']/img/@src</picture>
+        <!--游戏视角-->
+        <viewpoint></viewpoint>
+        <!--游戏引擎-->
+        <engine></engine>
+        <!--游戏品级-->
+        <grade></grade>
+        <!--研发进度-->
+        <dpprogress></dpprogress>
+        <!--游戏题材-->
+        <gtheme></gtheme>
+        <!--产品团队规模-->
+        <scale></scale>
+        <!--产品需求-->
+        <pdemand></pdemand>
+        <!--价格-->
+        <price></price>
+        <!--付费方式-->
+        <charge_mode></charge_mode>
+        <!--研发公司-->
+        <develop_com>//div[@class='tooltip']/div[2]/span/text()</develop_com>
+        <!--游戏介绍-->
+        <g_desc>//p[@class='pslide']</g_desc>
+        <!--初版出售时间-->
+        <ptime formatStr=""></ptime>
+        <!--公测时间-->
+        <beta_time formatStr=""></beta_time>
+        <!--内测时间-->
+        <test_time formatStr=""></test_time>
+        <!--封测时间-->
+        <betatest_time formatStr=""></betatest_time>
+        <!--立项时间-->
+        <set_time formatStr=""></set_time>
+        <!--游戏官网-->
+        <web></web>
+        <!--运营商-->
+        <operator></operator>
+        <!--资料片发布时间-->
+        <films_time></films_time>
+        <!--游戏画面（2D,3D）-->
+        <gamespy></gamespy>
+        <!--游戏大小-->
+        <game_size>//ul[@class=' cf']/li[2]/text()</game_size>
+        <!--网站更新时间-->
+        <web_update_time>//ul[@class=' cf']/li[6]/text()</web_update_time>
+        <!--下载链接-->
+        <download_link join="app.mi.com">//div[@class='app-info-down']/a[@class='download']/@href</download_link>
+        <!--游戏类型-->
+        <gtypes>
+            <gtype></gtype>
+        </gtypes>
+        <!--游戏平台（操作系统）-->
+        <platform></platform>
+        <!--网络类型-->
+        <network_type></network_type>
+
+        <!--下一页链接需要拼接的内容-->
+        <contentPathnext></contentPathnext>
+        <!--游戏截图下一页需要拼接的内容-->
+        <contentPathpic></contentPathpic>>
+        <!--游戏截图下一页的xpath语句-->
+        <nextpic></nextpic>>
+        <!--选择列表页所用驱动-->
+        <flag>jsoup</flag>>
+        <!--选择详情所用驱动-->
+        <flagchild>jsoup</flagchild>>
+        <!--点击更多jquery语言-->
+        <moreclick></moreclick>>
+        <!--滑动滚轮次数-->
+        <slidingRoller></slidingRoller>>
+    </spiderXMSD>
+    <!--木蚂蚁  3.7-->
+    <spiderMMY>
+            <!--网站名-->
+            <source>木蚂蚁 </source>
+            <!--ContentPath子链接拼接内容-->
+            <contentPath>http://mpk.mumayi.com</contentPath>
+            <!--详情页url-->
+            <detailurl>//ul[@class='appBox block listbbox']/li/a/@href</detailurl>
+            <!--下一页-->
+            <nextpage>//div[@class='pagination clear']/a[text()*='下一页'][1]/@href</nextpage>
+
+            <!--游戏名-->
+            <gname>//h1[@class='hidden fl']/text()</gname>
+            <!--游戏英语名字-->
+            <gename></gename>
+            <!--产品logo-->
+            <logo></logo>
+            <!--游戏版本-->
+            <version>//ul[@class='appsize fl']/li[2]/text()</version>
+            <!--语言-->
+            <language>//ul[@class='appsize fl']/li[3]/text()</language>
+            <!--是否联网0未知，1不需要联网，2需要联网'-->
+            <sort>2</sort>
+            <!--适合年龄-->
+            <suitable_age></suitable_age>
+            <!--发行商-->
+            <publisher></publisher>
+            <!--发行区域-->
+            <issue_area></issue_area>
+            <!--游戏风格-->
+            <gstyle></gstyle>
+            <!--标签-->
+            <gtags></gtags>
+            <!--游戏截图-->
+            <picture>//a[@class='img72_72 fl']/img/@src</picture>
+            <!--游戏视角-->
+            <viewpoint></viewpoint>
+            <!--游戏引擎-->
+            <engine></engine>
+            <!--游戏品级-->
+            <grade></grade>
+            <!--研发进度-->
+            <dpprogress></dpprogress>
+            <!--游戏题材-->
+            <gtheme></gtheme>
+            <!--产品团队规模-->
+            <scale></scale>
+            <!--产品需求-->
+            <pdemand></pdemand>
+            <!--价格-->
+            <price></price>
+            <!--付费方式-->
+            <charge_mode></charge_mode>
+            <!--研发公司-->
+            <develop_com></develop_com>
+            <!--游戏介绍-->
+            <g_desc>//div[@class='pBox']/p</g_desc>
+            <!--初版出售时间-->
+            <ptime formatStr=""></ptime>
+            <!--公测时间-->
+            <beta_time formatStr=""></beta_time>
+            <!--内测时间-->
+            <test_time formatStr=""></test_time>
+            <!--封测时间-->
+            <betatest_time formatStr=""></betatest_time>
+            <!--立项时间-->
+            <set_time formatStr=""></set_time>
+            <!--游戏官网-->
+            <web></web>
+            <!--运营商-->
+            <operator></operator>
+            <!--资料片发布时间-->
+            <films_time></films_time>
+            <!--游戏画面（2D,3D）-->
+            <gamespy></gamespy>
+            <!--游戏大小-->
+            <game_size>//ul[@class='appsize fl']/li[1]/text()</game_size>
+            <!--网站更新时间-->
+            <web_update_time></web_update_time>
+            <!--下载链接-->
+            <download_link join="">//p[@class='hbox hmarl']/a/@href</download_link>
+            <!--游戏类型-->
+            <gtypes>
+                <gtype></gtype>
+            </gtypes>
+            <!--游戏平台（操作系统）-->
+            <platform></platform>
+            <!--网络类型-->
+            <network_type></network_type>
+
+            <!--下一页链接需要拼接的内容-->
+            <contentPathnext></contentPathnext>
+            <!--游戏截图下一页需要拼接的内容-->
+            <contentPathpic></contentPathpic>>
+            <!--游戏截图下一页的xpath语句-->
+            <nextpic></nextpic>>
+            <!--选择列表页所用驱动-->
+            <flag>jsoup</flag>>
+            <!--选择详情所用驱动-->
+            <flagchild>jsoup</flagchild>>
+            <!--点击更多jquery语言-->
+            <moreclick></moreclick>>
+            <!--滑动滚轮次数-->
+            <slidingRoller></slidingRoller>>
+            <!--起始页面-->
+            <urls>
+                <url>
+                    http://mpk.mumayi.com/tiyv-download-1.html
+                </url>
+                <url>
+                    http://mpk.mumayi.com/yizhi-download-index.html
+                </url>
+                <url>
+                    http://mpk.mumayi.com/saiche-download-index.html
+                </url>
+                <url>
+                    http://mpk.mumayi.com/feixing-download-index.html
+                </url>
+                <url>
+                    http://mpk.mumayi.com/qipai-download-index.html
+                </url>
+                <url>
+                    http://mpk.mumayi.com/yangcheng-download-index.html
+                </url>
+                <url>
+                    http://mpk.mumayi.com/dongzuo-download-index.html
+                </url>
+                <url>
+                    http://mpk.mumayi.com/jiaose-download-index.html
+                </url>
+            </urls>
+
+    </spiderMMY>
 
 </BasProductPattern>
