@@ -1,10 +1,27 @@
 package SpiderUtils.SpiderData;
 
+import cn.wanghaomiao.xpath.exception.XpathSyntaxErrorException;
+import cn.wanghaomiao.xpath.model.JXDocument;
+import org.jsoup.Jsoup;
+
+import java.io.IOException;
+
 /**
  * Created by 123 on 2017/3/3.
  */
 public class Hello {
-    public  static void main(String [] args){
+    public  static void main(String [] args) throws IOException {
+        org.jsoup.nodes.Document doc1=Jsoup.connect("http://www.25pp.com/ios/detail_1046283/")
+
+                .userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36")
+                .get();
+        System.out.println(doc1);
+        JXDocument jx=new JXDocument(doc1);
+        try {
+            System.out.println(jx.selOne("//div[@class='app-detail-info']/p[1]/span[2]//text()"));
+        } catch (XpathSyntaxErrorException e) {
+            e.printStackTrace();
+        }
 
     }
     private static int Minimum(int a, int b, int c) {

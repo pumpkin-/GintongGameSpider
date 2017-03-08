@@ -10,17 +10,6 @@ public class SpiderLG {
     public static void main(String [] args) throws Exception {
 
 
-       SpiderProduct.ergodicUrl("spiderMMY", 0, 0);
-
-//       SpiderProduct.ergodicUrl("SpiderYxg", 0, 1);
-
-        
-//       SpiderProduct.ergodicUrl("SpiderYxg", 0, 0);
-//
-//       SpiderProduct.ergodicUrl("SpiderYxg", 0, 1);
-
-
-
     }
 
 
