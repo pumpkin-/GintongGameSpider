@@ -2207,6 +2207,50 @@
             </url>
         </urls>
     </spiderFL>
+    <!--易玩网  刘雪明3.8-->
+    <spiderYYW>
+            <title>//h2/text()</title>
+            <author></author>
+            <authorurl></authorurl>
+            <cover join=""></cover>
+            <ptime timeFormat="yyyy MM dd HH mm ss">//p[@class='time']</ptime>>
+            <tag></tag>
+            <main>//div[@class='detail']/p</main>>
+            <mainpic>//img/@src</mainpic>>
+            <type></type>>
+            <source>易玩网</source>
+            <childLink join="http://www.yiwan.com">//div[@class='text']/h2/a/@href</childLink>>
+            <nextpage join="http://www.yiwan.com">//div[@class='page']/a[@class='next']/@href</nextpage>
+            <flag>jsoup</flag>>
+            <childnext join=""></childnext>>
+            <chose demand=""></chose>>
+            <urls>
+                <url>
+                    http://www.yiwan.com/news/
+                </url>
+                <url>
+                    http://www.yiwan.com/video/
+                </url>
+                <url>
+                    http://www.yiwan.com/pingce/
+                </url>
+                <url>
+                    http://www.yiwan.com/gonglue/
+                </url>
+                <url>
+                    http://www.yiwan.com/libao/
+                </url>
+                <url>
+                    http://www.yiwan.com/wenda/
+                </url>
+                <url>
+                    http://www.yiwan.com/huodong/
+                </url>
+                <url>
+                    http://www.yiwan.com/softnew/
+                </url>
+            </urls>
+    </spiderYYW>
 
 
 

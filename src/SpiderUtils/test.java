@@ -135,12 +135,12 @@ public class test {
 //jsoup查看网页源码
 //http://chanye.07073.com/     http://chanye.07073.com/shuju/1560716.html
 
-      org.jsoup.nodes.Document doc1=Jsoup.connect("http://appstore.huawei.com/app/C10120211")
+      org.jsoup.nodes.Document doc1=Jsoup.connect("http://www.pipaw.com/yaqysg/")
                           .userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36")
                          .get();
         JXDocument doc=new JXDocument(doc1);
        System.out.println(doc1);
-//       System.out.println(doc.sel("//div[@class='b']/a[1]text()"));
+//       System.out.println(doc.sel("//div[@id='appListPage']/a[text()*='下一页']/@href"));
 
 //
 //       org.jsoup.nodes.Document doc1=Jsoup.connect("http://games.sina.com.cn/y/n/2017-03-01/fycaafp1372689.shtml")
