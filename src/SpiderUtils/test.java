@@ -58,7 +58,11 @@ import java.util.regex.Pattern;
 
 public class test {
     static List<org.dom4j.Element> books;
+    public static JXDocument getJXDocument(String url) throws IOException {
+        return new JXDocument(Jsoup.connect(url).userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36").ignoreContentType(true).ignoreHttpErrors(true).timeout(100000).get());
+    }
     public static void main(String[] args) throws ParserConfigurationException, XpathSyntaxErrorException, SpiderUtils.FormatEexception, DocumentException, IOException, ProKnowledgeImpl.FormatEexception, InterruptedException, ParseException {
+        System.out.println(test.getJXDocument("http://www.gamerbbs.cn/news/1431.html"));
        /* FileInputStream inputStream=new FileInputStream(Test.class.getClassLoader().getResource("SpiderUtils/BasKnowledgePattern.xml").getFile());
         System.out.println(Test.class.getClassLoader().getResource("SpiderUtils/BasKnowledgePattern.xml").getFile().toString());
         SAXReader sax=new SAXReader();
@@ -135,11 +139,11 @@ public class test {
 //jsoup查看网页源码
 //http://chanye.07073.com/     http://chanye.07073.com/shuju/1560716.html
 
-      org.jsoup.nodes.Document doc1=Jsoup.connect("http://www.pipaw.com/yaqysg/")
-                          .userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36")
-                         .get();
-        JXDocument doc=new JXDocument(doc1);
-       System.out.println(doc1);
+//      org.jsoup.nodes.Document doc1=Jsoup.connect("http://www.77l.com/game/10800.html")
+//                          .userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36")
+//                         .get();
+//        JXDocument doc=new JXDocument(doc1);
+//       System.out.println(doc1);
 //       System.out.println(doc.sel("//div[@id='appListPage']/a[text()*='下一页']/@href"));
 
 //
@@ -244,7 +248,6 @@ public class test {
 //        System.setProperty("webdriver.chrome.driver",SpiderContant.chromeWindowsPath );
 //        WebDriver driver=new ChromeDriver();
 //        driver.get("http://www.html5dw.com/news");
->>>>>>> d32140d7c5fb572cc6949998fd580002d3e38e94
 //        WebElement webElement=driver.findElement(By.xpath("/html"));
 //        org.jsoup.nodes.Document doc=Jsoup.parse(webElement.getAttribute("outerHTML"));
 //        JXDocument jxDocument=new JXDocument(doc);
@@ -270,7 +273,7 @@ public class test {
 
 //        System.setProperty("webdriver.chrome.driver",SpiderContant.chromeWindowsPath );
 //        WebDriver driver=new ChromeDriver();
-////        driver.get("http://zhushou.360.cn/list/index/cid/2?page=1");
+//      driver.get("http://zhushou.360.cn/list/index/cid/2?page=1");
 //        driver.get("http://game.hiapk.com/role/10005218.html");
 //        WebElement webElement=driver.findElement(By.xpath("/html"));
 //        org.jsoup.nodes.Document doc2=Jsoup.parse(webElement.getAttribute("outerHTML"));
@@ -279,8 +282,7 @@ public class test {
 
 //        System.setProperty("webdriver.chrome.driver",SpiderContant.chromeWindowsPath );
 //        WebDriver driver=new ChromeDriver();
-////        driver.get("http://zhushou.360.cn/list/index/cid/2?page=1");
-//        driver.get("http://play.91.com/iphone/Game/");
+//        driver.get("http://www.nduo.cn/Home/ListAll/32/?current=2&webType=web");
 //        WebElement webElement=driver.findElement(By.xpath("/html"));
 //        org.jsoup.nodes.Document doc2=Jsoup.parse(webElement.getAttribute("outerHTML"));
 //        JXDocument jxDocument=new JXDocument(doc2);

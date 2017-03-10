@@ -1,18 +1,21 @@
 package GintongameSpider.SpiderLxm;
 
-import java.util.HashMap;
-import java.util.Map;
+import SpiderUtils.SpiderContant;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.phantomjs.PhantomJSDriver;
+
 
 /**
  * Created by lenovon on 2017/3/3.
  */
 public class HW {
-    public static void main(String[] args){
-        System.out.println("Hello!I AM BayMax!");
-        Map<String,String> map=new HashMap<String, String>();
-        map.put("A", "a");
-        map.put("A","b");
-        System.out.println(map.get("A"));
 
+    public static void main(String[] args){
     }
 }

@@ -69,8 +69,6 @@ public class SpiderProduct {
         for(Object ele:urlNodes){
             Element elements= (Element) ele;
             if(map.get("flag").equals("jsoup")&&elements.attributeValue("page")!=null&& !elements.attributeValue("page").isEmpty()) {
-
-
                     String url=elements.getText().trim();
                 List<String> list = allpage(url, elements.attributeValue("page"), fromPageNum);
                     i++;
@@ -179,6 +177,8 @@ public class SpiderProduct {
             String develop_com=target.selectSingleNode("//"+targetNode+"/develop_com").getText();
             //简介
             String g_desc=target.selectSingleNode("//"+targetNode+"/g_desc").getText();
+            //游戏截图拼接的内容 刘雪明更改3.9
+            String pjoin=target.selectSingleNode("//"+targetNode+"/picture/@join").getText();
             //游戏截图
             String picture=target.selectSingleNode("//"+targetNode+"/picture").getText();
             //详情页url
@@ -302,6 +302,7 @@ public class SpiderProduct {
             map.put("gtheme",gtheme);
             map.put("engine",engine);
             map.put("joinlink",joinlink);
+            map.put("pjoin",pjoin);
             return map;
         }catch(DocumentException e){
             System.out.println("配置文件获取错误！");
@@ -627,7 +628,7 @@ class Spider{
     /**
      * 获取每页列表中的详情页的url
      */
-    public  List<String>getDetailUrls(JXDocument document, String detailurl){
+    public  List<String> getDetailUrls(JXDocument document, String detailurl){
         List<Object>urllist= null;
         try {
             urllist = document.sel(detailurl);
@@ -927,7 +928,7 @@ class Spider{
                     //多个游戏截图用“,”分隔连接为一个StringBuffer
                     StringBuffer screenBuffer = new StringBuffer();
                     for (Object ele : liEles) {
-                        screenBuffer.append(ele.toString() + ",");
+                        screenBuffer.append(map.get("pjoin")+ele.toString()+ ",");
                     }
                     screenShots = screenBuffer.toString();
                     System.out.println(screenShots);

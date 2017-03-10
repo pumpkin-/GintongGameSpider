@@ -8,7 +8,7 @@ import SpiderUtils.SpiderProduct;
 // */
 public class SpiderLG {
     public static void main(String [] args) throws Exception {
-        SpiderProduct.ergodicUrl("spiderTJW", 0, 1);
+        SpiderProduct.ergodicUrl("spiderQQL", 0, 0);
     }
 
 
