@@ -552,11 +552,13 @@ class Spider{
         int a=1;
         //页数
         int i=1;
+        WebDriver driver=null;
+        if(map.get("flagchild").toString().equals("selenium")){
+            driver=getChromeDriver();
+        }
+
         while(true){
-            WebDriver driver=null;
-            if(map.get("flagchild").toString().equals("selenium")){
-                driver=getChromeDriver();
-            }
+//TODO 待会儿修改代码
             //断点翻页
             for(int x=1;x<formpage;x++){
                 System.out.println("Start page break");
@@ -564,7 +566,6 @@ class Spider{
                 doc=listPageJsoup(doc);
                 i=x+1;
             }
-
             //调用下面的方法获取详情页的url列表
             List<String>detailUrls=getDetailUrls(doc,map.get("detailurl").toString());
             for(String detailUrl:detailUrls){

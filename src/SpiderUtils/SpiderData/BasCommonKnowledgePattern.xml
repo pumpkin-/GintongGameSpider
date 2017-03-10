@@ -33,9 +33,9 @@
             <!--<url>-->
                 <!--http://item.btime.com/455e6b55l1a8lqpjmfgtku6qt8v?from=mini-->
             <!--</url>-->
-            <url>
-                http://www.qianzhan.com/game/detail/381/170209-3d22dbfa.html
-            </url>
+            <!--<url>-->
+                <!--http://www.qianzhan.com/game/detail/381/170209-3d22dbfa.html-->
+            <!--</url>-->
             <!--<url>-->
                 <!--http://www.qianzhan.com/game/detail/381/170204-3b2a1afa.html-->
             <!--</url>-->
@@ -45,6 +45,9 @@
             <!--<url>-->
                 <!--http://www.gamelook.com.cn/2017/03/284334-->
             <!--</url>-->
+            <url>
+                http://news.qq.com/a/20170310/043759.htm
+            </url>
         </urls>
     </spiderUrl>
 

@@ -129,7 +129,8 @@ public class SpiderXpath {
             @Override
             public void run() {
                 try {
-                    CommonSpiderKnowledge.ergodicUrl("spiderYYW", 0, "no");
+//                    CommonSpiderKnowledge.ergodicUrl("spiderYYW", 0, "no");
+                    SpiderProduct.ergodicUrl("spiderXMSD", 0, 0);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

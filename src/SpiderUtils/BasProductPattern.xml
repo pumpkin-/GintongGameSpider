@@ -1701,22 +1701,22 @@
     <nextpage></nextpage>
     <!--起始页面-->
     <urls>
-        <url >
-            http://game.hiapk.com/classified/
-        </url>
-        <!--<url>-->
-            <!--http://hao.hiapk.com/game-list.html-->
+        <!--<url >-->
+            <!--http://game.hiapk.com/classified/-->
         <!--</url>-->
+        <url>
+            http://hao.hiapk.com/game-list.html
+        </url>
     </urls>
 
     <!--游戏名-->
-    <gname>//h1[@class='article_title']/text()</gname>
+    <gname>//dl[@class='left']/dd/strong/text()</gname>
     <!--游戏英语名字-->
     <gename></gename>
     <!--产品logo-->
     <logo>//div[@class='fl img']/a/img/@src</logo>
     <!--游戏版本-->
-    <version>//div[@class='clearfix mt10 type']/span[2]/text()</version>
+    <version></version>
     <!--语言-->
     <language></language>
     <!--是否联网0未知，1不需要联网，2需要联网'-->
@@ -1730,15 +1730,15 @@
     <!--游戏风格-->
     <gstyle></gstyle>
     <!--标签-->
-    <gtags>//div[@class='fl tags']/a/text()</gtags>
+    <gtags>//dd[@class='tag']/span/text()</gtags>
     <!--游戏截图-->
-    <picture>//div[@class='article_con clearfix']/p/img/@src</picture>
+    <picture join=""></picture>
     <!--游戏视角-->
     <viewpoint></viewpoint>
     <!--游戏引擎-->
     <engine></engine>
     <!--游戏品级-->
-    <grade>//div[@class='article_con clearfix']/p[4]/text()</grade>
+    <grade></grade>
     <!--研发进度-->
     <dpprogress></dpprogress>
     <!--游戏题材-->
@@ -1754,7 +1754,7 @@
     <!--研发公司-->
     <develop_com></develop_com>
     <!--游戏介绍-->
-    <g_desc>//div[@class='article_con clearfix']/p</g_desc>
+    <g_desc>//div[@class='clearfix mt10 gamelib_intro']/p</g_desc>
     <!--初版出售时间-->
     <ptime formatStr=""></ptime>
     <!--公测时间-->
@@ -1774,11 +1774,11 @@
     <!--游戏画面（2D,3D）-->
     <gamespy></gamespy>
     <!--游戏大小-->
-    <game_size></game_size>
+    <game_size>//dd[@class='dec']/span[2]/text()</game_size>
     <!--网站更新时间-->
     <web_update_time></web_update_time>
     <!--下载链接-->
-    <download_link join="">//a[@class='fl article_downbtn']/@href</download_link>
+    <download_link join="">//div[@class='right download']/a/@href</download_link>
     <!--游戏类型-->
     <gtypes>
         <gtype></gtype>
@@ -1795,7 +1795,7 @@
     <!--游戏截图下一页的xpath语句-->
     <nextpic></nextpic>>
     <!--选择列表页所用驱动-->
-    <flag>jsoup</flag>>
+    <flag>selenium</flag>>
     <!--选择详情所用驱动-->
     <flagchild>jsoup</flagchild>>
     <!--点击更多jquery语言-->
@@ -1803,7 +1803,7 @@
     <!--滑动滚轮次数-->
     <slidingRoller>100</slidingRoller>>
 </spiderAZYX>
-    <!--应用汇  刘雪明3.7-->
+    <!--应用汇  刘雪明3.7  频繁访问会暂时封号-->
     <spiderYYH>
         <!--网站名-->
         <source>应用汇</source>
@@ -1812,11 +1812,11 @@
         <!--详情页url-->
         <detailurl>//h1[@class='app-name']/a/@href</detailurl>
         <!--下一页-->
-        <nextpage>//a[@class='next']/@href</nextpage>
+        <nextpage></nextpage>
         <!--起始页面-->
         <urls>
-            <url>
-                http://www.appchina.com/game
+            <url page="167">
+                http://www.appchina.com/category/40/$(page)_1_1_3_0_0_0.html
             </url>
         </urls>
 
@@ -1843,7 +1843,7 @@
         <!--标签-->
         <gtags></gtags>
         <!--游戏截图-->
-        <picture>//ul[@class='app-screenshot-list']/li/a[@class='<example-image-link></example-image-link>']/img/@src</picture>
+        <picture join="">//ul[@class='app-screenshot-list']/li/a[@class='<example-image-link></example-image-link>']/img/@src</picture>
         <!--游戏视角-->
         <viewpoint></viewpoint>
         <!--游戏引擎-->
@@ -1889,7 +1889,7 @@
         <!--网站更新时间-->
         <web_update_time>//div[@class='intro app-other-info-intro']/p[3]/text()</web_update_time>
         <!--下载链接-->
-        <download_link></download_link>
+        <download_link join=""></download_link>
         <!--游戏类型-->
         <gtypes>
             <gtype></gtype>
@@ -1921,16 +1921,15 @@
         <!--ContentPath子链接拼接内容-->
         <contentPath>http://app.mi.com</contentPath>
         <!--详情页url-->
-        <detailurl>//ul[@class='applist']/li/a/@href</detailurl>
-        <!--下一页-->
-        <nextpage>//a[@class='next']/allText</nextpage>
+        <detailurl>//div[@class='applist-wrap']/ul[@id='all-applist']/li/a[1]/@href</detailurl>
+        <!--下一页//div[@id='all-pagination']/a[@class='next']-->
+        <nextpage></nextpage>
         <!--起始页面-->
         <urls>
-            <url>
-                http://app.mi.com/category/15
+            <url page="67">
+                http://app.mi.com/category/15#page=$(page)
             </url>
         </urls>
-
         <!--游戏名-->
         <gname>//h3/text()</gname>
         <!--游戏英语名字-->
@@ -1954,7 +1953,7 @@
         <!--标签-->
         <gtags>//h3/text()</gtags>
         <!--游戏截图-->
-        <picture>//div[@id='J_thumbnail_wrap']/img/@src</picture>
+        <picture join="">//div[@id='J_thumbnail_wrap']/img/@src</picture>
         <!--游戏视角-->
         <viewpoint></viewpoint>
         <!--游戏引擎-->
@@ -2387,18 +2386,18 @@
         <!--ContentPath子链接拼接内容-->
         <contentPath></contentPath>
         <!--详情页url-->
-        <detailurl>//div[@class='app-info']/a/@href</detailurl>
+        <detailurl>//*[@id="thelist"]/li[1]/div/a[1]</detailurl>
         <!--下一页-->
         <nextpage></nextpage>
         <!--起始页面-->
         <urls>
             <url>
-
+                http://www.nduo.cn/Home/ListAll/32/?current=2&amp;webType=web
             </url>
         </urls>
 
         <!--游戏名-->
-        <gname></gname>
+        <gname>//div[@class='app-info']/a[1]/text()</gname>
         <!--游戏英语名字-->
         <gename></gename>
         <!--产品logo-->
@@ -2420,7 +2419,7 @@
         <!--标签-->
         <gtags>//h3/text()</gtags>
         <!--游戏截图-->
-        <picture></picture>
+        <picture join=""></picture>
         <!--游戏视角-->
         <viewpoint></viewpoint>
         <!--游戏引擎-->
@@ -2466,7 +2465,7 @@
         <!--网站更新时间-->
         <web_update_time></web_update_time>
         <!--下载链接-->
-        <download_link join=""></download_link>
+        <download_link join="">//div[@class='app-info']/a[2]/@href</download_link>
         <!--游戏类型-->
         <gtypes>
             <gtype></gtype>
@@ -2487,7 +2486,7 @@
         <!--选择详情所用驱动-->
         <flagchild>selenium</flagchild>>
         <!--点击更多jquery语言-->
-        <moreclick>$('body > div > div.wrap.clearfix.clear > div.cla-wrap > div > div > a').click()</moreclick>>
+        <moreclick></moreclick>>
         <!--滑动滚轮次数-->
         <slidingRoller></slidingRoller>>
     </spiderNDSC>
