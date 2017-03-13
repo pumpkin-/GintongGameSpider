@@ -139,12 +139,12 @@ public class test {
 //jsoup查看网页源码
 //http://chanye.07073.com/     http://chanye.07073.com/shuju/1560716.html
 //TODO
-//      org.jsoup.nodes.Document doc1=Jsoup.connect("http://app.mi.com/category/15#page=1")
+//      org.jsoup.nodes.Document doc1=Jsoup.connect("http://www.25pp.com/android/detail_5760475/")
 //                          .userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36")
 //                         .get();
 //        JXDocument doc=new JXDocument(doc1);
 //       System.out.println(doc1.outerHtml());
-//       System.out.println(doc.sel("//div[@id='appListPage']/a[text()*='下一页']/@href"));
+//       System.out.println(doc.sel("//a[@class='btn-install large-btn']/@appdownurl"));
 
 //
 //       org.jsoup.nodes.Document doc1=Jsoup.connect("http://games.sina.com.cn/y/n/2017-03-01/fycaafp1372689.shtml")
@@ -271,13 +271,13 @@ public class test {
 
 //selenium查看网页源码
 
-        System.setProperty("webdriver.chrome.driver",SpiderContant.chromeWindowsPath );
-        WebDriver driver=new ChromeDriver();
-      driver.get("http://app.mi.com/category/15#page=2");
-        WebElement webElement=driver.findElement(By.xpath("/html"));
-        org.jsoup.nodes.Document doc2=Jsoup.parse(webElement.getAttribute("outerHTML"));
-        JXDocument jxDocument=new JXDocument(doc2);
-        System.out.println(doc2.outerHtml());
+//        System.setProperty("webdriver.chrome.driver",SpiderContant.chromeWindowsPath );
+//        WebDriver driver=new ChromeDriver();
+//      driver.get("");
+//        WebElement webElement=driver.findElement(By.xpath("/html"));
+//        org.jsoup.nodes.Document doc2=Jsoup.parse(webElement.getAttribute("outerHTML"));
+//        JXDocument jxDocument=new JXDocument(doc2);
+//        System.out.println(doc2.outerHtml());
 
 
 //        System.setProperty("webdriver.chrome.driver",SpiderContant.chromeWindowsPath );

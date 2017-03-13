@@ -286,6 +286,7 @@ public class BasCommonKnowledgeSpider {
                 }
             }
         });
+//        isUrlCorrect("http://www.baidu.com");
 
     }
 
