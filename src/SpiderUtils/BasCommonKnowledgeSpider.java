@@ -169,7 +169,7 @@ public class BasCommonKnowledgeSpider {
     /**
      * 写入数据库
      * @param knowledge
-     * @throws ProKnowledgeImpl.FormatEexception
+     * @throws dao.impl.ProKnowledgeImpl.FormatEexception
      */
     public static void storeToDatabase(ProKnowledge knowledge) throws Exception {
         ProKnowledgeImpl proImpl = new ProKnowledgeImpl();

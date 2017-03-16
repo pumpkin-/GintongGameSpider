@@ -39,16 +39,17 @@ import java.util.regex.Pattern;
  */
 public class SpiderWm {
     //微博用户名
-
-    private static String username="";
+    private static String username="15711490906";
     //微博密码
-    private static String password="";
+    private static String password="a19941031";
 
     private static List<String> perUrlList=new ArrayList<String>();
+    //谷歌驱动器
     private static WebDriver driver=null;
-
     //爬取公司人名信息
-    private static String comName="腾讯";
+    private static String comName="完美世界";
+    //人物主页的Url（非详情页）
+    private static String personUrl="http://weibo.com/mayun?refer_flag=1001030101_&is_hot=1";
 
     /**
      * 爬取列表页
@@ -243,7 +244,7 @@ public class SpiderWm {
         basPersonInfo.setPtag(tag);
         basPersonInfoDao.insertPerInfo(basPersonInfo);
 
-        System.out.println(name+"-"+livePlace+"-"+sex+"-"+birthday+"-"+bokeUrl+"-"+selfUrl+"-"+summary+"-"+regTime+"-"+tag);
+        //System.out.println(name+"-"+livePlace+"-"+sex+"-"+birthday+"-"+bokeUrl+"-"+selfUrl+"-"+summary+"-"+regTime+"-"+tag);
 
         BasOrganizeInfoDao basOrganizeInfoDao=new BasOrganizeInfoImpl();
         PerOrganizeDao perOrganizeDao=new PerOrganizeImpl();
@@ -276,12 +277,12 @@ public class SpiderWm {
             }
         }
         Elements schElements=docMain.select("div.WB_innerwrap div[class=m_wrap clearfix] ul.clearfix");
-        for(Element element:schElements){
-            if(element.select("ul").text().contains("大学")) {
-                String[] schools=element.select("span a").text().split(" ");
-                for(String school:schools){
-                    BasOrganizeInfo basOrganizeInfo=new BasOrganizeInfo();
-                    PerOrganize perOrganize=new PerOrganize();
+        for(Element element:schElements) {
+            if (element.select("ul").text().contains("大学")) {
+                String[] schools = element.select("span a").text().split(" ");
+                for (String school : schools) {
+                    BasOrganizeInfo basOrganizeInfo = new BasOrganizeInfo();
+                    PerOrganize perOrganize = new PerOrganize();
                     basOrganizeInfo.setOname(school);
                     basOrganizeInfo.setSource("微博");
                     basOrganizeInfo.setUuid(ouuid);
@@ -297,6 +298,7 @@ public class SpiderWm {
                 }
             }
         }
+        System.out.println(name+"：数据入库成功");
     }
 
     /**
@@ -330,9 +332,29 @@ public class SpiderWm {
         }
     }
 
+    public static void getOnePersonInfo(List<String> urls) throws InterruptedException {
+        WebDriver driver =getWebDriver();
+        String result=loginWeiBo(username, password);
+        if(result.equals("登录成功")) {
+            for (String url : urls) {
+                getPerInfoDataByUrl(driver, url);
+                Thread.sleep(8000);
+            }
+            closeWebDriver();
+        }else{
+            System.out.println("账号或者密码错误，登录失败!");
+            closeWebDriver();
+        }
+    }
+
 
     public static void main(String[] args) throws Exception {
-        SpiderWm.getPerInfoDataByList(perUrlList);
+        if(comName!=null) {
+            SpiderWm.getPerInfoDataByList(perUrlList);
+        }else{
+            perUrlList.add(personUrl);
+            SpiderWm.getOnePersonInfo(perUrlList);
+        }
 
 
 

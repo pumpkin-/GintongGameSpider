@@ -106,7 +106,7 @@ public class test {
 //                        System.out.println(index);
 //                        Thread.sleep(2000);
 //                    } catch (InterruptedException e) {
-//                        // TODO Auto-generated catch block
+                        // TODO Auto-generated catch block
 //                        e.printStackTrace();
 //                    }
 //                }
@@ -142,7 +142,7 @@ public class test {
 //        JXDocument doc=new JXDocument(doc1);
 //       System.out.println(doc1);
 
-//      org.jsoup.nodes.Document doc1=Jsoup.connect("http://mpk.mumayi.com/tiyv-download-1.html")
+//      org.jsoup.nodes.Document doc1=Jsoup.connect("")
 //                          .userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36")
 //                         .get();
 //        JXDocument doc=new JXDocument(doc1);
@@ -252,7 +252,7 @@ public class test {
 //        System.setProperty("webdriver.chrome.driver",SpiderContant.chromeWindowsPath );
 //        WebDriver driver=new ChromeDriver();
 //        driver.get("http://www.html5dw.com/news");
->>>>>>> d32140d7c5fb572cc6949998fd580002d3e38e94
+
 //        WebElement webElement=driver.findElement(By.xpath("/html"));
 //        org.jsoup.nodes.Document doc=Jsoup.parse(webElement.getAttribute("outerHTML"));
 //        JXDocument jxDocument=new JXDocument(doc);
@@ -278,8 +278,8 @@ public class test {
 
         System.setProperty("webdriver.chrome.driver",SpiderContant.chromeWindowsPath );
         WebDriver driver=new ChromeDriver();
-//        driver.get("http://zhushou.360.cn/list/index/cid/2?page=1");
-        driver.get("http://appstore.huawei.com/game/list_2_2_1");
+        driver.get("http://store.mopo.com/sort/detail.html?from=game:%E6%B8%B8%E6%88%8F%E5%88%86%E7%B1%BB&id=35069016");
+
         WebElement webElement=driver.findElement(By.xpath("/html"));
         org.jsoup.nodes.Document doc2=Jsoup.parse(webElement.getAttribute("outerHTML"));
         JXDocument jxDocument=new JXDocument(doc2);

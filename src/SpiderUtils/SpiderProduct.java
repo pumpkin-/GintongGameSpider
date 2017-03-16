@@ -505,7 +505,7 @@ class Spider{
      */
     public static JXDocument clickMore(Map<String, Object> map,WebDriver driver) throws InterruptedException {
         JavascriptExecutor executornext = (JavascriptExecutor) driver;
-        executornext.executeScript(map.get("moreclick").toString());
+        executornext.executeScript("if("+map.get("moreclick").toString()+".length == 0) {throw new Error('there is nothing to colick')}");
         Thread.sleep(2000);
         WebElement webElement=driver.findElement(By.xpath("/html"));
         JXDocument nextDocument=new JXDocument(Jsoup.parse(webElement.getAttribute("outerHTML")));

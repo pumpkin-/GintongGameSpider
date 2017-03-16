@@ -9,12 +9,12 @@ import SpiderUtils.SpiderProduct;
 public class SpiderLG {
     public static void main(String [] args) throws Exception {
 
-//       SpiderProduct.ergodicUrl("SpiderYxg", 0, 0);
-//
-        SpiderProduct.ergodicUrl("SpiderHwyy", 0, 0);
+        //SpiderProduct.ergodicUrl("SpiderWww", 1013, 1);
+        SpiderProduct.ergodicUrl("SpiderMppt", 0, 1);
+
+
+
        //CommonSpiderKnowledge.ergodicUrl("SpiderHwyy",0,"no");
-
-
 
     }
 

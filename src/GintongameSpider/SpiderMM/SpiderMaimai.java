@@ -43,9 +43,12 @@ public class SpiderMaimai {
     private static String username="13267462575";
     //脉脉密码
     private static String password="123456";
-    //查询的公司名称
-    private static String comName="多益";
+    //查询的公司名称(如果不想查公司赋值null)
+    private static String comName=null;
+    //查询个人时的所放的连接
     private static List<String> personList=new ArrayList();
+    //个人的Url
+    private static String personUrl="https://maimai.cn/contact/detail/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1Ijo1NzY1NTEsImxldmVsIjoxfQ.Tx9A06JaNUj5t-beBy6nHtpEnxH_JuG-V5WSK2-YI_c?from=webview%23%2Fweb%2Fsearch_center";
     //滚轮共滑动次数
     private static int count=30;
 
@@ -91,6 +94,16 @@ public class SpiderMaimai {
         WebDriver driver =getWebDriver();
         login(username,password);
         getPerUrl(driver,comName,count);
+        for(String url: urls) {
+            getPerInfoDataByUrl(driver, url);
+            Thread.sleep(8000);
+        }
+        closeWebDriver();
+    }
+
+    public static void getOnePersonInfo(List<String> urls) throws Exception {
+        WebDriver driver =getWebDriver();
+        login(username,password);
         for(String url: urls) {
             getPerInfoDataByUrl(driver, url);
             Thread.sleep(8000);
@@ -252,6 +265,11 @@ public class SpiderMaimai {
     }
 
     public static void main(String args[]) throws Exception {
-        getPerInfoDataByList(SpiderMaimai.personList);
+        if (comName!=null){
+            getPerInfoDataByList(SpiderMaimai.personList);
+        }else{
+            personList.add(personUrl);
+            getOnePersonInfo(SpiderMaimai.personList);
+        }
     }
 }
