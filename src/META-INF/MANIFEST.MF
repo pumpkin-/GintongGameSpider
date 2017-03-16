@@ -20,3 +20,4 @@ Class-Path: xercesImpl-2.11.0.jar commons-exec-1.1.jar nekohtml-1.9.21
  um-chrome-driver-2.44.0.jar
 Main-Class: GintongameSpider.SpiderLG.Test
 
+

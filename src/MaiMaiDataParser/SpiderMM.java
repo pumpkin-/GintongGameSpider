@@ -54,6 +54,9 @@ public class SpiderMM {
                         while((link=buffer.readLine())!=null){
                             links=link;
                         }
+                        buffer.close();
+                        rr.close();
+                        ff.close();
                         Gson gson = new Gson();
                         Maimai maimai = gson.fromJson(links, Maimai.class);
                         System.out.println(maimai.data.card.id);

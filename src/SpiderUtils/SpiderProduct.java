@@ -63,19 +63,16 @@ public class SpiderProduct {
     /**
      * 遍历urls内部url
      */
-    public static void ergodicUrl(String webname,int fromPageNum,int isImport) throws Exception {
+    public static void ergodicUrl(String webname, int fromPageNum, int isImport) throws Exception {
         System.out.println("Start parsing XML file");
         Map<String, Object> map = getElement(webname);
         ExecutorService pool= Executors.newFixedThreadPool(1);
         List urlNodes= (List) map.get("urls");
-        //String dynamicURL= (String) map.get("page");
         List  dynamicURL= (List) map.get("urlpage");
         int i=0;
         for(Object ele:urlNodes){
             Element elements= (Element) ele;
             if(map.get("flag").equals("jsoup")&&elements.attributeValue("page")!=null&& !elements.attributeValue("page").isEmpty()) {
-
-
                     String url=elements.getText().trim();
                 List<String> list = allpage(url, elements.attributeValue("page"), fromPageNum);
                     i++;
@@ -150,7 +147,7 @@ public class SpiderProduct {
         try{
             SAXReader reader = new SAXReader();
             //获取配置文档dom树
-            Document dom=reader.read(SpiderProduct.class.getClassLoader().getResource("SpiderUtils/BasProductPattern.xml").getPath());
+            Document dom=reader.read(SpiderProduct.class.getResourceAsStream("/SpiderUtils/BasProductPattern.xml"));
             //获取目标配置节点
             Node target=dom.selectSingleNode("//"+targetNode);
             //获取起始url
@@ -184,6 +181,8 @@ public class SpiderProduct {
             String develop_com=target.selectSingleNode("//"+targetNode+"/develop_com").getText();
             //简介
             String g_desc=target.selectSingleNode("//"+targetNode+"/g_desc").getText();
+            //游戏截图拼接的内容 刘雪明更改3.9
+            String pjoin=target.selectSingleNode("//"+targetNode+"/picture/@join").getText();
             //游戏截图
             String picture=target.selectSingleNode("//"+targetNode+"/picture").getText();
             //详情页url
@@ -241,6 +240,8 @@ public class SpiderProduct {
 //            <!--下载链接-->
             String joinlink=target.selectSingleNode("//"+targetNode+"/download_link/@join").getText();
             String download_link=target.selectSingleNode("//"+targetNode+"/download_link").getText();
+            String download_link_ios=target.selectSingleNode("//" + targetNode + "/download_link_ios").getText();
+            String joinlinkios=target.selectSingleNode("//"+targetNode+"/download_link_ios/@join").getText();
             String flag=target.selectSingleNode("//"+targetNode+"/flag").getText();
             String moreclick= target.selectSingleNode("//"+targetNode+"/moreclick").getText();
             String slidingRoller= target.selectSingleNode("//"+targetNode+"/slidingRoller").getText();
@@ -307,6 +308,9 @@ public class SpiderProduct {
             map.put("gtheme",gtheme);
             map.put("engine",engine);
             map.put("joinlink",joinlink);
+            map.put("pjoin",pjoin);
+            map.put("download_link_ios",download_link_ios);
+            map.put("joinlinkios",joinlinkios);
             return map;
         }catch(DocumentException e){
             System.out.println("配置文件获取错误！");
@@ -556,11 +560,13 @@ class Spider{
         int a=1;
         //页数
         int i=1;
+        WebDriver driver=null;
+        if(map.get("flagchild").toString().equals("selenium")){
+            driver=getChromeDriver();
+        }
+
         while(true){
-            WebDriver driver=null;
-            if(map.get("flagchild").toString().equals("selenium")){
-                driver=getChromeDriver();
-            }
+//TODO 待会儿修改代码
             //断点翻页
             for(int x=1;x<formpage;x++){
                 System.out.println("Start page break");
@@ -568,7 +574,6 @@ class Spider{
                 doc=listPageJsoup(doc);
                 i=x+1;
             }
-
             //调用下面的方法获取详情页的url列表
             List<String>detailUrls=getDetailUrls(doc,map.get("detailurl").toString());
             for(String detailUrl:detailUrls){
@@ -632,7 +637,7 @@ class Spider{
     /**
      * 获取每页列表中的详情页的url
      */
-    public  List<String>getDetailUrls(JXDocument document, String detailurl){
+    public  List<String> getDetailUrls(JXDocument document, String detailurl){
         List<Object>urllist= null;
         try {
             urllist = document.sel(detailurl);
@@ -920,11 +925,24 @@ class Spider{
                             if (list1 != null && list1.size() > 0) {
                                 list1.get(x).setDownloadLink(map.get("joinlink")+list.get(x).toString());
                             }
-                            System.out.println(map.get("joinlink").toString()+list.get(x).toString());
+                            System.out.println("安卓下载链接："+map.get("joinlink").toString()+list.get(x).toString());
                             gameInfo.setDownload_link(list.get(x).toString());
                         }
                     }
                 }
+//              ios下载链接
+            if(StringUtils.isNotEmpty(map.get("download_link_ios").toString())){
+                if (document.sel(map.get("download_link_ios").toString()).size()>0){
+                    List<Object> list=document.sel(map.get("download_link_ios").toString());
+                    for(int x=0;x<list.size();x++){
+                        if(list1!=null && list1.size()>0){
+                            list1.get(x).setDownloadLink(map.get("joinlinkios").toString()+list.get(x).toString());
+                        }
+                        System.out.println("ios下载链接"+map.get("joinlinkios").toString()+list.get(x).toString());
+                        gameInfo.setDownload_link(list.get(x).toString());
+                    }
+                }
+            }
             //游戏截图picture
             if(StringUtils.isNotEmpty(map.get("picture").toString())){
                 if(StringUtils.isEmpty(map.get("nextpic").toString())) {
@@ -932,7 +950,7 @@ class Spider{
                     //多个游戏截图用“,”分隔连接为一个StringBuffer
                     StringBuffer screenBuffer = new StringBuffer();
                     for (Object ele : liEles) {
-                        screenBuffer.append(ele.toString() + ",");
+                        screenBuffer.append(map.get("pjoin")+ele.toString()+ ",");
                     }
                     screenShots = screenBuffer.toString();
                     System.out.println(screenShots);

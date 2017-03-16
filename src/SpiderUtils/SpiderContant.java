@@ -17,4 +17,7 @@ public class SpiderContant {
     public static final int insertBatchContant = 5;
     public static final String phantomjsLinuxPath="D:/Spider/phantomjs-2.1.1-linux-x86_64/bin/phantomjs.exe";
     public static final String chromeWindowsPath= "E:/aaaa/chrom/chromedriver.exe";
+    public static final String xmlUrl="SpiderUtils/SpiderData/BasCommonKnowledgePattern.xml";
+    public static final String urlXml="SpiderUtils/BasKnowledgePattern.xml";
+
 }

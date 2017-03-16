@@ -4,13 +4,13 @@
     <!-- 命名跟数据库字段一致 -->
     <spiderUrl>
         <flag>jsoup</flag>
-        <ptime>//div[@class='fl']/i/text()</ptime>
-        <contentPath>http://www.yiwan.com</contentPath>
-        <detailXpath>//div[@class='text']/h2/a/href</detailXpath>
+        <ptime></ptime>
+        <childLink join="">//div[@class='info-head']/a/@href|//a[@class='info-pic']/@src</childLink>
+        <nextPage join="http://game.zol.com.cn">//div[@class='page']/a[@class='next']/@href</nextPage>
         <urls>
-           <url>
-               http://www.yiwan.com/news/
-           </url>
+            <url>
+                http://game.zol.com.cn/more/2_1133.shtml
+            </url>
         </urls>
     </spiderUrl>
 

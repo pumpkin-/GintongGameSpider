@@ -1773,7 +1773,7 @@
         <!--正文图片-->
         <mainpic join="http://www.techxue.com/">//img/@src</mainpic>>
         <type></type>>
-        <source>沙龙</source>
+        <source>互联网沙龙</source>
         <!--子链接-->
         <childLink join="http://www.techxue.com/">//div[@class='font1 fl']/h3/a/@href</childLink>>
         <flag>jsoup</flag>>
@@ -1844,7 +1844,6 @@
 
 
         </urls>>
-
     </spider52PKRW>
     <!--52pk产业要闻-->
     <spider52PKCY>
@@ -2185,6 +2184,7 @@
     </spiderZOL>
 
 
+
     <!--CoCoaChina-->
     <SpiderCoCoaChina>
         <title>//div[@class='detail-main']/h2/text()</title>
@@ -2244,7 +2244,6 @@
     </SpiderTykj>
 
 
-    http://www.feiliu.com/news
     <!--飞流  刘雪明3.7-->
     <spiderFL>
         <title>//div[@class='art-tit']</title>
@@ -2268,7 +2267,73 @@
             </url>
         </urls>
     </spiderFL>
-
+    <!--易玩网  刘雪明3.8-->
+    <spiderYYW>
+            <title>//h2/text()</title>
+            <author></author>
+            <authorurl></authorurl>
+            <cover join=""></cover>
+            <ptime timeFormat="yyyy MM dd HH mm ss">//p[@class='time']</ptime>>
+            <tag></tag>
+            <main>//div[@class='detail']/p</main>>
+            <mainpic>//img/@src</mainpic>>
+            <type></type>>
+            <source>易玩网</source>
+            <childLink join="http://www.yiwan.com">//div[@class='text']/h2/a/@href</childLink>>
+            <nextpage join="http://www.yiwan.com">//div[@class='page']/a[@class='next']/@href</nextpage>
+            <flag>jsoup</flag>>
+            <childnext join=""></childnext>>
+            <chose demand=""></chose>>
+            <urls>
+                <url>
+                    http://www.yiwan.com/news/
+                </url>
+                <url>
+                    http://www.yiwan.com/video/
+                </url>
+                <url>
+                    http://www.yiwan.com/pingce/
+                </url>
+                <url>
+                    http://www.yiwan.com/gonglue/
+                </url>
+                <url>
+                    http://www.yiwan.com/libao/
+                </url>
+                <url>
+                    http://www.yiwan.com/wenda/
+                </url>
+                <url>
+                    http://www.yiwan.com/huodong/
+                </url>
+                <url>
+                    http://www.yiwan.com/softnew/
+                </url>
+            </urls>
+    </spiderYYW>
+    <!--18touch   刘雪明3.14-->
+    <spider18Touch>
+            <title>//h1[@class='text-center']/text()</title>
+            <author></author>
+            <authorurl></authorurl>
+            <cover join="">//div[@class='media']/a/img/@src</cover>
+            <ptime timeFormat="yyyy MM dd HH mm">//address[@class='text-center']/time/text()</ptime>>
+            <tag></tag>
+            <main>//div[@class='content']/p</main>>
+            <mainpic>//img/@src</mainpic>>
+            <type></type>>
+            <source>18touch</source>
+            <childLink join="">//div[@class='media']/a[@class='pull-left']/@href</childLink>>
+            <nextpage join="http://www.18touch.com/category/hangye/type/海外新闻">$('.nextpagebtn')[0].click()</nextpage>
+            <flag>selenium</flag>>
+            <childnext join=""></childnext>>
+            <chose demand=""></chose>>
+            <urls>
+                <url>
+                    http://www.18touch.com/category/hangye/type/海外新闻
+                </url>
+            </urls>
+    </spider18Touch>
 
 
 
