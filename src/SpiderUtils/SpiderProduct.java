@@ -58,7 +58,7 @@ public class SpiderProduct {
     /**
      * 遍历urls内部url
      */
-    public void ergodicUrl(String webname, int fromPageNum, int isImport) throws Exception {
+    public static void ergodicUrl(String webname, int fromPageNum, int isImport) throws Exception {
         System.out.println("Start parsing XML file");
         Map<String, Object> map = getElement(webname);
         ExecutorService pool= Executors.newFixedThreadPool(1);
@@ -138,7 +138,7 @@ public class SpiderProduct {
      * @param targetNode 目标节点
      * @throws java.io.FileNotFoundException
      */
-    public Map<String, Object> getElement(String targetNode){
+    public static Map<String, Object> getElement(String targetNode){
         try{
             SAXReader reader = new SAXReader();
             //获取配置文档dom树

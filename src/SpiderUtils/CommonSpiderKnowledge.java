@@ -111,6 +111,7 @@ public class CommonSpiderKnowledge {
      * @return
      * @throws XpathSyntaxErrorException
      */
+//    TODO
     public static  List<Object> getTag(JXDocument document, String xpath) throws XpathSyntaxErrorException {
         List<Object> obj = null;
         if(StringUtils.isNotEmpty(xpath)) {
@@ -513,7 +514,6 @@ public class CommonSpiderKnowledge {
         while(true){
             int fg=0;
             //获取详情页列表
-
             List<Object> detailsUrls=doc.sel(knowledgeSpiderConfig.childLink.getText());
             //判断author列表页是否可以获取
             System.out.println("Start list page data");
@@ -1174,18 +1174,5 @@ public class CommonSpiderKnowledge {
     public static String getOSName() {
         return System.getProperty("os.name");
     }
-    public static ProKnowledge depositJavabeans(String title, String ptime, String type, String cover, String tag, String author, String main, String puuid, String kuuid, String childLink, String source, String authorurl) {
-        ProKnowledge proKnowledge = new ProKnowledge();
-        proKnowledge.setTitle(title);
-        proKnowledge.setPtime(ptime);
-        proKnowledge.setType(type);
-        proKnowledge.setCover(cover);
-        proKnowledge.setTag(tag);
-        proKnowledge.setAuthor(author);
-        proKnowledge.setMain(main);
-        proKnowledge.setUrl(childLink);
-        proKnowledge.setSource(source);
-        proKnowledge.setUuid(kuuid);
-        return proKnowledge;
-    }
+
 }
