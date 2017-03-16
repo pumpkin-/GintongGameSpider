@@ -139,12 +139,13 @@ public class test {
 //jsoup查看网页源码
 //http://chanye.07073.com/     http://chanye.07073.com/shuju/1560716.html
 //TODO
-//      org.jsoup.nodes.Document doc1=Jsoup.connect("http://www.25pp.com/android/detail_5760475/")
+//      org.jsoup.nodes.Document doc1=Jsoup.connect("http://www.18touch.com/category/hangye/type/海外新闻")
 //                          .userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36")
 //                         .get();
 //        JXDocument doc=new JXDocument(doc1);
 //       System.out.println(doc1.outerHtml());
-//       System.out.println(doc.sel("//a[@class='btn-install large-btn']/@appdownurl"));
+//        System.out.println(doc.sel("//div[@id='paging1']/li/a[@class='nextpagebtn']/@href"));
+
 
 //
 //       org.jsoup.nodes.Document doc1=Jsoup.connect("http://games.sina.com.cn/y/n/2017-03-01/fycaafp1372689.shtml")
@@ -270,15 +271,16 @@ public class test {
         System.out.println(body);*/
 
 //selenium查看网页源码
-
-//        System.setProperty("webdriver.chrome.driver",SpiderContant.chromeWindowsPath );
-//        WebDriver driver=new ChromeDriver();
-//      driver.get("");
-//        WebElement webElement=driver.findElement(By.xpath("/html"));
-//        org.jsoup.nodes.Document doc2=Jsoup.parse(webElement.getAttribute("outerHTML"));
-//        JXDocument jxDocument=new JXDocument(doc2);
-//        System.out.println(doc2.outerHtml());
-
+//
+        System.setProperty("webdriver.chrome.driver",SpiderContant.chromeWindowsPath );
+        WebDriver driver=new ChromeDriver();
+        driver.get("http://www.18touch.com/category/hangye/type/海外新闻");
+        WebElement webElement=driver.findElement(By.xpath("/html"));
+        org.jsoup.nodes.Document doc2=Jsoup.parse(webElement.getAttribute("outerHTML"));
+        JXDocument jxDocument=new JXDocument(doc2);
+        System.out.println(doc2.outerHtml());
+////        System.out.println(jxDocument.sel("//div[@class='number']/div[@class='page_box']/a[href='javascript:pg.toPage(2);']"));
+        System.out.println(jxDocument.sel("//div[@id='paging1']/li[4]/a/@href"));
 
 //        System.setProperty("webdriver.chrome.driver",SpiderContant.chromeWindowsPath );
 //        WebDriver driver=new ChromeDriver();

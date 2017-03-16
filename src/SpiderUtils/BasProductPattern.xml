@@ -208,8 +208,10 @@
         <operator></operator>
         <!--资料片发布时间-->
         <films_time></films_time>
-        <!--下载链接-->
-        <download_link></download_link>
+        <!--下载链接安卓-->
+        <download_link join="">//div[@class='btn down-adr']/a/@href</download_link>
+        <!--下载链接ios-->
+        <download_link_ios join="">//div[@class='btn down-ios']/a/@href</download_link_ios>
         <!--起始页面-->
         <urls>
             <url>
@@ -1349,15 +1351,15 @@
         <!--网站名-->
         <source>360手机助手</source>
         <!--ContentPath子链接拼接内容-->
-        <contentPath>http://zhushou.360.cn/</contentPath>
+        <contentPath>http://zhushou.360.cn</contentPath>
         <!--详情页url-->
-        <detailurl>//div[@class='icon_box']//ul[@id='iconList']/li/h3/a/@href</detailurl>
+        <detailurl>//ul[@id='iconList']/li/h3/a/@href</detailurl>
         <!--下一页-->
-        <nextpage>//div[@id='pages_pg_2']//div[@class='page_box']/a[text()*='下一页']/@href</nextpage>
+        <nextpage></nextpage>
         <!--起始页面-->
         <urls>
-            <url>
-                http://zhushou.360.cn/list/index/cid/2?page=1
+            <url page="50">
+                http://zhushou.360.cn/list/index/cid/2?page=$(page)
             </url>
             <!--<url>-->
                 <!--http://zhushou.360.cn/list/index/cid/2)-->
@@ -1387,7 +1389,7 @@
         <!--标签-->
         <gtags>//div[@class='app-tags']/a/text()</gtags>
         <!--游戏截图-->
-        <picture>//div[@class='overview']/img/@src</picture>
+        <picture join="">//div[@class='overview']/img/@src</picture>
         <!--游戏视角-->
         <viewpoint></viewpoint>
         <!--游戏引擎-->
@@ -1433,7 +1435,7 @@
         <!--网站更新时间-->
         <web_update_time></web_update_time>
         <!--下载链接-->
-        <download_link></download_link>
+        <download_link join=""></download_link>
         <!--游戏类型-->
         <gtypes>
             <gtype></gtype>
@@ -3106,5 +3108,254 @@
             <!--滑动滚轮次数-->
             <slidingRoller></slidingRoller>>
     </spiderUC>
-
+    <!--360游戏社区 刘雪明3.14-->
+    <spiderYXSQ>
+            <!--网站名-->
+            <source>360游戏社区</source>
+            <!--ContentPath子链接拼接内容-->
+            <contentPath>http://ku.u.360.cn</contentPath>
+            <!--详情页url-->
+            <detailurl>//div[@class='g_r_img']/a/@href</detailurl>
+            <!--下一页-->
+            <nextpage>//div[@class='fs_fenye']/a[@class='fs_fy_next']/@href</nextpage>
+            <!--起始页面-->
+            <urls>
+                <url>
+                    http://ku.u.360.cn/single.php?s=web&amp;label=&amp;tag=%E8%A7%92%E8%89%B2%E6%89%AE%E6%BC%94&amp;order=download&amp;start=0
+                </url>
+                <url>
+                    http://ku.u.360.cn/single.php?s=web&amp;label=&amp;tag=%E4%BC%91%E9%97%B2%E7%9B%8A%E6%99%BA&amp;order=download&amp;start=0
+                </url>
+                <url>
+                    http://ku.u.360.cn/single.php?s=web&amp;label=&amp;tag=%E5%8A%A8%E4%BD%9C%E5%86%92%E9%99%A9&amp;order=download&amp;start=0
+                </url>
+                <url>
+                    http://ku.u.360.cn/single.php?s=web&amp;label=&amp;tag=%E4%BD%93%E8%82%B2%E7%AB%9E%E9%80%9F&amp;order=download&amp;start=0
+                </url>
+                <url>
+                    http://ku.u.360.cn/single.php?s=web&amp;label=&amp;tag=%E9%A3%9E%E8%A1%8C%E5%B0%84%E5%87%BB&amp;order=download&amp;start=0
+                </url>
+                <url>
+                    http://ku.u.360.cn/single.php?s=web&amp;label=&amp;tag=%E7%BB%8F%E8%90%A5%E7%AD%96%E7%95%A5&amp;order=download&amp;start=0
+                </url>
+                <url>
+                    http://ku.u.360.cn/single.php?s=web&amp;label=&amp;tag=%E6%A3%8B%E7%89%8C%E5%A4%A9%E5%9C%B0&amp;order=download&amp;start=0
+                </url>
+                <url>
+                    http://ku.u.360.cn/single.php?s=web&amp;label=&amp;tag=%E7%B2%BE%E5%93%81%E5%8D%95%E6%9C%BA&amp;order=download&amp;start=0
+                </url>
+                <url>
+                    http://ku.u.360.cn/online.php?s=web&amp;label=&amp;tag=%E5%8D%A1%E7%89%8C&amp;order=download&amp;start=0
+                </url>
+                <url>
+                    http://ku.u.360.cn/online.php?s=web&amp;label=&amp;tag=RPG%E7%BD%91%E6%B8%B8&amp;order=download&amp;start=0
+                </url>
+                <url>
+                    http://ku.u.360.cn/online.php?s=web&amp;label=&amp;tag=%E4%B8%89%E5%9B%BD&amp;order=download&amp;start=0
+                </url>
+            </urls>
+            <!--游戏名-->
+            <gname>//div[@class='ng_d_info']/h2/text()</gname>
+            <!--游戏英语名字-->
+            <gename></gename>
+            <!--产品logo-->
+            <logo></logo>
+            <!--游戏版本-->
+            <version></version>
+            <!--语言-->
+            <language></language>
+            <!--是否联网0未知，1不需要联网，2需要联网'-->
+            <sort>0</sort>
+            <!--适合年龄-->
+            <suitable_age></suitable_age>
+            <!--发行商-->
+            <publisher></publisher>
+            <!--发行区域-->
+            <issue_area></issue_area>
+            <!--游戏风格-->
+            <gstyle></gstyle>
+            <!--标签-->
+            <gtags></gtags>
+            <!--游戏截图-->
+            <picture join="">//div[@class='slidesjs-control']/li[@class='db slidesjs-slide']/img/@src</picture>
+            <!--游戏视角-->
+            <viewpoint></viewpoint>
+            <!--游戏引擎-->
+            <engine></engine>
+            <!--游戏品级-->
+            <grade></grade>
+            <!--研发进度-->
+            <dpprogress></dpprogress>
+            <!--游戏题材-->
+            <gtheme></gtheme>
+            <!--产品团队规模-->
+            <scale></scale>
+            <!--产品需求-->
+            <pdemand></pdemand>
+            <!--价格-->
+            <price></price>
+            <!--付费方式-->
+            <charge_mode></charge_mode>
+            <!--研发公司-->
+            <develop_com></develop_com>
+            <!--游戏介绍-->
+            <g_desc>//div[@class='ng_lb_b_d_c_div']/text()</g_desc>
+            <!--初版出售时间-->
+            <ptime formatStr=""></ptime>
+            <!--公测时间-->
+            <beta_time formatStr=""></beta_time>
+            <!--内测时间-->
+            <test_time formatStr=""></test_time>
+            <!--封测时间-->
+            <betatest_time formatStr=""></betatest_time>
+            <!--立项时间-->
+            <set_time formatStr=""></set_time>
+            <!--游戏官网-->
+            <web></web>
+            <!--运营商-->
+            <operator></operator>
+            <!--资料片发布时间-->
+            <films_time></films_time>
+            <!--游戏画面（2D,3D）-->
+            <gamespy></gamespy>
+            <!--游戏大小-->
+            <game_size></game_size>
+            <!--网站更新时间-->
+            <web_update_time></web_update_time>
+            <!--下载链接-->
+            <download_link join=""></download_link>
+            <!--游戏类型-->
+            <gtypes>
+                <gtype></gtype>
+            </gtypes>
+            <!--游戏平台（操作系统）-->
+            <platform></platform>
+            <!--网络类型-->
+            <network_type></network_type>
+            <!--下一页链接需要拼接的内容-->
+            <contentPathnext>http://ku.u.360.cn</contentPathnext>
+            <!--游戏截图下一页需要拼接的内容-->
+            <contentPathpic></contentPathpic>>
+            <!--游戏截图下一页的xpath语句-->
+            <nextpic></nextpic>>
+            <!--选择列表页所用驱动-->
+            <flag>jsoup</flag>>
+            <!--选择详情所用驱动-->
+            <flagchild>jsoup</flagchild>>
+            <!--点击更多jquery语言-->
+            <moreclick></moreclick>>
+            <!--滑动滚轮次数-->
+            <slidingRoller></slidingRoller>>
+    </spiderYXSQ>
+    <!--select count(*),COUNT(DISTINCT gname) from pro_game_info where source='360游戏社区'-->
+    <!--96u/百度多酷  刘雪明3.14-->
+    <spider96u>
+        <!--网站名-->
+        <source>96u/百度多酷</source>
+        <!--ContentPath子链接拼接内容-->
+        <contentPath></contentPath>
+        <!--详情页url-->
+        <detailurl>//div[@class='text']/p[@class='title']/a/@href</detailurl>
+        <!--下一页-->
+        <nextpage>//div[@class='page']/a[@class='next']/@href</nextpage>
+        <!--起始页面-->
+        <urls>
+            <url page="1917">
+                http://www.96u.com/yxksx/$(page)_1_all_all_all_all_all.html
+            </url>
+        </urls>
+        <!--游戏名-->
+        <gname>//div[@class='fl detail-l']/h1/text()</gname>
+        <!--游戏英语名字-->
+        <gename></gename>
+        <!--产品logo-->
+        <logo>//div[@class='pic']/img/@src</logo>
+        <!--游戏版本-->
+        <version>//div[@class='info']/p[2]/text()</version>
+        <!--语言-->
+        <language></language>
+        <!--是否联网0未知，1不需要联网，2需要联网'-->
+        <sort>0</sort>
+        <!--适合年龄-->
+        <suitable_age></suitable_age>
+        <!--发行商-->
+        <publisher></publisher>
+        <!--发行区域-->
+        <issue_area></issue_area>
+        <!--游戏风格-->
+        <gstyle></gstyle>
+        <!--标签-->
+        <gtags>//div[@class='tags']/span/a/text()</gtags>
+        <!--游戏截图-->
+        <picture join="">//ul[@class='gameMain-ul']/li/img/@src</picture>
+        <!--游戏视角-->
+        <viewpoint></viewpoint>
+        <!--游戏引擎-->
+        <engine></engine>
+        <!--游戏品级-->
+        <grade></grade>
+        <!--研发进度-->
+        <dpprogress></dpprogress>
+        <!--游戏题材-->
+        <gtheme></gtheme>
+        <!--产品团队规模-->
+        <scale></scale>
+        <!--产品需求-->
+        <pdemand></pdemand>
+        <!--价格-->
+        <price></price>
+        <!--付费方式-->
+        <charge_mode></charge_mode>
+        <!--研发公司-->
+        <develop_com></develop_com>
+        <!--游戏介绍-->
+        <g_desc></g_desc>
+        <!--初版出售时间-->
+        <ptime formatStr=""></ptime>
+        <!--公测时间-->
+        <beta_time formatStr=""></beta_time>
+        <!--内测时间-->
+        <test_time formatStr=""></test_time>
+        <!--封测时间-->
+        <betatest_time formatStr=""></betatest_time>
+        <!--立项时间-->
+        <set_time formatStr=""></set_time>
+        <!--游戏官网-->
+        <web></web>
+        <!--运营商-->
+        <operator></operator>
+        <!--资料片发布时间-->
+        <films_time></films_time>
+        <!--游戏画面（2D,3D）-->
+        <gamespy></gamespy>
+        <!--游戏大小-->
+        <game_size></game_size>
+        <!--网站更新时间-->
+        <web_update_time></web_update_time>
+        <!--下载链接安卓-->
+        <download_link join="">//div[@class='btn down-adr']/a/@href</download_link>
+        <!--下载链接ios-->
+        <download_link_ios join="">//div[@class='btn down-ios']/a/@href</download_link_ios>
+        <!--游戏类型-->
+        <gtypes>
+            <gtype></gtype>
+        </gtypes>
+        <!--游戏平台（操作系统）-->
+        <platform></platform>
+        <!--网络类型-->
+        <network_type></network_type>
+        <!--下一页链接需要拼接的内容-->
+        <contentPathnext>http://www.96u.com</contentPathnext>
+        <contentPathpic></contentPathpic>>
+        <!--游戏截图下一页的xpath语句-->
+        <nextpic></nextpic>>
+        <!--选择列表页所用驱动-->
+        <flag>jsoup</flag>>
+        <!--选择详情所用驱动-->
+        <flagchild>jsoup</flagchild>>
+        <!--点击更多jquery语言-->
+        <moreclick></moreclick>>
+        <!--滑动滚轮次数-->
+        <slidingRoller></slidingRoller>>
+    </spider96u>
 </BasProductPattern>

@@ -58,12 +58,11 @@ public class SpiderProduct {
     /**
      * 遍历urls内部url
      */
-    public static void ergodicUrl(String webname,int fromPageNum,int isImport) throws Exception {
+    public void ergodicUrl(String webname, int fromPageNum, int isImport) throws Exception {
         System.out.println("Start parsing XML file");
         Map<String, Object> map = getElement(webname);
         ExecutorService pool= Executors.newFixedThreadPool(1);
         List urlNodes= (List) map.get("urls");
-        //String dynamicURL= (String) map.get("page");
         List  dynamicURL= (List) map.get("urlpage");
         int i=0;
         for(Object ele:urlNodes){
@@ -139,11 +138,11 @@ public class SpiderProduct {
      * @param targetNode 目标节点
      * @throws java.io.FileNotFoundException
      */
-    public static Map<String, Object> getElement(String targetNode){
+    public Map<String, Object> getElement(String targetNode){
         try{
             SAXReader reader = new SAXReader();
             //获取配置文档dom树
-            Document dom=reader.read(SpiderProduct.class.getClassLoader().getResource("SpiderUtils/BasProductPattern.xml").getPath());
+            Document dom=reader.read(SpiderProduct.class.getResourceAsStream("/SpiderUtils/BasProductPattern.xml"));
             //获取目标配置节点
             Node target=dom.selectSingleNode("//"+targetNode);
             //获取起始url
@@ -236,6 +235,8 @@ public class SpiderProduct {
 //            <!--下载链接-->
             String joinlink=target.selectSingleNode("//"+targetNode+"/download_link/@join").getText();
             String download_link=target.selectSingleNode("//"+targetNode+"/download_link").getText();
+            String download_link_ios=target.selectSingleNode("//" + targetNode + "/download_link_ios").getText();
+            String joinlinkios=target.selectSingleNode("//"+targetNode+"/download_link_ios/@join").getText();
             String flag=target.selectSingleNode("//"+targetNode+"/flag").getText();
             String moreclick= target.selectSingleNode("//"+targetNode+"/moreclick").getText();
             String slidingRoller= target.selectSingleNode("//"+targetNode+"/slidingRoller").getText();
@@ -303,6 +304,8 @@ public class SpiderProduct {
             map.put("engine",engine);
             map.put("joinlink",joinlink);
             map.put("pjoin",pjoin);
+            map.put("download_link_ios",download_link_ios);
+            map.put("joinlinkios",joinlinkios);
             return map;
         }catch(DocumentException e){
             System.out.println("配置文件获取错误！");
@@ -917,11 +920,24 @@ class Spider{
                             if (list1 != null && list1.size() > 0) {
                                 list1.get(x).setDownloadLink(map.get("joinlink")+list.get(x).toString());
                             }
-                            System.out.println(map.get("joinlink").toString()+list.get(x).toString());
+                            System.out.println("安卓下载链接："+map.get("joinlink").toString()+list.get(x).toString());
                             gameInfo.setDownload_link(list.get(x).toString());
                         }
                     }
                 }
+//              ios下载链接
+            if(StringUtils.isNotEmpty(map.get("download_link_ios").toString())){
+                if (document.sel(map.get("download_link_ios").toString()).size()>0){
+                    List<Object> list=document.sel(map.get("download_link_ios").toString());
+                    for(int x=0;x<list.size();x++){
+                        if(list1!=null && list1.size()>0){
+                            list1.get(x).setDownloadLink(map.get("joinlinkios").toString()+list.get(x).toString());
+                        }
+                        System.out.println("ios下载链接"+map.get("joinlinkios").toString()+list.get(x).toString());
+                        gameInfo.setDownload_link(list.get(x).toString());
+                    }
+                }
+            }
             //游戏截图picture
             if(StringUtils.isNotEmpty(map.get("picture").toString())){
                 if(StringUtils.isEmpty(map.get("nextpic").toString())) {

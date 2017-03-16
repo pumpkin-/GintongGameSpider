@@ -9,7 +9,8 @@ import SpiderUtils.SpiderProduct;
 public class SpiderLG {
     public static void main(String [] args)  {
         try {
-            SpiderProduct.ergodicUrl("spiderUC", 0, 1);
+            SpiderProduct spider = new SpiderProduct();
+            spider.ergodicUrl("spider96u", 0, 0);
         } catch (Exception e) {
             e.printStackTrace();
         }

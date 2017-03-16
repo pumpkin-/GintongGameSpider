@@ -1,5 +1,6 @@
 package SpiderUtils;
 
+import GintongameSpider.SpiderLxm.SpiderUtil;
 import JavaBean.BasPersonInfo;
 import JavaBean.PerKnowledge;
 import JavaBean.ProKnowledge;
@@ -49,17 +50,13 @@ public class BaseKnowledgeSpider {
         WebElement web=driver.findElement(By.xpath("/html"));
         String html=web.getAttribute("outerHTML");*/
         // InputStream inputStream=new FileInputStream(new File("SpiderUtils/BasKnowledgePattern.xml"));
-
-        InputStream inputStream= BaseKnowledgeSpider.class.getResourceAsStream("/SpiderUtils/BasKnowledgePatternMF.xml");
-
+        InputStream inputStream= BaseKnowledgeSpider.class.getResourceAsStream("SpiderUtils/BasKnowledgePatten.xml");
         SAXReader sax=new SAXReader();
         org.dom4j.Document doc=sax.read(inputStream);
         org.dom4j.Element root = doc.getRootElement();//获取根元素
         List<org.dom4j.Element> childElements = root.elements();//获取当前元素下的全部子元素
         Attribute leaderAttr =root. attribute("title");
-
         for (org.dom4j.Element child : childElements) {//循环输出全部book的相关信息
-            ;
             books = child.elements();
             for (org.dom4j.Element book : books) {
                 String name = book.getName();//获取当前元素名
@@ -67,10 +64,10 @@ public class BaseKnowledgeSpider {
                 System.out.println(name + ":" + text);
             }
         }
-
-
-        grabWeb();
+    grabWeb();
     }
+
+
 
     /**
      * 抓取网页
