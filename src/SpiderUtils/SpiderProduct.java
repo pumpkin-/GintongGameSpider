@@ -66,7 +66,8 @@ public class SpiderProduct {
     public static void ergodicUrl(String webname, int fromPageNum, int isImport) throws Exception {
         System.out.println("Start parsing XML file");
         Map<String, Object> map = getElement(webname);
-        ExecutorService pool= Executors.newFixedThreadPool(1);
+        //构建线程池
+        ExecutorService pool= Executors.newFixedThreadPool(5);
         List urlNodes= (List) map.get("urls");
         List  dynamicURL= (List) map.get("urlpage");
         int i=0;
@@ -78,7 +79,12 @@ public class SpiderProduct {
                     i++;
                     for(String uri:list){
                         final Spider s=new Spider(map, uri,0,isImport);
-                        s.run();
+//                        pool.submit(new Runnable() {
+//                            @Override
+//                            public void run() {
+                               s.run();
+//                            }
+//                        });
                         System.out.println(uri);
                     }
                     fromPageNum=0;
@@ -88,12 +94,12 @@ public class SpiderProduct {
                 System.out.println(url);
                 final Spider s=new Spider(map, url,fromPageNum,isImport);
                 //运行线程
-//                pool.submit(new Runnable() {
-//                    @Override
-//                    public void run() {
+//               pool.submit(new Runnable() {
+//                  @Override
+//                   public void run() {
                         s.run();
-//                    }
-//                });
+//                   }
+//              });
                 fromPageNum=0;
             }else if(map.get("flag").equals("selenium")){
                 Element element= (Element) ele;
@@ -535,14 +541,18 @@ class Spider{
      * 获取dom
      */
     public static org.jsoup.nodes.Document getDocument(String url){
+        org.jsoup.nodes.Document document= null;
         try{
-            org.jsoup.nodes.Document document=Jsoup.connect(url)
+            document = Jsoup.connect(url)
                     .userAgent("Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; .NET CLR 2.0.50727)")
                     .get();
-            return document;
+
         }catch (Exception e){
-            throw new RuntimeException("===============连接网页:"+url+"失败！！！========================");
+            e.printStackTrace();
+            System.out.println("======== 获取网页详情页失败 ==========");
+
         }
+        return document;
     }
 
     //线程执行内容
@@ -637,15 +647,15 @@ class Spider{
     /**
      * 获取每页列表中的详情页的url
      */
-    public  List<String> getDetailUrls(JXDocument document, String detailurl){
-        List<Object>urllist= null;
+    public  List<String> getDetailUrls(JXDocument document, String detailXpath){
+        List<Object> urllist= null;
         try {
-            urllist = document.sel(detailurl);
+            urllist = document.sel(detailXpath);
         } catch (XpathSyntaxErrorException e) {
             e.printStackTrace();
         }
         //存储每页中列表上跳转到详情页的链接
-        List<String>detailUrls=new ArrayList();
+        List<String>detailUrls=new ArrayList<String>();
         for(Object detailUrl:urllist){
             detailUrls.add((String)detailUrl);
         }
@@ -1007,61 +1017,67 @@ class Spider{
      *将数据存入mysql数据库中
      */
     public static void storeToDataBase(BasProGameInfo gameInfo, ProGameType gtypes, List<ProGamePlatform> list,BasOrganizeInfo basOrganizeInfo,OrgProduct orgProduct,BasOrganizeInfo basOrganizeInfo2,OrgProduct orgProduct2,BasOrganizeInfo basOrganizeInfo3,OrgProduct orgProduct3,String childLink,int isImport){
-        if(isImport==1) {
-        //网站源链接
-        gameInfo.setUrl(childLink);
-        String uuid=UUID.randomUUID().toString();
-        //uuid
-        gameInfo.setUuid(uuid);
-        //用dao层接口插入数据库
         ProGameInfoDao infoDao=new ProGameInfoDaoImpl();
-        infoDao.insertGame(gameInfo);
+        List<String> gameId=infoDao.selectGame(gameInfo);
+        if(isImport==1) {
+            if(gameId.size()==0) {
+                //网站源链接
+                gameInfo.setUrl(childLink);
+                String uuid = UUID.randomUUID().toString();
+                //uuid
+                gameInfo.setUuid(uuid);
+                //用dao层接口插入数据库
 
-        //插入游戏类型
-        ProGameTypeDao typeDao=new ProGameTypeDaoImpl();
-        gtypes.setUuid(uuid);
-        typeDao.insertType(gtypes);
+                infoDao.insertGame(gameInfo);
 
-        //插入组织表
-        basOrganizeInfo.setUrl(childLink);
-       String ouuid=UUID.randomUUID().toString();
-        basOrganizeInfo.setUuid(ouuid);
+                //插入游戏类型
+                ProGameTypeDao typeDao = new ProGameTypeDaoImpl();
+                gtypes.setUuid(uuid);
+                typeDao.insertType(gtypes);
 
-        basOrganizeInfo2.setUrl(childLink);
-        String ouuid2=UUID.randomUUID().toString();
-        basOrganizeInfo2.setUuid(ouuid2);
+                //插入组织表
+                basOrganizeInfo.setUrl(childLink);
+                String ouuid = UUID.randomUUID().toString();
+                basOrganizeInfo.setUuid(ouuid);
 
-        basOrganizeInfo3.setUrl(childLink);
-        String ouuid3=UUID.randomUUID().toString();
-        basOrganizeInfo3.setUuid(ouuid3);
+                basOrganizeInfo2.setUrl(childLink);
+                String ouuid2 = UUID.randomUUID().toString();
+                basOrganizeInfo2.setUuid(ouuid2);
 
-        //插入组织与产品关系表
-        orgProduct.setOuuid(ouuid);
-        orgProduct2.setOuuid(ouuid2);
-        orgProduct3.setOuuid(ouuid3);
-        orgProduct.setPr_uuid(uuid);
-        orgProduct2.setPr_uuid(uuid);
-        orgProduct3.setPr_uuid(uuid);
+                basOrganizeInfo3.setUrl(childLink);
+                String ouuid3 = UUID.randomUUID().toString();
+                basOrganizeInfo3.setUuid(ouuid3);
 
-        BasOrganizeInfoImpl basOrganizeInfo1=new BasOrganizeInfoImpl();
-            OrgProductDaoImpl orgProductDao = new OrgProductDaoImpl();
-            if (StringUtils.isNotEmpty(basOrganizeInfo.getOname())) {
-                basOrganizeInfo1.insertSingle(basOrganizeInfo);
-                orgProductDao.insertOPDuct(orgProduct);
-            }
-            if (StringUtils.isNotEmpty(basOrganizeInfo2.getOname())) {
-                basOrganizeInfo1.insertSingle(basOrganizeInfo2);
-                orgProductDao.insertOPDuct(orgProduct2);
-            }
-            if (StringUtils.isNotEmpty(basOrganizeInfo3.getOname())) {
-                basOrganizeInfo1.insertSingle(basOrganizeInfo3);
-                orgProductDao.insertOPDuct(orgProduct3);
-            }
-            //插入游戏平台（研发公司）
-            ProGamePlatformDao platformDao = new ProGamePlatformDaoImpl();
-            for (int x = 0; x < list.size(); x++) {
-                list.get(x).setUuid(uuid);
-                platformDao.insertPlatform(list.get(x));
+                //插入组织与产品关系表
+                orgProduct.setOuuid(ouuid);
+                orgProduct2.setOuuid(ouuid2);
+                orgProduct3.setOuuid(ouuid3);
+                orgProduct.setPr_uuid(uuid);
+                orgProduct2.setPr_uuid(uuid);
+                orgProduct3.setPr_uuid(uuid);
+
+                BasOrganizeInfoImpl basOrganizeInfo1 = new BasOrganizeInfoImpl();
+                OrgProductDaoImpl orgProductDao = new OrgProductDaoImpl();
+                if (StringUtils.isNotEmpty(basOrganizeInfo.getOname())) {
+                    basOrganizeInfo1.insertSingle(basOrganizeInfo);
+                    orgProductDao.insertOPDuct(orgProduct);
+                }
+                if (StringUtils.isNotEmpty(basOrganizeInfo2.getOname())) {
+                    basOrganizeInfo1.insertSingle(basOrganizeInfo2);
+                    orgProductDao.insertOPDuct(orgProduct2);
+                }
+                if (StringUtils.isNotEmpty(basOrganizeInfo3.getOname())) {
+                    basOrganizeInfo1.insertSingle(basOrganizeInfo3);
+                    orgProductDao.insertOPDuct(orgProduct3);
+                }
+                //插入游戏平台（研发公司）
+                ProGamePlatformDao platformDao = new ProGamePlatformDaoImpl();
+                for (int x = 0; x < list.size(); x++) {
+                    list.get(x).setUuid(uuid);
+                    platformDao.insertPlatform(list.get(x));
+                }
+            }else{
+                System.out.println("与数据库中数据重复");
             }
         }else {
             System.out.println("并未往数据库中存入数据");

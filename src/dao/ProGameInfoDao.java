@@ -2,6 +2,7 @@ package dao;
 
 
 import JavaBean.BasProGameInfo;
+import JavaBean.ProGameInfo;
 
 import java.util.List;
 
@@ -10,5 +11,5 @@ import java.util.List;
  */
 public interface ProGameInfoDao {
     public void insertGame(BasProGameInfo ts);
-    public List<String> selectGame(ProGameInfoDao gname);
+    public List<String> selectGame(BasProGameInfo gname);
 }

@@ -18,6 +18,5 @@ Class-Path: xercesImpl-2.11.0.jar commons-exec-1.1.jar nekohtml-1.9.21
  44.0.jar sitemesh-2.2.1.jar httpmime-4.3.3.jar cssparser-0.9.14.jar j
  son-lib-2.1-jdk15.jar gson-2.7.jar commons-beanutils-1.7.0.jar seleni
  um-chrome-driver-2.44.0.jar
-Main-Class: GintongameSpider.SpiderLG.Test
-
+Main-Class: GintongameSpider.SpiderLG.SpiderLG
 

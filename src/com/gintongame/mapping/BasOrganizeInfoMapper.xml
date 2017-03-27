@@ -51,5 +51,17 @@
         select * from bas_organize_info where uuid=#{uuid}
     </select>
 
+    <update id="updateOrgan" parameterType="JavaBean.BasOrganizeInfo">
+        update bas_organize_info set oname=#{oname}, ename=#{ename}, shortname=#{shortname},
+        fullname=#{fullname}, web=#{web}, con_way=#{con_way},
+        industry=#{industry}, scale=#{scale}, address=#{address},
+        logo=#{logo}, stime=#{stime}, other=#{other},
+        source=#{source}, url=#{url}, type=#{type},
+         financing_stage=#{financing_stage}, company_nature=#{company_nature},
+        management_field=#{management_field}, introduce=#{introduce}, picture=#{picture},
+        development_history=#{development_history}, corporate_culture=#{corporate_culture},
+        tag=#{tag} where uuid=#{uuid}
+    </update>
+
 
 </mapper>

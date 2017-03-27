@@ -59,6 +59,13 @@ import java.util.regex.Pattern;
 public class test {
 
     public static void main(String[] args) throws ParserConfigurationException, XpathSyntaxErrorException, SpiderUtils.FormatEexception, DocumentException, IOException, ProKnowledgeImpl.FormatEexception, InterruptedException, ParseException {
-
+        System.setProperty("webdriver.chrome.driver",SpiderContant.chromeWindowsPath);
+        WebDriver driver=new ChromeDriver();
+        driver.get("http://www.wanmei.com/");
+        WebElement webElement=driver.findElement(By.xpath("/html"));
+        org.jsoup.nodes.Document doc = Jsoup.parse(webElement.getAttribute("outerHTML"));
+        JXDocument jx=new JXDocument(doc);
+        System.out.println(doc.outerHtml());
+        System.out.println(jx.selOne("//div[@class='logo']/a/img/@src"));
     }
 }

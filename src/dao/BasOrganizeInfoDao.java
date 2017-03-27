@@ -12,4 +12,5 @@ public interface BasOrganizeInfoDao extends BaseDao<List>{
     public void insertSingle(BasOrganizeInfo ts);
     public List<String> selcetOrganId(String uuid);
     public List<BasOrganizeInfo> selectList(String ts);
+    public void updateSingle(BasOrganizeInfo ts);
 }

@@ -23,5 +23,10 @@
 
     </insert>
 
+    <select id="selectGame" parameterType="JavaBean.BasProGameInfo" resultType="String">
+        select id from pro_game_info where source=#{source} and gname=#{gname}
+
+    </select>
+
 
         </mapper>

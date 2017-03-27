@@ -7,9 +7,9 @@ public class PerEducationInfo {
 
     private String diploma;
 
-    private String startDate;
+    private String start_date;
 
-    private String endDate;
+    private String end_date;
 
     private String uuid;
 
@@ -43,20 +43,20 @@ public class PerEducationInfo {
         this.diploma = diploma == null ? null : diploma.trim();
     }
 
-    public String getStartDate() {
-        return startDate;
+    public String getStart_date() {
+        return start_date;
     }
 
-    public void setStartDate(String startDate) {
-        this.startDate = startDate == null ? null : startDate.trim();
+    public void setStart_date(String start_date) {
+        this.start_date = start_date;
     }
 
-    public String getEndDate() {
-        return endDate;
+    public String getEnd_date() {
+        return end_date;
     }
 
-    public void setEndDate(String endDate) {
-        this.endDate = endDate == null ? null : endDate.trim();
+    public void setEnd_date(String end_date) {
+        this.end_date = end_date;
     }
 
     public String getUuid() {
