@@ -133,7 +133,7 @@ public class SpiderOrganize {
                 SpiderLgw.getBussinessDataByOne(organizeSpiderConfig.lgwUrl.getText(), tycBasOrganizeInfo);
             }
             //微博数据入库
-            SpiderWm.getPerInfoDataByComName(organizeSpiderConfig.oname.getText(), tycBasOrganizeInfo.getUuid());
+            //SpiderWm.getPerInfoDataByComName(organizeSpiderConfig.oname.getText(), tycBasOrganizeInfo.getUuid());
             //脉脉数据入库
             SpiderMaimai.getPerInfoDataByComName(organizeSpiderConfig.oname.getText(), tycBasOrganizeInfo.getUuid());
         }else if(organizeSpiderConfig.flag.getText().equals("selenium")){
@@ -185,7 +185,7 @@ public class SpiderOrganize {
                 SpiderLgw.getBussinessDataByOne(organizeSpiderConfig.lgwUrl.getText(), tycBasOrganizeInfo);
             }
             //微博数据入库
-            SpiderWm.getPerInfoDataByComName(organizeSpiderConfig.oname.getText(), tycBasOrganizeInfo.getUuid());
+            //SpiderWm.getPerInfoDataByComName(organizeSpiderConfig.oname.getText(), tycBasOrganizeInfo.getUuid());
             //脉脉数据入库
             SpiderMaimai.getPerInfoDataByComName(organizeSpiderConfig.oname.getText(), tycBasOrganizeInfo.getUuid());
 
