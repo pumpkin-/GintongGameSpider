@@ -1,11 +1,7 @@
 package GintongameSpider.SpiderWm;
 
 import JavaBean.*;
-import MaiMaiDataParser.Maimai;
-import SpiderUtils.KnowledgeSpiderConfig;
 import SpiderUtils.SpiderContant;
-import cn.wanghaomiao.xpath.model.JXDocument;
-import com.google.gson.Gson;
 import dao.*;
 import dao.impl.*;
 import org.jsoup.Jsoup;
@@ -17,10 +13,6 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -170,7 +162,6 @@ public class SpiderWm {
      * @param perInfoUrl
      * @throws InterruptedException
      */
-//    TODO
     public static BasPersonInfo getPerInfoDataByUrl(WebDriver driver, String perInfoUrl,String ouuid,String companyName) throws InterruptedException {
         String uuid= UUID.randomUUID().toString();
         String name=null;
@@ -275,7 +266,8 @@ public class SpiderWm {
                         perWorkInfo.setCompany_addr(com.split("：")[1]);
                     }
                     if(com.contains("职位")){
-                        perWorkInfo.setJob(com.split("：")[1]);
+                       perWorkInfo.setJob(com.split("：")[1]);
+
                     }
                 }
                 perWorkInfo.setUuid(uuid);
@@ -353,6 +345,7 @@ public class SpiderWm {
      * 网页爬取完成后自动关闭
      */
     public static void closeWebDriver(){
+        driver.manage().deleteAllCookies();
         driver.close();
         //System.exit(0);
         perUrlList.clear();
@@ -388,7 +381,7 @@ public class SpiderWm {
             List<String> urlsByComName=getPerUrl(driver, companyName);
             for (String url : urlsByComName) {
                 try{
-//                    TODO
+
                     BasPersonInfo basPersonInfo=getPerInfoDataByUrl(driver, url,ouuid,companyName);
                     basPersonInfoList.add(basPersonInfo);
                     Thread.sleep(8000);

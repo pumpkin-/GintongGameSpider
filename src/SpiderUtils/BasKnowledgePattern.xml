@@ -2181,7 +2181,73 @@
                 http://game.zol.com.cn/keyword/list_9082.shtml
             </url>
         </urls>
+<<<<<<< HEAD
     </spider>
+=======
+    </spiderZOL>
+
+
+
+    <!--CoCoaChina-->
+    <SpiderCoCoaChina>
+        <title>//div[@class='detail-main']/h2/text()</title>
+        <author>//div[@class='p-ico clearfix']/div/span[2]/a/text()</author>
+        <authorurl></authorurl>
+        <cover join="">//div[@class='clearfix']/a/img/@src</cover>
+        <ptime timeFormat="yyyy MM dd HH mm ss">//div[@class='p-ico clearfix']/div/span[1]/text()</ptime>>
+        <tag></tag>
+        <main>//p</main>>
+        <mainpic>//img/@src</mainpic>>
+        <type></type>>
+        <source>CoCoaChina</source>
+        <childLink join="http://www.cocoachina.com">//div[@class='clearfix newstitle']/a/@href</childLink>>
+        <nextpage join="http://game.zol.com.cn">//a[text()*='下一页']/@href</nextpage>
+        <flag>jsoup</flag>>
+        <childnext join=""></childnext>>
+        <chose demand=""></chose>>
+        <urls>
+            <url>
+                http://game.zol.com.cn/more/2_1133.shtml
+            </url>
+            <url>
+                http://game.zol.com.cn/more/3_2093.shtml
+            </url>
+            <url>
+                http://game.zol.com.cn/keyword/list_13257.shtml
+            </url>
+            <url>
+                http://game.zol.com.cn/keyword/list_9082.shtml
+            </url>
+        </urls>
+
+    </SpiderCoCoaChina>
+
+    <!--天翼空间-->
+    <SpiderTykj>
+        <title>//h3/text()</title>
+        <author></author>
+        <authorurl></authorurl>
+        <cover join=""></cover>
+        <ptime timeFormat="yyyy MM dd">//h4/text()</ptime>>
+        <tag></tag>
+        <main>//p</main>>
+        <mainpic>//img/@src</mainpic>>
+        <type></type>>
+        <source>天翼空间</source>
+        <childLink join="https://www.189store.com">//div[@class='d-cny']/ul/li/a/@href</childLink>>
+        <nextpage>//a[text()*='下一页']/@href</nextpage>
+        <flag>jsoup</flag>>
+        <childnext join=""></childnext>>
+        <chose demand=""></chose>>
+        <urls>
+            <url>
+                https://www.189store.com/proftrend/toProftrend
+            </url>
+        </urls>
+    </SpiderTykj>
+
+
+>>>>>>> 1e6df14fec3b74c1e7770209a01f666e1d3f243d
     <!--飞流  刘雪明3.7-->
     <spider>
         <title>//div[@class='art-tit']</title>
@@ -2272,6 +2338,7 @@
                 </url>
             </urls>
     </spider18touch>
+
 
 
 </BasKnowledgeSpiderPattern>

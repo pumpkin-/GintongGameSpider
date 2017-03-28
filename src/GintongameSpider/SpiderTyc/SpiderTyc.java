@@ -28,10 +28,11 @@ import java.util.regex.Pattern;
  */
 public class SpiderTyc {
 
-    private static WebDriver driver = null;
+    private  WebDriver driver = null;
 
     public static void main(String [] args) throws Exception {
             //公司网址
+        SpiderTyc spiderTyc=new SpiderTyc();
         List<String> urls = new ArrayList<String>();
         urls.add("http://www.tianyancha.com/company/2347469001");
         urls.add("http://www.tianyancha.com/company/24582538");
@@ -105,7 +106,7 @@ public class SpiderTyc {
         urls.add("http://www.tianyancha.com/company/21284311");
         urls.add("http://www.tianyancha.com/company/135716396");
         urls.add("http://www.tianyancha.com/company/1771586");
-        SpiderTyc.getBussinessDataByList(urls);
+        spiderTyc.getBussinessDataByList(urls);
 
     }
 
@@ -114,12 +115,23 @@ public class SpiderTyc {
      * @param urls
      * @throws InterruptedException
      */
-    public static void getBussinessDataByList(List<String> urls) throws InterruptedException {
+    public  void getBussinessDataByList(List<String> urls) throws InterruptedException {
         WebDriver driver = getWebDriver();
         for(String url: urls) {
-            getBusinessDataByUrl(driver, url);
+            BasOrganizeInfo basOrganizeInfo=getBusinessDataByUrl(driver, url);
+            System.out.println(basOrganizeInfo.getOname() + ":数据入库完毕");
+            Thread.sleep(2000);
         }
         closeWebDriver();
+    }
+
+    public  BasOrganizeInfo getBussinessDataByOne(String url) throws InterruptedException {
+        WebDriver driver = getWebDriver();
+        BasOrganizeInfo basOrganizeInfo=getBusinessDataByUrl(driver, url);
+        System.out.println(basOrganizeInfo.getOname() + ":数据入库完毕(天眼查)");
+        Thread.sleep(2000);
+        closeWebDriver();
+        return basOrganizeInfo;
     }
 
     /**
@@ -128,71 +140,69 @@ public class SpiderTyc {
      * @param CompanyUrl
      * @throws InterruptedException
      */
-    public static void getBusinessDataByUrl(WebDriver driver, String CompanyUrl) throws InterruptedException {
-        driver.get(CompanyUrl);
-        Thread.sleep(2000);
-        WebElement webElement = driver.findElement(By.xpath("/html"));
-        Document doc = Jsoup.parse(webElement.getAttribute("outerHTML"));
-        //所对应的UUID
-        String uuid=UUID.randomUUID().toString();
-        //所对应businessID
-        String bid=null;
-        //System.out.println(doc.outerHtml());
-        //组织名
-        String oname = doc.select("div.company_info_text p.ng-binding").text();
-        //联系方式
-        String con_way =doc.select("div.company_info_text span.ng-binding:contains(电话)").text().split(":")[1].trim();
-        //邮箱
-        String email =doc.select("div.company_info_text span.ng-binding:contains(邮箱)").text().split(":")[1].trim();
-        //地址
-        String address =doc.select("div.company_info_text span.ng-binding:contains(地址)").text().split(":")[1].trim();
-        //网址
-        String web =doc.select("div.company_info_text span[style=margin-left:0px]").text();
-        //股票代码
-        String stockCode=doc.select("div.company_info_text p[ng-if=company.baseInfo.bondType] span.ng-binding span.ng-binding").text();
-        stockCode=stockCode.replaceAll("（([0-9]{1,})）","$1");
-        //股票代码类型
-        String stockCodeType=doc.select("div.company_info_text p[ng-if=company.baseInfo.bondType]").text().split(" ")[0];
-        //曾用名
-        String usedName=null;
-        if(oname.contains("曾用名")){
-            oname=doc.select("div.company_info_text p.ng-binding").text().split(" ")[0];
-            usedName=doc.select("div.company_info_text p.ng-binding").text().split(" ")[1].split("：")[1];
-        }else{
-            oname=doc.select("div.company_info_text p.ng-binding").text();
-        }
-        //注册时间
-        String ztime = doc.select(" td.td-regTime-value p.ng-binding").text();
+    public  BasOrganizeInfo  getBusinessDataByUrl(WebDriver driver, String CompanyUrl){
+        String oname=null;
+        BasOrganizeInfo basOrgan = new BasOrganizeInfo();
+        try {
+            driver.get(CompanyUrl);
+            Thread.sleep(2000);
+            WebElement webElement = driver.findElement(By.xpath("/html"));
+            Document doc = Jsoup.parse(webElement.getAttribute("outerHTML"));
+            //所对应的UUID
+            String uuid = UUID.randomUUID().toString();
+            //所对应businessID
+            String bid = null;
+            //System.out.println(doc.outerHtml());
+            //组织名
+            oname = doc.select("div[class=in-block ml10 f18 mb5 ng-binding]").text();
+            //联系方式
+            String con_way = doc.select("div.company_info_text span.ng-binding:contains(电话)").text().split(":")[1].trim();
+            //邮箱
+            String email = doc.select("div.company_info_text span.ng-binding:contains(邮箱)").text().split(":")[1].trim();
+            //地址
+            String address = doc.select("div.company_info_text span.ng-binding:contains(地址)").text().split(":")[1].trim();
+            //网址
+            String web = doc.select("div.company_info_text span[style=margin-left:0px]").text();
+            //股票代码
+            String stockCode = doc.select("span[style=font-size:16px]").text();
+            stockCode = stockCode.replaceAll("（([0-9]{1,})）", "$1");
+            //股票代码类型
+            String stockCodeType = doc.select("span[style=background-color: #009bae;color:white;padding: 2px 5px;font-size: 14px;border-radius: 3px]").text();
+            //曾用名
+            String usedName = null;
+            usedName = doc.select("span[class=history-last ng-binding]").text();
+            //注册时间
+            String ztime = doc.select("div.baseinfo-module-item:contains(注册时间) div[class=baseinfo-module-content-value ng-binding]").text();
 
-        //法定代表人
-        String boss = doc.select("td.td-legalPersonName-value a[ng-if=company.baseInfo.legalPersonName]").text();
-        //法定代表人连接
-        String bossUrl="http://www.tianyancha.com"+doc.select("td.td-legalPersonName-value a[ng-if=company.baseInfo.legalPersonName]").attr("href");
-        //注册资本
-        String zmoney = doc.select("td.td-regCapital-value p.ng-binding").text();
-        //状态
-        String state = doc.select("td.td-regStatus-value p.ng-binding").text();
-        //行业
-        String industry = doc.select("td.basic-td span.ng-binding").text().split(" ")[0];
-        //工商注册号
-        String businessNo = doc.select("div.c8 span.ng-binding").text().split(" ")[1];
-        //企业类型
-        String companyStyle = doc.select("div.c8 span.ng-binding").text().split(" ")[2];
-        //组织机构代码
-        String orgNo = doc.select("div.c8 span.ng-binding").text().split(" ")[3];
-        //营业期限
-        String businessTime = doc.select("div.c8 span.ng-binding").text().split(" ")[4];
-        //登记机关
-        String registDePart = doc.select("div.c8 span.ng-binding").text().split(" ")[5];
-        //核准日期
-        String approvalDate = doc.select("div.c8 span.ng-binding").text().split(" ")[6];
-        //统一信用代码
-        String uniformCode = doc.select("div.c8 span.ng-binding").text().split(" ")[7];
-        //注册地址
-        String registAddress = doc.select("div.c8 span.ng-binding").text().split(" ")[8];
-        //经营范围
+            //法定代表人
+            String boss = doc.select("a[ng-if=company.legalPersonName]").text();
+            //法定代表人连接
+            String bossUrl = "http://www.tianyancha.com" + doc.select("a[ng-if=company.legalPersonName]").attr("href");
+            //注册资本
+            String zmoney = doc.select("div.baseinfo-module-item:contains(注册资本) div[class=baseinfo-module-content-value ng-binding]").text();
+            //状态
+            String state = doc.select("div.baseinfo-module-item:contains(状态) div[class=baseinfo-module-content-value ng-binding]").text();
+            //行业
+            String industry = doc.select("div.c8:contains(行业) span.ng-binding").text();
+            //工商注册号
+            String businessNo = doc.select("div.c8:contains(工商注册号) span.ng-binding").text();
+            //企业类型
+            String companyStyle = doc.select("div.c8:contains(企业类型) span.ng-binding").text();
+            //组织机构代码
+            String orgNo = doc.select("div.c8:contains(组织机构代码) span.ng-binding").text();
+            //营业期限
+            String businessTime = doc.select("div.c8:contains(营业期限) span.ng-binding").text();
+            //登记机关
+            String registDePart = doc.select("div.c8:contains(登记机关) span.ng-binding").text();
+            //核准日期
+            String approvalDate = doc.select("div.c8:contains(核准日期) span.ng-binding").text();
+            //统一信用代码
+            String uniformCode = doc.select("div.c8:contains(统一信用代码) span.ng-binding").text();
+            //注册地址
+            String registAddress = doc.select("div.c8:contains(注册地址) span.ng-binding").text();
+            //经营范围
 
-        String businessScope = doc.select("div[class=c8 align-justify break-word] span.ng-binding").text();
+            String businessScope = doc.select("div[class=c8 align-justify break-word] span.ng-binding").text();
 //        System.out.println("公司名字："+oname);
 //        System.out.println("公司曾用名:"+usedName);
 //        System.out.println("联系方式:"+con_way);
@@ -203,221 +213,223 @@ public class SpiderTyc {
 //        System.out.println("公司基本信息:--->"+ztime+"-"+boss+"-"+bossUrl+"-"+zmoney+"-"+state+"-"+industry+"-"+businessNo+"-"+
 //                companyStyle+"-"+orgNo+"-"+businessTime+"-"+registDePart+"-"+approvalDate+"-"+uniformCode+"-"+registAddress+"-"+businessScope);
 
-        //组织数据入库
-        BasOrganizeInfo basOrgan=new BasOrganizeInfo();
-        basOrgan.setTag("西奥中心AB座");
-        basOrgan.setOname(oname);
-        basOrgan.setCon_way(con_way);
-        basOrgan.setAddress(address);
-        basOrgan.setWeb(web);
-        basOrgan.setIndustry(industry);
-        basOrgan.setStime(ztime);
-        basOrgan.setUuid(uuid);
-        basOrgan.setManagement_field(businessScope);
-        basOrgan.setSource("天眼查");
-        basOrgan.setType("0");
-        basOrgan.setUrl(CompanyUrl);
-        BasOrganizeInfoDao basOrganizeInfoDao=new BasOrganizeInfoImpl();
-        basOrganizeInfoDao.insertSingle(basOrgan);
-        List<String> basOrganId=basOrganizeInfoDao.selcetOrganId(uuid);
-        for(String bbid:basOrganId){
-            bid=bbid;
-        }
+            //组织数据入库
+            //basOrgan.setTag("西奥中心AB座");
+            basOrgan.setOname(oname);
+            basOrgan.setCon_way(con_way);
+            basOrgan.setAddress(address);
+            basOrgan.setWeb(web);
+            basOrgan.setIndustry(industry);
+            basOrgan.setStime(ztime);
+            basOrgan.setUuid(uuid);
+            basOrgan.setManagement_field(businessScope);
+            basOrgan.setSource("天眼查");
+            basOrgan.setType("0");
+            basOrgan.setUrl(CompanyUrl);
+            BasOrganizeInfoDao basOrganizeInfoDao = new BasOrganizeInfoImpl();
+            basOrganizeInfoDao.insertSingle(basOrgan);
+            List<String> basOrganId = basOrganizeInfoDao.selcetOrganId(uuid);
+            for (String bbid : basOrganId) {
+                bid = bbid;
+            }
 
-        //商业信息入库
-        BasBusinessInfo basBus=new BasBusinessInfo();
-        basBus.setBid(Integer.parseInt(bid));
-        basBus.setUuid(uuid);
-        basBus.setCname(oname);
-        basBus.setCnameOld(usedName);
-        basBus.setStockCode(stockCode);
-        basBus.setStockType(stockCodeType);
-        basBus.setTelephone(con_way);
-        basBus.setEmail(email);
-        basBus.setAdress(address);
-        basBus.setLegalPersen(boss);
-        basBus.setRcapital(zmoney);
-        basBus.setState(state);
-        basBus.setRtime(ztime);
-        basBus.setIndustry(industry);
-        basBus.setRbnumber(businessNo);
-        basBus.setEnterpriseType(companyStyle);
-        basBus.setOcode(orgNo);
-        basBus.setOperationPeriod(businessTime);
-        basBus.setRdepartment(registDePart);
-        basBus.setApprovaDate(approvalDate);
-        basBus.setUcCode(uniformCode);
-        basBus.setRadress(registAddress);
-        basBus.setBscope(businessScope);
-        basBus.setUrl(CompanyUrl);
-        basBus.setSource("天眼查");
-        BasBusinessInfoDao businessInfoDao=new BasBusinessInfoImpl();
+            //商业信息入库
+            BasBusinessInfo basBus = new BasBusinessInfo();
+            basBus.setBid(Integer.parseInt(bid));
+            basBus.setUuid(uuid);
+            basBus.setCname(oname);
+            basBus.setCnameOld(usedName);
+            basBus.setStockCode(stockCode);
+            basBus.setStockType(stockCodeType);
+            basBus.setTelephone(con_way);
+            basBus.setEmail(email);
+            basBus.setAdress(address);
+            basBus.setLegalPersen(boss);
+            basBus.setRcapital(zmoney);
+            basBus.setState(state);
+            basBus.setRtime(ztime);
+            basBus.setIndustry(industry);
+            basBus.setRbnumber(businessNo);
+            basBus.setEnterpriseType(companyStyle);
+            basBus.setOcode(orgNo);
+            basBus.setOperationPeriod(businessTime);
+            basBus.setRdepartment(registDePart);
+            basBus.setApprovaDate(approvalDate);
+            basBus.setUcCode(uniformCode);
+            basBus.setRadress(registAddress);
+            basBus.setBscope(businessScope);
+            basBus.setUrl(CompanyUrl);
+            basBus.setSource("天眼查");
+            BasBusinessInfoDao businessInfoDao = new BasBusinessInfoImpl();
 //        System.out.println("business中的bid"+basBus.getBid());
-        businessInfoDao.insertBusInfo(basBus);
+            businessInfoDao.insertBusInfo(basBus);
 
 
-
-        //对外投资
-        //对外投资公司名称
-        String outInvest=doc.select("div[ng-if=company.investList.length>0] div[class=intro-head-g1 ng-binding]").text();
-        //System.out.println("对外投资-----------"+outInvest);
-        if(outInvest.contains("对外投资")) {
-            String[] investComName = doc.select("div[class=col-xs-10 search_name search_repadding2 f14] a.query_name span.ng-binding").text().split(" ");
-            //对外投资公司网址
-            Elements comWeb = doc.select("div[class=col-xs-10 search_name search_repadding2 f14] a.query_name");
-            //对外投资法定代表人
-            String[] investBoss = doc.select("div[ng-if=company.investList.length>0] div[class=search_row_new f13] div[style=padding-left: 0]").text().split(" ");
-            //对外投资行业
-            String[] investIndusty = doc.select("div[ng-if=company.investList.length>0] div.row>div.search_row_new.f13 div.title:contains(行业) span.ng-binding").text().split(" ");
-            //对外投资状态
-            String[] investState = doc.select("div[ng-if=company.investList.length>0] div[class=search_row_new f13] div[style=border-right: none] span.ng-binding").text().split(" ");
-            //对外投资数额
-            String[] investMoney = doc.select("div[ng-if=company.investList.length>0] p[class=f13 ptten] span[class=c2 ng-binding]").text().split(" ");
-            ComInvestmentInfoDao comInvestmentInfoDao = new ComInvestmentInfoImpl();
-            for (int i = 0; i < investComName.length; i++) {
-                ComInvestmentInfo comInvestmentInfo = new ComInvestmentInfo();
-                comInvestmentInfo.setBid(Integer.parseInt(bid));
-                comInvestmentInfo.setUuid(uuid);
-                comInvestmentInfo.setOname(investComName[i]);
-                comInvestmentInfo.setLegalPersen(investBoss[i].split("：")[1]);
-                comInvestmentInfo.setIndustry(investIndusty[i]);
-                comInvestmentInfo.setState(investState[i]);
-                comInvestmentInfo.setInvestment(investMoney[i]);
-                comInvestmentInfo.setWeb("http://www.tianyancha.com" + comWeb.get(i).attr("href"));
-                comInvestmentInfoDao.insertInvestmentInfo(comInvestmentInfo);
+            //对外投资
+            //对外投资公司名称
+            String outInvest = doc.select("div[ng-if=company.investList.length>0] div[class=intro-head-g1 ng-binding]").text();
+            //System.out.println("对外投资-----------"+outInvest);
+            if (outInvest.contains("对外投资")) {
+                String[] investComName = doc.select("div[class=col-xs-10 search_name search_repadding2 f14] a.query_name span.ng-binding").text().split(" ");
+                //对外投资公司网址
+                Elements comWeb = doc.select("div[class=col-xs-10 search_name search_repadding2 f14] a.query_name");
+                //对外投资法定代表人
+                String[] investBoss = doc.select("div[ng-if=company.investList.length>0] div[class=search_row_new f13] div[style=padding-left: 0]").text().split(" ");
+                //对外投资行业
+                String[] investIndusty = doc.select("div[ng-if=company.investList.length>0] div.row>div.search_row_new.f13 div.title:contains(行业) span.ng-binding").text().split(" ");
+                //对外投资状态
+                String[] investState = doc.select("div[ng-if=company.investList.length>0] div[class=search_row_new f13] div[style=border-right: none] span.ng-binding").text().split(" ");
+                //对外投资数额
+                String[] investMoney = doc.select("div[ng-if=company.investList.length>0] p[class=f13 ptten] span[class=c2 ng-binding]").text().split(" ");
+                ComInvestmentInfoDao comInvestmentInfoDao = new ComInvestmentInfoImpl();
+                for (int i = 0; i < investComName.length; i++) {
+                    ComInvestmentInfo comInvestmentInfo = new ComInvestmentInfo();
+                    comInvestmentInfo.setBid(Integer.parseInt(bid));
+                    comInvestmentInfo.setUuid(uuid);
+                    comInvestmentInfo.setOname(investComName[i]);
+                    comInvestmentInfo.setLegalPersen(investBoss[i].split("：")[1]);
+                    comInvestmentInfo.setIndustry(investIndusty[i]);
+                    comInvestmentInfo.setState(investState[i]);
+                    comInvestmentInfo.setInvestment(investMoney[i]);
+                    comInvestmentInfo.setWeb("http://www.tianyancha.com" + comWeb.get(i).attr("href"));
+                    comInvestmentInfoDao.insertInvestmentInfo(comInvestmentInfo);
 //            System.out.println("对外投资-----》" + comWeb.get(i).attr("href") + "--" + investComName[i] + "--" + investBoss[i].split("：")[1] + "---" + investIndusty[i] + "--" + investState[i]+"---"+investMoney[i]);
 //            System.out.println();
+                }
             }
-        }
 
-        //高管信息
-        String leaderInfo=doc.select("div[ng-if=company.staffList.length>0] div[class=intro-head-g1 ng-binding]").text();
-        //System.out.println("高管------------"+leaderInfo);
-        if(leaderInfo.contains("高管信息")) {
-            List<String> leaderNamelist = new ArrayList();
-            List<String> leaderDutylist = new ArrayList();
-            List<String> leaderUrlList = new ArrayList();
-            //从人物表中查询出来的人物ID
-            String pid = null;
-            //人物的puuid
-            String puuid = null;
-            Elements leader = doc.select("div[ng-if=company.staffList.length>0] tbody>tr>td[ng-style=$last?{width:(100-(($index)*33))+'%'}:{width:'33%'}]>a");
-            Elements leaderDuty = doc.select("div[ng-if=company.staffList.length>0] tr td[ng-class=$last ?'':'td-right-border']:has(span)");
-            for (org.jsoup.nodes.Element leadName : leader) {
-                leaderNamelist.add(leadName.text());
-            }
-            for (org.jsoup.nodes.Element leadDuty : leader) {
-                leaderUrlList.add(leadDuty.attr("href"));
-            }
-            for (org.jsoup.nodes.Element zhi : leaderDuty) {
-                leaderDutylist.add(zhi.text());
-            }
-            ComExecutiveInfoDao comExecutiveInfoDao = new ComExecutiveInfoImpl();
-            BasPersonInfoDao basPersonInfo = new BasPersonInfoImpl();
-            PerOrganizeDao perOrganizeDao = new PerOrganizeImpl();
-            for (int i = 0; i < leaderDutylist.size(); i++) {
-                puuid = UUID.randomUUID().toString();
-                ComExecutiveInfo comExecutiveInfo = new ComExecutiveInfo();
-                //高管人名
-                String leadName = leaderNamelist.get(i);
-                //高管职务
-                String leadDuty = leaderDutylist.get(i);
-                String leadUrl = "http://www.tianyancha.com" + leaderUrlList.get(i);
-                //高管库
-                comExecutiveInfo.setBid(Integer.parseInt(bid));
-                comExecutiveInfo.setUuid(uuid);
-                comExecutiveInfo.setPname(leadName);
-                comExecutiveInfo.setJob(leadDuty);
-                comExecutiveInfo.setWeb(leadUrl);
-                comExecutiveInfoDao.insertExecutiveInfo(comExecutiveInfo);
+            //高管信息
+            String leaderInfo = doc.select("div[ng-if=company.staffList.length>0] div[class=intro-head-g1 ng-binding]").text();
+            //System.out.println("高管------------"+leaderInfo);
+            if (leaderInfo.contains("高管信息")) {
+                List<String> leaderNamelist = new ArrayList();
+                List<String> leaderDutylist = new ArrayList();
+                List<String> leaderUrlList = new ArrayList();
+                //从人物表中查询出来的人物ID
+                String pid = null;
+                //人物的puuid
+                String puuid = null;
+                Elements leader = doc.select("div[ng-if=company.staffList.length>0] tbody>tr>td[ng-style=$last?{width:(100-(($index)*33))+'%'}:{width:'33%'}]>a");
+                Elements leaderDuty = doc.select("div[ng-if=company.staffList.length>0] tr td[ng-class=$last ?'':'td-right-border']:has(span)");
+                for (org.jsoup.nodes.Element leadName : leader) {
+                    leaderNamelist.add(leadName.text());
+                }
+                for (org.jsoup.nodes.Element leadDuty : leader) {
+                    leaderUrlList.add(leadDuty.attr("href"));
+                }
+                for (org.jsoup.nodes.Element zhi : leaderDuty) {
+                    leaderDutylist.add(zhi.text());
+                }
+                ComExecutiveInfoDao comExecutiveInfoDao = new ComExecutiveInfoImpl();
+                BasPersonInfoDao basPersonInfo = new BasPersonInfoImpl();
+                PerOrganizeDao perOrganizeDao = new PerOrganizeImpl();
+                for (int i = 0; i < leaderDutylist.size(); i++) {
+                    puuid = UUID.randomUUID().toString();
+                    ComExecutiveInfo comExecutiveInfo = new ComExecutiveInfo();
+                    //高管人名
+                    String leadName = leaderNamelist.get(i);
+                    //高管职务
+                    String leadDuty = leaderDutylist.get(i);
+                    String leadUrl = "http://www.tianyancha.com" + leaderUrlList.get(i);
+                    //高管库
+                    comExecutiveInfo.setBid(Integer.parseInt(bid));
+                    comExecutiveInfo.setUuid(uuid);
+                    comExecutiveInfo.setPname(leadName);
+                    comExecutiveInfo.setJob(leadDuty);
+                    comExecutiveInfo.setWeb(leadUrl);
+                    comExecutiveInfoDao.insertExecutiveInfo(comExecutiveInfo);
 
-                //人物库
-                BasPersonInfo basPerson = new BasPersonInfo();
-                basPerson.setUuid(puuid);
-                basPerson.setName(leadName);
-                basPerson.setSource("天眼查");
-                basPerson.setUrl(leadUrl);
-                basPersonInfo.insertPerInfo(basPerson);
+                    //人物库
+                    BasPersonInfo basPerson = new BasPersonInfo();
+                    basPerson.setUuid(puuid);
+                    basPerson.setName(leadName);
+                    basPerson.setSource("天眼查");
+                    basPerson.setUrl(leadUrl);
+                    basPersonInfo.insertPerInfo(basPerson);
 
 
-                //人物 组织关系库
-                PerOrganize perOrganize = new PerOrganize();
-                perOrganize.setName(leadName);
-                perOrganize.setOname(oname);
-                perOrganize.setJob(leadDuty);
-                perOrganize.setOuuid(uuid);
-                perOrganize.setRtype("任职公司");
-                perOrganize.setPuuid(puuid);
-                perOrganize.setSource("天眼查");
-                perOrganizeDao.insertPerOrgani(perOrganize);
+                    //人物 组织关系库
+                    PerOrganize perOrganize = new PerOrganize();
+                    perOrganize.setName(leadName);
+                    perOrganize.setOname(oname);
+                    perOrganize.setJob(leadDuty);
+                    perOrganize.setOuuid(uuid);
+                    perOrganize.setRtype("任职公司");
+                    perOrganize.setPuuid(puuid);
+                    perOrganize.setSource("天眼查");
+                    perOrganizeDao.insertPerOrgani(perOrganize);
 
 
 //            System.out.println("高管:------>"+leadUrl+"+"+leadName+"+"+leadDuty);
 //            System.out.println();
+                }
             }
-        }
 
-        //股东信息
-        String partnerInfo=doc.select("div[ng-if=company.investorList.length>0] div[class=intro-head-g1 ng-binding]").text();
-       // System.out.println("股东信息------------------"+partnerInfo);
-        if(partnerInfo.contains("股东信息")) {
-            Elements partnerlink = doc.select("div[ng-if=company.investorList.length>0] div.search_result_single.ng-scope");
-            ComShareholderDao comShareholderDao = new ComShareholderImpl();
-            ComShareholderTeamDao comShareholderTeamDao = new ComShareholderTeamImpl();
-            for (org.jsoup.nodes.Element partner : partnerlink) {
-                if (partner.select("a").attr("href").contains("human")) {
-                    ComShareholder comShareholder = new ComShareholder();
-                    //股东名称连接
-                    String partnerNameUrl = "http://www.tianyancha.com" + partner.select("a").attr("href");
-                    //股东人名字
-                    String partnerName = partner.select("a").text();
-                    //股东投资金额
-                    String partnerMoney = partner.select("span.c2.ng-binding").text();
-                    comShareholder.setBid(Integer.parseInt(bid));
-                    comShareholder.setUuid(uuid);
-                    comShareholder.setName(partnerName);
-                    comShareholder.setWeb(partnerNameUrl);
-                    comShareholder.setInvestment(partnerMoney);
-                    comShareholderDao.insertComShareholder(comShareholder);
+            //股东信息
+            String partnerInfo = doc.select("div[ng-if=company.investorList.length>0] div[class=intro-head-g1 ng-binding]").text();
+            // System.out.println("股东信息------------------"+partnerInfo);
+            if (partnerInfo.contains("股东信息")) {
+                Elements partnerlink = doc.select("div[ng-if=company.investorList.length>0] div.search_result_single.ng-scope");
+                ComShareholderDao comShareholderDao = new ComShareholderImpl();
+                ComShareholderTeamDao comShareholderTeamDao = new ComShareholderTeamImpl();
+                for (org.jsoup.nodes.Element partner : partnerlink) {
+                    if (partner.select("a").attr("href").contains("human")) {
+                        ComShareholder comShareholder = new ComShareholder();
+                        //股东名称连接
+                        String partnerNameUrl = "http://www.tianyancha.com" + partner.select("a").attr("href");
+                        //股东人名字
+                        String partnerName = partner.select("a").text();
+                        //股东投资金额
+                        String partnerMoney = partner.select("span.c2.ng-binding").text();
+                        comShareholder.setBid(Integer.parseInt(bid));
+                        comShareholder.setUuid(uuid);
+                        comShareholder.setName(partnerName);
+                        comShareholder.setWeb(partnerNameUrl);
+                        comShareholder.setInvestment(partnerMoney);
+                        comShareholderDao.insertComShareholder(comShareholder);
 //                System.out.println("人物股东信息:---->"+partnerNameUrl+"-"+partnerName+"-"+partnerMoney);
-                } else {
-                    ComShareholderTeam comShareholderTeam = new ComShareholderTeam();
-                    //股东公司网址
-                    String partnerComNameUrl = "http://www.tianyancha.com" + partner.select("a").attr("href");
-                    //股东公司名称
-                    String partnerComName = partner.select("a").text();
-                    //股东公司法定代表人
-                    String partnerComPer = partner.select("span.ng-binding").get(0).text();
-                    //股东行业
-                    String partnerIndustry = partner.select("span.ng-binding").get(1).text();
-                    //股东状态
-                    String partnerState = partner.select("span.ng-binding").get(2).text();
-                    //股东投资金额
-                    String partnerComMoney = partner.select("p.f13.ptten span.c2.ng-binding").text();
+                    } else {
+                        ComShareholderTeam comShareholderTeam = new ComShareholderTeam();
+                        //股东公司网址
+                        String partnerComNameUrl = "http://www.tianyancha.com" + partner.select("a").attr("href");
+                        //股东公司名称
+                        String partnerComName = partner.select("a").text();
+                        //股东公司法定代表人
+                        String partnerComPer = partner.select("span.ng-binding").get(0).text();
+                        //股东行业
+                        String partnerIndustry = partner.select("span.ng-binding").get(1).text();
+                        //股东状态
+                        String partnerState = partner.select("span.ng-binding").get(2).text();
+                        //股东投资金额
+                        String partnerComMoney = partner.select("p.f13.ptten span.c2.ng-binding").text();
 
-                    comShareholderTeam.setBid(Integer.parseInt(bid));
-                    comShareholderTeam.setUuid(uuid);
-                    comShareholderTeam.setOname(partnerComName);
-                    comShareholderTeam.setLegalPersen(partnerComPer);
-                    comShareholderTeam.setWeb(partnerComNameUrl);
-                    comShareholderTeam.setIndustry(partnerIndustry);
-                    comShareholderTeam.setState(partnerState);
-                    comShareholderTeam.setInvestment(partnerComMoney);
-                    comShareholderTeamDao.insertShareholderTeam(comShareholderTeam);
+                        comShareholderTeam.setBid(Integer.parseInt(bid));
+                        comShareholderTeam.setUuid(uuid);
+                        comShareholderTeam.setOname(partnerComName);
+                        comShareholderTeam.setLegalPersen(partnerComPer);
+                        comShareholderTeam.setWeb(partnerComNameUrl);
+                        comShareholderTeam.setIndustry(partnerIndustry);
+                        comShareholderTeam.setState(partnerState);
+                        comShareholderTeam.setInvestment(partnerComMoney);
+                        comShareholderTeamDao.insertShareholderTeam(comShareholderTeam);
 
 //                System.out.println("人物股东信息:---->"+partnerComNameUrl+"-"+partnerComName+"-"+partnerComPer+"-"+partnerIndustry+"-"+partnerState+"-"+partnerComMoney);
 
+                    }
+
                 }
             }
+        }catch (Exception e){
+            e.printStackTrace();
         }
-
+        return basOrgan;
     }
 
     /**
      * 获取webDriver
      * @return
      */
-    public synchronized static WebDriver getWebDriver() {
+    public  WebDriver getWebDriver() {
         System.setProperty("webdriver.chrome.driver", SpiderContant.chromeWindowsPath);
         if(driver == null) {
             driver = new ChromeDriver();
@@ -428,9 +440,9 @@ public class SpiderTyc {
     /**
      * 关闭webDriver
      */
-    public static void closeWebDriver() {
+    public  void closeWebDriver() {
         driver.close();
-        System.exit(0);
+        //System.exit(0);
     }
 
 

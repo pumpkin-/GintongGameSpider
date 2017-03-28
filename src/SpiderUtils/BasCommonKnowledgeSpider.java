@@ -71,7 +71,7 @@ public class BasCommonKnowledgeSpider {
     }
 //    phantomjs驱动器
     public static WebDriver getPhantomjsDriver(){
-        System.setProperty("phantomjs.binary.path",SpiderContant.phantomjsLinuxPath);
+        System.setProperty("phantomjs.binary.path", SpiderContant.phantomjsLinuxPath);
         return new PhantomJSDriver();
     }
 //    jsoup
@@ -311,8 +311,13 @@ public class BasCommonKnowledgeSpider {
         oldurl=nexturl;
         return nextDocument;
     }
+
     /**
      * 通过xpath语法 获取document树的节点 selenium
+     * @param document
+     * @param xpath
+     * @return
+     * @throws XpathSyntaxErrorException
      */
     public static List<JXNode> getTagN(JXDocument document, String xpath) throws XpathSyntaxErrorException {
         List<JXNode> obj=null;

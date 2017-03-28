@@ -7,17 +7,17 @@ public class OrgEvaInfo {
 
     private Byte etype;
 
-    private String evaluatorDesc;
+    private String tag;
 
-    private Long detailId;
+    private String detail;
 
-    private Date etime;
+    private String etime;
 
     private String eplace;
 
     private String eback;
 
-    private Date startTime;
+    private String job_interview;
 
     private String uuid;
 
@@ -37,27 +37,19 @@ public class OrgEvaInfo {
         this.etype = etype;
     }
 
-    public String getEvaluatorDesc() {
-        return evaluatorDesc;
+    public String getTag() {
+        return tag;
     }
 
-    public void setEvaluatorDesc(String evaluatorDesc) {
-        this.evaluatorDesc = evaluatorDesc == null ? null : evaluatorDesc.trim();
+    public void setTag(String tag) {
+        this.tag = tag;
     }
 
-    public Long getDetailId() {
-        return detailId;
-    }
-
-    public void setDetailId(Long detailId) {
-        this.detailId = detailId;
-    }
-
-    public Date getEtime() {
+    public String getEtime() {
         return etime;
     }
 
-    public void setEtime(Date etime) {
+    public void setEtime(String etime) {
         this.etime = etime;
     }
 
@@ -77,19 +69,27 @@ public class OrgEvaInfo {
         this.eback = eback == null ? null : eback.trim();
     }
 
-    public Date getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(Date startTime) {
-        this.startTime = startTime;
-    }
-
     public String getUuid() {
         return uuid;
     }
 
     public void setUuid(String uuid) {
         this.uuid = uuid == null ? null : uuid.trim();
+    }
+
+    public String getDetail() {
+        return detail;
+    }
+
+    public void setDetail(String detail) {
+        this.detail = detail;
+    }
+
+    public String getJob_interview() {
+        return job_interview;
+    }
+
+    public void setJob_interview(String job_interview) {
+        this.job_interview = job_interview;
     }
 }

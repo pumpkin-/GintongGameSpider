@@ -1,6 +1,7 @@
 package dao.impl;
 
 import JavaBean.BasProGameInfo;
+import JavaBean.ProGameInfo;
 import dao.ProGameInfoDao;
 
 import java.io.Serializable;
@@ -22,7 +23,7 @@ public class ProGameInfoDaoImpl extends BaseDaoImpl implements ProGameInfoDao {
     }
 
     @Override
-    public List<String> selectGame(ProGameInfoDao gname) {
-        return this.getSqlSession().selectOne(this.getNs() + "selectGame", gname);
+    public List<String> selectGame(BasProGameInfo gname) {
+        return this.getSqlSession().selectList(this.getNs() + "selectGame", gname);
     }
 }

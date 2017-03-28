@@ -221,31 +221,6 @@ public class test {
         }*/
 
 
-
-
-
-
-
-
-
-
-
-
-//        System.setProperty("webdriver.chrome.driver",SpiderContant.chromeWindowsPath );
-//        WebDriver driver=new ChromeDriver();
-//        driver.get("http://games.sina.cn/pc/newslist.d.html?cid=35435,35434,35436,35437,35439,35440,35441&page=1&pagesize=53");
-
-
-        /*System.setProperty("webdriver.chrome.driver",SpiderContant.chromeWindowsPath );
-        WebDriver driver=new ChromeDriver();
-        driver.get("http://news.yzz.cn/ku/hlsgsd/");
-
-        WebElement webElement=driver.findElement(By.xpath("/html"));
-        org.jsoup.nodes.Document doc=Jsoup.parse(webElement.getAttribute("outerHTML"));
-        JXDocument jxDocument=new JXDocument(doc);
-        System.out.println(doc.outerHtml());
-
-
 //        System.setProperty("webdriver.chrome.driver",SpiderContant.chromeWindowsPath );
 //        WebDriver driver=new ChromeDriver();
 //        driver.get("http://www.html5dw.com/news");
@@ -302,5 +277,6 @@ public class test {
 //        // 字符串是否与正则表达式相匹配
 //        boolean rs = matcher.matches();
 //        System.out.println(rs);
+
     }
 }

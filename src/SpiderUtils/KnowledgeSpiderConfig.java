@@ -47,6 +47,8 @@ public class KnowledgeSpiderConfig {
 
     public Element childnext;
     public Element childLink;
+    public Element contentPath;
+    public Element detailXpath;
     public int page=0;
 
     @Override
@@ -69,6 +71,8 @@ public class KnowledgeSpiderConfig {
                 ", authorUrl='" + authorUrl + '\'' +
                 ", childnexti='" + childnext + '\'' +
                 ", page=" + page +
+                ", contentPath=" + contentPath + '\'' +
+                ", detailXpath=" + detailXpath + '\'' +
                 '}';
     }
 

@@ -9,39 +9,7 @@ public class PerWorkInfo {
 
     private String level;
 
-    public String getJob_early() {
-        return job_early;
-    }
-
-    public void setJob_early(String job_early) {
-        this.job_early = job_early;
-    }
-
     private String job_early;
-
-    public String getWork_time() {
-        return work_time;
-    }
-
-    public void setWork_time(String work_time) {
-        this.work_time = work_time;
-    }
-
-    public String getCompany_addr() {
-        return company_addr;
-    }
-
-    public void setCompany_addr(String company_addr) {
-        this.company_addr = company_addr;
-    }
-
-    public String getW_desc() {
-        return w_desc;
-    }
-
-    public void setW_desc(String w_desc) {
-        this.w_desc = w_desc;
-    }
 
     private String work_time;
 
@@ -89,7 +57,6 @@ public class PerWorkInfo {
         this.level = level == null ? null : level.trim();
     }
 
-
     public String getWtype() {
         return wtype;
     }
@@ -97,7 +64,6 @@ public class PerWorkInfo {
     public void setWtype(String wtype) {
         this.wtype = wtype == null ? null : wtype.trim();
     }
-
 
     public String getOph() {
         return oph;
@@ -123,4 +89,36 @@ public class PerWorkInfo {
         this.uuid = uuid == null ? null : uuid.trim();
     }
 
+
+    public String getJob_early() {
+        return job_early;
+    }
+
+    public void setJob_early(String job_early) {
+        this.job_early = job_early;
+    }
+
+    public String getWork_time() {
+        return work_time;
+    }
+
+    public void setWork_time(String work_time) {
+        this.work_time = work_time;
+    }
+
+    public String getCompany_addr() {
+        return company_addr;
+    }
+
+    public void setCompany_addr(String company_addr) {
+        this.company_addr = company_addr;
+    }
+
+    public String getW_desc() {
+        return w_desc;
+    }
+
+    public void setW_desc(String w_desc) {
+        this.w_desc = w_desc;
+    }
 }
