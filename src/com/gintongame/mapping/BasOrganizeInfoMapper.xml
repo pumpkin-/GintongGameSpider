@@ -13,9 +13,9 @@
     </insert>
     <!--单条插入 丁全彬-->
     <insert id="insertSingle" parameterType="JavaBean.BasOrganizeInfo"  useGeneratedKeys="true">
-        insert into bas_organize_info(oname,ename,shortname,fullname,web,con_way,industry,scale,introduce,address,logo,stime,other,source,url,uuid,financing_info,picture,development_history,financing_stage,company_nature,corporate_culture,tag,management_field)
+        insert into bas_organize_info(oname,ename,shortname,fullname,web,con_way,industry,scale,introduce,address,logo,stime,other,source,url,uuid,financing_round,picture,development_history,financing_stage,company_nature,corporate_culture,tag,management_field,financing_total,business_plan)
         values
-        (#{oname},#{ename},#{shortname},#{fullname},#{web},#{con_way},#{industry},#{scale},#{introduce},#{address},#{logo},#{stime},#{other},#{source},#{url},#{uuid},#{financing_info},#{picture},#{development_history},#{financing_stage},#{company_nature},#{corporate_culture},#{tag},#{management_field})
+        (#{oname},#{ename},#{shortname},#{fullname},#{web},#{con_way},#{industry},#{scale},#{introduce},#{address},#{logo},#{stime},#{other},#{source},#{url},#{uuid},#{financing_round},#{picture},#{development_history},#{financing_stage},#{company_nature},#{corporate_culture},#{tag},#{management_field},#{financing_total},#{business_plan})
 
     </insert>
 
@@ -50,6 +50,18 @@
     <select id="selectList" parameterType="java.lang.String"  resultType="JavaBean.BasOrganizeInfo">
         select * from bas_organize_info where uuid=#{uuid}
     </select>
+
+    <update id="updateOrgan" parameterType="JavaBean.BasOrganizeInfo">
+        update bas_organize_info set oname=#{oname}, ename=#{ename}, shortname=#{shortname},
+        fullname=#{fullname}, web=#{web}, con_way=#{con_way},
+        industry=#{industry}, scale=#{scale}, address=#{address},
+        logo=#{logo}, stime=#{stime}, other=#{other},
+        source=#{source}, url=#{url}, type=#{type},
+         financing_stage=#{financing_stage}, company_nature=#{company_nature},
+        management_field=#{management_field}, introduce=#{introduce}, picture=#{picture},
+        development_history=#{development_history}, corporate_culture=#{corporate_culture},
+        tag=#{tag} where uuid=#{uuid}
+    </update>
 
 
 </mapper>

@@ -1,6 +1,6 @@
 package GintongameSpider.SpiderLxm;
 
-import SpiderUtils.CommonSpiderKnowledge;
+import SpiderUtils.*;
 
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
@@ -118,22 +118,25 @@ public class SpiderXpath {
 //            @Override
 //            public void run() {
 //                try {
-//                    CommonSpiderKnowledge.ergodicUrl("spiderKC",0,"no");
+//                    SpiderProduct.ergodicUrl("spiderXMSD",0,0);
 //                } catch (Exception e) {
 //                    e.printStackTrace();
 //                }
 //            }
 //        });
-//        pool.submit(new Runnable() {
-//            @Override
-//            public void run() {
-//                try {
-//                    CommonSpiderKnowledge.ergodicUrl("spiderTX",22,"no");
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        });
+        pool.submit(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    CommonSpiderKnowledge.ergodicUrl("spider18Touch", 0, "no");
+//                    KnowledgeSpiderConfigMiNi knowledgeSpiderConfigMiNi=BasCommonKnowledgeSpider.ergodicUrl("spiderUrl",SpiderContant.xmlUrl);
+//                    System.out.println(knowledgeSpiderConfigMiNi);
+//                    SpiderProduct.ergodicUrl("spiderXMSD", 0, 0);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
 
     }
 }

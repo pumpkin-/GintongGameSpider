@@ -7,6 +7,7 @@ import dao.ProGameInfoDao;
 import dao.ProGamePlatformDao;
 import dao.ProGameTypeDao;
 import dao.impl.*;
+
 import org.apache.commons.lang3.StringUtils;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
@@ -21,7 +22,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.phantomjs.PhantomJSDriver;
 
-import java.io.FileNotFoundException;
+
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -30,44 +31,83 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 /**
- * 游戏产品信息爬取
- * Created by gao on 2017/2/21.
- */
+* 游戏产品信息爬取
+* Created by gao on 2017/2/21.
+*/
 public class SpiderProduct {
 
     public static void main(String[] args) throws Exception {
-        ergodicUrl("spiderYZZ",0);
+
+        //ergodicUrl("SpiderRPYX",0);
+        //ergodicUrl("SpiderYYW",0);
+        //ergodicUrl("Spider52PK",0);
+
+       // ergodicUrl("spiderAZSC",0,1);
+      //ergodicUrl("SpiderFpw", 0,1);
+       //ergodicUrl("SpiderRPYX",0);
+
+      ergodicUrl("Spider360助手",0,0);
+
+
+
+     //ergodicUrl("Spider360助手",0,1);
+      // ergodicUrl("Spider91助手",0,1);
+     //ergodicUrl("SpiderDlw",0,1);
+      // ergodicUrl("SpiderJfw",0,1);
+
+
+
     }
+
 
     /**
      * 遍历urls内部url
      */
-    public static void ergodicUrl(String webname,int fromPageNum) throws Exception {
+    public static void ergodicUrl(String webname, int fromPageNum, int isImport) throws Exception {
         System.out.println("Start parsing XML file");
         Map<String, Object> map = getElement(webname);
-        ExecutorService pool= Executors.newFixedThreadPool(3);
+        //构建线程池
+        ExecutorService pool= Executors.newFixedThreadPool(5);
         List urlNodes= (List) map.get("urls");
+        List  dynamicURL= (List) map.get("urlpage");
+        int i=0;
         for(Object ele:urlNodes){
-            if(map.get("flag").equals("jsoup")) {
+            Element elements= (Element) ele;
+            if(map.get("flag").equals("jsoup")&&elements.attributeValue("page")!=null&& !elements.attributeValue("page").isEmpty()) {
+                    String url=elements.getText().trim();
+                List<String> list = allpage(url, elements.attributeValue("page"), fromPageNum);
+                    i++;
+                    for(String uri:list){
+                        final Spider s=new Spider(map, uri,0,isImport);
+//                        pool.submit(new Runnable() {
+//                            @Override
+//                            public void run() {
+                               s.run();
+//                            }
+//                        });
+                        System.out.println(uri);
+                    }
+                    fromPageNum=0;
+            } else if(map.get("flag").equals("jsoup")) {
                 Element element= (Element) ele;
                 String url=element.getText().trim();
                 System.out.println(url);
-                final Spider s=new Spider(map, url,fromPageNum);
+                final Spider s=new Spider(map, url,fromPageNum,isImport);
                 //运行线程
-                pool.submit(new Runnable() {
-                    @Override
-                    public void run() {
+//               pool.submit(new Runnable() {
+//                  @Override
+//                   public void run() {
                         s.run();
-                    }
-                });
+//                   }
+//              });
                 fromPageNum=0;
             }else if(map.get("flag").equals("selenium")){
                 Element element= (Element) ele;
                 String url=element.getText().trim();
                 System.out.println("Get details page");
-                final Spider s=new Spider(map, url,fromPageNum);
+                final Spider s=new Spider(map, url,fromPageNum,isImport);
                 WebDriver driver=s.getChromeDriver();
-                s.ergodicDetails(map, driver, url, fromPageNum);
+                s.ergodicDetails(map, driver, url, fromPageNum,isImport);
                 fromPageNum=0;
                 driver.close();
             }else{
@@ -76,24 +116,50 @@ public class SpiderProduct {
         }
     }
 
+    /**
+     * 获取全部的链接
+     * @param dynamicURL 链接
+     * @param allpage 页数
+     * @return 全部的链接
+     */
+    public static List  allpage(String dynamicURL,String allpage,int fromPageNum){
+        List<String>list=new ArrayList<String>();
+        int pages=Integer.parseInt(allpage);
+        String page;
+        if(fromPageNum==0){
+            fromPageNum=fromPageNum+1;
+        }
+        for(int i=fromPageNum;i<pages+1;i++) {
+            page = i+ "";
+            try {
+                list.add(dynamicURL.replace("$(page)", page));
+            }catch (Exception e){
+                e.printStackTrace();
+            }
 
+        }
+            return list;
+
+    }
 
 
     /**
      * 获取配置文件中要爬取的信息
      *
      * @param targetNode 目标节点
-     * @throws FileNotFoundException
+     * @throws java.io.FileNotFoundException
      */
     public static Map<String, Object> getElement(String targetNode){
         try{
             SAXReader reader = new SAXReader();
             //获取配置文档dom树
-            Document dom=reader.read(SpiderProduct.class.getClassLoader().getResource("SpiderUtils/BasProductPattern.xml").getPath());
+            Document dom=reader.read(SpiderProduct.class.getResourceAsStream("/SpiderUtils/BasProductPattern.xml"));
             //获取目标配置节点
             Node target=dom.selectSingleNode("//"+targetNode);
             //获取起始url
             List urls=target.selectNodes("//"+targetNode+"//url");
+            //String page=target.selectSingleNode("//"+targetNode+"/urls/@page").getText();
+            List urlpage=target.selectNodes("//"+targetNode+"//url/@page");
             //获取网站源名称
             String source=target.selectSingleNode("//"+targetNode+"/source").getText();
             //获取ContentPath
@@ -106,10 +172,6 @@ public class SpiderProduct {
             String version=target.selectSingleNode("//"+targetNode+"/version").getText();
             //分类
             String network_type=target.selectSingleNode("//"+targetNode+"/network_type").getText();
-            //时间
-            String web_update_time=target.selectSingleNode("//"+targetNode+"/web_update_time").getText();
-            //时间格式化字符串
-            String formatStr=target.selectSingleNode("//"+targetNode+"/web_update_time/@formatStr").getText();
             String ptimeStr=target.selectSingleNode("//"+targetNode+"/ptime/@formatStr").getText();
             String beta_timeStr=target.selectSingleNode("//"+targetNode+"/beta_time/@formatStr").getText();
             String test_timeStr=target.selectSingleNode("//"+targetNode+"/test_time/@formatStr").getText();
@@ -118,13 +180,15 @@ public class SpiderProduct {
             //大小
             String game_size=target.selectSingleNode("//"+targetNode+"/game_size").getText();
             //系统
-            String platform=target.selectSingleNode("//"+targetNode+"/platform").getText();
+            List<Element> platforms=target.selectNodes("//" + targetNode + "/platform");
             //资费
             String charge_mode=target.selectSingleNode("//"+targetNode+"/charge_mode").getText();
             //作者
             String develop_com=target.selectSingleNode("//"+targetNode+"/develop_com").getText();
             //简介
             String g_desc=target.selectSingleNode("//"+targetNode+"/g_desc").getText();
+            //游戏截图拼接的内容 刘雪明更改3.9
+            String pjoin=target.selectSingleNode("//"+targetNode+"/picture/@join").getText();
             //游戏截图
             String picture=target.selectSingleNode("//"+targetNode+"/picture").getText();
             //详情页url
@@ -132,7 +196,7 @@ public class SpiderProduct {
             //下一页
             String nextpage=target.selectSingleNode("//"+targetNode+"/nextpage").getText();
             //游戏类型
-            List gtypes=target.selectNodes("//"+targetNode+"//gtype");
+            List gtypes=target.selectNodes("//" + targetNode + "//gtype");
             //游戏状态
             String dpprogress=target.selectSingleNode("//"+targetNode+"/dpprogress").getText();
             //画面风格
@@ -141,8 +205,6 @@ public class SpiderProduct {
             String gamespy=target.selectSingleNode("//"+targetNode+"/gamespy").getText();
             //游戏题材
             String gtheme=target.selectSingleNode("//"+targetNode+"/gtheme").getText();
-            //开服总数
-            String totalServer=target.selectSingleNode("//"+targetNode+"/totalServer").getText();
 //            <!--游戏英语名字-->
             String gename=target.selectSingleNode("//"+targetNode+"/gename").getText();
 //            <!--语言-->
@@ -182,7 +244,10 @@ public class SpiderProduct {
 //            <!--资料片发布时间-->
             String films_time=target.selectSingleNode("//"+targetNode+"/films_time").getText();
 //            <!--下载链接-->
+            String joinlink=target.selectSingleNode("//"+targetNode+"/download_link/@join").getText();
             String download_link=target.selectSingleNode("//"+targetNode+"/download_link").getText();
+            String download_link_ios=target.selectSingleNode("//" + targetNode + "/download_link_ios").getText();
+            String joinlinkios=target.selectSingleNode("//"+targetNode+"/download_link_ios/@join").getText();
             String flag=target.selectSingleNode("//"+targetNode+"/flag").getText();
             String moreclick= target.selectSingleNode("//"+targetNode+"/moreclick").getText();
             String slidingRoller= target.selectSingleNode("//"+targetNode+"/slidingRoller").getText();
@@ -194,7 +259,8 @@ public class SpiderProduct {
 
             //将上面读到的配置文件中的xpath信息返回main方法
             Map<String, Object>map=new HashMap();
-
+            //map.put("page",page);
+            map.put("urlpage",urlpage);
             map.put("nextpic",nextpic);
             map.put("contentPathpic",contentPathpic);
             map.put("flagchild",flagchild);
@@ -209,10 +275,8 @@ public class SpiderProduct {
             map.put("gname",gname);
             map.put("version",version);
             map.put("network_type",network_type);
-            map.put("web_update_time",web_update_time);
-            map.put("formatStr",formatStr);
             map.put("game_size",game_size);
-            map.put("platform",platform);
+            map.put("platform",platforms);
             map.put("charge_mode",charge_mode);
             map.put("develop_com",develop_com);
             map.put("g_desc",g_desc);
@@ -223,7 +287,6 @@ public class SpiderProduct {
             map.put("dpprogress",dpprogress);
             map.put("gstyle",gstyle);
             map.put("gamespy",gamespy);
-            map.put("totalServer",totalServer);
             map.put("gename",gename);
             map.put("language",language);
             map.put("publisher",publisher);
@@ -250,23 +313,34 @@ public class SpiderProduct {
             map.put("set_timeStr",set_timeStr);
             map.put("gtheme",gtheme);
             map.put("engine",engine);
+            map.put("joinlink",joinlink);
+            map.put("pjoin",pjoin);
+            map.put("download_link_ios",download_link_ios);
+            map.put("joinlinkios",joinlinkios);
             return map;
         }catch(DocumentException e){
             System.out.println("配置文件获取错误！");
+            e.printStackTrace();
             return null;
         }
     }
+
 }
+
+
+
 
 //爬虫内部线程类
 class Spider{
     private static Map<String, Object> map=null;
     private static String startUrl;
     private static int formpage;
-    public Spider(Map<String, Object> map,String startUrl,int formpage) {
+    private static int isImport;
+    public Spider(Map<String, Object> map,String startUrl,int formpage,int isImport) {
         this.map=map;
         this.startUrl=startUrl;
         this.formpage=formpage;
+        this.isImport=isImport;
     }
 
     /**
@@ -308,7 +382,7 @@ class Spider{
     /**
      * 根据url获取详情页 selenium
      */
-    public static void ergodicDetails(Map<String, Object> map,WebDriver driver,String startUrl,int formpage) throws Exception {
+    public static void ergodicDetails(Map<String, Object> map,WebDriver driver,String startUrl,int formpage,int isImport) throws Exception {
         JXDocument doc=null;
         System.out.println("Start getting starturl's DOM tree");
         doc=getJXDocument(driver,startUrl);
@@ -351,6 +425,7 @@ class Spider{
         while(true){
             //获取详情页列表
             List<Object> detailsUrls=doc.sel(map.get("detailurl").toString());
+            System.out.println("detail urls size：" + detailsUrls.size());
             System.out.println("Start traversal details page");
             for(Object details:detailsUrls){
                 String childLink=null;
@@ -376,7 +451,7 @@ class Spider{
                     childDocumet = getJXDocument(driver,childLink);
                 }
                 System.out.println("Start cleaning");
-                Spider.parsePage(childDocumet, map,childLink);
+                Spider.parsePage(childDocumet, map,childLink,isImport);
                 System.out.println(a+"+"+i);
                 a++;
                 System.out.println("-------------------------------");
@@ -440,7 +515,7 @@ class Spider{
      */
     public static JXDocument clickMore(Map<String, Object> map,WebDriver driver) throws InterruptedException {
         JavascriptExecutor executornext = (JavascriptExecutor) driver;
-        executornext.executeScript(map.get("moreclick").toString());
+        executornext.executeScript("if("+map.get("moreclick").toString()+".length == 0) {throw new Error('there is nothing to colick')}");
         Thread.sleep(2000);
         WebElement webElement=driver.findElement(By.xpath("/html"));
         JXDocument nextDocument=new JXDocument(Jsoup.parse(webElement.getAttribute("outerHTML")));
@@ -465,15 +540,19 @@ class Spider{
     /**
      * 获取dom
      */
-    public org.jsoup.nodes.Document getDocument(String url){
+    public static org.jsoup.nodes.Document getDocument(String url){
+        org.jsoup.nodes.Document document= null;
         try{
-            org.jsoup.nodes.Document document=Jsoup.connect(url)
+            document = Jsoup.connect(url)
                     .userAgent("Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; .NET CLR 2.0.50727)")
                     .get();
-            return document;
+
         }catch (Exception e){
-            throw new RuntimeException("===============连接网页:"+url+"失败！！！========================");
+            e.printStackTrace();
+            System.out.println("======== 获取网页详情页失败 ==========");
+
         }
+        return document;
     }
 
     //线程执行内容
@@ -491,11 +570,13 @@ class Spider{
         int a=1;
         //页数
         int i=1;
+        WebDriver driver=null;
+        if(map.get("flagchild").toString().equals("selenium")){
+            driver=getChromeDriver();
+        }
+
         while(true){
-            WebDriver driver=null;
-            if(map.get("flagchild").toString().equals("selenium")){
-                driver=getChromeDriver();
-            }
+//TODO 待会儿修改代码
             //断点翻页
             for(int x=1;x<formpage;x++){
                 System.out.println("Start page break");
@@ -503,7 +584,6 @@ class Spider{
                 doc=listPageJsoup(doc);
                 i=x+1;
             }
-
             //调用下面的方法获取详情页的url列表
             List<String>detailUrls=getDetailUrls(doc,map.get("detailurl").toString());
             for(String detailUrl:detailUrls){
@@ -511,12 +591,12 @@ class Spider{
                     if(map.get("flagchild").toString().equals("jsoup")) {
                         org.jsoup.nodes.Document document1 = getDocument(map.get("contentPath").toString() + detailUrl);
                         //解析详情页面并且存储进数据库
-                        parsePage(new JXDocument(document1), map,map.get("contentPath").toString() + detailUrl);
+                        parsePage(new JXDocument(document1), map,map.get("contentPath").toString() + detailUrl,isImport);
                         System.out.println(Thread.currentThread().getName());
                     }else{
                         System.out.println(map.get("contentPath").toString() + detailUrl);
                         JXDocument childDocumet = getJXDocument(driver,map.get("contentPath").toString() + detailUrl);
-                        parsePage(childDocumet, map,map.get("contentPath").toString() + detailUrl);
+                        parsePage(childDocumet, map,map.get("contentPath").toString() + detailUrl,isImport);
                         System.out.println(Thread.currentThread().getName());
                     }
                 }catch(Exception e){
@@ -526,13 +606,21 @@ class Spider{
                 a++;
                 System.out.println("---------------------------------------");
             }
-            driver.close();
+            if(map.get("flagchild").toString().equals("selenium")){
+                driver.close();
+            }
+            List page= (List) map.get("urlpage");
+            if(!page.isEmpty()){
+                break;
+            }
             doc=listPageJsoup(doc);
             i++;
+
+
         }
     }
 
-    public static JXDocument listPageJsoup(JXDocument doc){
+        public static JXDocument listPageJsoup(JXDocument doc){
         String next=null;
         //进入下一页
         try{
@@ -540,6 +628,7 @@ class Spider{
             try {
                 //若获取下一页失败，则停止当前线程
                 nextUrl = doc.sel(map.get("nextpage").toString()).get(0).toString();
+                System.out.println(nextUrl);
             }catch (Exception e){
                 return doc;
             }
@@ -558,15 +647,15 @@ class Spider{
     /**
      * 获取每页列表中的详情页的url
      */
-    public  List<String>getDetailUrls(JXDocument document, String detailurl){
-        List<Object>urllist= null;
+    public  List<String> getDetailUrls(JXDocument document, String detailXpath){
+        List<Object> urllist= null;
         try {
-            urllist = document.sel(detailurl);
+            urllist = document.sel(detailXpath);
         } catch (XpathSyntaxErrorException e) {
             e.printStackTrace();
         }
         //存储每页中列表上跳转到详情页的链接
-        List<String>detailUrls=new ArrayList();
+        List<String>detailUrls=new ArrayList<String>();
         for(Object detailUrl:urllist){
             detailUrls.add((String)detailUrl);
         }
@@ -578,7 +667,7 @@ class Spider{
      *
      * @param document
      */
-    public static void parsePage(JXDocument document, Map map,String childLink){
+    public static void parsePage(JXDocument document, Map map,String childLink,int isImport){
         String logo=null;
         String name=null;
         String version=null;
@@ -599,7 +688,6 @@ class Spider{
         String totalServer=null;
         //创建数据库表对象
         BasProGameInfo gameInfo=new BasProGameInfo();
-        ProGamePlatform proPlatform=new ProGamePlatform();
         ProGameType progtypes=new ProGameType();
         BasOrganizeInfo basOrganizeInfo=new BasOrganizeInfo();
         OrgProduct orgProduct=new OrgProduct();
@@ -607,6 +695,7 @@ class Spider{
         OrgProduct orgProduct2=new OrgProduct();
         BasOrganizeInfo basOrganizeInfo3=new BasOrganizeInfo();
         OrgProduct orgProduct3=new OrgProduct();
+        List<ProGamePlatform> list1=new ArrayList<ProGamePlatform>();
 
         try{
             //源网站名称
@@ -621,6 +710,7 @@ class Spider{
                 orgProduct3.setSource(source);
                 basOrganizeInfo3.setSource(source);
             }
+
             //图标logo
             logo=map.get("contentPath").toString()+getInfomation(document,"logo");
             if(map.get("source").toString()=="安智市场"||"安智市场".equals(map.get("source").toString())) {
@@ -629,7 +719,9 @@ class Spider{
             gameInfo.setLogo(logo);
             //名称gname
             if(StringUtils.isNoneEmpty(map.get("gname").toString())){
-                name=document.sel(map.get("gname").toString()).get(0).toString();
+                if(document.sel(map.get("gname").toString()).size()>0) {
+                    name = document.sel(map.get("gname").toString()).get(0).toString();
+                }
                 System.out.println(name);
                 gameInfo.setGname(name);
                 orgProduct.setPname(name);
@@ -638,8 +730,10 @@ class Spider{
             }
             //版本version
             if(StringUtils.isNoneEmpty(map.get("version").toString())){
-                version=document.sel(map.get("version").toString()).get(0).toString();
-                version=version.substring(1,version.lastIndexOf(")"));
+                if(document.sel(map.get("version").toString()).size()>0) {
+                    version = document.sel(map.get("version").toString()).get(0).toString();
+                }
+//                version=version.substring(1,version.lastIndexOf(")"));
                 System.out.println(version);
                 gameInfo.setVersion(version);
             }
@@ -656,37 +750,43 @@ class Spider{
                 network_type="0";
                 gameInfo.setNetwork_type(getNetType(network_type));
             }
-            //setWeb_update_time
-            if(StringUtils.isNotEmpty(map.get("web_update_time").toString())){
-                String timeStr=document.sel(map.get("web_update_time").toString()).get(0).toString().split("\\：")[1];
-                time=timeFormat(timeStr,map.get("formatStr").toString());
-                System.out.println(time);
-                gameInfo.setWeb_update_time(time);
+            //操作系统
+            if(StringUtils.isNoneEmpty(map.get("platform").toString())){
+                List<Element> platforms= (List<Element>) map.get("platforms");
+                if(platforms!=null&&platforms.size()>0){
+                    for(int x=0;x<platforms.size();x++){
+                        ProGamePlatform proPlatform=new ProGamePlatform();
+                        proPlatform.setPlatform(platforms.get(x).getText());
+                        list1.add(proPlatform);
+                    }
+                }
             }
             //大小game_size
             if(StringUtils.isNotEmpty(map.get("game_size").toString())){
-                game_size=document.sel(map.get("game_size").toString()).get(0).toString().split("\\：")[1];
-                System.out.println(game_size);
-                gameInfo.setGame_size(game_size);
-            }
-            //操作系统
-            if(StringUtils.isNoneEmpty(map.get("platform").toString())){
-                platform=document.sel(map.get("platform").toString()).get(0).toString();
-                if(map.get("source").toString()=="安智市场"||"安智市场".equals(map.get("source").toString())) {
-                    platform=platform.split("\\：")[1];
+                List<Object> list= document.sel(map.get("game_size").toString());
+                if(list!=null&&list.size()>0) {
+                    for(int x=0;x<list.size();x++){
+                        if(list1!=null&&list1.size()>0) {
+                            list1.get(x).setGame_size(list.get(x).toString());
+                        }
+                        System.out.println(list.get(x).toString());
+                        gameInfo.setGame_size(list.get(x).toString());
+                    }
                 }
-                System.out.println(platform);
-                proPlatform.setPlatform(platform);
             }
             //资费charge_mode
             if(StringUtils.isNotEmpty(map.get("charge_mode").toString())){
-                charge_mode=document.sel(map.get("charge_mode").toString()).get(0).toString();
+                if(document.sel(map.get("charge_mode").toString()).size()>0) {
+                    charge_mode = document.sel(map.get("charge_mode").toString()).get(0).toString();
+                }
                 System.out.println(charge_mode);
                 gameInfo.setCharge_mode(charge_mode);
             }
             //游戏研发公司（作者）develop_com
             if(StringUtils.isNotEmpty(map.get("develop_com").toString())){
-                develop_com=document.sel(map.get("develop_com").toString()).get(0).toString();
+                if(document.sel(map.get("develop_com").toString()).size()>0) {
+                    develop_com = document.sel(map.get("develop_com").toString()).get(0).toString();
+                }
                 if(map.get("source").toString()=="安智市场"||"安智市场".equals(map.get("source").toString())) {
                     develop_com=develop_com.split("\\：")[1];
                 }
@@ -698,7 +798,9 @@ class Spider{
 
             //简介g_desc
             if(StringUtils.isNotEmpty(map.get("g_desc").toString())){
-                g_desc=document.sel(map.get("g_desc").toString()).get(0).toString();
+                if(document.sel(map.get("g_desc").toString()).size()>0) {
+                    g_desc = document.sel(map.get("g_desc").toString()).get(0).toString();
+                }
                 System.out.println(g_desc);
                 gameInfo.setG_desc(g_desc);
             }
@@ -707,41 +809,48 @@ class Spider{
             for (Element gtype : eles) {
                 String gtypeStr=gtype.getText().trim();
                 if(StringUtils.isNotEmpty(gtypeStr)) {
-                    gtypes.append(document.sel(gtypeStr) + ",");
+                    gtypes.append(document.sel(gtypeStr) + ",").toString();
                 }
 
             }
-            System.out.println(gtypes);
-            progtypes.setGtype(gtypes.toString());
+            System.out.println(gtypes.toString().replace("[", "").replace("]", ""));
+            progtypes.setGtype(gtypes.toString().replace("[", "").replace("]", ""));
             //游戏状态(研发进度)
             if(StringUtils.isNotEmpty(map.get("dpprogress").toString())){
-                dpprogress=document.sel(map.get("dpprogress").toString()).get(0).toString();
-                System.out.println(dpprogress);
-                gameInfo.setDpprogress(dpprogress);
-                proPlatform.setDpprogress(dpprogress);
+                if(document.sel(map.get("dpprogress").toString()).size()>0) {
+                    List<Object> list= document.sel(map.get("dpprogress").toString());
+                    for(int x=0;x<list.size();x++){
+                        if(list1!=null&&list1.size()>0) {
+                            list1.get(x).setDpprogress(list.get(x).toString());
+                        }
+                        System.out.println(list.get(x).toString());
+                        gameInfo.setDpprogress(list.get(x).toString());
+                    }
+                }
             }
             //画面风格
             if(StringUtils.isNotEmpty(map.get("gstyle").toString())){
-                gstyle=document.sel(map.get("gstyle").toString()).get(0).toString();
+                if(document.sel(map.get("gstyle").toString()).size()>0) {
+                    gstyle = document.sel(map.get("gstyle").toString()).get(0).toString();
+                }
                 System.out.println(gstyle);
                 gameInfo.setGstyle(gstyle);
             }
             //画面方式2D,3D
             if(StringUtils.isNotEmpty(map.get("gamespy").toString())){
-                gamespy=document.sel(map.get("gamespy").toString()).get(0).toString();
+                if(document.sel(map.get("gamespy").toString()).size()>0) {
+                    gamespy = document.sel(map.get("gamespy").toString()).get(0).toString();
+                }
                 System.out.println(gamespy);
                 gameInfo.setGamespy(gamespy);
             }
             //游戏题材
             if(StringUtils.isNotEmpty(map.get("gtheme").toString())){
-                gtheme=document.sel(map.get("gtheme").toString()).get(0).toString();
+                if(document.sel(map.get("gtheme").toString()).size()>0) {
+                    gtheme = document.sel(map.get("gtheme").toString()).get(0).toString();
+                }
                 System.out.println(gtheme);
                 gameInfo.setGtheme(gtheme);
-            }
-            //开服总数
-            if(StringUtils.isNotEmpty(map.get("totalServer").toString())){
-                totalServer=document.sel(map.get("totalServer").toString()).get(0).toString();
-                System.out.println(totalServer);
             }
             //游戏英语名字
             String gename=getInfomation(document,"gename");
@@ -819,8 +928,31 @@ class Spider{
             String films_time=getInfomation(document,"films_time");
             gameInfo.setFilms_time(films_time);
 //            <!--下载链接-->
-            String download_link=getInfomation(document,"download_link");
-            gameInfo.setDownload_link(download_link);
+                if (StringUtils.isNotEmpty(map.get("download_link").toString())) {
+                    if (document.sel(map.get("download_link").toString()).size() > 0) {
+                        List<Object> list = document.sel(map.get("download_link").toString());
+                        for (int x = 0; x < list.size(); x++) {
+                            if (list1 != null && list1.size() > 0) {
+                                list1.get(x).setDownloadLink(map.get("joinlink")+list.get(x).toString());
+                            }
+                            System.out.println("安卓下载链接："+map.get("joinlink").toString()+list.get(x).toString());
+                            gameInfo.setDownload_link(list.get(x).toString());
+                        }
+                    }
+                }
+//              ios下载链接
+            if(StringUtils.isNotEmpty(map.get("download_link_ios").toString())){
+                if (document.sel(map.get("download_link_ios").toString()).size()>0){
+                    List<Object> list=document.sel(map.get("download_link_ios").toString());
+                    for(int x=0;x<list.size();x++){
+                        if(list1!=null && list1.size()>0){
+                            list1.get(x).setDownloadLink(map.get("joinlinkios").toString()+list.get(x).toString());
+                        }
+                        System.out.println("ios下载链接"+map.get("joinlinkios").toString()+list.get(x).toString());
+                        gameInfo.setDownload_link(list.get(x).toString());
+                    }
+                }
+            }
             //游戏截图picture
             if(StringUtils.isNotEmpty(map.get("picture").toString())){
                 if(StringUtils.isEmpty(map.get("nextpic").toString())) {
@@ -828,7 +960,7 @@ class Spider{
                     //多个游戏截图用“,”分隔连接为一个StringBuffer
                     StringBuffer screenBuffer = new StringBuffer();
                     for (Object ele : liEles) {
-                        screenBuffer.append(ele.toString() + ",");
+                        screenBuffer.append(map.get("pjoin")+ele.toString()+ ",");
                     }
                     screenShots = screenBuffer.toString();
                     System.out.println(screenShots);
@@ -860,7 +992,7 @@ class Spider{
                 }
             }
             //存入数据库
-            storeToDataBase(gameInfo,progtypes,proPlatform,basOrganizeInfo,orgProduct,basOrganizeInfo2,orgProduct2,basOrganizeInfo3,orgProduct3);
+            storeToDataBase(gameInfo,progtypes,list1,basOrganizeInfo,orgProduct,basOrganizeInfo2,orgProduct2,basOrganizeInfo3,orgProduct3,childLink,isImport);
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -873,10 +1005,9 @@ class Spider{
         String information=null;
         String path=map.get(xpath).toString();
             if(StringUtils.isNotEmpty(path)) {
-                if(document.sel(path).size()==0){
-                    throw new NullPointerException("Xpath语句：<"+xpath+">:"+path+"出错，未捕获到页面标签！！");
+                if(document.sel(map.get(xpath).toString()).size()>0) {
+                    information = document.sel(map.get(xpath).toString()).get(0).toString();
                 }
-                information =document.sel(map.get(xpath).toString()) .get(0).toString();
                 System.out.println(information);
             }
         return information;
@@ -885,57 +1016,72 @@ class Spider{
     /**
      *将数据存入mysql数据库中
      */
-    public static void storeToDataBase(BasProGameInfo gameInfo, ProGameType gtypes, ProGamePlatform platform,BasOrganizeInfo basOrganizeInfo,OrgProduct orgProduct,BasOrganizeInfo basOrganizeInfo2,OrgProduct orgProduct2,BasOrganizeInfo basOrganizeInfo3,OrgProduct orgProduct3){
-       //插入组织表
-        basOrganizeInfo.setUrl(startUrl);
-       String ouuid=UUID.randomUUID().toString();
-        basOrganizeInfo.setUuid(ouuid);
-
-        basOrganizeInfo2.setUrl(startUrl);
-        String ouuid2=UUID.randomUUID().toString();
-        basOrganizeInfo.setUuid(ouuid2);
-
-        basOrganizeInfo3.setUrl(startUrl);
-        String ouuid3=UUID.randomUUID().toString();
-        basOrganizeInfo.setUuid(ouuid3);
-
-        BasOrganizeInfoImpl basOrganizeInfo1=new BasOrganizeInfoImpl();
-        basOrganizeInfo1.insertSingle(basOrganizeInfo);
-        basOrganizeInfo1.insertSingle(basOrganizeInfo2);
-        basOrganizeInfo1.insertSingle(basOrganizeInfo3);
-
-
-        //网站源链接
-        gameInfo.setUrl(startUrl);
-        String uuid=UUID.randomUUID().toString();
-        //uuid
-        gameInfo.setUuid(uuid);
-        //用dao层接口插入数据库
+    public static void storeToDataBase(BasProGameInfo gameInfo, ProGameType gtypes, List<ProGamePlatform> list,BasOrganizeInfo basOrganizeInfo,OrgProduct orgProduct,BasOrganizeInfo basOrganizeInfo2,OrgProduct orgProduct2,BasOrganizeInfo basOrganizeInfo3,OrgProduct orgProduct3,String childLink,int isImport){
         ProGameInfoDao infoDao=new ProGameInfoDaoImpl();
-        infoDao.insertGame(gameInfo);
+        List<String> gameId=infoDao.selectGame(gameInfo);
+        if(isImport==1) {
+            if(gameId.size()==0) {
+                //网站源链接
+                gameInfo.setUrl(childLink);
+                String uuid = UUID.randomUUID().toString();
+                //uuid
+                gameInfo.setUuid(uuid);
+                //用dao层接口插入数据库
 
-        //插入游戏类型
-        ProGameTypeDao typeDao=new ProGameTypeDaoImpl();
-        gtypes.setUuid(uuid);
-        typeDao.insertType(gtypes);
+                infoDao.insertGame(gameInfo);
 
-        //插入游戏平台（研发公司）
-        platform.setUuid(uuid);
-        ProGamePlatformDao platformDao=new ProGamePlatformDaoImpl();
-        platformDao.insertPlatform(platform);
+                //插入游戏类型
+                ProGameTypeDao typeDao = new ProGameTypeDaoImpl();
+                gtypes.setUuid(uuid);
+                typeDao.insertType(gtypes);
 
+                //插入组织表
+                basOrganizeInfo.setUrl(childLink);
+                String ouuid = UUID.randomUUID().toString();
+                basOrganizeInfo.setUuid(ouuid);
 
-        //插入组织与产品关系表
-        orgProduct.setOuuid(ouuid);
-        orgProduct2.setOuuid(ouuid2);
-        orgProduct3.setOuuid(ouuid3);
-        orgProduct.setPr_uuid(uuid);
-        orgProduct2.setPr_uuid(uuid);
-        orgProduct3.setPr_uuid(uuid);
-        OrgProductDaoImpl orgProductDao=new OrgProductDaoImpl();
-        orgProductDao.insertOPDuct(orgProduct);
-        orgProductDao.insertOPDuct(orgProduct2);
-        orgProductDao.insertOPDuct(orgProduct3);
+                basOrganizeInfo2.setUrl(childLink);
+                String ouuid2 = UUID.randomUUID().toString();
+                basOrganizeInfo2.setUuid(ouuid2);
+
+                basOrganizeInfo3.setUrl(childLink);
+                String ouuid3 = UUID.randomUUID().toString();
+                basOrganizeInfo3.setUuid(ouuid3);
+
+                //插入组织与产品关系表
+                orgProduct.setOuuid(ouuid);
+                orgProduct2.setOuuid(ouuid2);
+                orgProduct3.setOuuid(ouuid3);
+                orgProduct.setPr_uuid(uuid);
+                orgProduct2.setPr_uuid(uuid);
+                orgProduct3.setPr_uuid(uuid);
+
+                BasOrganizeInfoImpl basOrganizeInfo1 = new BasOrganizeInfoImpl();
+                OrgProductDaoImpl orgProductDao = new OrgProductDaoImpl();
+                if (StringUtils.isNotEmpty(basOrganizeInfo.getOname())) {
+                    basOrganizeInfo1.insertSingle(basOrganizeInfo);
+                    orgProductDao.insertOPDuct(orgProduct);
+                }
+                if (StringUtils.isNotEmpty(basOrganizeInfo2.getOname())) {
+                    basOrganizeInfo1.insertSingle(basOrganizeInfo2);
+                    orgProductDao.insertOPDuct(orgProduct2);
+                }
+                if (StringUtils.isNotEmpty(basOrganizeInfo3.getOname())) {
+                    basOrganizeInfo1.insertSingle(basOrganizeInfo3);
+                    orgProductDao.insertOPDuct(orgProduct3);
+                }
+                //插入游戏平台（研发公司）
+                ProGamePlatformDao platformDao = new ProGamePlatformDaoImpl();
+                for (int x = 0; x < list.size(); x++) {
+                    list.get(x).setUuid(uuid);
+                    platformDao.insertPlatform(list.get(x));
+                }
+            }else{
+                System.out.println("与数据库中数据重复");
+            }
+        }else {
+            System.out.println("并未往数据库中存入数据");
+        }
 
     }
 

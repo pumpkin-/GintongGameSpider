@@ -30,4 +30,10 @@ public class BasOrganizeInfoImpl extends BaseDaoImpl<List> implements BasOrganiz
     public List<BasOrganizeInfo> selectList(String ts) {
         return this.getSqlSession().selectList(this.getNs()+"selectList"+ts);
     }
+
+    @Override
+    public void updateSingle(BasOrganizeInfo ts) {
+        this.getSqlSession().update(this.getNs()+"updateOrgan",ts);
+    }
+
 }

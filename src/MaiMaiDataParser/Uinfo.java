@@ -23,6 +23,7 @@ public class Uinfo {
     public String noemail;
     public String noaccount;
     public String xingzuo;
+    public String headline;
     public List<String> praised;
 
 }
