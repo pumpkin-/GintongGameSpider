@@ -19,5 +19,6 @@ public class SpiderContant {
     public static final String chromeWindowsPath= "E:/aaaa/chrom/chromedriver.exe";
     public static final String xmlUrl="SpiderUtils/SpiderData/BasCommonKnowledgePattern.xml";
     public static final String urlXml="SpiderUtils/BasKnowledgePattern.xml";
+    public static final String orgXmlPath="/SpiderUtils/BasOrganizePattern.xml";
 
 }

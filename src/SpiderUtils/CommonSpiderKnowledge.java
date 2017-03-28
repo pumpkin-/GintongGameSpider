@@ -10,6 +10,7 @@ import dao.impl.BugDataImpl;
 import dao.impl.PerKnowledgeImpl;
 import dao.impl.ProKnowledgeImpl;
 import org.apache.commons.lang3.StringUtils;
+import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
@@ -75,7 +76,7 @@ public class CommonSpiderKnowledge {
             @Override
             public void run() {
                 try {
-                    ergodicUrl("spiderTX", 0, "no",SpiderContant.urlXml);
+                    ergodicUrl("spiderYWW", 101, "no",SpiderContant.urlXml);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -111,7 +112,6 @@ public class CommonSpiderKnowledge {
      * @return
      * @throws XpathSyntaxErrorException
      */
-//    TODO
     public static  List<Object> getTag(JXDocument document, String xpath) throws XpathSyntaxErrorException {
         List<Object> obj = null;
         if(StringUtils.isNotEmpty(xpath)) {
@@ -308,7 +308,8 @@ public class CommonSpiderKnowledge {
 
         knowledgeSpiderConfig.webUrls = new ArrayList<Element>();
 
-        org.dom4j.Document dom =  saxReader.read(new FileInputStream(SpiderUtils.class.getClassLoader().getResource("SpiderUtils/BasKnowledgePattern.xml").getFile()));
+//        org.dom4j.Document dom =  saxReader.read(new FileInputStream(SpiderUtils.class.getClassLoader().getResource("SpiderUtils/BasKnowledgePattern.xml").getFile()));
+        Document dom=saxReader.read(SpiderUtils.class.getResourceAsStream("/SpiderUtils/BasKnowledgePattern.xml"));
         Element rootElemnt = dom.getRootElement();//获取根元素
         Element childElement = rootElemnt.element(webName);
 
@@ -1174,5 +1175,4 @@ public class CommonSpiderKnowledge {
     public static String getOSName() {
         return System.getProperty("os.name");
     }
-
 }

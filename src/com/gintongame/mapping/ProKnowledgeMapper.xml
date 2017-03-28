@@ -24,4 +24,5 @@
         SELECT * FROM pro_knowledge WHERE ptime BETWEEN #{datepast} AND #{date}
     </select>
 
+
 </mapper>

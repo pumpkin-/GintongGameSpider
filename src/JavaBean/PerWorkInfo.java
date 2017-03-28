@@ -9,13 +9,45 @@ public class PerWorkInfo {
 
     private String level;
 
-    private String jobEarly;
+    public String getJob_early() {
+        return job_early;
+    }
 
-    private String workTime;
+    public void setJob_early(String job_early) {
+        this.job_early = job_early;
+    }
+
+    private String job_early;
+
+    public String getWork_time() {
+        return work_time;
+    }
+
+    public void setWork_time(String work_time) {
+        this.work_time = work_time;
+    }
+
+    public String getCompany_addr() {
+        return company_addr;
+    }
+
+    public void setCompany_addr(String company_addr) {
+        this.company_addr = company_addr;
+    }
+
+    public String getW_desc() {
+        return w_desc;
+    }
+
+    public void setW_desc(String w_desc) {
+        this.w_desc = w_desc;
+    }
+
+    private String work_time;
 
     private String wtype;
 
-    private String companyAddr;
+    private String company_addr;
 
     private String oph;
 
@@ -23,7 +55,7 @@ public class PerWorkInfo {
 
     private String uuid;
 
-    private String wDesc;
+    private String w_desc;
 
     public String getOname() {
         return oname;
@@ -57,21 +89,6 @@ public class PerWorkInfo {
         this.level = level == null ? null : level.trim();
     }
 
-    public String getJobEarly() {
-        return jobEarly;
-    }
-
-    public void setJobEarly(String jobEarly) {
-        this.jobEarly = jobEarly == null ? null : jobEarly.trim();
-    }
-
-    public String getWorkTime() {
-        return workTime;
-    }
-
-    public void setWorkTime(String workTime) {
-        this.workTime = workTime == null ? null : workTime.trim();
-    }
 
     public String getWtype() {
         return wtype;
@@ -81,13 +98,6 @@ public class PerWorkInfo {
         this.wtype = wtype == null ? null : wtype.trim();
     }
 
-    public String getCompanyAddr() {
-        return companyAddr;
-    }
-
-    public void setCompanyAddr(String companyAddr) {
-        this.companyAddr = companyAddr == null ? null : companyAddr.trim();
-    }
 
     public String getOph() {
         return oph;
@@ -113,11 +123,4 @@ public class PerWorkInfo {
         this.uuid = uuid == null ? null : uuid.trim();
     }
 
-    public String getwDesc() {
-        return wDesc;
-    }
-
-    public void setwDesc(String wDesc) {
-        this.wDesc = wDesc == null ? null : wDesc.trim();
-    }
 }

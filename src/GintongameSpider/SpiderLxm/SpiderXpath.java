@@ -128,7 +128,7 @@ public class SpiderXpath {
             @Override
             public void run() {
                 try {
-                    CommonSpiderKnowledge.ergodicUrl("spider18Touch", 0, "no");
+                    CommonSpiderKnowledge.ergodicUrl("spiderYWW", 0, "no");
 //                    KnowledgeSpiderConfigMiNi knowledgeSpiderConfigMiNi=BasCommonKnowledgeSpider.ergodicUrl("spiderUrl",SpiderContant.xmlUrl);
 //                    System.out.println(knowledgeSpiderConfigMiNi);
 //                    SpiderProduct.ergodicUrl("spiderXMSD", 0, 0);
