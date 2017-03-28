@@ -30,10 +30,17 @@ import java.util.regex.Pattern;
 public class SpiderMaimai {
 
     private static WebDriver driver=null;
-    //脉脉账号
-    private static String username="13267483687";
-    //脉脉密码
-    private static String password="123456";
+    //脉脉账号1
+    private static String usernameOne="15311412549";
+    //脉脉密码1
+    private static String passwordOne="123456";
+    //脉脉账号2
+    private static String usernameTwo="18141903791";
+    //脉脉密码2
+    private static String passwordTwo="123456";
+
+
+
     //查询的公司名称(如果不想查公司赋值null)
     private static String comName=null;
     //查询个人时的所放的连接
@@ -84,7 +91,7 @@ public class SpiderMaimai {
 
     public static void getPerInfoDataByList(List<String> urls,String ouuid,String companeName) throws Exception {
         WebDriver driver =getWebDriver();
-        login(username,password);
+        login(usernameOne,passwordOne);
         getPerUrl(driver,comName,count);
         for(String url: urls) {
             getPerInfoDataByUrl(driver, url,ouuid,companeName);
@@ -96,16 +103,26 @@ public class SpiderMaimai {
     public static List<BasPersonInfo> getPerInfoDataByComName(String companyName,String ouuid) throws Exception {
         List<BasPersonInfo> basPersonInfoList=new ArrayList<BasPersonInfo>();
             WebDriver driver =getWebDriver();
-            login(username,password);
+            login(usernameOne,passwordOne);
             List<String> urlsByComName=getPerUrl(driver,companyName,count);
             basPersonInfoList=new ArrayList<BasPersonInfo>();
+            int num=0;
+            int index=1;
             for(String url: urlsByComName) {
+                num++;
                 try {
                     BasPersonInfo basPersonInfo=getPerInfoDataByUrl(driver, url,ouuid,companyName);
                     basPersonInfoList.add(basPersonInfo);
+                    System.out.println("第"+index+"个号已经加载了"+num+"个数据");
                     Thread.sleep(8000);
                 }catch (Exception e){
                     e.printStackTrace();
+                }
+                if(num==120){
+                    driver.manage().deleteAllCookies();
+                    login(usernameTwo, passwordTwo);
+                    num=0;
+                    index++;
                 }
 
             }
@@ -118,7 +135,7 @@ public class SpiderMaimai {
 
     public static void getPersonInfo(String url,String ouuid,String companyName) throws Exception {
         WebDriver driver =getWebDriver();
-        login(username,password);
+        login(usernameOne,passwordOne);
         //getPerUrl(driver,comName,count);
         getPerInfoDataByUrl(driver, url,ouuid,companyName);
         Thread.sleep(8000);
@@ -130,7 +147,7 @@ public class SpiderMaimai {
 
     public static void getOnePersonInfo(List<String> urls,String ouuid,String comName) throws Exception {
         WebDriver driver =getWebDriver();
-        login(username,password);
+        login(usernameOne,passwordOne);
         for(String url: urls) {
             getPerInfoDataByUrl(driver, url,ouuid,comName);
             Thread.sleep(8000);
@@ -347,6 +364,8 @@ public class SpiderMaimai {
 //            personList.add(personUrl);
 //            getOnePersonInfo(SpiderMaimai.personList);
 //        }
-       // getPersonInfo("https://maimai.cn/contact/detail/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1IjoxNDU4Njc5LCJsZXZlbCI6MX0.aDC0RnuXOWy-8cOVEU4ewmzS-i0IlOQmecXhL69eeAE?from=webview%23%2Fweb%2Fsearch_center","123","完美世界");
+       getPersonInfo("https://maimai.cn/contact/detail/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1IjoxNDU4Njc5LCJsZXZlbCI6MX0.aDC0RnuXOWy-8cOVEU4ewmzS-i0IlOQmecXhL69eeAE?from=webview%23%2Fweb%2Fsearch_center","123","完美世界");
     }
+
+
 }

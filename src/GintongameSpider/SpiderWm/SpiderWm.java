@@ -352,6 +352,7 @@ public class SpiderWm {
      * 网页爬取完成后自动关闭
      */
     public static void closeWebDriver(){
+        driver.manage().deleteAllCookies();
         driver.close();
         //System.exit(0);
         perUrlList.clear();

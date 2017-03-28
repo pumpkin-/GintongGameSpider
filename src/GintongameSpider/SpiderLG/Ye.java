@@ -53,11 +53,16 @@ public class Ye {
         //spiderOrganize.mainProcess("Spider360Yx",SpiderContant.orgXmlPath);(完成)
         //spiderOrganize.mainProcess("SpiderBd",SpiderContant.orgXmlPath);(完成)
         //spiderOrganize.mainProcess("SpiderTx",SpiderContant.orgXmlPath);(完成)
+        //spiderOrganize.mainProcess("SpiderSh",SpiderContant.orgXmlPath);(完成)
+       // spiderOrganize.mainProcess("SpiderZq",SpiderContant.orgXmlPath);(完成)
+        //spiderOrganize.mainProcess("SpiderKlww",SpiderContant.orgXmlPath);(完成)
+       // spiderOrganize.mainProcess("SpiderTshd",SpiderContant.orgXmlPath);(完成)
 
 //        spiderOrganize.mainProcess("SpiderSh",SpiderContant.orgXmlPath);
 //        spiderOrganize.mainProcess("SpiderZq",SpiderContant.orgXmlPath);
 //        spiderOrganize.mainProcess("SpiderKlww",SpiderContant.orgXmlPath);
         spiderOrganize.mainProcess("SpiderTshd",SpiderContant.orgXmlPath);
+
 //        spiderOrganize.mainProcess("SpiderSzty",SpiderContant.orgXmlPath);
 //        spiderOrganize.mainProcess("SpiderLb",SpiderContant.orgXmlPath);
 //        spiderOrganize.mainProcess("SpiderZsy",SpiderContant.orgXmlPath);
@@ -118,9 +123,6 @@ public class Ye {
         //spiderOrganize.mainProcess("SpiderSyhd",SpiderContant.orgXmlPath);
        // spiderOrganize.mainProcess("SpiderBbsd",SpiderContant.orgXmlPath);
         //spiderOrganize.mainProcess("SpiderSqsd",SpiderContant.orgXmlPath);
-
-
-
 
     }
 }
