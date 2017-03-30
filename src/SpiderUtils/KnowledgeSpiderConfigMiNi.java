@@ -13,6 +13,17 @@ public class KnowledgeSpiderConfigMiNi {
     public List<Element> webUrls;
     public Element ptime;
     public Element nextPage;
+    public Element chose;
+
+    public Element getMain() {
+        return main;
+    }
+
+    public void setMain(Element main) {
+        this.main = main;
+    }
+
+    public Element main;
 
     public Element getNextPage() {
         return nextPage;

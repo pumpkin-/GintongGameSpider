@@ -12,6 +12,7 @@ import dao.impl.BugDataImpl;
 import dao.impl.PerKnowledgeImpl;
 import dao.impl.ProKnowledgeImpl;
 import org.apache.commons.lang3.StringUtils;
+import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
@@ -67,8 +68,8 @@ public class CommonSpiderKnowledge {
             @Override
             public void run() {
                 try {
-                    ergodicUrl("spiderYxdg", 10, "no");
-                } catch (Exception e) {
+                    ergodicUrl("spiderZOL", 0, "no", SpiderContant.urlXml);
+                }catch (Exception e){
                     e.printStackTrace();
                 }
             }
@@ -77,32 +78,32 @@ public class CommonSpiderKnowledge {
 //            @Override
 //            public void run() {
 //                try {
-//                    ergodicUrl("spiderTX", 0, "no",SpiderContant.urlXml);
+//                    ergodicUrl("spiderMJW", 0, "no",SpiderContant.PerKnowledgePatternPath);
 //                } catch (Exception e) {
 //                    e.printStackTrace();
 //                }
 //            }
 //        });
-        /*pool.submit(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    ergodicUrl("spiderDwyx", 0, "no");
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-        pool.submit(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    ergodicUrl("spiderYxgc", 0, "no");
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });*/
+//        pool.submit(new Runnable() {
+//            @Override
+//            public void run() {
+//                try {
+//                    ergodicUrl("spiderHXW", 0, "no",SpiderContant.PerKnowledgePatternPath);
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        });
+//        pool.submit(new Runnable() {
+//            @Override
+//            public void run() {
+//                try {
+//                    ergodicUrl("spiderHMW", 0, "no",SpiderContant.PerKnowledgePatternPath);
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        });
 
     }
 
@@ -111,9 +112,8 @@ public class CommonSpiderKnowledge {
      * @param document
      * @param xpath
      * @return
-     * @throws XpathSyntaxErrorException
+     * @throws cn.wanghaomiao.xpath.exception.XpathSyntaxErrorException
      */
-//    TODO
     public static  List<Object> getTag(JXDocument document, String xpath) throws XpathSyntaxErrorException {
         List<Object> obj = null;
         if(StringUtils.isNotEmpty(xpath)) {
@@ -190,14 +190,14 @@ public class CommonSpiderKnowledge {
     /**
      * 解析全部配置文件 获取所有的spider节点
      * @return
-     * @throws FileNotFoundException
-     * @throws DocumentException
+     * @throws java.io.FileNotFoundException
+     * @throws org.dom4j.DocumentException
      */
 //    TODO
     public static List<KnowledgeSpiderConfig> parseAllConfigXml(String webname,String knowledgeConfigXmlPath) throws FileNotFoundException, DocumentException {
         SAXReader saxReader = new SAXReader();
         List<KnowledgeSpiderConfig> configs = new ArrayList<KnowledgeSpiderConfig>();
-        org.dom4j.Document dom =  saxReader.read(new FileInputStream(SpiderUtils.class.getClassLoader().getResource(knowledgeConfigXmlPath).getFile()));
+        Document dom =  saxReader.read(new FileInputStream(SpiderUtils.class.getClassLoader().getResource(knowledgeConfigXmlPath).getFile()));
         Element rootElemnt = dom.getRootElement();//获取根元素
         List<Element> childElements =rootElemnt.elements("spider");
         for(Element childElement:childElements) {
@@ -210,13 +210,13 @@ public class CommonSpiderKnowledge {
     /**
      * 解析全部配置文件 获取所有的spider节点
      * @return
-     * @throws FileNotFoundException
-     * @throws DocumentException
+     * @throws java.io.FileNotFoundException
+     * @throws org.dom4j.DocumentException
      */
     public static List<KnowledgeSpiderConfig> parseAllConfigXml() throws FileNotFoundException, DocumentException {
         SAXReader saxReader = new SAXReader();
         List<KnowledgeSpiderConfig> configs = new ArrayList<KnowledgeSpiderConfig>();
-        org.dom4j.Document dom =  saxReader.read(new FileInputStream(SpiderUtils.class.getClassLoader().getResource("SpiderUtils/BasKnowledgePattern.xml").getFile()));
+        Document dom =  saxReader.read(new FileInputStream(SpiderUtils.class.getClassLoader().getResource("SpiderUtils/BasKnowledgePattern.xml").getFile()));
         Element rootElemnt = dom.getRootElement();//获取根元素
         List<Element> childElements =rootElemnt.elements("spider");
         for(Element childElement:childElements) {
@@ -310,7 +310,8 @@ public class CommonSpiderKnowledge {
 
         knowledgeSpiderConfig.webUrls = new ArrayList<Element>();
 
-        org.dom4j.Document dom =  saxReader.read(new FileInputStream(SpiderUtils.class.getClassLoader().getResource("SpiderUtils/BasKnowledgePattern.xml").getFile()));
+//        org.dom4j.Document dom =  saxReader.read(new FileInputStream(SpiderUtils.class.getClassLoader().getResource("SpiderUtils/BasKnowledgePattern.xml").getFile()));
+        Document dom=saxReader.read(SpiderUtils.class.getResourceAsStream("/SpiderUtils/BasKnowledgePattern.xml"));
         Element rootElemnt = dom.getRootElement();//获取根元素
         Element childElement = rootElemnt.element(webName);
 
@@ -383,7 +384,7 @@ public class CommonSpiderKnowledge {
 
         knowledgeSpiderConfig.webUrls = new ArrayList<Element>();
 
-        org.dom4j.Document dom =  saxReader.read(new FileInputStream(SpiderUtils.class.getClassLoader().getResource(urlXml).getFile()));
+        Document dom =  saxReader.read(new FileInputStream(SpiderUtils.class.getClassLoader().getResource(urlXml).getFile()));
         Element rootElemnt = dom.getRootElement();//获取根元素
         Element childElement = rootElemnt.element(webName);
 
@@ -565,8 +566,8 @@ public class CommonSpiderKnowledge {
      * @param doc
      * @param knowledgeSpiderConfig
      * @return
-     * @throws XpathSyntaxErrorException
-     * @throws IOException
+     * @throws cn.wanghaomiao.xpath.exception.XpathSyntaxErrorException
+     * @throws java.io.IOException
      */
     public static JXDocument listPageJsoup(JXDocument doc,KnowledgeSpiderConfig knowledgeSpiderConfig) throws XpathSyntaxErrorException, IOException {
         String nexturl=null;
@@ -959,6 +960,7 @@ public class CommonSpiderKnowledge {
         //正文
         if(StringUtils.isEmpty(knowledgeSpiderConfig.childnext.getText())) {
             List<JXNode> mainlist = getTagN(childDocumet,knowledgeSpiderConfig.main.getText());
+            System.out.println(mainlist);
             for (JXNode objmain : mainlist) {
                 if (StringUtils.isNotEmpty(objmain.getElement().text())) {
                     main = (main + "\r\n<p>" + objmain.getElement().text() + "</p>").replace("null\r\n", "").replace(Jsoup.parse("&nbsp;").text(), "");
@@ -1031,6 +1033,7 @@ public class CommonSpiderKnowledge {
         System.out.println(type);
 //TODO
         depositJavabean(title, ptime, type, cover, tag, author, main, puuid, kuuid, (String) childLink, source, authorurl);
+
         System.out.println(a + "+" + i);
         System.out.println("---------------------------------");
     }
@@ -1062,6 +1065,12 @@ public class CommonSpiderKnowledge {
         proKnowledge.setUrl(childLink);
         proKnowledge.setSource(source);
         proKnowledge.setUuid(kuuid);
+        ProKnowledgeImpl proKnowledgeImpl=new ProKnowledgeImpl();
+        try {
+            proKnowledgeImpl.insert(proKnowledge);
+        } catch (ProKnowledgeImpl.FormatEexception formatEexception) {
+            formatEexception.printStackTrace();
+        }
         proKnowledgeList.add(proKnowledge);
         if(StringUtils.isNotEmpty(author)) {
             PerKnowledge perKnow = new PerKnowledge();
@@ -1072,28 +1081,29 @@ public class CommonSpiderKnowledge {
             perKnow.setKuuid(kuuid);
             perKnow.setSource(source);
             perKnowledgeList.add(perKnow);
-
             BasPersonInfo basPerson = new BasPersonInfo();
             basPerson.setUuid(puuid);
             basPerson.setName(author);
             basPerson.setSource(source);
             basPerson.setUrl(authorurl);
             basPersonInfoList.add(basPerson);
+            System.out.println("---------------存放bas_person_info表和per_knowledge表中-----------------");
         }else{
-            PerKnowledge perKnow = new PerKnowledge();
-            perKnow.setName("null");
-            perKnow.setKname(title);
-            perKnow.setRtype("原作者");
-            perKnow.setPuuid(puuid);
-            perKnow.setKuuid(kuuid);
-            perKnow.setSource(source);
-            perKnowledgeList.add(perKnow);
+//            PerKnowledge perKnow = new PerKnowledge();
+//            perKnow.setName("null");
+//            perKnow.setKname(title);
+//            perKnow.setRtype("原作者");
+//            perKnow.setPuuid(puuid);
+//            perKnow.setKuuid(kuuid);
+//            perKnow.setSource(source);
+//            perKnowledgeList.add(perKnow);
             BasPersonInfo basPerson = new BasPersonInfo();
             basPerson.setUuid(puuid);
             basPerson.setName("null");
             basPerson.setSource(source);
             basPerson.setUrl(authorurl);
             basPersonInfoList.add(basPerson);
+            System.out.println("---------------作者为空，只存放bas_person_info表中-----------------");
         }
     }
 /**
@@ -1176,5 +1186,4 @@ public class CommonSpiderKnowledge {
     public static String getOSName() {
         return System.getProperty("os.name");
     }
-
 }

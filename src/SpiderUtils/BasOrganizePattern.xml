@@ -4927,6 +4927,9 @@
         <!--选择所需要的驱动器-->
         <flag>selenium</flag>
     </SpiderLghd>
+<<<<<<< HEAD
+
+=======
     <!--智明星通-->
     <SpiderZmxt>
         <!--知识配置文件列表-->
@@ -9855,6 +9858,7 @@
         <!--选择所需要的驱动器-->
         <flag>jsoup</flag>
     </SpiderSqsd>
+>>>>>>> 1e6df14fec3b74c1e7770209a01f666e1d3f243d
 
 
 

@@ -1,71 +1,67 @@
 package SpiderUtils;
-import JavaBean.ProKnowledge;
 import cn.wanghaomiao.xpath.exception.XpathSyntaxErrorException;
 import cn.wanghaomiao.xpath.model.JXDocument;
-import cn.wanghaomiao.xpath.model.JXNode;
 
-import com.google.gson.Gson;
-
-import com.gargoylesoftware.htmlunit.activex.javascript.msxml.XMLSerializer;
 
 import dao.impl.ProKnowledgeImpl;
 
-import org.apache.commons.lang3.StringUtils;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.HttpStatus;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.util.EntityUtils;
-import org.dom4j.Attribute;
-import org.dom4j.Document;
 import org.dom4j.DocumentException;
-import org.dom4j.Element;
-import org.dom4j.io.SAXReader;
-import org.dom4j.tree.AbstractAttribute;
-import org.jsoup.Connection;
+
 import org.jsoup.Jsoup;
-import org.jsoup.select.Elements;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.phantomjs.PhantomJSDriver;
-import org.xml.sax.SAXException;
 
-import javax.xml.crypto.dsig.XMLSignature;
+
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.*;
-import java.net.*;
-import java.nio.charset.Charset;
+
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Iterator;
+
 import java.util.List;
-import java.util.Objects;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.logging.SimpleFormatter;
-import java.util.logging.XMLFormatter;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+
 
 public class test {
-
+//    public static WebDriver getChromeDriver(){
+//        System.setProperty("webdriver.chrome.driver",SpiderContant.chromeWindowsPath);
+//        return new ChromeDriver();
+//    }
+//    public static WebDriver driver=getChromeDriver();
+    static List<org.dom4j.Element> books;
+    public static JXDocument getJXDocument(String url) throws IOException {
+        return new JXDocument(Jsoup.connect(url).userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36").ignoreContentType(true).ignoreHttpErrors(true).timeout(100000).get());
+    }
     public static void main(String[] args) throws ParserConfigurationException, XpathSyntaxErrorException, SpiderUtils.FormatEexception, DocumentException, IOException, ProKnowledgeImpl.FormatEexception, InterruptedException, ParseException {
-        System.setProperty("webdriver.chrome.driver",SpiderContant.chromeWindowsPath);
+//jsoup查看网页源码
+//http://chanye.07073.com/     http://chanye.07073.com/shuju/1560716.html
+//TODO
+//      org.jsoup.nodes.Document doc1=Jsoup.connect("http://search.ifeng.com/sofeng/search.action?q=%E4%BA%BA%E5%8A%9B%E8%B5%84%E6%BA%90&c=1&p=2")
+//                          .userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36")
+//                         .get();
+//        JXDocument doc=new JXDocument(doc1);
+//       System.out.println(doc1.outerHtml());
+
+
+
+
+
+
+
+//selenium查看网页源码
+//////
+        System.setProperty("webdriver.chrome.driver",SpiderContant.chromeWindowsPath );
         WebDriver driver=new ChromeDriver();
-        driver.get("http://www.wanmei.com/");
+        driver.get("http://news.baidu.com/ns?word=%E5%AE%8C%E7%BE%8E%E4%B8%96%E7%95%8C&tn=newstitle&from=news&cl=2&rn=20&ct=0");
         WebElement webElement=driver.findElement(By.xpath("/html"));
-        org.jsoup.nodes.Document doc = Jsoup.parse(webElement.getAttribute("outerHTML"));
-        JXDocument jx=new JXDocument(doc);
+        org.jsoup.nodes.Document doc=Jsoup.parse(webElement.getAttribute("outerHTML"));
+        JXDocument jxDocument=new JXDocument(doc);
         System.out.println(doc.outerHtml());
-        System.out.println(jx.selOne("//div[@class='logo']/a/img/@src"));
+////        System.out.println(jxDocument.sel(""));
+//        JavascriptExecutor executor= (JavascriptExecutor) driver;
+//        executor.executeScript("$(\'doc.sel(\"//a[text()*='下一页']/@href\")\').click()");
+
+
     }
 }

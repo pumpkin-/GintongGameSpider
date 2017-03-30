@@ -1,5 +1,6 @@
 package SpiderUtils;
 
+import org.apache.commons.lang3.StringUtils;
 import org.dom4j.Element;
 
 import java.util.List;
@@ -73,5 +74,17 @@ public class KnowledgeSpiderConfig {
                 ", contentPath=" + contentPath + '\'' +
                 ", detailXpath=" + detailXpath + '\'' +
                 '}';
+    }
+
+    /**
+     * 判断config不为null
+     * @param ele
+     * @return
+     */
+    public static boolean isNotEmpty(Element ele) {
+        if(ele != null && StringUtils.isNotEmpty(ele.getText())) {
+            return true;
+        }
+        return false;
     }
 }

@@ -1,11 +1,7 @@
 package GintongameSpider.SpiderWm;
 
 import JavaBean.*;
-import MaiMaiDataParser.Maimai;
-import SpiderUtils.KnowledgeSpiderConfig;
 import SpiderUtils.SpiderContant;
-import cn.wanghaomiao.xpath.model.JXDocument;
-import com.google.gson.Gson;
 import dao.*;
 import dao.impl.*;
 import org.jsoup.Jsoup;
@@ -17,10 +13,6 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -275,6 +267,7 @@ public class SpiderWm {
                     }
                     if(com.contains("职位")){
                        perWorkInfo.setJob(com.split("：")[1]);
+
                     }
                 }
                 perWorkInfo.setUuid(uuid);
@@ -388,6 +381,7 @@ public class SpiderWm {
             List<String> urlsByComName=getPerUrl(driver, companyName);
             for (String url : urlsByComName) {
                 try{
+
                     BasPersonInfo basPersonInfo=getPerInfoDataByUrl(driver, url,ouuid,companyName);
                     basPersonInfoList.add(basPersonInfo);
                     Thread.sleep(8000);

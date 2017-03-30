@@ -1,7 +1,8 @@
-package SpiderUtils;
 
+package SpiderUtils;
+import JavaBean.EcologyOrgData;
 import GintongameSpider.SpiderLgw.SpiderLgw;
-    import GintongameSpider.SpiderMM.SpiderMaimai;
+import GintongameSpider.SpiderMM.SpiderMaimai;
 import GintongameSpider.SpiderTyc.SpiderTyc;
 import JavaBean.BasOrganizeInfo;
 import JavaBean.BaseKnowLedge;
@@ -339,3 +340,4 @@ public class SpiderOrganize {
 
 
 }
+

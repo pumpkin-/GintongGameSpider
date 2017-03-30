@@ -109,6 +109,7 @@ public class PerWorkInfo {
         this.uuid = uuid == null ? null : uuid.trim();
     }
 
+
     public String getJob_early() {
         return job_early;
     }

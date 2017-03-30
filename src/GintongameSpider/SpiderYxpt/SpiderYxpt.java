@@ -68,6 +68,7 @@ public class SpiderYxpt {
     }
 
     public static void dataClean(Document doc,String url,int flag) throws IOException, ProKnowledgeImpl.FormatEexception {
+
         String tag=null;
         String main=null;
         String cover=null;
@@ -106,6 +107,14 @@ public class SpiderYxpt {
                 main=(main+"\r\n"+"<img src=\""+linkmain.select("img").attr("src")+"\">").replace("null\r\n","");
             }
         }
+        System.out.println("+++++++++++++++++++++++++++++"+url);
+        System.out.println("title:"+title);
+        System.out.println("ptime:"+ptime);
+        System.out.println("cover:"+cover);
+        System.out.println("tag:"+tag);
+        System.out.println("type:"+type);
+        System.out.println("main:"+main);
+        System.out.println("author:"+author);
         try {
             storeToDatebase(title,ptime,type,cover,tag,author,main,puuid,kuuid,url);
         } catch (Exception e) {

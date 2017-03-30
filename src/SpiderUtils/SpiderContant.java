@@ -12,5 +12,6 @@ public class SpiderContant {
     public static final String xmlUrl="SpiderUtils/SpiderData/BasCommonKnowledgePattern.xml";
     public static final String urlXml="SpiderUtils/BasKnowledgePattern.xml";
     public static final String orgXmlPath="/SpiderUtils/BasOrganizePattern.xml";
+    public static final String PerKnowledgePatternPath="SpiderUtils/PerKnowledgePattern.xml";
 
 }

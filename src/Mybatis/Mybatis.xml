@@ -30,9 +30,11 @@
         <mapper resource="com/gintongame/mapping/ComShareholderMapper.xml"/>
         <mapper resource="com/gintongame/mapping/ComShareholderTeamMapper.xml"/>
         <mapper resource="com/gintongame/mapping/PerOrganizeMapper.xml"/>
+        <mapper resource="com/gintongame/mapping/PerWorkInfoMapper.xml"/>
+        <mapper resource="com/gintongame/mapping/PerEducationInfoMapper.xml"/>
+        <mapper resource="com/gintongame/mapping/PerSkillInfoMapper.xml"/>
         <mapper resource="com/gintongame/mapping/OrgEvaInfoMapper.xml"/>
         <mapper resource="com/gintongame/mapping/PerWorkInfoMapper.xml"/>
         <mapper resource="com/gintongame/mapping/PerEducationInfoMapper.xml"/>
-
     </mappers>
 </configuration>

@@ -30,6 +30,43 @@ public class BasPersonInfo {
     private String p_desc;
     private String source;
     private String url;
+
+    @Override
+    public String toString() {
+        return "BasPersonInfo{" +
+                "uuid='" + uuid + '\'' +
+                ", name='" + name + '\'' +
+                ", enname='" + enname + '\'' +
+                ", age='" + age + '\'' +
+                ", alias='" + alias + '\'' +
+                ", hometown='" + hometown + '\'' +
+                ", country='" + country + '\'' +
+                ", nation='" + nation + '\'' +
+                ", con_way='" + con_way + '\'' +
+                ", sex='" + sex + '\'' +
+                ", id_number='" + id_number + '\'' +
+                ", birthday='" + birthday + '\'' +
+                ", household_register='" + household_register + '\'' +
+                ", liveplace='" + liveplace + '\'' +
+                ", marital_status='" + marital_status + '\'' +
+                ", employment='" + employment + '\'' +
+                ", diploma='" + diploma + '\'' +
+                ", work_years='" + work_years + '\'' +
+                ", child_status='" + child_status + '\'' +
+                ", live_photo='" + live_photo + '\'' +
+                ", occu_photo='" + occu_photo + '\'' +
+                ", art_photo='" + art_photo + '\'' +
+                ", ptag='" + ptag + '\'' +
+                ", p_desc='" + p_desc + '\'' +
+                ", source='" + source + '\'' +
+                ", url='" + url + '\'' +
+                ", type='" + type + '\'' +
+                ", province='" + province + '\'' +
+                ", city='" + city + '\'' +
+                ", advantage='" + advantage + '\'' +
+                '}';
+    }
+
     private String type="0";
     private String province;
     private String city;
@@ -275,4 +312,5 @@ public class BasPersonInfo {
     }
 
     private String advantage;
+
 }

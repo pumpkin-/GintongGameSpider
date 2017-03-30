@@ -2,7 +2,7 @@
 <BasKnowledgeSpiderPattern>
 
     <!--游戏大观抓取-->
-    <spiderYxdg>
+    <spider>
         <title>//h1[@class='entry-title']/text()</title>
         <author>//span[@class='meta-author']/a/text()</author>
         <authorurl></authorurl>>
@@ -57,11 +57,11 @@
             </url>>
         </urls>>
 
-    </spiderYxdg>
+    </spider>
 
 
 <!--游戏观察抓取-->
-    <spiderYxgc>
+    <spider>
         <title>//div[@class='detail_cont']/h1[@class='tit']/text()</title>
         <author></author>
         <authorurl></authorurl>>
@@ -83,11 +83,11 @@
             </url>
         </urls>>
 
-    </spiderYxgc>
+    </spider>
 
 
     <!--上方网抓取-->
-    <spiderSfw>
+    <spider>
         <title>//div[@class='side']/h1[@class='h1title']/text()</title>
         <author></author>
         <authorurl></authorurl>>
@@ -109,11 +109,11 @@
             </url>
         </urls>>
 
-    </spiderSfw>
+    </spider>
 
 
 <!--游民星空抓取-->
-    <spiderYmxk>
+    <spider>
         <title>//div[@class='Mid2L_tit']/h1/text()|//div[@class='MidL_title']/h1/text()</title>
         <author>//div[@class='detail']/span[text()*=作者]/text()</author>
         <authorurl></authorurl>>
@@ -135,10 +135,10 @@
             </url>
         </urls>>
 
-    </spiderYmxk>
+    </spider>
 
 <!--多玩游戏-->
-    <spiderDwyx>
+    <spider>
         <title>//div[@class='article']/h1/text()|//div[@class='newsDetail-header']/h1/text()</title>
         <author>//div[@class='info']/span[@class='author']/text()</author>
         <authorurl></authorurl>>
@@ -160,10 +160,10 @@
             </url>
         </urls>>
 
-    </spiderDwyx>
+    </spider>
 
     <!--电玩巴士-->
-    <spiderDWBS>
+    <spider>
         <title>//div[@class='top-info']/h4[@class='title']/p/text()</title>
         <author>//div[@class='author']/span[@class='name']/@author</author>
         <authorurl></authorurl>>
@@ -188,9 +188,9 @@
             </url>>
         </urls>>
 
-    </spiderDWBS>
+    </spider>
     <!--爱玩网-->
-    <spiderAW>
+    <spider>
         <title>//h1[@class='article-h1']/text()</title>
         <author>//div[@class='article-about']/span[1]/text()</author>
         <authorurl></authorurl>>
@@ -212,12 +212,12 @@
             </url>
 
         </urls>>
-        </spiderAW>
+        </spider>
 
 
 
 <!--逗游爬虫 刘雪明2.25-->
-    <spiderDoyo>
+    <spider>
         <!--详情页标题-->
         <title>//div[@class='title']/h1/text()</title>
         <!--详情页作者-->
@@ -248,9 +248,9 @@
                 http://www.doyo.cn/news/wangye
             </url>
         </urls>>
-    </spiderDoyo>
+    </spider>
 <!--游戏邦爬虫  刘雪明2.25-->
-    <spiderGamerboom>
+    <spider>
         <title>//div[@class='the_article']/h1/text()</title>
         <!--详情页作者-->
         <author>//div[@class='cnt_main']/div[@class='cnt_body']/p[1]/text()</author>
@@ -286,9 +286,9 @@
                 http://gamerboom.com/archives/category/dataview
             </url>
         </urls>>
-    </spiderGamerboom>
+    </spider>
 <!--不凡游戏爬虫  刘雪明2.25-->
-    <spiderBufan>
+    <spider>
         <title>//div[@class='this_con']/h2/text()|//div[@class='tit-right']/dl//dt/text()</title>
         <!--详情页作者-->
         <author>//em[@class='lt']/text()</author>
@@ -321,9 +321,9 @@
                 <!--http://xin.bufan.com/news_203/-->
             <!--</url>-->
         </urls>>
-    </spiderBufan>
+    </spider>
 <!-- 触乐抓取  刘雪明 2.25 -->
-    <spiderChuapp>
+    <spider>
         <!--列表页标题-->
         <title>//dl[@class='fn-left']/dt/text()</title>
         <!--详情页作者-->
@@ -361,21 +361,21 @@
                 http://www.chuapp.com/category/zsyx
             </url>
         </urls>>
-    </spiderChuapp>
+    </spider>
 
 
 
-    <spiderRwt>
-        <title>//h1[@class='appgame-video-title']/text()|//h1[@class='appgame-single-title']/text()</title>
-        <author>//div[@class='appgame-article-state']/a/text()|//div[@class='appgame-video-state']/a/text()</author>
-        <authorurl>//div[@class='appgame-article-state']/a/@href|//div[@class='appgame-video-state']/a/@href</authorurl>>
-        <cover>//div[@class='appgame-item-section']/a/strong/i/@data-original</cover>>
-        <ptime timeFormat="yyyy MM dd HH mm">//div[@class='appgame-video-state']/text()|//div[@class='appgame-article-state']/text()</ptime>>
+    <!--<spiderRwt>-->
+        <!--<title>//h1[@class='appgame-video-title']/text()|//h1[@class='appgame-single-title']/text()</title>-->
+        <!--<author>//div[@class='appgame-article-state']/a/text()|//div[@class='appgame-video-state']/a/text()</author>-->
+        <!--<authorurl>//div[@class='appgame-article-state']/a/@href|//div[@class='appgame-video-state']/a/@href</authorurl>>-->
+        <!--<cover>//div[@class='appgame-item-section']/a/strong/i/@data-original</cover>>-->
+        <!--<ptime timeFormat="yyyy MM dd HH mm">//div[@class='appgame-video-state']/text()|//div[@class='appgame-article-state']/text()</ptime>>-->
 
-</spiderRwt>
+<!--</spiderRwt>-->
 
     <!--易竞技-->
-    <spiderYJJ>
+    <spider>
         <title>//h1[@class='article-h1']/text()</title>
         <author>//div[@class='article-about']/span[1]/text()</author>
         <authorurl></authorurl>>
@@ -397,9 +397,9 @@
             </url>
 
         </urls>>
-    </spiderYJJ>
+    </spider>
     <!--前瞻网-->
-    <spiderQZW>
+    <spider>
         <title>//h1[@id='h_title']/text()</title>
         <author>//div[@class='info']/p[@class='fl']/span[@id='author_baidu']/text()</author>
         <authorurl></authorurl>>
@@ -435,9 +435,9 @@
 
         </urls>>
 
-    </spiderQZW>
+    </spider>
     <!--当游网-->
-    <spiderDYW>
+    <spider>
         <title>//div[@id='zx_content']/h1/text()</title>
         <author>//div[@class='info']/p/span[3]/text()</author>
         <authorurl></authorurl>>
@@ -463,10 +463,10 @@
 
         </urls>>
 
-    </spiderDYW>
+    </spider>
 
     <!--游戏陀螺 标签-->
-    <spiderYXTL>
+    <spider>
         <title>//div[@id='text_content']/h1/text()</title>
         <author></author>
         <authorurl></authorurl>>
@@ -515,9 +515,9 @@
             </url>
         </urls>>
 
-    </spiderYXTL>
+    </spider>
     <!--游戏狗-->
-    <spiderYXG>
+    <spider>
         <title>//div[@class='headlines']/h1/text()</title>
         <author>//div[@class='headlines']/p/span[3]/text()</author>
         <authorurl></authorurl>>
@@ -555,9 +555,9 @@
             </url>
         </urls>>
 
-    </spiderYXG>
+    </spider>
     <!--18183-->
-    <spider18183>
+    <spider>
         <title>//h1/text()</title>
         <author>//div[@class='a_info']/text()</author>
         <authorurl></authorurl>>
@@ -603,9 +603,9 @@
             </url>
         </urls>>
 
-    </spider18183>
+    </spider>
     <!--蚕豆网-->
-    <spiderCDW>
+    <spider>
         <title>//div[@class='main_l']//h1/text()</title>
         <author></author>
         <authorurl></authorurl>>
@@ -646,9 +646,9 @@
 
         </urls>>
 
-    </spiderCDW>
+    </spider>
     <!--pc25g-->
-    <spiderPc25g>
+    <spider>
         <title>//div[@class='article']/h1/text()</title>
         <author>//div[@class='article-info']/span[1]/text()</author>
         <authorurl></authorurl>>
@@ -677,12 +677,12 @@
 
         </urls>>
 
-    </spiderPc25g>
+    </spider>
 
 
 
     <!--腾讯游戏频道（手机游戏）-->
-    <spiderTXSY>
+    <spider>
         <title>//div[@class='qq_article']/div[@class='hd']/h1/text()|//div[@class='hd']/h1/text()</title>
         <author>//div[@class='a_Info']/span[@class='a_author']/text()</author>
         <authorurl></authorurl>>
@@ -719,9 +719,9 @@
             </url>
         </urls>
 
-    </spiderTXSY>
+    </spider>
     <!--腾讯游戏频道-->
-    <spiderTXYX>
+    <spider>
         <title>//div[@class='qq_main']/div[@class='hd']/h1/text()|//div[@class='qq_article']/div[@class='hd']/h1/text()|</title>
         <author>//span[@class='a_author']/text()</author>
         <authorurl></authorurl>>
@@ -749,9 +749,9 @@
             </url>
         </urls>>
 
-    </spiderTXYX>
+    </spider>
     <!--4399-->
-    <spider43994>
+    <spider>
         <title>//div[@class='heading']/h1[@class='title']/text()</title>
         <author>//div[@class='meta clearfix mt20']/span[@class='me2']/text()</author>
         <authorurl></authorurl>>
@@ -773,8 +773,8 @@
             </url>
         </urls>>
 
-    </spider43994>
-    <spider43991>
+    </spider>
+    <spider>
         <title>//div[@class='heading']/h1[@class='title']/text()</title>
         <author>//div[@class='meta clearfix mt20']/span[@class='me2']/text()</author>
         <authorurl></authorurl>>
@@ -799,8 +799,8 @@
 
         </urls>>
 
-    </spider43991>
-    <spider43992>
+    </spider>
+    <spider>
         <title>//div[@class='heading']/h1[@class='title']/text()</title>
         <author>//div[@class='meta clearfix mt20']/span[@class='me2']/text()</author>
         <authorurl></authorurl>>
@@ -822,8 +822,8 @@
             </url>
         </urls>>
 
-    </spider43992>
-    <spider43993>
+    </spider>
+    <spider>
         <title>//h1[@class='conh1']/text()</title>
         <author>//ul[@class='coninfo cf']/li[@class='li1']/text()</author>
         <authorurl></authorurl>>
@@ -847,7 +847,7 @@
 
         </urls>>
 
-    </spider43993>
+    </spider>
     <!--40407游戏资讯-->
     <!--
     <spider40407>
@@ -876,7 +876,7 @@
     </spider40407>
     -->
     <!--40407产业频道-->
-    <spider40407CY>
+    <spider>
     <title>//div[@class='details_tit']/h3/text()</title>
     <author>//p[@class='time']/text()</author>
     <authorurl></authorurl>>
@@ -908,9 +908,9 @@
 
     </urls>>
 
-</spider40407CY>
+</spider>
     <!--40407新游戏-->
-    <spider40407XYX>
+    <spider>
         <title>//|div[@class='con_left']/h1/text()</title>
         <author>//div[@class='zz']/span[1]/text()</author>
         <authorurl></authorurl>>
@@ -935,12 +935,12 @@
             </url>
         </urls>>
 
-    </spider40407XYX>
+    </spider>
 
 
 
     <!--178游戏网  刘雪明 2.27-->
-    <spider178>
+    <spider>
         <!--详情页标题-->
         <title>//h2[@class='list-content-item-title']/text()|//div[@id='content-header']/h2/text()</title>
         <!--作者-->
@@ -988,9 +988,9 @@
                 http://news.178.com/
             </url>
         </urls>>
-    </spider178>
+    </spider>
     <!--07073游戏网 刘雪明 2.27-->
-    <spider07073>
+    <spider>
         <!--详情页标题-->
         <title>//div[@class='new15Cont fl']/h1[@class='h1title']/text()</title>
         <!--作者-->
@@ -1020,9 +1020,9 @@
                 http://chanye.07073.com/
             </url>
         </urls>>
-    </spider07073>
+    </spider>
     <!--07073人物专访   刘雪明2.27-->
-    <spider07073Person>
+    <spider>
         <!--详情页标题-->
         <title>//div[@class='new15CF_R fr']/h1[@class='h1title']/text()</title>
         <!--作者-->
@@ -1052,9 +1052,9 @@
                 http://chanye.07073.com/caifang/
             </url>
         </urls>>
-    </spider07073Person>
+    </spider>
     <!--游戏瓶  刘雪明2.27-->
-    <spiderYouXiPing>
+    <spider>
         <!--详情页标题-->
         <title>//div[@class='h hm']/h1[@class='ph']/text()</title>
         <!--作者-->
@@ -1100,9 +1100,9 @@
             </url>
         </urls>>
 
-    </spiderYouXiPing>
+    </spider>
     <!--玩客   刘雪明2.27-->
-    <spiderWankr>
+    <spider>
         <!--详情页标题-->
         <title>//div[@class='wr15eva_glcon_l_art']/h3[@class='wr15eva_glcon_l_artH3']/text()</title>
         <!--作者-->
@@ -1148,9 +1148,9 @@
         </urls>
 
 
-    </spiderWankr>
+    </spider>
     <!--手游矩阵 刘雪明2.27-->
-    <spiderSYJZ>
+    <spider>
         <!--详情页标题-->
         <title>//header[@class='single-header']/h1/text()</title>
         <!--作者-->
@@ -1199,9 +1199,9 @@
             </url>
         </urls>>
 
-    </spiderSYJZ>
+    </spider>
     <!--52pk网 刘雪明2.28（玩家八卦）-->
-    <spider52PK>
+    <spider>
         <!--详情页标题-->
         <title>//div[@class='lt contentl']/h1/text()</title>
         <!--作者-->
@@ -1231,9 +1231,9 @@
                 http://news.52pk.com/shtml/sjbg.shtml
             </url>
         </urls>>
-    </spider52PK>
+    </spider>
     <!--52PK网 （有点意思）  刘雪明2.28  有问题-->
-    <spider52PKYDYS>
+    <spider>
         <!--详情页标题-->
         <title>//div[@class='lt contentl']/h1/text()|//div[@class='main']/h2[@class='t']/span/text()</title>
         <!--作者-->
@@ -1265,9 +1265,9 @@
         </urls>>
 
 
-    </spider52PKYDYS>
+    </spider>
     <!--手游手游戏网 刘雪明2.28-->
-    <spiderShouYou>
+    <spider>
         <!--详情页标题-->
         <title>//div[@class='art-info']/h1[@class='art-info-tit']/text()|//div[@class='gb-final-pn-article']/h1[@class='gb-final-tit-article']/text()</title>
         <!--作者-->
@@ -1297,9 +1297,9 @@
                 http://news.shouyou.com/news/dnews.shtml
             </url>
         </urls>>
-    </spiderShouYou>
+    </spider>
     <!--游戏论坛 刘雪明2.28-->
-    <spiderGameBBS>
+    <spider>
         <!--详情页标题-->
         <title>//div[@class='listPage']/h1/text()</title>
         <!--作者-->
@@ -1348,9 +1348,9 @@
             </url>
         </urls>>
 
-    </spiderGameBBS>
+    </spider>
     <!--522K网 刘雪明2.28-->
-    <spider522k>
+    <spider>
         <!--详情页标题-->
         <title>//div[@class='news_top']/h1/text()</title>
         <!--作者-->
@@ -1405,9 +1405,9 @@
             </url>
         </urls>>
 
-    </spider522k>
+    </spider>
     <!--html5 刘雪明2.28-->
-    <spiderHtml5>
+    <spider>
         <!--详情页标题-->
         <title>//div[@class='post-hd']/h2[@class='post-title']/text()</title>
         <!--作者-->
@@ -1447,9 +1447,9 @@
             </url>
         </urls>>
 
-    </spiderHtml5>
+    </spider>
     <!--电科技 刘雪明2.28-->
-    <spiderDianKJ>
+    <spider>
         <!--详情页标题-->
         <title>//div[@class='arttext']/h1[@class='title']/text()</title>
         <!--作者-->
@@ -1504,9 +1504,9 @@
             </url>
         </urls>>
 
-    </spiderDianKJ>
+    </spider>
     <!--游戏客栈  刘雪明2.28-->
-    <spiderGameKZ>
+    <spider>
         <!--详情页标题-->
         <title>//div[@class='n_title']/span/text()</title>
         <!--作者-->
@@ -1546,9 +1546,9 @@
             </url>
         </urls>>
 
-    </spiderGameKZ>
+    </spider>
     <!--vrzinc  刘雪明 3.1-->
-    <spiderVR>
+    <spider>
         <!--详情页标题-->
         <title>//h1[@class='title']/text()</title>
         <!--作者-->
@@ -1581,9 +1581,9 @@
                 <!--http://www.vrzinc.com/news/movie-->
             <!--</url>-->
         </urls>>
-    </spiderVR>
+    </spider>
     <!--游戏行 刘雪明3.1-->
-    <spiderYXH>
+    <spider>
         <!--详情页标题-->
         <title>//div[@cklass='h hm']/h1[@class='ph']/text()</title>
         <!--作者-->
@@ -1667,9 +1667,9 @@
                 http://www.youxihang.com/portal.php?mod=list&amp;catid=18
             </url>
         </urls>>
-    </spiderYXH>
+    </spider>
     <!--donews   刘雪明3.1-->
-    <spiderDN>
+    <spider>
         <!--详情页标题-->
         <title>//div[@class='contentbox pb50 w770 p35  pt30 mb30  border-left-shadow clearfix']/h2/text()</title>
         <!--作者-->
@@ -1708,9 +1708,9 @@
                 http://www.donews.com/idonews/
             </url>
         </urls>>
-    </spiderDN>
+    </spider>
     <!--砍柴网  刘雪明3.1-->
-    <spiderKC>
+    <spider>
         <!--详情页标题-->
         <title>//div[@class='hl_c_title']/h2/text()</title>
         <!--作者-->
@@ -1755,9 +1755,9 @@
                 http://news.ikanchai.com/qiye/
             </url>
         </urls>>
-    </spiderKC>
+    </spider>
     <!--互联网沙龙   刘雪明3.1-->
-    <spiderTX>
+    <spider>
         <!--详情页标题-->
         <title>//div[@class='bt']/div/text()</title>
         <!--作者-->
@@ -1817,9 +1817,9 @@
                 http://www.techxue.com/socialbeta/?a=1
             </url>
         </urls>>
-    </spiderTX>
+    </spider>
     <!--52pk网人物专访-->
-    <spider52PKRW>
+    <spider>
         <title>//div[@class='articletxt1 mb1']/h1/text()</title>
         <author>//div[@class='articletxt1 mb1']/h2/text()</author>
         <authorurl></authorurl>>
@@ -1844,9 +1844,9 @@
 
 
         </urls>>
-    </spider52PKRW>
+    </spider>
     <!--52pk产业要闻-->
-    <spider52PKCY>
+    <spider>
         <title>//div[@class='lt contentl']/h1/text()</title>
         <author>//div[@class='m_left lt']/span[3]/text()</author>
         <authorurl></authorurl>>
@@ -1871,9 +1871,9 @@
 
         </urls>>
 
-    </spider52PKCY>
+    </spider>
     <!--52PK大陆新闻-->
-    <spider52PKDL>
+    <spider>
         <title>//div[@class='lt contentl']/h1/text()</title>
         <author>//div[@class='m_left lt']/span[3]/text()</author>
         <authorurl></authorurl>>
@@ -1898,9 +1898,9 @@
 
         </urls>>
 
-    </spider52PKDL>
+    </spider>
     <!--52PKP全球资讯-->
-    <spider52PKQQ>
+    <spider>
         <title>//div[@class='articletxt1 mb1']/h1/text()</title>
         <author>//div[@class='articletxt1 mb1']/h2/text()</author>
         <authorurl></authorurl>>
@@ -1921,9 +1921,9 @@
                 http://news.52pk.com/hwnews/list_11_1.shtml
             </url>>
         </urls>>
-    </spider52PKQQ>
+    </spider>
     <!--游戏城-->
-    <spiderYXC>
+    <spider>
         <title>//div[@class='article']/h1/text()</title>
         <author>//div[@class='article_time']/text()</author>
         <authorurl></authorurl>>
@@ -1944,9 +1944,9 @@
                 http://www.youxicheng.net/xinwen/
             </url>>
         </urls>>
-    </spiderYXC>
+    </spider>
     <!--91游戏网-->
-    <spiderYXW>
+    <spider>
         <title>//div[@class='arc-box mt30 clearfix']/h1/text()</title>
         <author>//div[@class='post-info clearfix']/p/span[@class='source']/text()</author>
         <authorurl></authorurl>>
@@ -1967,9 +1967,9 @@
                 http://game.91.com/zixun/1799_1.html
             </url>>
         </urls>>
-    </spiderYXW>
+    </spider>
     <!--手游那点事-->
-    <spiderYYNDS>
+    <spider>
         <title>//div[@class='partCont_content_mod_article']/h1/text()</title>
         <author></author>
         <authorurl></authorurl>>
@@ -2002,9 +2002,9 @@
                 http://www.sykong.com/category/gao
             </url>
         </urls>>
-    </spiderYYNDS>
+    </spider>
     <!--超好玩游戏攻略-->
-    <spiderCHWGL>
+    <spider>
         <title>//h1[@class='text-center']/text()</title>
         <author></author>
         <authorurl></authorurl>>
@@ -2025,9 +2025,9 @@
                 http://www.18touch.com/walkthrough/new/page/1
             </url>>
         </urls>>
-    </spiderCHWGL>
+    </spider>
     <!--超好玩专栏-->
-    <spiderCHWZL>
+    <spider>
         <title>//div[@class='title']/h1/text()</title>
         <author>//div[@class='author']/span[1]/text()</author>
         <authorurl></authorurl>>
@@ -2048,9 +2048,9 @@
                 http://www.18touch.com/special/gdtls
             </url>
         </urls>>
-    </spiderCHWZL>
+    </spider>
     <!--超好玩评测-->
-    <spiderCHWPC>
+    <spider>
         <title>//h1/text()</title>
         <author>//address[@class='text-center']/text()</author>
         <authorurl></authorurl>>
@@ -2071,9 +2071,9 @@
                 http://www.18touch.com/category/new-games/page/1
             </url>>
         </urls>>
-    </spiderCHWPC>
+    </spider>
     <!--超好玩资讯速报-->
-    <spiderCHWZX>
+    <spider>
         <title>//h1/text()</title>
         <author></author>
         <authorurl></authorurl>>
@@ -2094,9 +2094,9 @@
                 http://www.18touch.com/category/news
             </url>>
         </urls>>
-    </spiderCHWZX>
+    </spider>
     <!--新浪产业频道-->
-    <spiderXLCY>
+    <spider>
         <title>//h1/text()</title>
         <author></author>
         <authorurl></authorurl>>
@@ -2117,9 +2117,9 @@
                 http://games.sina.cn/pc/newslist.d.html?cid=35435,35434,35436,35437,35439,35440,35441&amp;page=1&amp;pagesize=53
             </url>>
         </urls>>
-    </spiderXLCY>
+    </spider>
     <!--游戏坛子-->
-    <spiderYXTZ>
+    <spider>
         <title>//h1/text()</title>
         <author>//div[@class='news_detail_title']/span[3]/text()</author>
         <authorurl></authorurl>
@@ -2149,7 +2149,7 @@
                 http://www.gametanzi.com/syhy.html
             </url>
         </urls>
-    </spiderYXTZ>
+    </spider>
     <!--ZOL游戏-->
     <spiderZOL>
         <title>//h1/text()</title>
@@ -2181,7 +2181,9 @@
                 http://game.zol.com.cn/keyword/list_9082.shtml
             </url>
         </urls>
+
     </spiderZOL>
+
 
 
 
@@ -2243,7 +2245,6 @@
         </urls>
     </SpiderTykj>
 
-
     <!--飞流  刘雪明3.7-->
     <spiderFL>
         <title>//div[@class='art-tit']</title>
@@ -2268,8 +2269,8 @@
         </urls>
     </spiderFL>
     <!--易玩网  刘雪明3.8-->
-    <spiderYYW>
-            <title>//h2/text()</title>
+    <spiderYWW >
+            <title>//title/text()</title>
             <author></author>
             <authorurl></authorurl>
             <cover join=""></cover>
@@ -2310,17 +2311,17 @@
                     http://www.yiwan.com/softnew/
                 </url>
             </urls>
-    </spiderYYW>
+    </spiderYWW>
     <!--18touch   刘雪明3.14-->
-    <spider18Touch>
+    <spider18touch>
             <title>//h1[@class='text-center']/text()</title>
             <author></author>
             <authorurl></authorurl>
             <cover join="">//div[@class='media']/a/img/@src</cover>
             <ptime timeFormat="yyyy MM dd HH mm">//address[@class='text-center']/time/text()</ptime>>
             <tag></tag>
-            <main>//div[@class='content']/p</main>>
-            <mainpic>//img/@src</mainpic>>
+            <main>//div[@class='Z_article_box Z_content_box col-xs-12 Z_mrb']/article/div[@class='content']/p</main>>
+            <mainpic join="">//img/@src</mainpic>>
             <type></type>>
             <source>18touch</source>
             <childLink join="">//div[@class='media']/a[@class='pull-left']/@href</childLink>>
@@ -2333,7 +2334,7 @@
                     http://www.18touch.com/category/hangye/type/海外新闻
                 </url>
             </urls>
-    </spider18Touch>
+    </spider18touch>
 
 
 
