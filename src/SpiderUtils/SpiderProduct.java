@@ -122,6 +122,7 @@ public class SpiderProduct {
      * @param allpage 页数
      * @return 全部的链接
      */
+//    TODO
     public static List  allpage(String dynamicURL,String allpage,int fromPageNum){
         List<String>list=new ArrayList<String>();
         int pages=Integer.parseInt(allpage);
@@ -732,9 +733,13 @@ class Spider{
             if(StringUtils.isNoneEmpty(map.get("version").toString())){
                 if(document.sel(map.get("version").toString()).size()>0) {
                     version = document.sel(map.get("version").toString()).get(0).toString();
+                    if(version.contains("：")){
+                        version=version.split("：")[1];
+                        System.out.println(version);
+                    }else{
+                        System.out.println(version);
+                    }
                 }
-//                version=version.substring(1,version.lastIndexOf(")"));
-                System.out.println(version);
                 gameInfo.setVersion(version);
             }
             //分类(网络类型)
@@ -769,8 +774,12 @@ class Spider{
                         if(list1!=null&&list1.size()>0) {
                             list1.get(x).setGame_size(list.get(x).toString());
                         }
-                        System.out.println(list.get(x).toString());
-                        gameInfo.setGame_size(list.get(x).toString());
+                        StringBuffer sb=new StringBuffer(list.get(x).toString().split("：")[1]);
+                        if(!list.get(x).toString().split("：")[1].contains("B")){
+                            sb=sb.append("B");
+                            System.out.println(sb.toString());
+                        }
+                        gameInfo.setGame_size(sb.toString());
                     }
                 }
             }
@@ -1007,6 +1016,9 @@ class Spider{
             if(StringUtils.isNotEmpty(path)) {
                 if(document.sel(map.get(xpath).toString()).size()>0) {
                     information = document.sel(map.get(xpath).toString()).get(0).toString();
+                    if(information.contains("：")){
+                        System.out.println(information.split("：")[1]);
+                    }
                 }
                 System.out.println(information);
             }
@@ -1028,7 +1040,7 @@ class Spider{
                 gameInfo.setUuid(uuid);
                 //用dao层接口插入数据库
 
-                infoDao.insertGame(gameInfo);
+//                infoDao.insertGame(gameInfo);
 
                 //插入游戏类型
                 ProGameTypeDao typeDao = new ProGameTypeDaoImpl();

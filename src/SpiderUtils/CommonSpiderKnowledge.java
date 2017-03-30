@@ -61,47 +61,47 @@ public class CommonSpiderKnowledge {
                     e.printStackTrace();
                 }
             }
-        });
-        pool.submit(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    ergodicUrl("spiderYxdg", 10, "no");
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
         });*/
         pool.submit(new Runnable() {
             @Override
             public void run() {
                 try {
-                    ergodicUrl("spiderYWW", 101, "no",SpiderContant.urlXml);
-                } catch (Exception e) {
+                    ergodicUrl("spiderZOL", 0, "no", SpiderContant.urlXml);
+                }catch (Exception e){
                     e.printStackTrace();
                 }
             }
         });
-        /*pool.submit(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    ergodicUrl("spiderDwyx", 0, "no");
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-        pool.submit(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    ergodicUrl("spiderYxgc", 0, "no");
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });*/
+//        pool.submit(new Runnable() {
+//            @Override
+//            public void run() {
+//                try {
+//                    ergodicUrl("spiderMJW", 0, "no",SpiderContant.PerKnowledgePatternPath);
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        });
+//        pool.submit(new Runnable() {
+//            @Override
+//            public void run() {
+//                try {
+//                    ergodicUrl("spiderHXW", 0, "no",SpiderContant.PerKnowledgePatternPath);
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        });
+//        pool.submit(new Runnable() {
+//            @Override
+//            public void run() {
+//                try {
+//                    ergodicUrl("spiderHMW", 0, "no",SpiderContant.PerKnowledgePatternPath);
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        });
 
     }
 
@@ -958,6 +958,7 @@ public class CommonSpiderKnowledge {
         //正文
         if(StringUtils.isEmpty(knowledgeSpiderConfig.childnext.getText())) {
             List<JXNode> mainlist = getTagN(childDocumet,knowledgeSpiderConfig.main.getText());
+            System.out.println(mainlist);
             for (JXNode objmain : mainlist) {
                 if (StringUtils.isNotEmpty(objmain.getElement().text())) {
                     main = (main + "\r\n<p>" + objmain.getElement().text() + "</p>").replace("null\r\n", "").replace(Jsoup.parse("&nbsp;").text(), "");
@@ -1030,6 +1031,7 @@ public class CommonSpiderKnowledge {
         System.out.println(type);
 //TODO
         depositJavabean(title, ptime, type, cover, tag, author, main, puuid, kuuid, (String) childLink, source, authorurl);
+
         System.out.println(a + "+" + i);
         System.out.println("---------------------------------");
     }
@@ -1061,6 +1063,12 @@ public class CommonSpiderKnowledge {
         proKnowledge.setUrl(childLink);
         proKnowledge.setSource(source);
         proKnowledge.setUuid(kuuid);
+        ProKnowledgeImpl proKnowledgeImpl=new ProKnowledgeImpl();
+        try {
+            proKnowledgeImpl.insert(proKnowledge);
+        } catch (ProKnowledgeImpl.FormatEexception formatEexception) {
+            formatEexception.printStackTrace();
+        }
         proKnowledgeList.add(proKnowledge);
         if(StringUtils.isNotEmpty(author)) {
             PerKnowledge perKnow = new PerKnowledge();
@@ -1071,28 +1079,29 @@ public class CommonSpiderKnowledge {
             perKnow.setKuuid(kuuid);
             perKnow.setSource(source);
             perKnowledgeList.add(perKnow);
-
             BasPersonInfo basPerson = new BasPersonInfo();
             basPerson.setUuid(puuid);
             basPerson.setName(author);
             basPerson.setSource(source);
             basPerson.setUrl(authorurl);
             basPersonInfoList.add(basPerson);
+            System.out.println("---------------存放bas_person_info表和per_knowledge表中-----------------");
         }else{
-            PerKnowledge perKnow = new PerKnowledge();
-            perKnow.setName("null");
-            perKnow.setKname(title);
-            perKnow.setRtype("原作者");
-            perKnow.setPuuid(puuid);
-            perKnow.setKuuid(kuuid);
-            perKnow.setSource(source);
-            perKnowledgeList.add(perKnow);
+//            PerKnowledge perKnow = new PerKnowledge();
+//            perKnow.setName("null");
+//            perKnow.setKname(title);
+//            perKnow.setRtype("原作者");
+//            perKnow.setPuuid(puuid);
+//            perKnow.setKuuid(kuuid);
+//            perKnow.setSource(source);
+//            perKnowledgeList.add(perKnow);
             BasPersonInfo basPerson = new BasPersonInfo();
             basPerson.setUuid(puuid);
             basPerson.setName("null");
             basPerson.setSource(source);
             basPerson.setUrl(authorurl);
             basPersonInfoList.add(basPerson);
+            System.out.println("---------------作者为空，只存放bas_person_info表中-----------------");
         }
     }
 /**

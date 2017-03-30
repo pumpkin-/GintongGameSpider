@@ -6,7 +6,7 @@
             <transactionManager type="JDBC" />
             <dataSource type="POOLED">
                 <property name="driver" value="com.mysql.jdbc.Driver" />
-                <property name="url" value="jdbc:mysql://123.59.74.132:3306/game_db?useUnicode=true&amp;useCursorFetch=true&amp;defaultFetchSize=100?useUnicode=true&amp;characterEncoding=utf-8" />
+                <property name="url" value="jdbc:mysql://123.59.74.132:3306/game_db_qa?useUnicode=true&amp;useCursorFetch=true&amp;defaultFetchSize=100?useUnicode=true&amp;characterEncoding=utf-8" />
                 <property name="username" value="gtcom" />
                 <property name="password" value="admin@gt.com1" />
             </dataSource>
@@ -30,15 +30,11 @@
         <mapper resource="com/gintongame/mapping/ComShareholderMapper.xml"/>
         <mapper resource="com/gintongame/mapping/ComShareholderTeamMapper.xml"/>
         <mapper resource="com/gintongame/mapping/PerOrganizeMapper.xml"/>
-<<<<<<< HEAD
         <mapper resource="com/gintongame/mapping/PerWorkInfoMapper.xml"/>
         <mapper resource="com/gintongame/mapping/PerEducationInfoMapper.xml"/>
         <mapper resource="com/gintongame/mapping/PerSkillInfoMapper.xml"/>
-=======
         <mapper resource="com/gintongame/mapping/OrgEvaInfoMapper.xml"/>
         <mapper resource="com/gintongame/mapping/PerWorkInfoMapper.xml"/>
         <mapper resource="com/gintongame/mapping/PerEducationInfoMapper.xml"/>
-
->>>>>>> 1e6df14fec3b74c1e7770209a01f666e1d3f243d
     </mappers>
 </configuration>

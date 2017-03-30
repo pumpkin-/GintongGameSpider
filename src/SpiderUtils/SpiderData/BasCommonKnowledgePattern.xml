@@ -8,8 +8,8 @@
         <childLink join="">//div[@class='info-head']/a/@href|//a[@class='info-pic']/@src</childLink>
         <nextPage join="http://game.zol.com.cn">//div[@class='page']/a[@class='next']/@href</nextPage>
         <urls>
-            <url>
-                http://game.zol.com.cn/more/2_1133.shtml
+            <url page="20">
+                http://game.zol.com.cn/more/2_1133_$(page).shtml
             </url>
         </urls>
     </spiderUrl>

@@ -2,7 +2,6 @@ package SpiderUtils;
 
 import JavaBean.BasPersonInfo;
 import JavaBean.OrgKnowledge;
-import JavaBean.PerKnowledge;
 import JavaBean.ProKnowledge;
 import cn.wanghaomiao.xpath.exception.XpathSyntaxErrorException;
 import cn.wanghaomiao.xpath.model.JXDocument;
@@ -14,6 +13,7 @@ import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 import org.jsoup.Jsoup;
+import org.jsoup.select.Elements;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -68,49 +68,49 @@ public class SpiderKnowledge {
             knowledgeSpiderConfig.title=childElement.element("title");
 
         }
-        if (StringUtils.isNotEmpty(childElement.element("author").getText())){
+        if (knowledgeSpiderConfig.isNotEmpty(childElement.element("author"))){
             knowledgeSpiderConfig.author=childElement.element("author");
 
         }
-        if(StringUtils.isNotEmpty(childElement.element("authorurl").getText())){
+        if(knowledgeSpiderConfig.isNotEmpty(childElement.element("authorurl"))){
             knowledgeSpiderConfig.authorUrl=childElement.element("authorurl");
 
         }
-        if(StringUtils.isNotEmpty(childElement.element("cover").getText())){
+        if(knowledgeSpiderConfig.isNotEmpty(childElement.element("cover"))){
             knowledgeSpiderConfig.cover=childElement.element("cover");
 
         }
-        if (StringUtils.isNotEmpty(childElement.element("ptime").getText())){
+        if (knowledgeSpiderConfig.isNotEmpty(childElement.element("ptime"))){
             knowledgeSpiderConfig.ptime=childElement.element("ptime");
         }
-        if (StringUtils.isNotEmpty(childElement.element("tag").getText())){
+        if (knowledgeSpiderConfig.isNotEmpty(childElement.element("tag"))){
             knowledgeSpiderConfig.tag=childElement.element("tag");
         }
-        if(StringUtils.isNotEmpty(childElement.element("main").getText())){
+        if(knowledgeSpiderConfig.isNotEmpty(childElement.element("main"))){
             knowledgeSpiderConfig.main=childElement.element("main");
         }
-        if (StringUtils.isNotEmpty(childElement.element("mainpic").getText())){
+        if (knowledgeSpiderConfig.isNotEmpty(childElement.element("mainpic"))){
             knowledgeSpiderConfig.mainPicture=childElement.element("mainpic");
         }
-        if (StringUtils.isNotEmpty(childElement.element("type").getText())){
+        if (knowledgeSpiderConfig.isNotEmpty(childElement.element("type"))){
             knowledgeSpiderConfig.type=childElement.element("type");
         }
-        if (StringUtils.isNotEmpty(childElement.element("source").getText())){
+        if (knowledgeSpiderConfig.isNotEmpty(childElement.element("source"))){
             knowledgeSpiderConfig.source=childElement.element("source");
         }
-        if(StringUtils.isNotEmpty(childElement.element("childLink").getText())){
+        if(knowledgeSpiderConfig.isNotEmpty(childElement.element("childLink"))){
             knowledgeSpiderConfig.childLink=childElement.element("childLink");
         }
-        if (StringUtils.isNotEmpty(childElement.element("nextpage").getText())){
+        if (knowledgeSpiderConfig.isNotEmpty(childElement.element("nextpage"))){
             knowledgeSpiderConfig.nextPage=childElement.element("nextpage");
         }
-        if (StringUtils.isNotEmpty(childElement.element("flag").getText())){
+        if (knowledgeSpiderConfig.isNotEmpty(childElement.element("flag"))){
             knowledgeSpiderConfig.flag=childElement.element("flag");
         }
-        if (StringUtils.isNotEmpty(childElement.element("childnext").getText())){
+        if (knowledgeSpiderConfig.isNotEmpty(childElement.element("childnext"))){
             knowledgeSpiderConfig.childnext=childElement.element("childnext");
         }
-        if (StringUtils.isNotEmpty(childElement.element("chose").getText())){
+        if (knowledgeSpiderConfig.isNotEmpty(childElement.element("chose"))){
             knowledgeSpiderConfig.chose=childElement.element("chose");
         }
         if(StringUtils.isEmpty(childElement.element("urls").getText())){
@@ -276,9 +276,9 @@ public class SpiderKnowledge {
                             JXDocument childDocumet = getJXDocument(childLink);
                             clearType(childDocumet,knowledgeSpiderConfig);
                             clearTag(childDocumet,knowledgeSpiderConfig);
-                            clearTime(childDocumet,knowledgeSpiderConfig);
+//                            clearTime(childDocumet,knowledgeSpiderConfig);
                             clearCover(doc,knowledgeSpiderConfig);
-                            clearAnthor(childDocumet,knowledgeSpiderConfig);
+//                            clearAnthor(childDocumet,knowledgeSpiderConfig);
                             clearTitle(childDocumet,knowledgeSpiderConfig);
                             clearMain(childDocumet,knowledgeSpiderConfig);
                         }
@@ -306,9 +306,9 @@ public class SpiderKnowledge {
                         JXDocument childDocumet = getJXDocument(childLink);
                         clearType(childDocumet,knowledgeSpiderConfig);
                         clearTag(childDocumet,knowledgeSpiderConfig);
-                        clearTime(childDocumet,knowledgeSpiderConfig);
+//                        clearTime(childDocumet,knowledgeSpiderConfig);
                         clearCover(doc,knowledgeSpiderConfig);
-                        clearAnthor(childDocumet,knowledgeSpiderConfig);
+//                        clearAnthor(childDocumet,knowledgeSpiderConfig);
                         clearTitle(childDocumet,knowledgeSpiderConfig);
                         clearMain(childDocumet,knowledgeSpiderConfig);
 
@@ -364,9 +364,9 @@ public class SpiderKnowledge {
                             JXDocument childDocumet = getJXDocument(childLink);
                             clearType(childDocumet,knowledgeSpiderConfig);
                             clearTag(childDocumet,knowledgeSpiderConfig);
-                            clearTime(childDocumet,knowledgeSpiderConfig);
+//                            clearTime(childDocumet,knowledgeSpiderConfig);
                             clearCover(doc,knowledgeSpiderConfig);
-                            clearAnthor(childDocumet,knowledgeSpiderConfig);
+//                            clearAnthor(childDocumet,knowledgeSpiderConfig);
                             clearTitle(childDocumet,knowledgeSpiderConfig);
                             clearMain(childDocumet,knowledgeSpiderConfig);
 //                            TODO
@@ -405,9 +405,9 @@ public class SpiderKnowledge {
                             JXDocument childDocumet = getJXDocument(childLink);
                             clearType(childDocumet,knowledgeSpiderConfig);
                             clearTag(childDocumet,knowledgeSpiderConfig);
-                            clearTime(childDocumet,knowledgeSpiderConfig);
+//                            clearTime(childDocumet,knowledgeSpiderConfig);
                             clearCover(doc,knowledgeSpiderConfig);
-                            clearAnthor(childDocumet,knowledgeSpiderConfig);
+//                            clearAnthor(childDocumet,knowledgeSpiderConfig);
                             clearTitle(childDocumet,knowledgeSpiderConfig);
                             clearMain(childDocumet,knowledgeSpiderConfig);
 //                            TODO
@@ -581,30 +581,36 @@ public class SpiderKnowledge {
         String mainPicture=null;
         if (knowledgeSpiderConfig.childnext==null){
             List<JXNode> mainList=getTagN(childDocumet,knowledgeSpiderConfig.main.getText());
-            for(JXNode objmian:mainList){
-                if(StringUtils.isNotEmpty(objmian.getElement().text())){
-                    main=("<p>"+objmian.getElement().text()+"</p>");
+            for(JXNode objmian:mainList) {
+                if (StringUtils.isNotEmpty(objmian.getElement().text())) {
+                    main = ("<p>" + objmian.getElement().text() + "</p>");
                 }
-                if (knowledgeSpiderConfig.isNotEmpty(knowledgeSpiderConfig.mainPicture)){
-                    mainPicture=objmian.sel(knowledgeSpiderConfig.mainPicture.getText()).toString();
-                    if (objmian.sel(knowledgeSpiderConfig.mainPicture.getText()).size()>0){
-                        if (StringUtils.isNotEmpty(knowledgeSpiderConfig.mainPicture.attributeValue("join"))){
-                            main=("<p>"+objmian.getElement().text()+"</p>\r\n"+("<img src=\""+knowledgeSpiderConfig.mainPicture.attributeValue("join")+mainPicture)+"\">").replace("null\r\n", "").replace(Jsoup.parse("&nbsp;").text(), "");
-                        }else {
-                            main=("<p>"+objmian.getElement().text()+"</p>\r\n"+"<img src=\""+mainPicture+"\">").replace("[","").replace("]","").replace("null\r\n", "").replace(Jsoup.parse("&nbsp;").text(), "");
+                if (knowledgeSpiderConfig.isNotEmpty(knowledgeSpiderConfig.mainPicture)) {
+                    mainPicture = objmian.sel(knowledgeSpiderConfig.mainPicture.getText()).toString();
+                    if (objmian.sel(knowledgeSpiderConfig.mainPicture.getText()).size() > 0) {
+                        if (StringUtils.isNotEmpty(knowledgeSpiderConfig.mainPicture.attributeValue("join"))) {
+                            main = ("<p>" + objmian.getElement().text() + "</p>\r\n" + ("<img src=\"" + knowledgeSpiderConfig.mainPicture.attributeValue("join") + mainPicture) + "\">").replace("null\r\n", "").replace(Jsoup.parse("&nbsp;").text(), "");
+                        } else {
+                            main = ("<p>" + objmian.getElement().text() + "</p>\r\n" + "<img src=\"" + mainPicture + "\">").replace("[", "").replace("]", "").replace("null\r\n", "").replace(Jsoup.parse("&nbsp;").text(), "");
                         }
-                    }else{
-                        if (StringUtils.isNotEmpty(knowledgeSpiderConfig.mainPicture.attributeValue("join"))){
-                            main=("<p>"+objmian.getElement().text()+"</p>").replace("null\r\n", "").replace(Jsoup.parse("&nbsp;").text(), "");
-                        }else {
-                            main=("<p>"+objmian.getElement().text()+"</p>").replace("[","").replace("]","").replace("null\r\n", "").replace(Jsoup.parse("&nbsp;").text(), "");
+                    } else {
+                        if (StringUtils.isNotEmpty(knowledgeSpiderConfig.mainPicture.attributeValue("join"))) {
+                            main = ("<p>" + objmian.getElement().text() + "</p>").replace("null\r\n", "").replace(Jsoup.parse("&nbsp;").text(), "");
+                        } else {
+                            main = ("<p>" + objmian.getElement().text() + "</p>").replace("[", "").replace("]", "").replace("null\r\n", "").replace(Jsoup.parse("&nbsp;").text(), "");
                         }
                     }
 
+                } else {
+                    List<JXNode> mainLists = getTagN(childDocumet, knowledgeSpiderConfig.main.getText());
+                    for (JXNode objmians : mainLists) {
+                        if (StringUtils.isNotEmpty(objmian.getElement().text())) {
+                            main = ("<p>" + objmians.getElement().text() + "</p>");
+                        }
+                    }
+                    System.out.println(main);
                 }
-                System.out.println(main);
             }
-
         }
         return true;
     }
@@ -619,12 +625,13 @@ public class SpiderKnowledge {
         String anthor=null;
         if (knowledgeSpiderConfig.isNotEmpty(knowledgeSpiderConfig.author)) {
             try {
+                System.out.println(knowledgeSpiderConfig.author.getText());
                 anthor = childDocumet.selOne(knowledgeSpiderConfig.author.getText()).toString();
-                Pattern pattern=Pattern.compile(".*作者.*");
-                Matcher matcher=pattern.matcher(anthor);
-                if (matcher.find()){
-                    anthor=matcher.group(0);
-                 }
+//                Pattern pattern=Pattern.compile(".*作者.*");
+//                Matcher matcher=pattern.matcher(anthor);
+//                if (matcher.find()){
+//                    anthor=matcher.group(0);
+//                 }
             } catch (XpathSyntaxErrorException e) {
                 e.printStackTrace();
             }
@@ -706,17 +713,17 @@ public class SpiderKnowledge {
         SimpleDateFormat simpleDateFormat=new SimpleDateFormat(knowledgeSpiderConfig.ptime.attributeValue("timeFormat"));
         if (knowledgeSpiderConfig.isNotEmpty(knowledgeSpiderConfig.ptime)) {
             try {
+                System.out.println(knowledgeSpiderConfig.ptime.getText());
                 ptime = childDocumet.selOne(knowledgeSpiderConfig.ptime.getText()).toString();
-                Pattern pattern=Pattern.compile("[0-9]{4}\\D[0-9]{1,2}\\D[0-9]{1,2}\\D\\d{1,2}\\D\\d{1,2}\\D\\d{0,2}|[0-9]{4}\\D[0-9]{1,2}\\D[0-9]{1,2}");
-                Matcher matcher=pattern.matcher(ptime);
-                if(matcher.find()){
-                    ptime=matcher.group(0);
-                }
-                if (ptime.contains("/")){
+//                Pattern pattern=Pattern.compile("[0-9]{4}\\D[0-9]{1,2}\\D[0-9]{1,2}\\D\\d{1,2}\\D\\d{1,2}\\D\\d{0,2}|[0-9]{4}\\D[0-9]{1,2}\\D[0-9]{1,2}");
+//                Matcher matcher=pattern.matcher(ptime);
+//                if(matcher.find()){
+//                    ptime=matcher.group(0);
+//                }
                     ptime=ptime.replaceAll("\\D", " ");
                     date =simpleDateFormat.parse(ptime);
                     ptime=simpleDateFormatchange.format(date);
-                }
+
             } catch (XpathSyntaxErrorException e) {
                 System.out.println("check your ptime Xpath");
             } catch (ParseException e) {
@@ -804,6 +811,80 @@ public class SpiderKnowledge {
         ProKnowledgeImpl perKnowledgeImpl=new ProKnowledgeImpl();
         perKnowledgeImpl.insert(perKnowledge);
     }
+    public static void fecthNewsByCompanyName(String companyName,String uuid) throws InterruptedException {
+        String url=" http://news.baidu.com/ns?word=" +companyName+ "&pn=20&cl=2&ct=0&tn=newstitle&rn=20&ie=utf-8&bt=0&et=0";
+        WebDriver driver=getChromeDriver();
+        driver.get(url);
+        List<String> hrefList=new ArrayList<String>();
+        WebElement element=driver.findElement(By.xpath("/html"));
+        org.jsoup.nodes.Document doc=Jsoup.parse(element.getAttribute("outerHTML"));
+        while(true){
+            int num=0;
+            num++;
+            int i=0;
+            Elements elementsHref=doc.select("h3[class=c-title] a");
+            for(org.jsoup.nodes.Element elementHrefs:elementsHref){
+                String href=elementHrefs.attr("href");
+                hrefList.add(href);
+            }
+            try{
+                for(String hrefLists:hrefList){
+                    driver.get(hrefLists);
+                    System.out.println(hrefLists);
+                    WebElement elementDetails=driver.findElement(By.xpath("/html"));
+                    org.jsoup.nodes.Document documentDetails= Jsoup.parse(elementDetails.getAttribute("outerHTML"));
+                    String title=documentDetails.select("title").text();
+                    System.out.println(title);
+                    String time=documentDetails.select("span[class=date]").text();
+                    System.out.println(time);
+                    Elements elementMain=documentDetails.select("p");
+                    String main=null;
+                    String imgSrc=null;
+                    for( org.jsoup.nodes.Element elementMains:elementMain){
+                        main="<p>"+elementMains.text()+"</p>";
+                        Elements elementImg=elementMains.select("img");
+                        for(org.jsoup.nodes.Element elementImgs:elementImg){
+                            imgSrc=elementImgs.attr("src");
+                            System.out.println("<img src=\""+imgSrc+"\"/>");
+                        }
+                        System.out.println(main);
+                    }
+                    i++;
+                    System.out.println("----------------------这是第"+num+"页的第"+i+"条数据-------------------------------");
+                    Thread.sleep(5000);
+                }
+            }catch(Exception e){
+                System.out.println("出错了。。。");
+            }
+            JavascriptExecutor javascriptExecutor=(JavascriptExecutor)driver;
+            javascriptExecutor.executeScript("$('#page >a.n')[1].click()");
+            doc= returnPageDocument(driver);
+        }
+
+    }
+    /**
+     * 返回页面的Document
+     * @return
+     */
+    public static org.jsoup.nodes.Document returnPageDocument(WebDriver driver){
+        String handle=driver.getWindowHandle();
+        for(String handles:driver.getWindowHandles()){
+            if(handle.equals(handles)){
+                continue;
+            }else{
+                driver.close();
+                driver.switchTo().window(handles);
+            }
+        }
+        try {
+            Thread.sleep(10000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        WebElement webElementMain=driver.findElement(By.xpath("/html"));
+        org.jsoup.nodes.Document doc=Jsoup.parse(webElementMain.getAttribute("outerHTML"));
+        return doc;
+    }
     /**
      *
      * @param arg
@@ -813,12 +894,12 @@ public class SpiderKnowledge {
         Document doc=obtainKnowledgeXml(SpiderContant.urlXml);
         Element  rootElement=doc.getRootElement();
         Element childElement=rootElement.element(WebName);
-        System.out.println(childElement);
         String uuid=UUID.randomUUID().toString();
-        System.out.println(uuid);
         try {
-//            ergodicUrl("spiderYWW",SpiderContant.urlXml);
-            ergodicUrl(childElement,uuid);
+//            ergodicUrl("spiderHXW",SpiderContant.PerKnowledgePatternPath);
+//            ergodicUrl(childElement,uuid);
+            String name="完美世界";
+            fecthNewsByCompanyName(name,UUID.randomUUID().toString());
         } catch (Exception e) {
             e.printStackTrace();
         }

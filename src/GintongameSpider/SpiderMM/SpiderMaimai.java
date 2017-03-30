@@ -1,4 +1,4 @@
-package GintongameSpider.SpiderMm;
+package GintongameSpider.SpiderMM;
 
 import JavaBean.*;
 import MaiMaiDataParser.Contact;

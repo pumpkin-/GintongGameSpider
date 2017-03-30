@@ -2151,7 +2151,7 @@
         </urls>
     </spider>
     <!--ZOL游戏-->
-    <spider>
+    <spiderZOL>
         <title>//h1/text()</title>
         <author>//div[@class='article-aboute']/span[3]/div/a/text()|//div[@calss='editor']/a/text()</author>
         <authorurl>//div[@class='article-aboute']/span[3]/div/a/@href|//div[@calss='editor']/a/@href</authorurl>
@@ -2181,10 +2181,9 @@
                 http://game.zol.com.cn/keyword/list_9082.shtml
             </url>
         </urls>
-<<<<<<< HEAD
-    </spider>
-=======
+
     </spiderZOL>
+
 
 
 
@@ -2246,10 +2245,8 @@
         </urls>
     </SpiderTykj>
 
-
->>>>>>> 1e6df14fec3b74c1e7770209a01f666e1d3f243d
     <!--飞流  刘雪明3.7-->
-    <spider>
+    <spiderFL>
         <title>//div[@class='art-tit']</title>
         <author></author>
         <authorurl></authorurl>
@@ -2270,7 +2267,7 @@
                 http://www.feiliu.com/news
             </url>
         </urls>
-    </spider>
+    </spiderFL>
     <!--易玩网  刘雪明3.8-->
     <spiderYWW >
             <title>//title/text()</title>

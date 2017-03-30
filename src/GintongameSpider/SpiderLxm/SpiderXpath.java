@@ -1,5 +1,6 @@
 package GintongameSpider.SpiderLxm;
 
+import JavaBean.BasPersonInfo;
 import SpiderUtils.*;
 
 import java.util.concurrent.Executor;
@@ -128,10 +129,11 @@ public class SpiderXpath {
             @Override
             public void run() {
                 try {
-                    CommonSpiderKnowledge.ergodicUrl("spiderYWW", 0, "no");
+//                    BasCommonSpiderKnowledgeSpider.ergodicUrl("spiderYWW", 0, "no");
+                    BasCommonKnowledgeSpider.ergodicUrl("spiderUrl",SpiderContant.xmlUrl);
 //                    KnowledgeSpiderConfigMiNi knowledgeSpiderConfigMiNi=BasCommonKnowledgeSpider.ergodicUrl("spiderUrl",SpiderContant.xmlUrl);
 //                    System.out.println(knowledgeSpiderConfigMiNi);
-//                    SpiderProduct.ergodicUrl("spiderXMSD", 0, 0);
+//                    SpiderProduct.ergodicUrl("spiderOPPO", 0, 0);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

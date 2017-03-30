@@ -1,5 +1,6 @@
 package GintongameSpider.SpiderLxm;
 
+import JavaBean.PerKnowledge;
 import JavaBean.ProKnowledge;
 import SpiderUtils.BaseKnowledgeSpider;
 import SpiderUtils.LevenshteinDis;
@@ -57,12 +58,13 @@ public class SpiderUtil {
      * @param main
      * @param source
      */
-    public static ProKnowledge depositJavabean(String title, String ptime, String main, String source ){
+    public static ProKnowledge depositJavabean(String title, String ptime, String main, String source,String anthor ){
         ProKnowledge proKnowledge = new ProKnowledge();
         proKnowledge.setTitle(title);
         proKnowledge.setPtime(ptime);
         proKnowledge.setMain(main);
         proKnowledge.setSource(source);
+        proKnowledge.setAuthor(anthor);
         proKnowledge.setUuid(UUID.randomUUID().toString());
         return proKnowledge;
     }
@@ -72,9 +74,8 @@ public class SpiderUtil {
      * @throws ProKnowledgeImpl.FormatEexception
      */
     public static void storeToDatabase(ProKnowledge knowledge) throws Exception {
-        ProKnowledgeImpl proImpl = new ProKnowledgeImpl();
-        if(LevenshteinDis.isExist(knowledge))
-            proImpl.insert(knowledge);
+           ProKnowledgeImpl proImpl = new ProKnowledgeImpl();
+           proImpl.insert(knowledge);
     }
     static List<org.dom4j.Element> books;
  public static Document getContent(String url) throws DocumentException, IOException, ProKnowledgeImpl.FormatEexception {

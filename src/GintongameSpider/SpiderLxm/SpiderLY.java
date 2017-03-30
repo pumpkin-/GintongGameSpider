@@ -24,8 +24,8 @@ import java.util.UUID;
  */
 public class SpiderLY {
 //    897692892@qq.com    helloworld    15711490906@163.com  a19941031
-    private static String username="15711490906@163.com";
-    private static String password="a19941031";
+    private static String username="897692892@qq.com";
+    private static String password="helloworld";
     private static String companyName="多益";
     private static List<String> listPageUrl=new ArrayList<String>();
     private static WebDriver driver=getWebDriver();
