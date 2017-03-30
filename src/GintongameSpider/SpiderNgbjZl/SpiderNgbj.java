@@ -1,8 +1,9 @@
 package GintongameSpider.SpiderNgbjZl;
 
-import SpiderUtils.LevenshteinDis;
+import JavaBean.BasPersonInfo;
+import JavaBean.PerKnowledge;
+import JavaBean.ProKnowledge;
 import SpiderUtils.SpiderContant;
-import SpiderUtils.SpiderUtils;
 import dao.impl.BasPersonInfoImpl;
 import dao.impl.PerKnowledgeImpl;
 import dao.impl.ProKnowledgeImpl;
@@ -14,11 +15,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.phantomjs.PhantomJSDriver;
-import JavaBean.BasPersonInfo;
-import JavaBean.PerKnowledge;
-import JavaBean.ProKnowledge;
 
-import java.io.*;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -159,21 +157,24 @@ public class SpiderNgbj {
 
 
                     PerKnowledge perKnow=new PerKnowledge();
-                    perKnow.setName(author);
+                    if(author!=null) {
+                        perKnow.setName(author);
+                        perKnow.setPuuid(puuid);
+                    }
                     perKnow.setKname(title);
                     perKnow.setRtype("原作者");
-                    perKnow.setPuuid(puuid);
                     perKnow.setKuuid(kuuid);
                     perKnow.setSource("鸟哥笔记");
                     perKnowledges.add(perKnow);
 
-
-                    BasPersonInfo basPerson=new BasPersonInfo();
-                    basPerson.setUuid(puuid);
-                    basPerson.setName(author);
-                    basPerson.setSource("鸟哥笔记");
-                    basPerson.setUrl(url);
-                    basPersoninfos.add(basPerson);
+                    if(author!=null) {
+                        BasPersonInfo basPerson = new BasPersonInfo();
+                        basPerson.setUuid(puuid);
+                        basPerson.setName(author);
+                        basPerson.setSource("鸟哥笔记");
+                        basPerson.setUrl(url);
+                        basPersoninfos.add(basPerson);
+                    }
                 }
             } catch (Exception e) {
                 e.printStackTrace();

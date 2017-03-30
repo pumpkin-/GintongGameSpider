@@ -1,10 +1,6 @@
 package dao.impl;
 
-import JavaBean.BasPersonInfo;
-import JavaBean.PerEducationInfo;
 import JavaBean.PerWorkInfo;
-import dao.BasPersonInfoDao;
-import dao.PerEducationInfoDao;
 import dao.PerWorkInfoDao;
 
 import java.util.List;
@@ -19,5 +15,10 @@ public class PerWorkInfoDaoImpl extends BaseDaoImpl<List> implements PerWorkInfo
     @Override
     public void insertPerWorkInfo(PerWorkInfo perWorkInfo) {
         this.getSqlSession().insert(this.getNs()+"insertPerWorkInfo",perWorkInfo);
+    }
+
+    @Override
+    public List<PerWorkInfo> selectListBySource(String source) {
+        return this.getSqlSession().selectList(this.getNs()+"selectPerWorkInfoBySource",source);
     }
 }

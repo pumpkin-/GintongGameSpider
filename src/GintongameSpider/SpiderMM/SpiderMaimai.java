@@ -31,11 +31,11 @@ public class SpiderMaimai {
 
     private static WebDriver driver=null;
     //脉脉账号1
-    private static String usernameOne="15311412549";
+    private static String usernameOne="18141903672";
     //脉脉密码1
     private static String passwordOne="123456";
     //脉脉账号2
-    private static String usernameTwo="18141903791";
+    private static String usernameTwo="13267458660";
     //脉脉密码2
     private static String passwordTwo="123456";
 

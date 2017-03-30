@@ -1,6 +1,5 @@
 package dao;
 
-import JavaBean.BasBusinessInfo;
 import JavaBean.PerWorkInfo;
 
 import java.util.List;
@@ -10,4 +9,5 @@ import java.util.List;
  */
 public  interface PerWorkInfoDao {
     public void insertPerWorkInfo(PerWorkInfo perWorkInfo);
+    public List<PerWorkInfo> selectListBySource(String source);
 }

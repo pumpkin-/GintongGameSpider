@@ -90,7 +90,7 @@ public class keygen
      * @param name
      * @param days
      * @param id
-     * @param prtype
+     * @param
      * @return
      */
     public static String MakeKey(String name, int days, int id)

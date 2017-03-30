@@ -1,7 +1,9 @@
 package SpiderUtils;
 
-import GintongameSpider.SpiderLxm.SpiderUtil;
-import JavaBean.*;
+import JavaBean.BasPersonInfo;
+import JavaBean.BugData;
+import JavaBean.PerKnowledge;
+import JavaBean.ProKnowledge;
 import cn.wanghaomiao.xpath.exception.XpathSyntaxErrorException;
 import cn.wanghaomiao.xpath.model.JXDocument;
 import cn.wanghaomiao.xpath.model.JXNode;
@@ -60,7 +62,7 @@ public class CommonSpiderKnowledge {
                     e.printStackTrace();
                 }
             }
-        });
+        });*/
         pool.submit(new Runnable() {
             @Override
             public void run() {
@@ -70,17 +72,17 @@ public class CommonSpiderKnowledge {
                     e.printStackTrace();
                 }
             }
-        });*/
-        pool.submit(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    ergodicUrl("spiderTX", 0, "no",SpiderContant.urlXml);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
         });
+//        pool.submit(new Runnable() {
+//            @Override
+//            public void run() {
+//                try {
+//                    ergodicUrl("spiderTX", 0, "no",SpiderContant.urlXml);
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        });
         /*pool.submit(new Runnable() {
             @Override
             public void run() {
