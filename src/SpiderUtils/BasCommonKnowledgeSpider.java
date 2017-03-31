@@ -199,11 +199,100 @@ public class BasCommonKnowledgeSpider {
                     int fromPageNum=0;
                     List<String> list=allpage(url.getText().trim(),url.attributeValue("page"),fromPageNum);
                     i++;
+                    int page=0;
                     for (String urls:list){
+                        int num=0;
+                        page++;
                         System.out.println("----+++++----+++++-----+++++------++++"+urls);
                         JXDocument doc=getJXDocument(urls);
+                        List<Object> detailsUrls=doc.sel(knowledgeSpiderConfigMiNi.childLink.getText());
+                        for (Object details : detailsUrls) {
+                            num++;
+                            if (StringUtils.isNotEmpty(knowledgeSpiderConfigMiNi.childLink.attributeValue("join"))) {
+                                if(details.toString().contains("..")){
+                                    details=details.toString().replace("..", "");
+                                }
+                                childLink = knowledgeSpiderConfigMiNi.childLink.attributeValue("join") + details;
+                                JXDocument doc1 = getJXDocument(childLink);
+                                title = doc1.selNOne("//title/text()").toString();
+                                content = doc1.selN("//p//text()").toString();
+                                String hearUrl = url.getText().trim().replaceAll("(http:\\/\\/)(.*)\\/(.*)", "$1");
+                                String partUrl = url.getText().trim().replaceAll("(http:)\\/\\/(.*)\\/(.*)", "$2");
+                                String[] sbuUrl = partUrl.split("/");
+                                List<JXNode> listSrc = doc1.selN("//p/parent::div//img/@src");
+                                for (JXNode lists : listSrc) {
+                                    if (!(lists.toString().substring(0, 4).equals("http"))) {
+                                        if (lists.toString().contains("//")) {
+                                            System.out.println("图片路径：" + lists);
+                                        } else {
+                                            contentImgUrl = sbuUrl[0] + lists;
+                                            System.out.println("补充图片路径：" + contentImgUrl);
+                                        }
+                                    } else {
+                                        contentImgUrl = lists.toString();
+                                        System.out.println("全图片路径：" + contentImgUrl);
+                                    }
+                                }
+                                if (StringUtils.isEmpty(knowledgeSpiderConfigMiNi.ptime.getText())) {
+                                    Pattern pattern = Pattern.compile("[0-9]{4}\\D[0-9]{1,2}\\D[0-9]{1,2}\\D\\d{1,2}\\D\\d{1,2}\\D\\d{0,2}|[0-9]{4}\\D[0-9]{1,2}\\D[0-9]{1,2}");
+                                    Matcher match = pattern.matcher(doc1.selN("//body/allText()").toString());
+                                    if (match.find()) {
+                                        ptime = match.group(0);
+                                        if (ptime.contains("/") || ptime.contains("年") || ptime.contains("月") || ptime.contains("日")) {
+                                            ptime = ptime.replaceAll("/", "-");
+                                            ptime = ptime.replace("年", "-");
+                                            ptime = ptime.replace("月", "-");
+                                            ptime = ptime.replace("日", "-");
+                                        }
+                                    }
+                                } else {
+                                    ptime = doc1.selOne(knowledgeSpiderConfigMiNi.ptime.getText()).toString();
+                                    if (ptime.contains("/") || ptime.contains("年") || ptime.contains("月") || ptime.contains("日")) {
+                                        ptime = ptime.replaceAll("/", "-");
+                                        ptime = ptime.replace("年", "-");
+                                        ptime = ptime.replace("月", "-");
+                                        ptime = ptime.replace("日", "-");
+                                    }
+                                }
+                                System.out.println(ptime);
+                                System.out.println(title);
+                                System.out.println(content);
+                                System.out.println(childLink);
+
+                            } else {
+                                childLink = (String) details;
+                               try{
+                                   JXDocument doc1 = getJXDocument(childLink);
+                                   title = doc1.selNOne("//title/text()").toString();
+                                   content = doc1.selN("//p//text()").toString();
+                                   String hearUrl = url.getText().trim().replaceAll("(http:\\/\\/)(.*)\\/(.*)", "$1");
+                                   String partUrl = url.getText().trim().replaceAll("(http:)\\/\\/(.*)\\/(.*)", "$2");
+                                   String[] sbuUrl = partUrl.split("/");
+                                   List<JXNode> listsrc = doc.selN("//p/parent::div//img/@src");
+                                   for (JXNode lists : listsrc) {
+                                       if (!(lists.toString().substring(0, 4).equals("http"))) {
+                                           if (lists.toString().contains("//")) {
+                                               System.out.println("图片路径：" + lists);
+                                           } else {
+                                               contentImgUrl = sbuUrl[0] + lists;
+                                               System.out.println("补充图片路径：" + contentImgUrl);
+                                               SpiderUtil.isUrlCorrect(contentImgUrl);
+                                           }
+                                       } else {
+                                           contentImgUrl = lists.toString();
+                                           System.out.println("全图片路径：" + contentImgUrl);
+                                       }
+                                   }
+                                   System.out.println(title);
+                                   System.out.println(content);
+                                   System.out.println(childLink);
+                               }catch(Exception e){
+
+                               }
+                            }
+                            System.out.println("------------------------这是第"+page+"页的第"+num+"条数据---------------------------");
+                        }
                     }
-//TODO
                 }
             }else {
                     WebDriver driver=getChromeDriver();
@@ -296,9 +385,6 @@ public class BasCommonKnowledgeSpider {
                 }
 
             }
-//            if(knowledgeSpiderConfigMiNi.chose.attributeValue("").equals("")){
-//
-//            }
         }
 
         return knowledgeSpiderConfigMiNi;

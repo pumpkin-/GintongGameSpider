@@ -131,7 +131,7 @@ public class SpiderXpath {
                 try {
 //                    BasCommonSpiderKnowledgeSpider.ergodicUrl("spiderYWW", 0, "no");
                     BasCommonKnowledgeSpider.ergodicUrl("spiderUrl",SpiderContant.xmlUrl);
-//                    KnowledgeSpiderConfigMiNi knowledgeSpiderConfigMiNi=BasCommonKnowledgeSpider.ergodicUrl("spiderUrl",SpiderContant.xmlUrl);
+//                    KnowledgeSpiderConfigMiNi knowledgeSpiderCon/figMiNi=BasCommonKnowledgeSpider.ergodicUrl("spiderUrl",SpiderContant.xmlUrl);
 //                    System.out.println(knowledgeSpiderConfigMiNi);
 //                    SpiderProduct.ergodicUrl("spiderOPPO", 0, 0);
                 } catch (Exception e) {

@@ -5,12 +5,21 @@
     <spiderUrl>
         <flag>jsoup</flag>
         <ptime></ptime>
-        <childLink join="">//div[@class='info-head']/a/@href|//a[@class='info-pic']/@src</childLink>
-        <nextPage join="http://game.zol.com.cn">//div[@class='page']/a[@class='next']/@href</nextPage>
+        <childLink join="">//div[@class='searchResults']/p[@class='fz16 line24']/a/@href</childLink>
+        <nextPage join=""></nextPage>
         <urls>
-            <url page="20">
-                http://game.zol.com.cn/more/2_1133_$(page).shtml
-            </url>
+            <!--<url page="75">-->
+                <!--http://search.ifeng.com/sofeng/search.action?q=%E4%BA%BA%E5%8A%9B%E8%B5%84%E6%BA%90&amp;c=1&amp;p=$(page)-->
+            <!--</url>-->
+            <!--<url page="75">-->
+                <!--http://search.ifeng.com/sofeng/search.action?q=激励制度&amp;c=1&amp;chel=&amp;p=$(page)-->
+            <!--</url>-->
+            <!--<url page="45">-->
+                <!--http://www.tophr.net/news/newslist.asp?id=23&amp;page=$(page)-->
+            <!--</url>-->
+            <!--<url>-->
+                <!--http://mp.sohu.com/profile?xpt=cHBhZzc0NDQ5ZmQ3NDBhMUBzb2h1LmNvbQ==-->
+            <!--</url>-->
         </urls>
     </spiderUrl>
 
