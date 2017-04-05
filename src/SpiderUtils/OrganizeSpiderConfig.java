@@ -38,7 +38,12 @@ public class OrganizeSpiderConfig {
     public Element flag;
     //Logo前面所要添加的Url
     public Element oLogoContect;
-
+    //开服网页游Url
+    public Element kfwYYUrl;
+    //开服网端游Url
+    public Element kfwDyUrl;
+    //开服网手游Url
+    public Element kfwSyUrl;
 
 
     public String toString(){
@@ -57,6 +62,9 @@ public class OrganizeSpiderConfig {
                 ", oIntroduct='" + oIntroduct + '\'' +
                 ", oIntroductPic='" + oIntroductPic + '\'' +
                 ", oIntroductPicConnext='" + oIntroductPicConnext + '\'' +
+                ", kfwYYUrl='" + kfwYYUrl + '\'' +
+                ", kfwDyUrl='" + kfwDyUrl + '\'' +
+                ", kfwSyUrl='" + kfwSyUrl + '\'' +
                 ", flag='" + flag + '\'' +
                 '}';
     }

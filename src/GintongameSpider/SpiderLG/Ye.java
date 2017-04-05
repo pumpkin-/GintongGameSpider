@@ -118,8 +118,14 @@ public class Ye {
        // spiderOrganize.mainProcess("SpiderDlw", SpiderContant.orgXmlPath);(完成)
         //spiderOrganize.mainProcess("SpiderBwtx",SpiderContant.orgXmlPath);（完成）
         //spiderOrganize.mainProcess("SpiderSyhd", SpiderContant.orgXmlPath);
-       spiderOrganize.mainProcess("SpiderBbsd", SpiderContant.orgXmlPath);
+        // spiderOrganize.mainProcess("SpiderBbsd", SpiderContant.orgXmlPath);
         //spiderOrganize.mainProcess("SpiderSqsd",SpiderContant.orgXmlPath);
+
+        spiderOrganize.mainProcess("SpiderWmsj", SpiderContant.orgXmlPath);
+
+//        SpiderTyc spiderTyc=new SpiderTyc();
+//        spiderTyc.getBussinessDataByOne("http://www.tianyancha.com/company/150041670");
+
 
     }
 }

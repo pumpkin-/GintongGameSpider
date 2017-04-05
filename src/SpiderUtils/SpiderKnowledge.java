@@ -1,12 +1,12 @@
 package SpiderUtils;
 
-import JavaBean.BasPersonInfo;
 import JavaBean.OrgKnowledge;
 import JavaBean.ProKnowledge;
 import cn.wanghaomiao.xpath.exception.XpathSyntaxErrorException;
 import cn.wanghaomiao.xpath.model.JXDocument;
 import cn.wanghaomiao.xpath.model.JXNode;
-import dao.impl.*;
+import dao.impl.OrgKnowledgeImpl;
+import dao.impl.ProKnowledgeImpl;
 import org.apache.commons.lang3.StringUtils;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
@@ -26,9 +26,10 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.UUID;
 
 /**
  * Created by lenovon on 2017/3/15.
@@ -831,24 +832,24 @@ public class SpiderKnowledge {
                 for(String hrefLists:hrefList){
                     driver.get(hrefLists);
                     System.out.println(hrefLists);
-                    WebElement elementDetails=driver.findElement(By.xpath("/html"));
-                    org.jsoup.nodes.Document documentDetails= Jsoup.parse(elementDetails.getAttribute("outerHTML"));
-                    String title=documentDetails.select("title").text();
-                    System.out.println(title);
-                    String time=documentDetails.select("span[class=date]").text();
-                    System.out.println(time);
-                    Elements elementMain=documentDetails.select("p");
-                    String main=null;
-                    String imgSrc=null;
-                    for( org.jsoup.nodes.Element elementMains:elementMain){
-                        main="<p>"+elementMains.text()+"</p>";
-                        Elements elementImg=elementMains.select("img");
-                        for(org.jsoup.nodes.Element elementImgs:elementImg){
-                            imgSrc=elementImgs.attr("src");
-                            System.out.println("<img src=\""+imgSrc+"\"/>");
-                        }
-                        System.out.println(main);
-                    }
+//                    WebElement elementDetails=driver.findElement(By.xpath("/html"));
+//                    org.jsoup.nodes.Document documentDetails= Jsoup.parse(elementDetails.getAttribute("outerHTML"));
+//                    String title=documentDetails.select("title").text();
+//                    System.out.println(title);
+//                    String time=documentDetails.select("span[class=date]").text();
+//                    System.out.println(time);
+//                    Elements elementMain=documentDetails.select("p");
+//                    String main=null;
+//                    String imgSrc=null;
+//                    for( org.jsoup.nodes.Element elementMains:elementMain){
+//                        main="<p>"+elementMains.text()+"</p>";
+//                        Elements elementImg=elementMains.select("img");
+//                        for(org.jsoup.nodes.Element elementImgs:elementImg){
+//                            imgSrc=elementImgs.attr("src");
+//                            System.out.println("<img src=\""+imgSrc+"\"/>");
+//                        }
+//                        System.out.println(main);
+//                    }
                     i++;
                     System.out.println("----------------------这是第"+num+"页的第"+i+"条数据-------------------------------");
                     Thread.sleep(5000);
@@ -857,7 +858,11 @@ public class SpiderKnowledge {
                 System.out.println("出错了。。。");
             }
             JavascriptExecutor javascriptExecutor=(JavascriptExecutor)driver;
-            javascriptExecutor.executeScript("$('#page >a.n')[1].click()");
+             try{
+                 javascriptExecutor.executeScript("$('#page >a.n')[0].click()");
+             }catch(Exception e){
+                 e.printStackTrace();
+             }
             doc= returnPageDocument(driver);
         }
 

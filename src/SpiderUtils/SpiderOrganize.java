@@ -1,8 +1,6 @@
 
 package SpiderUtils;
-import JavaBean.EcologyOrgData;
-import GintongameSpider.SpiderLgw.SpiderLgw;
-import GintongameSpider.SpiderMM.SpiderMaimai;
+
 import GintongameSpider.SpiderTyc.SpiderTyc;
 import JavaBean.BasOrganizeInfo;
 import JavaBean.BaseKnowLedge;
@@ -13,14 +11,18 @@ import dao.BasOrganizeInfoDao;
 import dao.impl.BasOrganizeInfoImpl;
 import org.apache.commons.lang3.StringUtils;
 import org.dom4j.Document;
+import org.dom4j.DocumentException;
 import org.dom4j.Element;
+import org.dom4j.io.OutputFormat;
 import org.dom4j.io.SAXReader;
+import org.dom4j.io.XMLWriter;
 import org.jsoup.Jsoup;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.phantomjs.PhantomJSDriver;
 
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -51,10 +53,18 @@ public class SpiderOrganize {
      * @param filepath
      * @throws Exception
      */
-    public  void mainProcess(String companyName,String filepath) throws Exception {
+    public void mainProcess(String companyName,String filepath) throws Exception {
         String logo=null;
         String oIntroduct=null;
         String oIntroductPic=null;
+        int count;
+        //增量中的计数器
+        for(int i=0;i==0;) {
+            count = countNum(companyName, filepath);
+            Thread.sleep(50000);
+            System.out.println(count);
+        }
+
         Document document=obtainDocFromXml(filepath);
         Element rootElement=document.getRootElement();
         Element element=rootElement.element(companyName);
@@ -63,18 +73,6 @@ public class SpiderOrganize {
         List<Element> proGameInfoList=organizeSpiderConfig.proGameInfoList;
         List<Element> personInfoList=organizeSpiderConfig.personInfoList;
         List<Element> organizeInfoList=organizeSpiderConfig.organizeInfoList;
-        for(Element ele:knowLedgeList){
-            //TODO 缺少知识接口
-        }
-        for(Element ele:proGameInfoList){
-            //TODO 缺少产品接口
-        }
-        for(Element ele:personInfoList){
-            //TODO 缺少人的接口
-        }
-        for(Element ele:organizeInfoList){
-            //TODO 缺少组织的接口
-        }
         if(organizeSpiderConfig.flag.getText().equals("jsoup")) {
             org.jsoup.nodes.Document ourlDocument = getDocumentByJsoup(organizeSpiderConfig.ourl.getText());
             JXDocument ourlJxDocument = docTransferToJXDoc(ourlDocument);
@@ -115,20 +113,44 @@ public class SpiderOrganize {
             System.out.println("公司简介中的图片：" + oIntroductPic);
             SpiderTyc spiderTyc=new SpiderTyc();
             BasOrganizeInfo tycBasOrganizeInfo = spiderTyc.getBussinessDataByOne(organizeSpiderConfig.tycUrl.getText());
+
             tycBasOrganizeInfo.setLogo(logo);
             tycBasOrganizeInfo.setIntroduce(oIntroduct);
             tycBasOrganizeInfo.setPicture(oIntroductPic);
             tycBasOrganizeInfo.setWeb(organizeSpiderConfig.ourl.getText());
             BasOrganizeInfoDao basOrganizeInfoDao = new BasOrganizeInfoImpl();
             basOrganizeInfoDao.updateSingle(tycBasOrganizeInfo);
+            //向XML文件中写入一个ouuid
+            addOuuid(tycBasOrganizeInfo.getUuid(),companyName,filepath);
             //拉钩数据入库
-            if(StringUtils.isNotEmpty(organizeSpiderConfig.lgwUrl.getText())) {
-                SpiderLgw.getBussinessDataByOne(organizeSpiderConfig.lgwUrl.getText(), tycBasOrganizeInfo);
-            }
+//            if(StringUtils.isNotEmpty(organizeSpiderConfig.lgwUrl.getText())) {
+//                SpiderLgw.getBussinessDataByOne(organizeSpiderConfig.lgwUrl.getText(), tycBasOrganizeInfo);
+//            }
             //微博数据入库
             //SpiderWm.getPerInfoDataByComName(organizeSpiderConfig.oname.getText(), tycBasOrganizeInfo.getUuid());
             //脉脉数据入库
-            SpiderMaimai.getPerInfoDataByComName(organizeSpiderConfig.oname.getText(), tycBasOrganizeInfo.getUuid());
+            //SpiderMaimai.getPerInfoDataByComName(organizeSpiderConfig.oname.getText(), tycBasOrganizeInfo.getUuid());
+            //百度知识数据入库
+            SpiderKnowledge.fecthNewsByCompanyName(organizeSpiderConfig.oname.getText(),tycBasOrganizeInfo.getUuid());
+            if(StringUtils.isNotEmpty(tycBasOrganizeInfo.getEname())) {
+                SpiderKnowledge.fecthNewsByCompanyName(tycBasOrganizeInfo.getEname(), tycBasOrganizeInfo.getUuid());
+            }
+            if(StringUtils.isNotEmpty(tycBasOrganizeInfo.getOname())) {
+                SpiderKnowledge.fecthNewsByCompanyName(tycBasOrganizeInfo.getOname(), tycBasOrganizeInfo.getUuid());
+            }
+
+            for(Element ele:knowLedgeList){
+                SpiderKnowledge.ergodicUrl(ele,tycBasOrganizeInfo.getUuid());
+            }
+            for(Element ele:proGameInfoList){
+                //TODO 缺少产品接口
+            }
+            for(Element ele:personInfoList){
+                //TODO 缺少人的接口
+            }
+            for(Element ele:organizeInfoList){
+                //TODO 缺少组织的接口
+            }
         }else if(organizeSpiderConfig.flag.getText().equals("selenium")){
             WebDriver driver=getDriver(SpiderContant.chromeWindowsPath);
             org.jsoup.nodes.Document ourlDocument = getDocumentBySelenium(driver, organizeSpiderConfig.ourl.getText());
@@ -173,15 +195,37 @@ public class SpiderOrganize {
             tycBasOrganizeInfo.setPicture(oIntroductPic);
             BasOrganizeInfoDao basOrganizeInfoDao = new BasOrganizeInfoImpl();
             basOrganizeInfoDao.updateSingle(tycBasOrganizeInfo);
+            //向XML文件中写入一个ouuid
+            addOuuid(tycBasOrganizeInfo.getUuid(),companyName,filepath);
             //拉钩数据入库
-            if(StringUtils.isNotEmpty(organizeSpiderConfig.lgwUrl.getText())) {
-                SpiderLgw.getBussinessDataByOne(organizeSpiderConfig.lgwUrl.getText(), tycBasOrganizeInfo);
-            }
+//            if(StringUtils.isNotEmpty(organizeSpiderConfig.lgwUrl.getText())) {
+//                SpiderLgw.getBussinessDataByOne(organizeSpiderConfig.lgwUrl.getText(), tycBasOrganizeInfo);
+//            }
             //微博数据入库
             //SpiderWm.getPerInfoDataByComName(organizeSpiderConfig.oname.getText(), tycBasOrganizeInfo.getUuid());
             //脉脉数据入库
-            SpiderMaimai.getPerInfoDataByComName(organizeSpiderConfig.oname.getText(), tycBasOrganizeInfo.getUuid());
-
+           // SpiderMaimai.getPerInfoDataByComName(organizeSpiderConfig.oname.getText(), tycBasOrganizeInfo.getUuid());
+            //百度知识数据入库
+            SpiderKnowledge.fecthNewsByCompanyName(organizeSpiderConfig.oname.getText(),tycBasOrganizeInfo.getUuid());
+            if(StringUtils.isNotEmpty(tycBasOrganizeInfo.getEname())) {
+                SpiderKnowledge.fecthNewsByCompanyName(tycBasOrganizeInfo.getEname(), tycBasOrganizeInfo.getUuid());
+            }
+            if(StringUtils.isNotEmpty(tycBasOrganizeInfo.getOname())) {
+                SpiderKnowledge.fecthNewsByCompanyName(tycBasOrganizeInfo.getOname(), tycBasOrganizeInfo.getUuid());
+            }
+            //各个框架入库
+            for(Element ele:knowLedgeList){
+                SpiderKnowledge.ergodicUrl(ele,tycBasOrganizeInfo.getUuid());
+            }
+            for(Element ele:proGameInfoList){
+                //TODO 缺少产品接口
+            }
+            for(Element ele:personInfoList){
+                //TODO 缺少人的接口
+            }
+            for(Element ele:organizeInfoList){
+                //TODO 缺少组织的接口
+            }
         }else{
             throw new XpathSyntaxErrorException("you shuould chose jsoup or selenium");
         }
@@ -262,7 +306,67 @@ public class SpiderOrganize {
         if(childElement.element("flag")!=null){
             organizeSpiderConfig.flag = childElement.element("flag");
         }
+        if(childElement.element("kfwYYUrl")!=null){
+            organizeSpiderConfig.kfwYYUrl = childElement.element("kfwYYUrl");
+        }
+        if(childElement.element("kfwDyUrl")!=null){
+            organizeSpiderConfig.kfwDyUrl = childElement.element("kfwDyUrl");
+        }
+        if(childElement.element("kfwSyUrl")!=null){
+            organizeSpiderConfig.kfwSyUrl = childElement.element("kfwSyUrl");
+        }
         return organizeSpiderConfig;
+    }
+
+    /**
+     * 向Xml文件中添加ouuid
+     * @param ouuid
+     * @param companyName
+     * @param filepath
+     */
+    public void addOuuid(String ouuid,String companyName,String filepath) throws DocumentException, IOException {
+        SAXReader reader = new SAXReader();
+        Document document = reader.read(SpiderOrganize.class.getResourceAsStream(filepath));
+        Element organize = (Element) document.selectSingleNode("//" + companyName);
+        organize.addElement("ouuid").addText(ouuid);
+        FileWriter fileWriter = new FileWriter(System.getProperty("user.dir")+"/src"+SpiderContant.orgXmlPath);
+        OutputFormat format = OutputFormat.createPrettyPrint();
+        format.setEncoding("UTF-8");
+        XMLWriter writer = new XMLWriter(System.out, format);
+        writer.setWriter(fileWriter);
+        writer.write(document);
+        writer.flush();
+        writer.close();
+    }
+
+    /**
+     * 增量爬取计数工具
+     */
+    public int countNum(String companyName,String filepath) throws Exception {
+        int count=1;
+        SAXReader reader = new SAXReader();
+        Document document = reader.read(SpiderOrganize.class.getResourceAsStream(filepath));
+        Element organize = (Element) document.selectSingleNode("//" + companyName);
+       // System.out.println("XML中的东西"+organize.element("count"));
+        if(organize.element("count")==null){
+            //System.out.println("if中的count:"+count);
+            organize.addElement("count").addText(count+"");
+        }else{
+            count=Integer.parseInt(organize.element("count").getText());
+            count++;
+            organize.remove(organize.element("count"));
+            organize.addElement("count").addText(count+"");
+            //System.out.println("else中的count:"+count);
+        }
+        FileWriter fileWriter = new FileWriter(System.getProperty("user.dir")+"/src"+SpiderContant.orgXmlPath);
+        OutputFormat format = OutputFormat.createPrettyPrint();
+        format.setEncoding("UTF-8");
+        XMLWriter writer = new XMLWriter(System.out, format);
+        writer.setWriter(fileWriter);
+        writer.write(document);
+        writer.flush();
+        writer.close();
+        return count;
     }
 
 
