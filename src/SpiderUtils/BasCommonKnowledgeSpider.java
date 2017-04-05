@@ -58,8 +58,8 @@ public class BasCommonKnowledgeSpider {
         if(childElement.element("childLink")!=null){
             knowledgeSpiderConfigMiNi.childLink=childElement.element("childLink");
         }
-        if(childElement.element("nextpage")!=null){
-            knowledgeSpiderConfigMiNi.nextPage=childElement.element("nextpage");
+        if(childElement.element("nextPage")!=null){
+            knowledgeSpiderConfigMiNi.nextPage=childElement.element("nextPage");
         }
         if(childElement.element("main")!=null){
             knowledgeSpiderConfigMiNi.main=childElement.element("main");
@@ -80,7 +80,7 @@ public class BasCommonKnowledgeSpider {
     }
 //    jsoup
     public static JXDocument getJXDocument(String url) throws IOException {
-            JXDocument jxDocument=new JXDocument(Jsoup.connect(url).userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36").ignoreContentType(true).ignoreHttpErrors(true).timeout(100000).get());
+            JXDocument jxDocument=new JXDocument(Jsoup.connect(url.trim()).userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36").ignoreContentType(true).ignoreHttpErrors(true).timeout(100000).get());
         return jxDocument;
     }
 //    通过驱动器获取当前页面的document树
@@ -110,12 +110,17 @@ public class BasCommonKnowledgeSpider {
         for(Element url: knowledgeSpiderConfigMiNi.webUrls) {
 //            判断xml中的文件flag标签是否是jsoup
             if(knowledgeSpiderConfigMiNi.flag.getText().trim().equals("jsoup")) {
+                int numPage=0;
                 if(url.attributeValue("page")==null){
+
                 JXDocument doc = BasCommonKnowledgeSpider.getJXDocument(url.getText().trim());
                 while (true) {
 //                通过url
+                    int iNum=0;
+                    numPage++;
                     List<Object> detailsUrls = doc.sel(knowledgeSpiderConfigMiNi.childLink.getText());
                     for (Object details : detailsUrls) {
+                        iNum++;
                         if (StringUtils.isNotEmpty(knowledgeSpiderConfigMiNi.childLink.attributeValue("join"))) {
                             childLink = knowledgeSpiderConfigMiNi.childLink.attributeValue("join") + details;
                             JXDocument doc1 = getJXDocument(childLink);
@@ -132,7 +137,7 @@ public class BasCommonKnowledgeSpider {
                                     } else {
                                         contentImgUrl = sbuUrl[0] + lists;
                                         System.out.println("补充图片路径：" + contentImgUrl);
-                                        SpiderUtil.isUrlCorrect(contentImgUrl);
+//                                        SpiderUtil.isUrlCorrect(contentImgUrl);
                                     }
                                 } else {
                                     contentImgUrl = lists.toString();
@@ -192,25 +197,119 @@ public class BasCommonKnowledgeSpider {
                             System.out.println(content);
                             System.out.println(childLink);
                         }
+                        System.out.println("--------------这是第"+numPage+"页的第"+iNum+"条数据-----------------");
                     }
                     doc = listPageJsoup(doc, knowledgeSpiderConfigMiNi);
+
                 }
             }else{
                     int fromPageNum=0;
                     List<String> list=allpage(url.getText().trim(),url.attributeValue("page"),fromPageNum);
                     i++;
+                    int page=0;
                     for (String urls:list){
+                        int num=0;
+                        page++;
                         System.out.println("----+++++----+++++-----+++++------++++"+urls);
                         JXDocument doc=getJXDocument(urls);
+                        List<Object> detailsUrls=doc.sel(knowledgeSpiderConfigMiNi.childLink.getText());
+                        for (Object details : detailsUrls) {
+                            num++;
+                            if (StringUtils.isNotEmpty(knowledgeSpiderConfigMiNi.childLink.attributeValue("join"))) {
+                                if(details.toString().contains("..")){
+                                    details=details.toString().replace("..", "");
+                                }
+                                childLink = knowledgeSpiderConfigMiNi.childLink.attributeValue("join") + details;
+                                JXDocument doc1 = getJXDocument(childLink);
+                                title = doc1.selNOne("//title/text()").toString();
+                                content = doc1.selN("//p//text()").toString();
+                                String hearUrl = url.getText().trim().replaceAll("(http:\\/\\/)(.*)\\/(.*)", "$1");
+                                String partUrl = url.getText().trim().replaceAll("(http:)\\/\\/(.*)\\/(.*)", "$2");
+                                String[] sbuUrl = partUrl.split("/");
+                                List<JXNode> listSrc = doc1.selN("//p/parent::div//img/@src");
+                                for (JXNode lists : listSrc) {
+                                    if (!(lists.toString().substring(0, 4).equals("http"))) {
+                                        if (lists.toString().contains("//")) {
+                                            System.out.println("图片路径：" + lists);
+                                        } else {
+                                            contentImgUrl = sbuUrl[0] + lists;
+                                            System.out.println("补充图片路径：" + contentImgUrl);
+                                        }
+                                    } else {
+                                        contentImgUrl = lists.toString();
+                                        System.out.println("全图片路径：" + contentImgUrl);
+                                    }
+                                }
+                                if (StringUtils.isEmpty(knowledgeSpiderConfigMiNi.ptime.getText())) {
+                                    Pattern pattern = Pattern.compile("[0-9]{4}\\D[0-9]{1,2}\\D[0-9]{1,2}\\D\\d{1,2}\\D\\d{1,2}\\D\\d{0,2}|[0-9]{4}\\D[0-9]{1,2}\\D[0-9]{1,2}");
+                                    Matcher match = pattern.matcher(doc1.selN("//body/allText()").toString());
+                                    if (match.find()) {
+                                        ptime = match.group(0);
+                                        if (ptime.contains("/") || ptime.contains("年") || ptime.contains("月") || ptime.contains("日")) {
+                                            ptime = ptime.replaceAll("/", "-");
+                                            ptime = ptime.replace("年", "-");
+                                            ptime = ptime.replace("月", "-");
+                                            ptime = ptime.replace("日", "-");
+                                        }
+                                    }
+                                } else {
+                                    ptime = doc1.selOne(knowledgeSpiderConfigMiNi.ptime.getText()).toString();
+                                    if (ptime.contains("/") || ptime.contains("年") || ptime.contains("月") || ptime.contains("日")) {
+                                        ptime = ptime.replaceAll("/", "-");
+                                        ptime = ptime.replace("年", "-");
+                                        ptime = ptime.replace("月", "-");
+                                        ptime = ptime.replace("日", "-");
+                                    }
+                                }
+                                System.out.println(ptime);
+                                System.out.println(title);
+                                System.out.println(content);
+                                System.out.println(childLink);
+
+                            } else {
+                                childLink = (String) details;
+                               try{
+                                   JXDocument doc1 = getJXDocument(childLink);
+                                   title = doc1.selNOne("//title/text()").toString();
+                                   content = doc1.selN("//p//text()").toString();
+                                   String hearUrl = url.getText().trim().replaceAll("(http:\\/\\/)(.*)\\/(.*)", "$1");
+                                   String partUrl = url.getText().trim().replaceAll("(http:)\\/\\/(.*)\\/(.*)", "$2");
+                                   String[] sbuUrl = partUrl.split("/");
+                                   List<JXNode> listsrc = doc.selN("//p/parent::div//img/@src");
+                                   for (JXNode lists : listsrc) {
+                                       if (!(lists.toString().substring(0, 4).equals("http"))) {
+                                           if (lists.toString().contains("//")) {
+                                               System.out.println("图片路径：" + lists);
+                                           } else {
+                                               contentImgUrl = sbuUrl[0] + lists;
+                                               System.out.println("补充图片路径：" + contentImgUrl);
+                                               SpiderUtil.isUrlCorrect(contentImgUrl);
+                                           }
+                                       } else {
+                                           contentImgUrl = lists.toString();
+                                           System.out.println("全图片路径：" + contentImgUrl);
+                                       }
+                                   }
+                                   System.out.println(title);
+                                   System.out.println(content);
+                                   System.out.println(childLink);
+                               }catch(Exception e){
+
+                               }
+                            }
+                            System.out.println("------------------------这是第"+page+"页的第"+num+"条数据---------------------------");
+                        }
                     }
-//TODO
                 }
             }else {
+                int nums=0;
                     WebDriver driver=getChromeDriver();
                     JXDocument doc = getJXDocument(driver, url.getText());
                 while(true){
+                    int s=0;
                     List<Object> detailsUrls=doc.sel(knowledgeSpiderConfigMiNi.childLink.getText());
                     for(Object details:detailsUrls){
+                        s++;
                         if (StringUtils.isNotEmpty(knowledgeSpiderConfigMiNi.childLink.attributeValue("join"))){
                             childLink=knowledgeSpiderConfigMiNi.childLink.attributeValue("join")+details;
                             JXDocument doc1=getJXDocument(childLink);
@@ -278,7 +377,7 @@ public class BasCommonKnowledgeSpider {
                                     }else{
                                         contentImgUrl=sbuUrl[0]+lists;
                                         System.out.println("补充图片路径："+contentImgUrl);
-                                        SpiderUtil.isUrlCorrect(contentImgUrl);
+//                                        SpiderUtil.isUrlCorrect(contentImgUrl);
                                     }
                                 }else{
                                     contentImgUrl=lists.toString();
@@ -290,15 +389,13 @@ public class BasCommonKnowledgeSpider {
                             System.out.println(childLink);
                         }
                         SpiderUtil.storeToDatabase(SpiderUtil.depositJavabean(title,ptime,content,"null",anthor));
+                        System.out.println("------------这是第"+nums+"的第"+s+"条数据--------------------");
                     }
                     doc=listPageSelenium(driver,knowledgeSpiderConfigMiNi);
-
+                    nums++;
                 }
 
             }
-//            if(knowledgeSpiderConfigMiNi.chose.attributeValue("").equals("")){
-//
-//            }
         }
 
         return knowledgeSpiderConfigMiNi;
@@ -322,6 +419,7 @@ public class BasCommonKnowledgeSpider {
         JXDocument nextDocument=null;
         String oldurl=null;
         next=getTagOne(doc,knowledgeSpiderConfig.nextPage.getText()).toString();
+        System.out.println();
             if (StringUtils.isNotEmpty(knowledgeSpiderConfig.nextPage.attributeValue("join"))) {
                 if (next.toString().substring(0, 4).equals("http")) {
                     nexturl = next.toString().replace("..", "");
@@ -368,11 +466,7 @@ public class BasCommonKnowledgeSpider {
      */
     public static JXDocument listPageSelenium(WebDriver driver,KnowledgeSpiderConfigMiNi knowledgeSpiderConfig) throws InterruptedException {
         JavascriptExecutor executor= (JavascriptExecutor) driver;
-        try{
-            executor.executeScript(knowledgeSpiderConfig.nextPage.getText().trim());
-        }catch(Exception e){
-            e.printStackTrace();
-        }
+        executor.executeScript(knowledgeSpiderConfig.nextPage.getText().trim());
         String handle=driver.getWindowHandle();
         for(String handles:driver.getWindowHandles()){
             if (handle.equals(handle)){
@@ -423,5 +517,4 @@ public class BasCommonKnowledgeSpider {
         return list;
 
     }
-
 }

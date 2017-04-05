@@ -14,123 +14,12 @@ public class SpiderXpath {
     public static void main(String[] args){
         ExecutorService pool= Executors.newSingleThreadExecutor();
 
-//        pool.submit(new Runnable() {
-//            @Override
-//            public void run() {
-//                try {
-//                    CommonSpiderKnowledge.ergodicUrl("spiderTX",0,"no");
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        });
-//        pool.submit(new Runnable() {
-//            @Override
-//            public void run() {
-//                try {
-//                    CommonSpiderKnowledge.ergodicUrl("spiderShouYou",0,"no");
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        });
-//        pool.submit(new Runnable() {
-//            @Override
-//            public void run() {
-//                try {
-//                    CommonSpiderKnowledge.ergodicUrl("spiderGameBBS",0,"no");
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        });
-//
-//        pool.submit(new Runnable() {
-//            @Override
-//            public void run() {
-//                try {
-//                    CommonSpiderKnowledge.ergodicUrl("spider522k",0,"no");
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        });
-//        pool.submit(new Runnable() {
-//            @Override
-//            public void run() {
-//                try {
-//                    CommonSpiderKnowledge.ergodicUrl("spiderHtml5",0,"no");
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        });
-//        pool.submit(new Runnable() {
-//            @Override
-//            public void run() {
-//                try {
-//                    CommonSpiderKnowledge.ergodicUrl("spiderDianKJ",0,"no");
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        });
-//        pool.submit(new Runnable() {
-//            @Override
-//            public void run() {
-//                try {
-//                    CommonSpiderKnowledge.ergodicUrl("spiderGameKZ",0,"no");
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        });
-//        pool.submit(new Runnable() {
-//            @Override
-//            public void run() {
-//                try {
-//                    CommonSpiderKnowledge.ergodicUrl("spiderVR",0,"no");
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        });
-//        pool.submit(new Runnable() {
-//            @Override
-//            public void run() {
-//                try {
-//                    CommonSpiderKnowledge.ergodicUrl("spiderYXH",0,"no");
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        });
-//        pool.submit(new Runnable() {
-//            @Override
-//            public void run() {
-//                try {
-//                    CommonSpiderKnowledge.ergodicUrl("spiderDN",0,"no");
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        });
-//        pool.submit(new Runnable() {
-//            @Override
-//            public void run() {
-//                try {
-//                    SpiderProduct.ergodicUrl("spiderXMSD",0,0);
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        });
         pool.submit(new Runnable() {
             @Override
             public void run() {
                 try {
 //                    BasCommonSpiderKnowledgeSpider.ergodicUrl("spiderYWW", 0, "no");
-                    BasCommonKnowledgeSpider.ergodicUrl("spiderUrl",SpiderContant.xmlUrl);
+                    BasCommonKnowledgeSpider.ergodicUrl("spiderHR369",SpiderContant.xmlUrl);
 //                    KnowledgeSpiderConfigMiNi knowledgeSpiderConfigMiNi=BasCommonKnowledgeSpider.ergodicUrl("spiderUrl",SpiderContant.xmlUrl);
 //                    System.out.println(knowledgeSpiderConfigMiNi);
 //                    SpiderProduct.ergodicUrl("spiderOPPO", 0, 0);
@@ -139,6 +28,5 @@ public class SpiderXpath {
                 }
             }
         });
-
     }
 }

@@ -1,12 +1,12 @@
 package SpiderUtils;
 
+
 import JavaBean.OrgKnowledge;
 import JavaBean.ProKnowledge;
 import cn.wanghaomiao.xpath.exception.XpathSyntaxErrorException;
 import cn.wanghaomiao.xpath.model.JXDocument;
 import cn.wanghaomiao.xpath.model.JXNode;
-import dao.impl.OrgKnowledgeImpl;
-import dao.impl.ProKnowledgeImpl;
+import dao.impl.*;
 import org.apache.commons.lang3.StringUtils;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
@@ -26,16 +26,14 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * Created by lenovon on 2017/3/15.
  */
 public class SpiderKnowledge {
     static SimpleDateFormat simpleDateFormatchange=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    public static  List<String> hrefList=new ArrayList<String>();
     /**
      * 1、获取xml
      * @param xmlPath
@@ -240,9 +238,9 @@ public class SpiderKnowledge {
      *
      * @param WebName
      * @param xmlPath
-     * @throws IOException
+     * @throws java.io.IOException
      * @throws InterruptedException
-     * @throws XpathSyntaxErrorException
+     * @throws cn.wanghaomiao.xpath.exception.XpathSyntaxErrorException
      */
     public static void ergodicUrl(String WebName,String xmlPath) throws IOException, InterruptedException, XpathSyntaxErrorException {
         String childLink = null;
@@ -327,9 +325,9 @@ public class SpiderKnowledge {
      * 通过
      * @param childElement
      * @param uuid
-     * @throws IOException
+     * @throws java.io.IOException
      * @throws InterruptedException
-     * @throws XpathSyntaxErrorException
+     * @throws cn.wanghaomiao.xpath.exception.XpathSyntaxErrorException
      */
     public static void ergodicUrl(Element childElement,String uuid) throws IOException, InterruptedException, XpathSyntaxErrorException {
         String childLink = null;
@@ -436,7 +434,7 @@ public class SpiderKnowledge {
      * @param doc
      * @param xpath
      * @return
-     * @throws XpathSyntaxErrorException
+     * @throws cn.wanghaomiao.xpath.exception.XpathSyntaxErrorException
      */
     public static Object getTagOne(JXDocument doc,String xpath) throws XpathSyntaxErrorException {
         Object obj=null;
@@ -454,8 +452,8 @@ public class SpiderKnowledge {
      * @param doc
      * @param knowledgeSpiderConfig
      * @return
-     * @throws XpathSyntaxErrorException
-     * @throws IOException
+     * @throws cn.wanghaomiao.xpath.exception.XpathSyntaxErrorException
+     * @throws java.io.IOException
      */
     public static JXDocument listPageJsoup(JXDocument doc,KnowledgeSpiderConfig knowledgeSpiderConfig) throws XpathSyntaxErrorException, IOException {
         String next=null;
@@ -540,7 +538,7 @@ public class SpiderKnowledge {
      * @param document
      * @param xpath
      * @return
-     * @throws XpathSyntaxErrorException
+     * @throws cn.wanghaomiao.xpath.exception.XpathSyntaxErrorException
      */
     public static List<JXNode> getTagN(JXDocument document,String xpath) throws XpathSyntaxErrorException {
         List<JXNode> obj=null;
@@ -557,7 +555,7 @@ public class SpiderKnowledge {
      * @param document
      * @param xpath
      * @return
-     * @throws XpathSyntaxErrorException
+     * @throws cn.wanghaomiao.xpath.exception.XpathSyntaxErrorException
      */
     public static  List<Object> getTag(JXDocument document, String xpath) throws XpathSyntaxErrorException {
         List<Object> obj = null;
@@ -575,7 +573,7 @@ public class SpiderKnowledge {
      * @param childDocumet
      * @param knowledgeSpiderConfig
      * @return
-     * @throws XpathSyntaxErrorException
+     * @throws cn.wanghaomiao.xpath.exception.XpathSyntaxErrorException
      */
     public static boolean clearMain(JXDocument childDocumet,KnowledgeSpiderConfig knowledgeSpiderConfig) throws XpathSyntaxErrorException {
         String main=null;
@@ -684,7 +682,7 @@ public class SpiderKnowledge {
      * @param doc
      * @param knowledgeSpiderConfig
      * @return
-     * @throws XpathSyntaxErrorException
+     * @throws cn.wanghaomiao.xpath.exception.XpathSyntaxErrorException
      */
     public static boolean clearCover(JXDocument doc,KnowledgeSpiderConfig knowledgeSpiderConfig) throws XpathSyntaxErrorException {
         String cover=null;
@@ -812,60 +810,58 @@ public class SpiderKnowledge {
         ProKnowledgeImpl perKnowledgeImpl=new ProKnowledgeImpl();
         perKnowledgeImpl.insert(perKnowledge);
     }
+
     public static void fecthNewsByCompanyName(String companyName,String uuid) throws InterruptedException {
-        String url=" http://news.baidu.com/ns?word=" +companyName+ "&pn=20&cl=2&ct=0&tn=newstitle&rn=20&ie=utf-8&bt=0&et=0";
         WebDriver driver=getChromeDriver();
+        String url="http://news.baidu.com/ns?word=title%3A%28"+companyName+"%29&pn=20&cl=2&ct=0&tn=newstitle&rn=20&ie=utf-8&bt=0&et=0";
         driver.get(url);
-        List<String> hrefList=new ArrayList<String>();
         WebElement element=driver.findElement(By.xpath("/html"));
         org.jsoup.nodes.Document doc=Jsoup.parse(element.getAttribute("outerHTML"));
+       try{
+           getAllPageURL(doc,driver);
+       }catch(Exception e){
+       }
+        System.out.println("一共有数据"+hrefList.size()+"条");
+        System.out.println("开始解析数据：");
+        int i=0;
+        for(String urls:hrefList){
+            i++;
+            try{
+                    driver.get(urls);
+                    WebElement elementDetails=driver.findElement(By.xpath("/html"));
+                    org.jsoup.nodes.Document documentDetails= Jsoup.parse(elementDetails.getAttribute("outerHTML"));
+                    String title=documentDetails.select("title").text();
+                    System.out.println(title);
+                    String time=documentDetails.select("span[class=date]").text();
+                    System.out.println(time);
+                    Elements elementMain=documentDetails.select("p");
+                    String main=null;
+                    String imgSrc=null;
+                    for( org.jsoup.nodes.Element elementMains:elementMain){
+                        main="<p>"+elementMains.text()+"</p>";
+                        Elements elementImg=elementMains.select("img");
+                        for(org.jsoup.nodes.Element elementImgs:elementImg){
+                            imgSrc=elementImgs.attr("src");
+                            System.out.println("<img src=\""+imgSrc+"\"/>");
+                        }
+                        System.out.println(main);
+                    }
+                System.out.println(urls);
+                System.out.println("---------------------这是第"+i+"条数据----------------------");
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+        }
+    }
+    public static void getAllPageURL(org.jsoup.nodes.Document doc,WebDriver driver) throws InterruptedException {
         while(true){
-            int num=0;
-            num++;
-            int i=0;
             Elements elementsHref=doc.select("h3[class=c-title] a");
             for(org.jsoup.nodes.Element elementHrefs:elementsHref){
                 String href=elementHrefs.attr("href");
                 hrefList.add(href);
             }
-            try{
-                for(String hrefLists:hrefList){
-                    driver.get(hrefLists);
-                    System.out.println(hrefLists);
-//                    WebElement elementDetails=driver.findElement(By.xpath("/html"));
-//                    org.jsoup.nodes.Document documentDetails= Jsoup.parse(elementDetails.getAttribute("outerHTML"));
-//                    String title=documentDetails.select("title").text();
-//                    System.out.println(title);
-//                    String time=documentDetails.select("span[class=date]").text();
-//                    System.out.println(time);
-//                    Elements elementMain=documentDetails.select("p");
-//                    String main=null;
-//                    String imgSrc=null;
-//                    for( org.jsoup.nodes.Element elementMains:elementMain){
-//                        main="<p>"+elementMains.text()+"</p>";
-//                        Elements elementImg=elementMains.select("img");
-//                        for(org.jsoup.nodes.Element elementImgs:elementImg){
-//                            imgSrc=elementImgs.attr("src");
-//                            System.out.println("<img src=\""+imgSrc+"\"/>");
-//                        }
-//                        System.out.println(main);
-//                    }
-                    i++;
-                    System.out.println("----------------------这是第"+num+"页的第"+i+"条数据-------------------------------");
-                    Thread.sleep(5000);
-                }
-            }catch(Exception e){
-                System.out.println("出错了。。。");
-            }
-            JavascriptExecutor javascriptExecutor=(JavascriptExecutor)driver;
-             try{
-                 javascriptExecutor.executeScript("$('#page >a.n')[0].click()");
-             }catch(Exception e){
-                 e.printStackTrace();
-             }
-            doc= returnPageDocument(driver);
+            doc= listSeleniumPage(driver);
         }
-
     }
     /**
      * 返回页面的Document
@@ -882,13 +878,36 @@ public class SpiderKnowledge {
             }
         }
         try {
-            Thread.sleep(10000);
+            Thread.sleep(5000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
         WebElement webElementMain=driver.findElement(By.xpath("/html"));
         org.jsoup.nodes.Document doc=Jsoup.parse(webElementMain.getAttribute("outerHTML"));
         return doc;
+    }
+
+
+    public static org.jsoup.nodes.Document listSeleniumPage(WebDriver driver){
+        JavascriptExecutor executor=(JavascriptExecutor)driver;
+        executor.executeScript("document.getElementsByClassName('n')[1].click()");
+        String handle=driver.getWindowHandle();
+        for(String handles:driver.getWindowHandles()){
+            if(handle.equals(handles)){
+                continue;
+            }else{
+                driver.close();
+                driver.switchTo().window(handles);
+            }
+        }
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        WebElement webElementMain=driver.findElement(By.xpath("/html"));
+        org.jsoup.nodes.Document docs= Jsoup.parse(webElementMain.getAttribute("outerHTML"));
+        return docs;
     }
     /**
      *
@@ -909,4 +928,5 @@ public class SpiderKnowledge {
             e.printStackTrace();
         }
     }
+
 }

@@ -12,8 +12,14 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.phantomjs.PhantomJSDriver;
+import sun.net.www.http.HttpClient;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.List;
 import java.util.Objects;
 
@@ -22,9 +28,9 @@ import java.util.Objects;
  * Created by lenovon on 2017/3/3.
  */
 public class HW {
-    public static void main(String[] args) throws IOException, XpathSyntaxErrorException {
-        org.jsoup.nodes.Document doc1=Jsoup.connect("http://app.mi.com/category/16").userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36").get();
-        JXDocument doc=new JXDocument(doc1);
-        System.out.println(doc);
+    String url="";
+
+    public static void main(String[] args){
+
     }
 }
