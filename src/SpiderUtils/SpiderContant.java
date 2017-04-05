@@ -22,5 +22,9 @@ public class SpiderContant {
     public static final String urlXml="SpiderUtils/BasKnowledgePattern.xml";
     public static final String orgXmlPath="/SpiderUtils/BasOrganizePattern.xml";
     public static final String PerKnowledgePatternPath="SpiderUtils/PerKnowledgePattern.xml";
+    public static final String CommonMoilbeGamesProductXml="/SpiderUtils/SpiderData/CommonMobileGamesProductPattern.xml";
+    public static final String CommonHTMLGamesProductXml="/SpiderUtils/SpiderData/CommonHTMLGamesProductPattern.xml";
+    public static final String CommonPCGamesProductXml="/SpiderUtils/SpiderData/CommonPCGamesProductPattern.xml";
+
 
 }

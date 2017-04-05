@@ -1,6 +1,6 @@
 package SpiderUtils;
 
-import JavaBean.BasPersonInfo;
+
 import JavaBean.OrgKnowledge;
 import JavaBean.ProKnowledge;
 import cn.wanghaomiao.xpath.exception.XpathSyntaxErrorException;
@@ -27,14 +27,13 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Created by lenovon on 2017/3/15.
  */
 public class SpiderKnowledge {
     static SimpleDateFormat simpleDateFormatchange=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    public static  List<String> hrefList=new ArrayList<String>();
     /**
      * 1、获取xml
      * @param xmlPath
@@ -811,26 +810,24 @@ public class SpiderKnowledge {
         ProKnowledgeImpl perKnowledgeImpl=new ProKnowledgeImpl();
         perKnowledgeImpl.insert(perKnowledge);
     }
+
     public static void fecthNewsByCompanyName(String companyName,String uuid) throws InterruptedException {
-        String url=" http://news.baidu.com/ns?word=" +companyName+ "&pn=20&cl=2&ct=0&tn=newstitle&rn=20&ie=utf-8&bt=0&et=0";
         WebDriver driver=getChromeDriver();
+        String url="http://news.baidu.com/ns?word=title%3A%28"+companyName+"%29&pn=20&cl=2&ct=0&tn=newstitle&rn=20&ie=utf-8&bt=0&et=0";
         driver.get(url);
-        List<String> hrefList=new ArrayList<String>();
         WebElement element=driver.findElement(By.xpath("/html"));
         org.jsoup.nodes.Document doc=Jsoup.parse(element.getAttribute("outerHTML"));
-        while(true){
-            int num=0;
-            num++;
-            int i=0;
-            Elements elementsHref=doc.select("h3[class=c-title] a");
-            for(org.jsoup.nodes.Element elementHrefs:elementsHref){
-                String href=elementHrefs.attr("href");
-                hrefList.add(href);
-            }
+       try{
+           getAllPageURL(doc,driver);
+       }catch(Exception e){
+       }
+        System.out.println("一共有数据"+hrefList.size()+"条");
+        System.out.println("开始解析数据：");
+        int i=0;
+        for(String urls:hrefList){
+            i++;
             try{
-                for(String hrefLists:hrefList){
-                    driver.get(hrefLists);
-                    System.out.println(hrefLists);
+                    driver.get(urls);
                     WebElement elementDetails=driver.findElement(By.xpath("/html"));
                     org.jsoup.nodes.Document documentDetails= Jsoup.parse(elementDetails.getAttribute("outerHTML"));
                     String title=documentDetails.select("title").text();
@@ -849,18 +846,22 @@ public class SpiderKnowledge {
                         }
                         System.out.println(main);
                     }
-                    i++;
-                    System.out.println("----------------------这是第"+num+"页的第"+i+"条数据-------------------------------");
-                    Thread.sleep(5000);
-                }
+                System.out.println(urls);
+                System.out.println("---------------------这是第"+i+"条数据----------------------");
             }catch(Exception e){
-                System.out.println("出错了。。。");
+                e.printStackTrace();
             }
-            JavascriptExecutor javascriptExecutor=(JavascriptExecutor)driver;
-            javascriptExecutor.executeScript("$('#page >a.n')[1].click()");
-            doc= returnPageDocument(driver);
         }
-
+    }
+    public static void getAllPageURL(org.jsoup.nodes.Document doc,WebDriver driver) throws InterruptedException {
+        while(true){
+            Elements elementsHref=doc.select("h3[class=c-title] a");
+            for(org.jsoup.nodes.Element elementHrefs:elementsHref){
+                String href=elementHrefs.attr("href");
+                hrefList.add(href);
+            }
+            doc= listSeleniumPage(driver);
+        }
     }
     /**
      * 返回页面的Document
@@ -877,13 +878,36 @@ public class SpiderKnowledge {
             }
         }
         try {
-            Thread.sleep(10000);
+            Thread.sleep(5000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
         WebElement webElementMain=driver.findElement(By.xpath("/html"));
         org.jsoup.nodes.Document doc=Jsoup.parse(webElementMain.getAttribute("outerHTML"));
         return doc;
+    }
+
+
+    public static org.jsoup.nodes.Document listSeleniumPage(WebDriver driver){
+        JavascriptExecutor executor=(JavascriptExecutor)driver;
+        executor.executeScript("document.getElementsByClassName('n')[1].click()");
+        String handle=driver.getWindowHandle();
+        for(String handles:driver.getWindowHandles()){
+            if(handle.equals(handles)){
+                continue;
+            }else{
+                driver.close();
+                driver.switchTo().window(handles);
+            }
+        }
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        WebElement webElementMain=driver.findElement(By.xpath("/html"));
+        org.jsoup.nodes.Document docs= Jsoup.parse(webElementMain.getAttribute("outerHTML"));
+        return docs;
     }
     /**
      *
@@ -904,4 +928,5 @@ public class SpiderKnowledge {
             e.printStackTrace();
         }
     }
+
 }

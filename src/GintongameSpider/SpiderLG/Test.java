@@ -141,7 +141,7 @@ public class Test {
                     gameInfo.setGtags(tag);
                     gameInfo.setPublisher(kaifashang);
                     gameInfo.setPdemand(xuqiu);
-                    proGameInfoDao.insertGame(gameInfo);
+//                    proGameInfoDao.insertGame(gameInfo);
 
                     progtypes.setUuid(uuid);
                     progtypes.setGtype(leibie);
