@@ -7,4 +7,12 @@
         VALUES
         (#{bid},#{uuid},#{pname},#{job},#{adress},#{web})
     </insert>
+
+    <select id="selectComExecutive" parameterType="java.lang.String" resultType="JavaBean.ComExecutiveInfo">
+        select * from com_executive_info where uuid=#{uuid}
+    </select>
+
+    <update id="updateComExecutive" parameterType="JavaBean.ComExecutiveInfo">
+        update com_executive_info set job=#{job},adress=#{adress},web=#{web} where uuid=#{uuid} and pname=#{pname}
+    </update>
 </mapper>

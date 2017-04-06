@@ -1,6 +1,6 @@
 package GintongameSpider.SpiderLG;
 
-import SpiderUtils.SpiderContant;
+import GintongameSpider.SpiderTyc.SpiderTyc;
 import SpiderUtils.SpiderOrganize;
 
 /**
@@ -121,10 +121,11 @@ public class Ye {
         // spiderOrganize.mainProcess("SpiderBbsd", SpiderContant.orgXmlPath);
         //spiderOrganize.mainProcess("SpiderSqsd",SpiderContant.orgXmlPath);
 
-        spiderOrganize.mainProcess("SpiderWmsj", SpiderContant.orgXmlPath);
+        //spiderOrganize.mainProcess("SpiderSqsd", SpiderContant.orgXmlPath);
 
-//        SpiderTyc spiderTyc=new SpiderTyc();
-//        spiderTyc.getBussinessDataByOne("http://www.tianyancha.com/company/150041670");
+        SpiderTyc spiderTyc=new SpiderTyc();
+        spiderTyc.getBussinessDataByOne("http://www.tianyancha.com/company/2358815206",false,"87777405-7027-49c5-a938-92a8a0874eb9");
+
 
 
     }

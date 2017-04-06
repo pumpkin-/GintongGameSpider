@@ -9,6 +9,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -16,118 +17,226 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 /**
  * Created by lenovo on 2017/2/21.
  */
 public class SpiderTyc {
-
+    private static List<String> perUrlList=new ArrayList<String>();
     private  WebDriver driver = null;
 
     public static void main(String [] args) throws Exception {
             //公司网址
-        SpiderTyc spiderTyc=new SpiderTyc();
-        List<String> urls = new ArrayList<String>();
-        urls.add("http://www.tianyancha.com/company/2347469001");
-        urls.add("http://www.tianyancha.com/company/24582538");
-        urls.add("http://www.tianyancha.com/company/15676849");
-        urls.add("http://www.tianyancha.com/company/712667541");
-        urls.add("http://www.tianyancha.com/company/96685097");
-        urls.add("http://www.tianyancha.com/company/15676849");
-        urls.add("http://www.tianyancha.com/company/28644163");
-        urls.add("http://www.tianyancha.com/company/16091722");
-        urls.add("http://www.tianyancha.com/company/9459198");
-        urls.add("http://www.tianyancha.com/company/96829874");
-        urls.add("http://www.tianyancha.com/company/28510961");
-        urls.add("http://www.tianyancha.com/company/103890902");
-        urls.add("http://www.tianyancha.com/company/28552456");
-        urls.add("http://www.tianyancha.com/company/5519198");
-        urls.add("http://www.tianyancha.com/company/28013865");
-        urls.add("http://www.tianyancha.com/company/2450478858");
-        urls.add("http://www.tianyancha.com/company/82731450");
-        urls.add("http://www.tianyancha.com/company/2377462584");
-        urls.add("http://www.tianyancha.com/company/978948221");
-        urls.add("http://www.tianyancha.com/company/26255088");
-        urls.add("http://www.tianyancha.com/company/10361034");
-        urls.add("http://www.tianyancha.com/company/27175339");
-        urls.add("http://www.tianyancha.com/company/83201574");
-        urls.add("http://www.tianyancha.com/company/35833909");
-        urls.add("http://www.tianyancha.com/company/118466410");
-        urls.add("http://www.tianyancha.com/company/24838528");
-        urls.add("http://www.tianyancha.com/company/9000434");
-        urls.add("http://www.tianyancha.com/company/30081795");
-        urls.add("http://www.tianyancha.com/company/15239518");
-        urls.add("http://www.tianyancha.com/company/3855448");
-        urls.add("http://www.tianyancha.com/company/26697419");
-        urls.add("http://www.tianyancha.com/company/11949400");
-        urls.add("http://www.tianyancha.com/company/2450478858");
-        urls.add("http://www.tianyancha.com/company/2316993363");
-        urls.add("http://www.tianyancha.com/company/108245097");
-        urls.add("http://www.tianyancha.com/company/2353587338");
-        urls.add("http://www.tianyancha.com/company/9000434");
-        urls.add("http://www.tianyancha.com/company/17782765");
-        urls.add("http://www.tianyancha.com/company/2350113433");
-        urls.add("http://www.tianyancha.com/company/25588370");
-        urls.add("http://www.tianyancha.com/company/2517536223");
-        urls.add("http://www.tianyancha.com/company/2344690438");
-        urls.add("http://www.tianyancha.com/company/28415550");
-        urls.add("http://www.tianyancha.com/company/2315672506");
-        urls.add("http://www.tianyancha.com/company/5369226");
-        urls.add("http://www.tianyancha.com/company/26621891");
-        urls.add("http://www.tianyancha.com/company/2344968663");
-        urls.add("http://www.tianyancha.com/company/27732799");
-        urls.add("http://www.tianyancha.com/company/8450050");
-        urls.add("http://www.tianyancha.com/company/2358562179");
-        urls.add("http://www.tianyancha.com/company/1965476");
-        urls.add("http://www.tianyancha.com/company/31762302");
-        urls.add("http://www.tianyancha.com/company/15792651");
-        urls.add("http://www.tianyancha.com/company/6951861");
-        urls.add("http://www.tianyancha.com/company/11216089");
-        urls.add("http://www.tianyancha.com/company/31751038");
-        urls.add("http://www.tianyancha.com/company/2168189");
-        urls.add("http://www.tianyancha.com/company/26425907");
-        urls.add("http://www.tianyancha.com/company/12566358");
-        urls.add("http://www.tianyancha.com/company/109491575");
-        urls.add("http://www.tianyancha.com/company/32726890");
-        urls.add("http://www.tianyancha.com/company/24285243");
-        urls.add("http://www.tianyancha.com/company/23113285");
-        urls.add("http://www.tianyancha.com/company/33108730");
-        urls.add("http://www.tianyancha.com/company/15239518");
-        urls.add("http://www.tianyancha.com/company/26956239");
-        urls.add("http://www.tianyancha.com/company/26677731");
-        urls.add("http://www.tianyancha.com/company/28554472");
-        urls.add("http://www.tianyancha.com/company/83568248");
-        urls.add("http://www.tianyancha.com/company/21284311");
-        urls.add("http://www.tianyancha.com/company/135716396");
-        urls.add("http://www.tianyancha.com/company/1771586");
-        spiderTyc.getBussinessDataByList(urls);
+//        SpiderTyc spiderTyc=new SpiderTyc();
+//        List<String> urls = new ArrayList<String>();
+//        urls.add("http://www.tianyancha.com/company/2347469001");
+//        urls.add("http://www.tianyancha.com/company/24582538");
+//        urls.add("http://www.tianyancha.com/company/15676849");
+//        urls.add("http://www.tianyancha.com/company/712667541");
+//        urls.add("http://www.tianyancha.com/company/96685097");
+//        urls.add("http://www.tianyancha.com/company/15676849");
+//        urls.add("http://www.tianyancha.com/company/28644163");
+//        urls.add("http://www.tianyancha.com/company/16091722");
+//        urls.add("http://www.tianyancha.com/company/9459198");
+//        urls.add("http://www.tianyancha.com/company/96829874");
+//        urls.add("http://www.tianyancha.com/company/28510961");
+//        urls.add("http://www.tianyancha.com/company/103890902");
+//        urls.add("http://www.tianyancha.com/company/28552456");
+//        urls.add("http://www.tianyancha.com/company/5519198");
+//        urls.add("http://www.tianyancha.com/company/28013865");
+//        urls.add("http://www.tianyancha.com/company/2450478858");
+//        urls.add("http://www.tianyancha.com/company/82731450");
+//        urls.add("http://www.tianyancha.com/company/2377462584");
+//        urls.add("http://www.tianyancha.com/company/978948221");
+//        urls.add("http://www.tianyancha.com/company/26255088");
+//        urls.add("http://www.tianyancha.com/company/10361034");
+//        urls.add("http://www.tianyancha.com/company/27175339");
+//        urls.add("http://www.tianyancha.com/company/83201574");
+//        urls.add("http://www.tianyancha.com/company/35833909");
+//        urls.add("http://www.tianyancha.com/company/118466410");
+//        urls.add("http://www.tianyancha.com/company/24838528");
+//        urls.add("http://www.tianyancha.com/company/9000434");
+//        urls.add("http://www.tianyancha.com/company/30081795");
+//        urls.add("http://www.tianyancha.com/company/15239518");
+//        urls.add("http://www.tianyancha.com/company/3855448");
+//        urls.add("http://www.tianyancha.com/company/26697419");
+//        urls.add("http://www.tianyancha.com/company/11949400");
+//        urls.add("http://www.tianyancha.com/company/2450478858");
+//        urls.add("http://www.tianyancha.com/company/2316993363");
+//        urls.add("http://www.tianyancha.com/company/108245097");
+//        urls.add("http://www.tianyancha.com/company/2353587338");
+//        urls.add("http://www.tianyancha.com/company/9000434");
+//        urls.add("http://www.tianyancha.com/company/17782765");
+//        urls.add("http://www.tianyancha.com/company/2350113433");
+//        urls.add("http://www.tianyancha.com/company/25588370");
+//        urls.add("http://www.tianyancha.com/company/2517536223");
+//        urls.add("http://www.tianyancha.com/company/2344690438");
+//        urls.add("http://www.tianyancha.com/company/28415550");
+//        urls.add("http://www.tianyancha.com/company/2315672506");
+//        urls.add("http://www.tianyancha.com/company/5369226");
+//        urls.add("http://www.tianyancha.com/company/26621891");
+//        urls.add("http://www.tianyancha.com/company/2344968663");
+//        urls.add("http://www.tianyancha.com/company/27732799");
+//        urls.add("http://www.tianyancha.com/company/8450050");
+//        urls.add("http://www.tianyancha.com/company/2358562179");
+//        urls.add("http://www.tianyancha.com/company/1965476");
+//        urls.add("http://www.tianyancha.com/company/31762302");
+//        urls.add("http://www.tianyancha.com/company/15792651");
+//        urls.add("http://www.tianyancha.com/company/6951861");
+//        urls.add("http://www.tianyancha.com/company/11216089");
+//        urls.add("http://www.tianyancha.com/company/31751038");
+//        urls.add("http://www.tianyancha.com/company/2168189");
+//        urls.add("http://www.tianyancha.com/company/26425907");
+//        urls.add("http://www.tianyancha.com/company/12566358");
+//        urls.add("http://www.tianyancha.com/company/109491575");
+//        urls.add("http://www.tianyancha.com/company/32726890");
+//        urls.add("http://www.tianyancha.com/company/24285243");
+//        urls.add("http://www.tianyancha.com/company/23113285");
+//        urls.add("http://www.tianyancha.com/company/33108730");
+//        urls.add("http://www.tianyancha.com/company/15239518");
+//        urls.add("http://www.tianyancha.com/company/26956239");
+//        urls.add("http://www.tianyancha.com/company/26677731");
+//        urls.add("http://www.tianyancha.com/company/28554472");
+//        urls.add("http://www.tianyancha.com/company/83568248");
+//        urls.add("http://www.tianyancha.com/company/21284311");
+//        urls.add("http://www.tianyancha.com/company/135716396");
+//        urls.add("http://www.tianyancha.com/company/1771586");
+//        spiderTyc.getBussinessDataByList(urls);
 
+
+        SpiderTyc spiderTyc=new SpiderTyc();
+        spiderTyc.getBussinessDataByList("腾讯");
     }
 
     /**
      * 获取一组公司的工商数据
-     * @param urls
+     * @param
      * @throws InterruptedException
      */
-    public  void getBussinessDataByList(List<String> urls) throws Exception {
-        WebDriver driver = getWebDriver();
-        for(String url: urls) {
-            BasOrganizeInfo basOrganizeInfo=getBusinessDataByUrl(driver, url);
-            System.out.println(basOrganizeInfo.getOname() + ":数据入库完毕");
-            Thread.sleep(2000);
-        }
-        closeWebDriver();
-    }
+//    public  void getBussinessDataByList(List<String> urls) throws Exception {
+//        WebDriver driver = getWebDriver();
+//        for(String url: urls) {
+//            BasOrganizeInfo basOrganizeInfo=getBusinessDataByUrl(driver, url);
+//            System.out.println(basOrganizeInfo.getOname() + ":数据入库完毕");
+//            Thread.sleep(2000);
+//        }
+//        closeWebDriver();
+//    }
 
-    public  BasOrganizeInfo getBussinessDataByOne(String url) throws Exception {
+    public  BasOrganizeInfo getBussinessDataByOne(String url,Boolean isFirst,String ouuid) throws Exception {
         WebDriver driver = getWebDriver();
-        BasOrganizeInfo basOrganizeInfo=getBusinessDataByUrl(driver, url);
+        BasOrganizeInfo basOrganizeInfo=null;
+        basOrganizeInfo = getBusinessDataByUrl(driver, url, isFirst,ouuid);
         System.out.println(basOrganizeInfo.getOname() + ":数据入库完毕(天眼查)");
         Thread.sleep(2000);
         closeWebDriver();
         return basOrganizeInfo;
     }
+
+    public  BasOrganizeInfo getBussinessDataByList(String ComName) throws Exception {
+        WebDriver driver = getWebDriver();
+        BasOrganizeInfo basOrganizeInfo=null;
+        List<String> perUrlList=getPerUrl(driver,ComName);
+        for(String url:perUrlList) {
+            basOrganizeInfo = getBusinessDataByUrl(driver, url, true,null);
+            System.out.println(basOrganizeInfo.getOname() + ":数据入库完毕(天眼查)");
+        }
+
+        Thread.sleep(2000);
+        closeWebDriver();
+        return basOrganizeInfo;
+    }
+
+
+    /**
+     * 爬取列表页
+     * @param driver
+     * @param comName
+     * @throws Exception
+     */
+    public static List<String> getPerUrl(WebDriver driver,String comName) throws Exception {
+        int page=0;
+        String comUrl="http://www.tianyancha.com/search?key="+comName+"&checkFrom=searchBox";
+        driver.get(comUrl);
+        WebElement webElementMain = driver.findElement(By.xpath("/html"));
+        Document docMain = Jsoup.parse(webElementMain.getAttribute("outerHTML"));
+        Elements elements=docMain.select("a[class=query_name search-new-color]");
+        for(Element element:elements){
+            perUrlList.add(element.attr("href"));
+            System.out.println(element.attr("href"));
+        }
+        System.out.println("第1页数据已经跑完");
+        Element elementsPage=docMain.select("div[class=total ng-binding]").last();
+        if(elementsPage!=null) {
+            String pages = elementsPage.text();
+            Pattern pattern = Pattern.compile("[0-9]{1,}");
+            Matcher matcher = pattern.matcher(pages);
+            while (matcher.find()) {
+                page = Integer.parseInt(matcher.group(0));
+                System.out.println("page----:"+page);
+            }
+            for(int i=2;i<page;i++){
+                try{
+                    String url="http://www.tianyancha.com/search/p"+i+"?key="+comName;
+                    docMain=getDocumentBySelenium(driver,url);
+                    Elements elementsMain=docMain.select("a[class=query_name search-new-color]");
+                    for(Element element:elementsMain){
+                        System.out.println(element.attr("href"));
+                        perUrlList.add(element.attr("href"));
+                    }
+                    System.out.println("第"+i+"页数据已经跑完");
+                    Thread.sleep(5000);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+
+            }
+        }
+        return perUrlList;
+    }
+
+    /**
+     * 通过驱动器获得当前页面的doucument树
+     * @param driver
+     * @return
+     */
+    public static org.jsoup.nodes.Document getDocumentBySelenium(WebDriver driver, String url) throws InterruptedException {
+        driver.get(url);
+        Thread.sleep(1000);
+        return Jsoup.parse(driver.findElement(By.xpath("/html")).getAttribute("outerHTML"));
+    }
+
+
+    /**
+     * 翻页程序
+     * @param driver
+     * @return
+     * @throws InterruptedException
+     */
+    public static Document listPageSelenium(WebDriver driver) throws InterruptedException {
+        JavascriptExecutor executornext = (JavascriptExecutor) driver;
+        executornext.executeScript("$(\"#ng-view > div.ng-scope > div > div > div > div.col-9.company-main.pl0.pr20.pt18.company_new_2017 > div > div:nth-child(11) " +
+                "> div.ng-scope > div.company_pager.ng-scope > ul > li.pagination-next.ng-scope > a\").click()");
+        String handle = driver.getWindowHandle();
+        for (String handles : driver.getWindowHandles()) {
+            if (handles.equals(handle)) {
+                continue;
+            }else {
+                driver.close();
+                driver.switchTo().window(handles);
+            }
+        }
+        Thread.sleep(5000);
+        WebElement webElement=driver.findElement(By.xpath("/html"));
+        Document Document=Jsoup.parse(webElement.getAttribute("outerHTML"));
+        return Document;
+    }
+
+
+
 
     /**
      * 获取一家公司的工商数据
@@ -135,15 +244,20 @@ public class SpiderTyc {
      * @param CompanyUrl
      * @throws InterruptedException
      */
-    public  BasOrganizeInfo  getBusinessDataByUrl(WebDriver driver, String CompanyUrl) throws Exception {
+    public  BasOrganizeInfo  getBusinessDataByUrl(WebDriver driver, String CompanyUrl,Boolean isFirst,String ouuid) throws Exception {
         String oname=null;
+        String uuid=null;
         BasOrganizeInfo basOrgan = new BasOrganizeInfo();
             driver.get(CompanyUrl);
             Thread.sleep(2000);
             WebElement webElement = driver.findElement(By.xpath("/html"));
             Document doc = Jsoup.parse(webElement.getAttribute("outerHTML"));
             //所对应的UUID
-            String uuid = UUID.randomUUID().toString();
+            if(isFirst==true) {
+                uuid= UUID.randomUUID().toString();
+            }else{
+                uuid=ouuid;
+            }
             //所对应businessID
             String bid = null;
             //System.out.println(doc.outerHtml());
@@ -221,7 +335,11 @@ public class SpiderTyc {
             basOrgan.setType("0");
             basOrgan.setUrl(CompanyUrl);
             BasOrganizeInfoDao basOrganizeInfoDao = new BasOrganizeInfoImpl();
-            basOrganizeInfoDao.insertSingle(basOrgan);
+            if(isFirst==true) {
+                basOrganizeInfoDao.insertSingle(basOrgan);
+            }else{
+                basOrganizeInfoDao.updateSingle(basOrgan);
+            }
             List<String> basOrganId = basOrganizeInfoDao.selcetOrganId(uuid);
             for (String bbid : basOrganId) {
                 bid = bbid;
@@ -256,7 +374,11 @@ public class SpiderTyc {
             basBus.setSource("天眼查");
             BasBusinessInfoDao businessInfoDao = new BasBusinessInfoImpl();
 //        System.out.println("business中的bid"+basBus.getBid());
-            businessInfoDao.insertBusInfo(basBus);
+            if(isFirst==true) {
+                businessInfoDao.insertBusInfo(basBus);
+            }else{
+                businessInfoDao.updateBusInfo(basBus);
+            }
 
 
             //对外投资
@@ -280,7 +402,25 @@ public class SpiderTyc {
                     comInvestmentInfo.setState(investState);
                     comInvestmentInfo.setInvestment(investMoney);
                     comInvestmentInfo.setWeb("http://www.tianyancha.com" + comWeb);
-                    comInvestmentInfoDao.insertInvestmentInfo(comInvestmentInfo);
+                    if(isFirst==true) {
+                        comInvestmentInfoDao.insertInvestmentInfo(comInvestmentInfo);
+                    }else {
+                        List<ComInvestmentInfo> comInvestmentInfoList = comInvestmentInfoDao.selectInvestmentInfo(uuid);
+                        boolean isExist=false;
+                        for (int i = 0; i < comInvestmentInfoList.size(); i++) {
+                            String investOname=comInvestmentInfoList.get(i).getOname();
+                            String investUuid=comInvestmentInfoList.get(i).getUuid();
+                            if(investOname.equals(investComName)&&investUuid.equals(uuid)){
+                                comInvestmentInfoDao.updateInvestmentInfo(comInvestmentInfo);
+                                isExist=true;
+                                break;
+                            }
+                        }
+                        if(isExist==false){
+                            comInvestmentInfoDao.insertInvestmentInfo(comInvestmentInfo);
+                        }
+                    }
+
                     //System.out.println("对外投资:"+investComName+"-"+comWeb+"-"+investBoss+"-"+investState+"-"+investMoney);
                 }catch (Exception e){
                     e.printStackTrace();
@@ -329,7 +469,24 @@ public class SpiderTyc {
                         comExecutiveInfo.setPname(leadName);
                         comExecutiveInfo.setJob(leadDuty);
                         comExecutiveInfo.setWeb(leadUrl);
-                        comExecutiveInfoDao.insertExecutiveInfo(comExecutiveInfo);
+                        if(isFirst==true) {
+                            comExecutiveInfoDao.insertExecutiveInfo(comExecutiveInfo);
+                        }else {
+                            List<ComExecutiveInfo> comExecutiveInfoList = comExecutiveInfoDao.selectExecutiveInfo(uuid);
+                            boolean isExist=false;
+                            for (int j = 0; j < comExecutiveInfoList.size(); j++) {
+                                String investOname=comExecutiveInfoList.get(j).getPname();
+                                String investUuid=comExecutiveInfoList.get(j).getUuid();
+                                if(investOname.equals(leadName)&&investUuid.equals(uuid)){
+                                    comExecutiveInfoDao.updateExecutiveInfo(comExecutiveInfo);
+                                    isExist=true;
+                                    break;
+                                }
+                            }
+                            if(isExist==false){
+                                comExecutiveInfoDao.insertExecutiveInfo(comExecutiveInfo);
+                            }
+                        }
 
                         //人物库
                         BasPersonInfo basPerson = new BasPersonInfo();
@@ -378,7 +535,24 @@ public class SpiderTyc {
                             comShareholder.setName(partnerName);
                             comShareholder.setWeb(partnerNameUrl);
                             comShareholder.setInvestment(partnerMoney);
-                            comShareholderDao.insertComShareholder(comShareholder);
+                            if(isFirst==true) {
+                                comShareholderDao.insertComShareholder(comShareholder);
+                            }else {
+                                List<ComShareholder> comShareholderList = comShareholderDao.selectComShareholder(uuid);
+                                boolean isExist=false;
+                                for (int j = 0; j < comShareholderList.size(); j++) {
+                                    String investOname=comShareholderList.get(j).getName();
+                                    String investUuid=comShareholderList.get(j).getUuid();
+                                    if(investOname.equals(partnerName)&&investUuid.equals(uuid)){
+                                        comShareholderDao.updateComShareholder(comShareholder);
+                                        isExist=true;
+                                        break;
+                                    }
+                                }
+                                if(isExist==false){
+                                    comShareholderDao.insertComShareholder(comShareholder);
+                                }
+                            }
                             // System.out.println("人物股东信息:---->"+partnerNameUrl+"-"+partnerName+"-"+partnerMoney);
                         } else {
                             ComShareholderTeam comShareholderTeam = new ComShareholderTeam();
@@ -403,17 +577,159 @@ public class SpiderTyc {
                             //comShareholderTeam.setIndustry(partnerIndustry);
                             //comShareholderTeam.setState(partnerState);
                             comShareholderTeam.setInvestment(partnerComMoney);
-                            comShareholderTeamDao.insertShareholderTeam(comShareholderTeam);
+                            if(isFirst==true) {
+                                comShareholderTeamDao.insertShareholderTeam(comShareholderTeam);
+                            }else {
+                                List<ComShareholderTeam> comShareholderTeamList = comShareholderTeamDao.selectShareholderTeam(uuid);
+                                boolean isExist=false;
+                                for (int j = 0; j < comShareholderTeamList.size(); j++) {
+                                    String investOname=comShareholderTeamList.get(j).getOname();
+                                    String investUuid=comShareholderTeamList.get(j).getUuid();
+                                    if(investOname.equals(partnerComName)&&investUuid.equals(uuid)){
+                                        comShareholderTeamDao.updateShareholderTeam(comShareholderTeam);
+                                        isExist=true;
+                                        break;
+                                    }
+                                }
+                                if(isExist==false){
+                                    comShareholderTeamDao.insertShareholderTeam(comShareholderTeam);
+                                }
+                            }
                         }
                     }catch (Exception e){
                         e.printStackTrace();
                     }
-
                 //System.out.println("公司股东信息:---->"+partnerComNameUrl+"-"+partnerComName+"-"+partnerComMoney);
-
             }
+
+           //变更信息
+           String changePage = doc.select("div[ng-if=dataItemCount.changeCount>0] div[class=total ng-binding]").text();
+            ComChangeInfoDao comChangeInfoDao=new ComChangeInfoImpl();
+            if(changePage!=null){
+                int page=0;
+                Pattern pattern = Pattern.compile("[0-9]{1,}");
+                Matcher matcher = pattern.matcher(changePage);
+                while (matcher.find()) {
+                    page = Integer.parseInt(matcher.group(0));
+                    System.out.println("page----:"+page);
+                }
+                    Elements elements = doc.select("div[ng-if=dataItemCount.changeCount>0] table[class=table companyInfo-table] tr.ng-scope");
+                    for (Element element : elements) {
+                        ComChangInfo comChangInfo = new ComChangInfo();
+                        String change_time = element.select("span[class=ng-binding]").text().split(" ")[0];
+                        String change_item = element.select("span[class=ng-binding]").text().split(" ")[1];
+                        String before_change = element.select("span[ng-bind-html=change.contentBefore | splitNum]").text();
+                        String after_change = element.select("span[ng-bind-html=change.contentAfter | splitNum]").text();
+                        comChangInfo.setBid(Integer.parseInt(bid));
+                        comChangInfo.setUuid(uuid);
+                        comChangInfo.setAfter_change(after_change);
+                        comChangInfo.setChange_time(change_time);
+                        comChangInfo.setChange_item(change_item);
+                        comChangInfo.setBefore_change(before_change);
+                        if(isFirst==true) {
+                            comChangeInfoDao.insertChangeInfo(comChangInfo);
+                        }else {
+                            List<ComChangInfo> comChangInfoList = comChangeInfoDao.selectChangeInfo(uuid);
+                            boolean isExist=false;
+                            for (int j = 0; j < comChangInfoList.size(); j++) {
+                                String investOname=comChangInfoList.get(j).getChange_item();
+                                String investUuid=comChangInfoList.get(j).getUuid();
+                                if(investOname.equals(change_item)&&investUuid.equals(uuid)){
+                                    comChangeInfoDao.updateChangeInfo(comChangInfo);
+                                    isExist=true;
+                                    break;
+                                }
+                            }
+                            if(isExist==false){
+                                comChangeInfoDao.insertChangeInfo(comChangInfo);
+                            }
+                        }
+                        //System.out.println(change_time + "***" + change_item + "***" + before_change + "***" + after_change);
+                    }
+                        for(int i=2;i<=page;i++) {
+                            doc = listPageSelenium(driver);
+                            Elements eles = doc.select("div[ng-if=dataItemCount.changeCount>0] table[class=table companyInfo-table] tr.ng-scope");
+                            for (Element ele : eles) {
+                                try {
+
+
+                                    ComChangInfo comChangInfo = new ComChangInfo();
+                                    String change_time = ele.select("span[class=ng-binding]").text().split(" ")[0];
+                                    String change_item = ele.select("span[class=ng-binding]").text().split(" ")[1];
+                                    String before_change = ele.select("span[ng-bind-html=change.contentBefore | splitNum]").text();
+                                    String after_change = ele.select("span[ng-bind-html=change.contentAfter | splitNum]").text();
+                                    comChangInfo.setBid(Integer.parseInt(bid));
+                                    comChangInfo.setUuid(uuid);
+                                    comChangInfo.setAfter_change(after_change);
+                                    comChangInfo.setChange_time(change_time);
+                                    comChangInfo.setChange_item(change_item);
+                                    comChangInfo.setBefore_change(before_change);
+                                    if (isFirst == true) {
+                                        comChangeInfoDao.insertChangeInfo(comChangInfo);
+                                    } else {
+                                        List<ComChangInfo> comChangInfoList = comChangeInfoDao.selectChangeInfo(uuid);
+                                        boolean isExist = false;
+                                        for (int j = 0; j < comChangInfoList.size(); j++) {
+                                            String investOname = comChangInfoList.get(j).getChange_item();
+                                            String investUuid = comChangInfoList.get(j).getUuid();
+                                            if (investOname.equals(change_item) && investUuid.equals(uuid)) {
+                                                comChangeInfoDao.updateChangeInfo(comChangInfo);
+                                                isExist = true;
+                                                break;
+                                            }
+                                        }
+                                        if (isExist == false) {
+                                            comChangeInfoDao.insertChangeInfo(comChangInfo);
+                                        }
+                                    }
+                                    //System.out.println(change_time + "***" + change_item + "***" + before_change + "***" + after_change);
+                                }catch (Exception e){
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+
+
+            }else{
+                Elements elements=doc.select("div[ng-if=dataItemCount.changeCount>0] table[class=table companyInfo-table] tr.ng-scope");
+                for(Element element:elements){
+                    ComChangInfo comChangInfo=new ComChangInfo();
+                    String change_time=element.select("span[class=ng-binding]").text().split(" ")[0];
+                    String change_item=element.select("span[class=ng-binding]").text().split(" ")[1];
+                    String before_change=element.select("span[ng-bind-html=change.contentBefore | splitNum]").text();
+                    String after_change=element.select("span[ng-bind-html=change.contentAfter | splitNum]").text();
+                    comChangInfo.setBid(Integer.parseInt(bid));
+                    comChangInfo.setUuid(uuid);
+                    comChangInfo.setAfter_change(after_change);
+                    comChangInfo.setChange_time(change_time);
+                    comChangInfo.setChange_item(change_item);
+                    comChangInfo.setBefore_change(before_change);
+                    if(isFirst==true) {
+                        comChangeInfoDao.insertChangeInfo(comChangInfo);
+                    }else {
+                        List<ComChangInfo> comChangInfoList = comChangeInfoDao.selectChangeInfo(uuid);
+                        boolean isExist=false;
+                        for (int j = 0; j < comChangInfoList.size(); j++) {
+                            String investOname=comChangInfoList.get(j).getChange_item();
+                            String investUuid=comChangInfoList.get(j).getUuid();
+                            if(investOname.equals(change_item)&&investUuid.equals(uuid)){
+                                comChangeInfoDao.updateChangeInfo(comChangInfo);
+                                isExist=true;
+                                break;
+                            }
+                        }
+                        if(isExist==false){
+                            comChangeInfoDao.insertChangeInfo(comChangInfo);
+                        }
+                    }
+                    //System.out.println(change_time + "***" + change_item + "***" + before_change + "***" + after_change);
+                }
+            }
+
+
         return basOrgan;
     }
+
 
     /**
      * 获取webDriver

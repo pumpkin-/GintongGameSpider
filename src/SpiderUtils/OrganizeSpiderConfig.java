@@ -44,6 +44,8 @@ public class OrganizeSpiderConfig {
     public Element kfwDyUrl;
     //开服网手游Url
     public Element kfwSyUrl;
+    //公司的Ouuid
+    public Element ouuid;
 
 
     public String toString(){
@@ -66,6 +68,7 @@ public class OrganizeSpiderConfig {
                 ", kfwDyUrl='" + kfwDyUrl + '\'' +
                 ", kfwSyUrl='" + kfwSyUrl + '\'' +
                 ", flag='" + flag + '\'' +
+                ", ouuid='" + ouuid + '\'' +
                 '}';
     }
 

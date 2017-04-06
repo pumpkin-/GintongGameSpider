@@ -1,17 +1,19 @@
 
 package SpiderUtils;
 
+import GintongameSpider.SpiderMM.SpiderMaimai;
 import GintongameSpider.SpiderTyc.SpiderTyc;
+import GintongameSpider.SpiderWm.SpiderWm;
 import JavaBean.BasOrganizeInfo;
 import JavaBean.BaseKnowLedge;
 import JavaBean.EcologyOrgData;
+import SpiderUtils.SpiderData.CommonProduct;
 import cn.wanghaomiao.xpath.exception.XpathSyntaxErrorException;
 import cn.wanghaomiao.xpath.model.JXDocument;
 import dao.BasOrganizeInfoDao;
 import dao.impl.BasOrganizeInfoImpl;
 import org.apache.commons.lang3.StringUtils;
 import org.dom4j.Document;
-import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.io.OutputFormat;
 import org.dom4j.io.SAXReader;
@@ -57,14 +59,8 @@ public class SpiderOrganize {
         String logo=null;
         String oIntroduct=null;
         String oIntroductPic=null;
-        int count;
-        //增量中的计数器
-        for(int i=0;i==0;) {
-            count = countNum(companyName, filepath);
-            Thread.sleep(50000);
-            System.out.println(count);
-        }
-
+        int count=1;
+        boolean isFirst=judgeFirst(companyName,filepath);
         Document document=obtainDocFromXml(filepath);
         Element rootElement=document.getRootElement();
         Element element=rootElement.element(companyName);
@@ -112,35 +108,68 @@ public class SpiderOrganize {
             System.out.println("公司简介:" + oIntroduct);
             System.out.println("公司简介中的图片：" + oIntroductPic);
             SpiderTyc spiderTyc=new SpiderTyc();
-            BasOrganizeInfo tycBasOrganizeInfo = spiderTyc.getBussinessDataByOne(organizeSpiderConfig.tycUrl.getText());
+            BasOrganizeInfo tycBasOrganizeInfo=null;
+            String ouuid=null;
+            if(isFirst==true) {
+                System.out.println("第一次");
+                tycBasOrganizeInfo = spiderTyc.getBussinessDataByOne(organizeSpiderConfig.tycUrl.getText(), isFirst, null);
+                tycBasOrganizeInfo.setLogo(logo);
+                tycBasOrganizeInfo.setIntroduce(oIntroduct);
+                tycBasOrganizeInfo.setPicture(oIntroductPic);
+                BasOrganizeInfoDao basOrganizeInfoDao = new BasOrganizeInfoImpl();
+                basOrganizeInfoDao.updateSingle(tycBasOrganizeInfo);
+                ouuid=tycBasOrganizeInfo.getUuid();
+            }
 
-            tycBasOrganizeInfo.setLogo(logo);
-            tycBasOrganizeInfo.setIntroduce(oIntroduct);
-            tycBasOrganizeInfo.setPicture(oIntroductPic);
-            tycBasOrganizeInfo.setWeb(organizeSpiderConfig.ourl.getText());
-            BasOrganizeInfoDao basOrganizeInfoDao = new BasOrganizeInfoImpl();
-            basOrganizeInfoDao.updateSingle(tycBasOrganizeInfo);
-            //向XML文件中写入一个ouuid
-            addOuuid(tycBasOrganizeInfo.getUuid(),companyName,filepath);
+            if(organizeSpiderConfig.ouuid!=null){
+                ouuid=organizeSpiderConfig.ouuid.getText();
+                System.out.println("ouuid:"+ouuid);
+            }
+            //增量计数器
+            count=countNum(ouuid,companyName,filepath);
+            if(count!=1){
+                isFirst=false;
+            }
+            if(isFirst==false){
+                System.out.println("第"+count+"次");
+                tycBasOrganizeInfo = spiderTyc.getBussinessDataByOne(organizeSpiderConfig.tycUrl.getText(), isFirst, ouuid);
+                tycBasOrganizeInfo.setLogo(logo);
+                tycBasOrganizeInfo.setIntroduce(oIntroduct);
+                tycBasOrganizeInfo.setPicture(oIntroductPic);
+                BasOrganizeInfoDao basOrganizeInfoDaoNotFirst = new BasOrganizeInfoImpl();
+                basOrganizeInfoDaoNotFirst.updateSingle(tycBasOrganizeInfo);
+            }
             //拉钩数据入库
 //            if(StringUtils.isNotEmpty(organizeSpiderConfig.lgwUrl.getText())) {
 //                SpiderLgw.getBussinessDataByOne(organizeSpiderConfig.lgwUrl.getText(), tycBasOrganizeInfo);
 //            }
-            //微博数据入库
-            //SpiderWm.getPerInfoDataByComName(organizeSpiderConfig.oname.getText(), tycBasOrganizeInfo.getUuid());
-            //脉脉数据入库
-            //SpiderMaimai.getPerInfoDataByComName(organizeSpiderConfig.oname.getText(), tycBasOrganizeInfo.getUuid());
-            //百度知识数据入库
-            SpiderKnowledge.fecthNewsByCompanyName(organizeSpiderConfig.oname.getText(),tycBasOrganizeInfo.getUuid());
-            if(StringUtils.isNotEmpty(tycBasOrganizeInfo.getEname())) {
-                SpiderKnowledge.fecthNewsByCompanyName(tycBasOrganizeInfo.getEname(), tycBasOrganizeInfo.getUuid());
-            }
-            if(StringUtils.isNotEmpty(tycBasOrganizeInfo.getOname())) {
-                SpiderKnowledge.fecthNewsByCompanyName(tycBasOrganizeInfo.getOname(), tycBasOrganizeInfo.getUuid());
+            if(count%SpiderContant.ecologyOrgPerTime==0) {
+                //微博数据入库
+                SpiderWm.getPerInfoDataByComName(organizeSpiderConfig.oname.getText(), ouuid);
+                //脉脉数据入库
+                SpiderMaimai.getPerInfoDataByComName(organizeSpiderConfig.oname.getText(),ouuid);
+
+                //开服网产品入库
+                CommonProduct.ergodicUrl(organizeSpiderConfig.oname.getText(), organizeSpiderConfig.kfwDyUrl.getText(),ouuid);
+                CommonProduct.ergodicUrl(organizeSpiderConfig.oname.getText(), organizeSpiderConfig.kfwSyUrl.getText(),ouuid);
+                CommonProduct.ergodicUrl(organizeSpiderConfig.oname.getText(), organizeSpiderConfig.kfwYYUrl.getText(),ouuid);
             }
 
-            for(Element ele:knowLedgeList){
-                SpiderKnowledge.ergodicUrl(ele,tycBasOrganizeInfo.getUuid());
+            //百度知识数据入库
+            if(count%SpiderContant.ecologyOrgKnowledgeTime==0) {
+                SpiderKnowledge.fecthNewsByCompanyName(organizeSpiderConfig.oname.getText(),ouuid);
+                if (StringUtils.isNotEmpty(tycBasOrganizeInfo.getEname())) {
+                    SpiderKnowledge.fecthNewsByCompanyName(tycBasOrganizeInfo.getEname(),ouuid);
+                }
+                if (StringUtils.isNotEmpty(tycBasOrganizeInfo.getOname())) {
+                    SpiderKnowledge.fecthNewsByCompanyName(tycBasOrganizeInfo.getOname(),ouuid);
+                }
+            }
+            //各个框架入库
+            if(count%SpiderContant.ecologyOrgKnowledgeTime==0) {
+                for (Element ele : knowLedgeList) {
+                    SpiderKnowledge.ergodicUrl(ele,ouuid);
+                }
             }
             for(Element ele:proGameInfoList){
                 //TODO 缺少产品接口
@@ -189,33 +218,67 @@ public class SpiderOrganize {
             System.out.println("公司简介中的图片：" + oIntroductPic);
             driver.close();
             SpiderTyc spiderTyc=new SpiderTyc();
-            BasOrganizeInfo tycBasOrganizeInfo = spiderTyc.getBussinessDataByOne(organizeSpiderConfig.tycUrl.getText());
-            tycBasOrganizeInfo.setLogo(logo);
-            tycBasOrganizeInfo.setIntroduce(oIntroduct);
-            tycBasOrganizeInfo.setPicture(oIntroductPic);
-            BasOrganizeInfoDao basOrganizeInfoDao = new BasOrganizeInfoImpl();
-            basOrganizeInfoDao.updateSingle(tycBasOrganizeInfo);
-            //向XML文件中写入一个ouuid
-            addOuuid(tycBasOrganizeInfo.getUuid(),companyName,filepath);
+            BasOrganizeInfo tycBasOrganizeInfo=null;
+            String ouuid=null;
+            if(isFirst==true) {
+                System.out.println("第一次");
+                tycBasOrganizeInfo = spiderTyc.getBussinessDataByOne(organizeSpiderConfig.tycUrl.getText(), isFirst, null);
+                tycBasOrganizeInfo.setLogo(logo);
+                tycBasOrganizeInfo.setIntroduce(oIntroduct);
+                tycBasOrganizeInfo.setPicture(oIntroductPic);
+                BasOrganizeInfoDao basOrganizeInfoDao = new BasOrganizeInfoImpl();
+                basOrganizeInfoDao.updateSingle(tycBasOrganizeInfo);
+                ouuid=tycBasOrganizeInfo.getUuid();
+            }
+            if(organizeSpiderConfig.ouuid!=null){
+                ouuid=organizeSpiderConfig.ouuid.getText();
+            }
+            //增量计数器
+            count=countNum(ouuid,companyName,filepath);
+            if(count!=1){
+                isFirst=false;
+            }
+            if(isFirst==false){
+                System.out.println("ouuid:"+ouuid);
+                System.out.println("第"+count+"次");
+                tycBasOrganizeInfo = spiderTyc.getBussinessDataByOne(organizeSpiderConfig.tycUrl.getText(), isFirst, ouuid);
+                tycBasOrganizeInfo.setLogo(logo);
+                tycBasOrganizeInfo.setIntroduce(oIntroduct);
+                tycBasOrganizeInfo.setPicture(oIntroductPic);
+                BasOrganizeInfoDao basOrganizeInfoDaoNotFirst = new BasOrganizeInfoImpl();
+                basOrganizeInfoDaoNotFirst.updateSingle(tycBasOrganizeInfo);
+            }
             //拉钩数据入库
 //            if(StringUtils.isNotEmpty(organizeSpiderConfig.lgwUrl.getText())) {
 //                SpiderLgw.getBussinessDataByOne(organizeSpiderConfig.lgwUrl.getText(), tycBasOrganizeInfo);
 //            }
-            //微博数据入库
-            //SpiderWm.getPerInfoDataByComName(organizeSpiderConfig.oname.getText(), tycBasOrganizeInfo.getUuid());
-            //脉脉数据入库
-           // SpiderMaimai.getPerInfoDataByComName(organizeSpiderConfig.oname.getText(), tycBasOrganizeInfo.getUuid());
-            //百度知识数据入库
-            SpiderKnowledge.fecthNewsByCompanyName(organizeSpiderConfig.oname.getText(),tycBasOrganizeInfo.getUuid());
-            if(StringUtils.isNotEmpty(tycBasOrganizeInfo.getEname())) {
-                SpiderKnowledge.fecthNewsByCompanyName(tycBasOrganizeInfo.getEname(), tycBasOrganizeInfo.getUuid());
+            if(count%SpiderContant.ecologyOrgPerTime==0) {
+                //微博数据入库
+                SpiderWm.getPerInfoDataByComName(organizeSpiderConfig.oname.getText(), ouuid);
+                //脉脉数据入库
+                SpiderMaimai.getPerInfoDataByComName(organizeSpiderConfig.oname.getText(),ouuid);
+
+                //开服网产品入库
+                CommonProduct.ergodicUrl(organizeSpiderConfig.oname.getText(), organizeSpiderConfig.kfwDyUrl.getText(),ouuid);
+                CommonProduct.ergodicUrl(organizeSpiderConfig.oname.getText(), organizeSpiderConfig.kfwSyUrl.getText(),ouuid);
+                CommonProduct.ergodicUrl(organizeSpiderConfig.oname.getText(), organizeSpiderConfig.kfwYYUrl.getText(),ouuid);
             }
-            if(StringUtils.isNotEmpty(tycBasOrganizeInfo.getOname())) {
-                SpiderKnowledge.fecthNewsByCompanyName(tycBasOrganizeInfo.getOname(), tycBasOrganizeInfo.getUuid());
+
+            //百度知识数据入库
+            if(count%SpiderContant.ecologyOrgKnowledgeTime==0) {
+                SpiderKnowledge.fecthNewsByCompanyName(organizeSpiderConfig.oname.getText(),ouuid);
+                if (StringUtils.isNotEmpty(tycBasOrganizeInfo.getEname())) {
+                    SpiderKnowledge.fecthNewsByCompanyName(tycBasOrganizeInfo.getEname(),ouuid);
+                }
+                if (StringUtils.isNotEmpty(tycBasOrganizeInfo.getOname())) {
+                    SpiderKnowledge.fecthNewsByCompanyName(tycBasOrganizeInfo.getOname(),ouuid);
+                }
             }
             //各个框架入库
-            for(Element ele:knowLedgeList){
-                SpiderKnowledge.ergodicUrl(ele,tycBasOrganizeInfo.getUuid());
+            if(count%SpiderContant.ecologyOrgKnowledgeTime==0) {
+                for (Element ele : knowLedgeList) {
+                    SpiderKnowledge.ergodicUrl(ele,ouuid);
+                }
             }
             for(Element ele:proGameInfoList){
                 //TODO 缺少产品接口
@@ -249,6 +312,8 @@ public class SpiderOrganize {
             return null;
         }
     }
+
+
 
     /**
      * 解析单个节点
@@ -315,6 +380,9 @@ public class SpiderOrganize {
         if(childElement.element("kfwSyUrl")!=null){
             organizeSpiderConfig.kfwSyUrl = childElement.element("kfwSyUrl");
         }
+        if(childElement.element("ouuid")!=null){
+            organizeSpiderConfig.ouuid = childElement.element("ouuid");
+        }
         return organizeSpiderConfig;
     }
 
@@ -324,25 +392,25 @@ public class SpiderOrganize {
      * @param companyName
      * @param filepath
      */
-    public void addOuuid(String ouuid,String companyName,String filepath) throws DocumentException, IOException {
-        SAXReader reader = new SAXReader();
-        Document document = reader.read(SpiderOrganize.class.getResourceAsStream(filepath));
-        Element organize = (Element) document.selectSingleNode("//" + companyName);
-        organize.addElement("ouuid").addText(ouuid);
-        FileWriter fileWriter = new FileWriter(System.getProperty("user.dir")+"/src"+SpiderContant.orgXmlPath);
-        OutputFormat format = OutputFormat.createPrettyPrint();
-        format.setEncoding("UTF-8");
-        XMLWriter writer = new XMLWriter(System.out, format);
-        writer.setWriter(fileWriter);
-        writer.write(document);
-        writer.flush();
-        writer.close();
-    }
+//    public void addOuuid(String ouuid,String companyName,String filepath) throws DocumentException, IOException {
+//        SAXReader reader = new SAXReader();
+//        Document document = reader.read(SpiderOrganize.class.getResourceAsStream(filepath));
+//        Element organize = (Element) document.selectSingleNode("//" + companyName);
+//        organize.addElement("ouuid").addText(ouuid);
+//        FileWriter fileWriter = new FileWriter(System.getProperty("user.dir")+"/src"+SpiderContant.orgXmlPath);
+//        OutputFormat format = OutputFormat.createPrettyPrint();
+//        format.setEncoding("UTF-8");
+//        XMLWriter writer = new XMLWriter(System.out, format);
+//        writer.setWriter(fileWriter);
+//        writer.write(document);
+//        writer.flush();
+//        writer.close();
+//    }
 
     /**
      * 增量爬取计数工具
      */
-    public int countNum(String companyName,String filepath) throws Exception {
+    public int countNum(String ouuid,String companyName,String filepath) throws Exception {
         int count=1;
         SAXReader reader = new SAXReader();
         Document document = reader.read(SpiderOrganize.class.getResourceAsStream(filepath));
@@ -358,6 +426,9 @@ public class SpiderOrganize {
             organize.addElement("count").addText(count+"");
             //System.out.println("else中的count:"+count);
         }
+        if(count==1){
+            organize.addElement("ouuid").addText(ouuid);
+        }
         FileWriter fileWriter = new FileWriter(System.getProperty("user.dir")+"/src"+SpiderContant.orgXmlPath);
         OutputFormat format = OutputFormat.createPrettyPrint();
         format.setEncoding("UTF-8");
@@ -367,6 +438,21 @@ public class SpiderOrganize {
         writer.flush();
         writer.close();
         return count;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public boolean judgeFirst(String companyName,String filepath) throws Exception {
+        SAXReader reader = new SAXReader();
+        boolean isFirst= false;
+        Document document = reader.read(SpiderOrganize.class.getResourceAsStream(filepath));
+        Element organize = (Element) document.selectSingleNode("//" + companyName);
+        if(organize.element("count")==null){
+            isFirst=true;
+        }
+        return isFirst;
     }
 
 

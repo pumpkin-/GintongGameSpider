@@ -17,4 +17,13 @@
         select id from bas_business_info where uuid=#{uuid}
     </select>
 
+    <update id="updateBusiness" parameterType="JavaBean.BasBusinessInfo" >
+        update bas_business_info set cname=#{cname},cname_old=#{cname_old},stock_type=#{stock_type},stock_code=#{stock_code},
+        telephone=#{telephone},email=#{email},web=#{web},adress=#{adress},legal_persen= #{legal_persen},rcapital=#{rcapital},
+        state=#{state},rtime=#{rtime},industry=#{industry},rbnumber=#{rbnumber},enterprise_type=#{enterprise_type},
+        ocode=#{state},operation_period=#{operation_period},rdepartment=#{rdepartment},approva_date=#{approva_date},
+        uc_code=#{uc_code},radress=#{radress},bscope=#{bscope},source=#{source},url=#{url}  where uuid=#{uuid}
+
+    </update>
+
 </mapper>

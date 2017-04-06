@@ -21,4 +21,10 @@ public class BasBusinessInfoImpl extends BaseDaoImpl implements BasBusinessInfoD
     public List<String> selectBusInfo(String uuid) {
         return this.getSqlSession().selectList(this.getNs() + "selectBusinessId", uuid);
     }
+
+    @Override
+    public void updateBusInfo(BasBusinessInfo businfo) {
+        this.getSqlSession().update(this.getNs()+"updateBusiness",businfo);
+    }
+
 }

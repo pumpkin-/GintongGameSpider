@@ -374,6 +374,7 @@ public class SpiderWm {
     }
 
     public static List<BasPersonInfo> getPerInfoDataByComName(String companyName,String ouuid) throws Exception {
+
         WebDriver driver =getWebDriver();
         String result=loginWeiBo(username, password);
         List<BasPersonInfo> basPersonInfoList=new ArrayList<BasPersonInfo>();
@@ -381,7 +382,6 @@ public class SpiderWm {
             List<String> urlsByComName=getPerUrl(driver, companyName);
             for (String url : urlsByComName) {
                 try{
-
                     BasPersonInfo basPersonInfo=getPerInfoDataByUrl(driver, url,ouuid,companyName);
                     basPersonInfoList.add(basPersonInfo);
                     Thread.sleep(8000);

@@ -10,4 +10,5 @@ import java.util.List;
 public  interface BasBusinessInfoDao {
     public void insertBusInfo(BasBusinessInfo busInfo);
     public List<String> selectBusInfo(String uuid);
+    public void updateBusInfo(BasBusinessInfo businfo);
 }

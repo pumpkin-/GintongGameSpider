@@ -7,4 +7,12 @@
       VALUES
       (#{bid},#{uuid},#{name},#{investment},#{adress},#{web})
     </insert>
+
+    <select id="selectComShareholder" parameterType="java.lang.String" resultType="JavaBean.ComShareholder">
+      select * from com_shareholder where uuid=#{uuid}
+    </select>
+
+    <update id="" parameterType="JavaBean.ComShareholder">
+        update com_shareholder set investment=#{investment},adress=#{adress},web=#{web} where uuid=#{uuid} and name=#{name}
+    </update>
 </mapper>

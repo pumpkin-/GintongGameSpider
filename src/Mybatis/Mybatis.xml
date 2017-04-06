@@ -36,5 +36,6 @@
         <mapper resource="com/gintongame/mapping/OrgEvaInfoMapper.xml"/>
         <mapper resource="com/gintongame/mapping/PerWorkInfoMapper.xml"/>
         <mapper resource="com/gintongame/mapping/PerEducationInfoMapper.xml"/>
+        <mapper resource="com/gintongame/mapping/ComChangeInfoMapper.xml"/>
     </mappers>
 </configuration>
