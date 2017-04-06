@@ -155,14 +155,14 @@ public class SpiderOrganize {
                 CommonProduct.ergodicUrl(organizeSpiderConfig.oname.getText(), organizeSpiderConfig.kfwYYUrl.getText(),ouuid);
             }
 
-            //百度知识数据入库
+            //百度知识数据入库 TODO
             if(count%SpiderContant.ecologyOrgKnowledgeTime==0) {
-                SpiderKnowledge.fecthNewsByCompanyName(organizeSpiderConfig.oname.getText(),ouuid);
+                SpiderKnowledge.fecthNewsByCompanyName(organizeSpiderConfig.oname.getText(),ouuid, true);
                 if (StringUtils.isNotEmpty(tycBasOrganizeInfo.getEname())) {
-                    SpiderKnowledge.fecthNewsByCompanyName(tycBasOrganizeInfo.getEname(),ouuid);
+                    SpiderKnowledge.fecthNewsByCompanyName(tycBasOrganizeInfo.getEname(),ouuid, true);
                 }
                 if (StringUtils.isNotEmpty(tycBasOrganizeInfo.getOname())) {
-                    SpiderKnowledge.fecthNewsByCompanyName(tycBasOrganizeInfo.getOname(),ouuid);
+                    SpiderKnowledge.fecthNewsByCompanyName(tycBasOrganizeInfo.getOname(),ouuid, true);
                 }
             }
             //各个框架入库
@@ -264,14 +264,14 @@ public class SpiderOrganize {
                 CommonProduct.ergodicUrl(organizeSpiderConfig.oname.getText(), organizeSpiderConfig.kfwYYUrl.getText(),ouuid);
             }
 
-            //百度知识数据入库
+            //百度知识数据入库 TODO
             if(count%SpiderContant.ecologyOrgKnowledgeTime==0) {
-                SpiderKnowledge.fecthNewsByCompanyName(organizeSpiderConfig.oname.getText(),ouuid);
+                SpiderKnowledge.fecthNewsByCompanyName(organizeSpiderConfig.oname.getText(),ouuid,true);
                 if (StringUtils.isNotEmpty(tycBasOrganizeInfo.getEname())) {
-                    SpiderKnowledge.fecthNewsByCompanyName(tycBasOrganizeInfo.getEname(),ouuid);
+                    SpiderKnowledge.fecthNewsByCompanyName(tycBasOrganizeInfo.getEname(),ouuid, true);
                 }
                 if (StringUtils.isNotEmpty(tycBasOrganizeInfo.getOname())) {
-                    SpiderKnowledge.fecthNewsByCompanyName(tycBasOrganizeInfo.getOname(),ouuid);
+                    SpiderKnowledge.fecthNewsByCompanyName(tycBasOrganizeInfo.getOname(),ouuid,true);
                 }
             }
             //各个框架入库

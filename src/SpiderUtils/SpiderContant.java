@@ -16,9 +16,14 @@ public class SpiderContant {
     public static final String CommonMoilbeGamesProductXml="/SpiderUtils/SpiderData/CommonMobileGamesProductPattern.xml";
     public static final String CommonHTMLGamesProductXml="/SpiderUtils/SpiderData/CommonHTMLGamesProductPattern.xml";
     public static final String CommonPCGamesProductXml="/SpiderUtils/SpiderData/CommonPCGamesProductPattern.xml";
+
     //组织生态框架中人、组织、产品的增量时间（单位为30分钟）
     public static final int ecologyOrgPerTime=2880;
     //组织生态框架中知识的增量时间设置（单位为30分钟）
     public static final int ecologyOrgKnowledgeTime=6;
+
+    public static final String PersonKnowledgeType="10001";
+    public static final String OrgKnowledgeType="10002";
+    public static final String ProductKnowledgeType="10003";
 
 }

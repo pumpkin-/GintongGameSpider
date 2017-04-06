@@ -132,14 +132,17 @@ public class CommonPCGamesProduct {
                 System.out.println(title);
                 System.out.println(contentPic);
                 System.out.println(source);
-                BasProGameInfo basProGameInfo=new BasProGameInfo();
-                basProGameInfo.setLogo(logo);
-                basProGameInfo.setG_desc(mains);
-                basProGameInfo.setGname(title);
-                basProGameInfo.setWeb(webURL);
-                basProGameInfo.setPicture(contentPic);
                 ProGameInfoDaoImpl proGameInfoDaoImpl=new ProGameInfoDaoImpl();
-                proGameInfoDaoImpl.insertGame(basProGameInfo);
+                List<String> lists= proGameInfoDaoImpl.selectAllGame(source);
+                if(!lists.contains(title)){
+                    BasProGameInfo basProGameInfo=new BasProGameInfo();
+                    basProGameInfo.setLogo(logo);
+                    basProGameInfo.setG_desc(mains);
+                    basProGameInfo.setGname(title);
+                    basProGameInfo.setWeb(webURL);
+                    basProGameInfo.setPicture(contentPic);
+                    proGameInfoDaoImpl.insertGame(basProGameInfo);
+                }
                 System.out.println("++++++++++++++-----------这是第"+num+"页的第"+i+"条数据---------------++++++++++++++++++++++");
             }
             doc=listPageJsoup(doc,commonPCGamesProductConfig);

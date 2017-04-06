@@ -1040,7 +1040,7 @@ class Spider{
                 gameInfo.setUuid(uuid);
                 //用dao层接口插入数据库
 
-//                infoDao.insertGame(gameInfo);
+                infoDao.insertGame(gameInfo);
 
                 //插入游戏类型
                 ProGameTypeDao typeDao = new ProGameTypeDaoImpl();

@@ -146,27 +146,30 @@ public class CommonHTMLGamesProduct {
                 System.out.println(gtheme);
                 System.out.println(gamespy);
                 System.out.println(gameType);
-                BasProGameInfo proGameInfo=new BasProGameInfo();
-                proGameInfo.setUuid(uuid);
-                proGameInfo.setUrl((String) PageUrl);
-                proGameInfo.setSource(source);
-                proGameInfo.setLogo(logo);
-                proGameInfo.setGname(title);
-                proGameInfo.setGtheme(gtheme);
-                proGameInfo.setGamespy(gamespy);
-                proGameInfo.setG_desc(mains);
-                proGameInfo.setWeb(webURL);
-                proGameInfo.setPicture(contentPic);
                 ProGameInfoDaoImpl proGameInfoDaoImpl=new ProGameInfoDaoImpl();
-                proGameInfoDaoImpl.insertGame(proGameInfo);
-                ProGameType proGameType=new ProGameType();
-                proGameType.setUuid(uuid);
-                if(gameType.contains("：")){
-                    gameType=gameType.split("：")[1];
-                }
-                proGameType.setGtype(gameType);
-                ProGameTypeDaoImpl proGameTypeDaoImpl=new ProGameTypeDaoImpl();
-                proGameTypeDaoImpl.insertType(proGameType);
+                List<String> lists= proGameInfoDaoImpl.selectAllGame(source);
+               if(!lists.contains(title)){
+                   BasProGameInfo proGameInfo=new BasProGameInfo();
+                   proGameInfo.setUuid(uuid);
+                   proGameInfo.setUrl((String) PageUrl);
+                   proGameInfo.setSource(source);
+                   proGameInfo.setLogo(logo);
+                   proGameInfo.setGname(title);
+                   proGameInfo.setGtheme(gtheme);
+                   proGameInfo.setGamespy(gamespy);
+                   proGameInfo.setG_desc(mains);
+                   proGameInfo.setWeb(webURL);
+                   proGameInfo.setPicture(contentPic);
+                   proGameInfoDaoImpl.insertGame(proGameInfo);
+                   ProGameType proGameType=new ProGameType();
+                   proGameType.setUuid(uuid);
+                   if(gameType.contains("：")){
+                       gameType=gameType.split("：")[1];
+                   }
+                   proGameType.setGtype(gameType);
+                   ProGameTypeDaoImpl proGameTypeDaoImpl=new ProGameTypeDaoImpl();
+                   proGameTypeDaoImpl.insertType(proGameType);
+               }
                 System.out.println("++++++++++++++-----------这是第" + num + "页的第" + i + "条数据---------------++++++++++++++++++++++");
             }
             doc=listPageJsoup(doc,commonHTMLGamesProductConfig);

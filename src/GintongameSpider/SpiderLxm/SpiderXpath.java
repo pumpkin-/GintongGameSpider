@@ -19,10 +19,10 @@ public class SpiderXpath {
             public void run() {
                 try {
 //                    BasCommonSpiderKnowledgeSpider.ergodicUrl("spiderYWW", 0, "no");
-                    BasCommonKnowledgeSpider.ergodicUrl("spiderHR369",SpiderContant.xmlUrl);
+//                    BasCommonKnowledgeSpider.ergodicUrl("SpiderHrsalon",SpiderContant.xmlUrl);
 //                    KnowledgeSpiderConfigMiNi knowledgeSpiderConfigMiNi=BasCommonKnowledgeSpider.ergodicUrl("spiderUrl",SpiderContant.xmlUrl);
 //                    System.out.println(knowledgeSpiderConfigMiNi);
-//                    SpiderProduct.ergodicUrl("spiderOPPO", 0, 0);
+                    SpiderProduct.ergodicUrl("SpiderYxgcYy", 0, 1);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

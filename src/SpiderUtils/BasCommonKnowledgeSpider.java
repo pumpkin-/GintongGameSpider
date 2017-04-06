@@ -382,6 +382,7 @@ public class BasCommonKnowledgeSpider {
                                 }else{
                                     contentImgUrl=lists.toString();
                                     System.out.println("全图片路径："+contentImgUrl);
+
                                 }
                             }
                             System.out.println(title);

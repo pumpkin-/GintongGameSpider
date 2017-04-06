@@ -12,4 +12,5 @@ import java.util.List;
 public interface ProGameInfoDao {
     public void insertGame(BasProGameInfo ts);
     public List<String> selectGame(BasProGameInfo gname);
+    public List<String> selectAllGame(String source);
 }

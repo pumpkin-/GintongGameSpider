@@ -1090,8 +1090,8 @@
         <download_link_ios join="">//div[@class='btn down-ios']/a/@href</download_link_ios>
         <!--起始页面-->
         <urls>
-            <url>
-                http://www.youxiguancha.com/file/index.php?ac=mgame
+            <url page="159">
+                http://www.youxiguancha.com/file/index.php?ac=mgame&amp;page=$(page)
             </url>
         </urls>
         <!--网站-->
@@ -1103,6 +1103,13 @@
         <!--网络类型-->
         <network_type></network_type>
       <picture join=""></picture>
+      <flag>jsoup</flag>
+      <moreclick></moreclick>
+      <slidingRoller></slidingRoller>
+      <flagchild>jsoup</flagchild>>
+      <contentPathnext></contentPathnext>
+      <contentPathpic></contentPathpic>
+      <nextpic></nextpic>
     </SpiderYxgcSy>
 
     <!--爬取游戏观察页游-->
@@ -1157,8 +1164,8 @@
         <picture join="">//ul[@id='imgliblist']/li/img/@src</picture>
         <!--起始页面-->
         <urls>
-            <url>
-                http://www.youxiguancha.com/file/index.php?ac=game
+            <url page="57">
+              http://www.youxiguancha.com/file/index.php?ac=game&amp;&amp;page=$(page)
             </url>
         </urls>
         <!--游戏英语名字-->
@@ -1203,6 +1210,13 @@
         <download_link join=""></download_link>
         <!--网络类型-->
         <network_type></network_type>
+      <flag>jsoup</flag>
+      <moreclick></moreclick>
+      <slidingRoller></slidingRoller>
+      <flagchild>jsoup</flagchild>>
+      <contentPathnext></contentPathnext>
+      <contentPathpic></contentPathpic>
+      <nextpic></nextpic>
     </SpiderYxgcYy>
 
     <!--Spider例子-->
@@ -4775,4 +4789,5 @@
       <!--滑动滚轮次数-->
       <slidingRoller></slidingRoller>>
   </spiderOPPO>
+  <!---->
 </BasProductPattern>

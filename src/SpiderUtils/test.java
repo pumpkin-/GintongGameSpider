@@ -3,6 +3,7 @@ import cn.wanghaomiao.xpath.exception.XpathSyntaxErrorException;
 import cn.wanghaomiao.xpath.model.JXDocument;
 
 
+import cn.wanghaomiao.xpath.model.JXNode;
 import dao.impl.ProKnowledgeImpl;
 
 import org.dom4j.DocumentException;
@@ -37,12 +38,14 @@ public class test {
 //jsoup查看网页源码
 //http://chanye.07073.com/     http://chanye.07073.com/shuju/1560716.html
 //TODO
-      org.jsoup.nodes.Document doc1=Jsoup.connect("http://news.hr369.com/zixun/2.html")
+      org.jsoup.nodes.Document doc1=Jsoup.connect("http://news.baidu.com/ns?ct=1&rn=20&ie=utf-8&bs=intitle%3A%28%E7%99%BE%E5%BA%A6%E6%90%9C%E7%B4%A2%29&rsv_bp=1&sr=0&cl=2&f=8&prevct=no&tn=newstitle&word=%E5%AE%8C%E7%BE%8E%E4%B8%96%E7%95%8C&rsv_sug3=11&rsv_sug4=107&rsv_sug1=11&rsv_sug2=0&inputT=4581&rsv_sug=1")
                           .userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36")
                          .get();
         JXDocument doc=new JXDocument(doc1);
-       System.out.println(doc1.outerHtml());
-        System.out.println(doc.sel("//div[@id='pages']/a[@class='a1'][]/@href"));
+        List<Object> list=doc.sel("//div[@class='c-title-author']/text()");
+        for(Object lists:list){
+            System.out.println(lists.toString().replace(Jsoup.parse("&nbsp;&nbsp;").text(),"-").split("-")[1]);
+        }
 
 
 
@@ -54,14 +57,13 @@ public class test {
 //////
 //        System.setProperty("webdriver.chrome.driver",SpiderContant.chromeWindowsPath );
 //        WebDriver driver=new ChromeDriver();
-//        driver.get("http://news.baidu.com/ns?word=%E5%AE%8C%E7%BE%8E%E4%B8%96%E7%95%8C&tn=newstitle&from=news&cl=2&rn=20&ct=0");
+//        driver.get("http://kns.cnki.net/kns/brief/default_result.aspx");
 //        WebElement webElement=driver.findElement(By.xpath("/html"));
 //        org.jsoup.nodes.Document doc=Jsoup.parse(webElement.getAttribute("outerHTML"));
 //        JXDocument jxDocument=new JXDocument(doc);
 //        System.out.println(doc.outerHtml());
-
-//        executor.executeScript("$(\'doc.sel(\"//a[text()*='下一页']/@href\")\').click()");
-
+//        System.out.println(jxDocument.sel("//a[@class='fz14']/@href"));
+//
 
     }
 }

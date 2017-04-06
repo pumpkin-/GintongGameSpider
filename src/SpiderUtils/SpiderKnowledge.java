@@ -6,7 +6,8 @@ import JavaBean.ProKnowledge;
 import cn.wanghaomiao.xpath.exception.XpathSyntaxErrorException;
 import cn.wanghaomiao.xpath.model.JXDocument;
 import cn.wanghaomiao.xpath.model.JXNode;
-import dao.impl.*;
+import dao.impl.OrgKnowledgeImpl;
+import dao.impl.ProKnowledgeImpl;
 import org.apache.commons.lang3.StringUtils;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
@@ -26,7 +27,10 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.UUID;
 
 /**
  * Created by lenovon on 2017/3/15.
@@ -34,6 +38,9 @@ import java.util.*;
 public class SpiderKnowledge {
     static SimpleDateFormat simpleDateFormatchange=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     public static  List<String> hrefList=new ArrayList<String>();
+    public static List<String> ptimeList=new ArrayList<String>();
+    public static ProKnowledgeImpl proKnowledgeImpl=new ProKnowledgeImpl();
+    public static List<String> list=null;
     /**
      * 1、获取xml
      * @param xmlPath
@@ -811,23 +818,36 @@ public class SpiderKnowledge {
         perKnowledgeImpl.insert(perKnowledge);
     }
 
-    public static void fecthNewsByCompanyName(String companyName,String uuid) throws InterruptedException {
+    /**
+     * 通过公司名查找公司信息
+     * @param companyName
+     * @param uuid
+     * @param isTrue
+     * @throws InterruptedException
+     */
+    public static void fecthNewsByCompanyName(String companyName,String uuid,boolean isTrue) throws InterruptedException {
+        String source="百度搜索_"+companyName;
         WebDriver driver=getChromeDriver();
-        String url="http://news.baidu.com/ns?word=title%3A%28"+companyName+"%29&pn=20&cl=2&ct=0&tn=newstitle&rn=20&ie=utf-8&bt=0&et=0";
+        String url="http://news.baidu.com/ns?ct=1&rn=20&ie=utf-8&bs=intitle"+companyName+"&rsv_bp=1&sr=0&cl=2&f=8&prevct=no&tn=newstitle&word="+companyName+"&rsv_sug3=11&rsv_sug4=107&rsv_sug1=11&rsv_sug2=0&inputT=4581&rsv_sug=1";
         driver.get(url);
         WebElement element=driver.findElement(By.xpath("/html"));
         org.jsoup.nodes.Document doc=Jsoup.parse(element.getAttribute("outerHTML"));
+        getFirstPage(doc,driver);
        try{
-           getAllPageURL(doc,driver);
+           String urlnext="http://news.baidu.com/ns?word=title%3A%28"+companyName+"%29&pn=20&cl=2&ct=0&tn=newstitle&rn=20&ie=utf-8&bt=0&et=0";
+           driver.get(urlnext);
+           WebElement elements=driver.findElement(By.xpath("/html"));
+           org.jsoup.nodes.Document docnext=Jsoup.parse(elements.getAttribute("outerHTML"));
+           getAllPageURL(docnext, driver);
        }catch(Exception e){
        }
         System.out.println("一共有数据"+hrefList.size()+"条");
         System.out.println("开始解析数据：");
         int i=0;
-        for(String urls:hrefList){
+        for(int j=0;j<hrefList.size();j++){
             i++;
             try{
-                    driver.get(urls);
+                    driver.get(hrefList.get(j));
                     WebElement elementDetails=driver.findElement(By.xpath("/html"));
                     org.jsoup.nodes.Document documentDetails= Jsoup.parse(elementDetails.getAttribute("outerHTML"));
                     String title=documentDetails.select("title").text();
@@ -846,15 +866,84 @@ public class SpiderKnowledge {
                         }
                         System.out.println(main);
                     }
-                System.out.println(urls);
+                System.out.println(hrefList.get(j));
+               if(isTrue==true){
+                       ProKnowledge proKnowledge = new ProKnowledge();
+                       proKnowledge.setPtime(ptimeList.get(j));
+                       System.out.println(ptimeList.get(j));
+                       proKnowledge.setSource(source);
+                       proKnowledge.setUrl(hrefList.get(j));
+                       proKnowledge.setTitle(title);
+                       proKnowledge.setUuid(uuid);
+                       proKnowledge.setMain(main);
+                       ProKnowledgeImpl proKnowledgeImpl = new ProKnowledgeImpl();
+                       proKnowledgeImpl.insert(proKnowledge);
+               }else {
+                   list=proKnowledgeImpl.selectBySource(source);
+                   for(String ptimelist:ptimeList){
+                       int result=ptimelist.compareTo(list.toString());
+                       if(result>0){
+                           ProKnowledge proKnowledge=new ProKnowledge();
+                           proKnowledge.setPtime(parsePtime(ptimelist));
+                           proKnowledge.setSource(source);
+                           proKnowledge.setUrl(hrefList.get(j));
+                           proKnowledge.setTitle(title);
+                           proKnowledge.setUuid(uuid);
+                           proKnowledge.setMain(main);
+                           ProKnowledgeImpl proKnowledgeImpl=new ProKnowledgeImpl();
+                           proKnowledgeImpl.insert(proKnowledge);
+                           System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++");
+                       }
+                   }
+               }
                 System.out.println("---------------------这是第"+i+"条数据----------------------");
             }catch(Exception e){
                 e.printStackTrace();
             }
         }
     }
+
+    /**
+     * 获取第一页的信息
+     * @param doc
+     * @param driver
+     */
+    public static void getFirstPage(org.jsoup.nodes.Document doc,WebDriver driver){
+        Elements elementsPtime=doc.select("div[class=c-title-author]");
+        for(org.jsoup.nodes.Element elementsPtimes:elementsPtime){
+            String ptime=elementsPtimes.text().replace(Jsoup.parse("&nbsp;&nbsp;").text(),"-").split("-")[1];
+            ptimeList.add(ptime);
+        }
+        Elements elementsHref=doc.select("h3[class=c-title] a");
+        for(org.jsoup.nodes.Element elementHrefs:elementsHref){
+            String href=elementHrefs.attr("href");
+            hrefList.add(href);
+        }
+    }
+
+    /**
+     * 转化时间格式
+     * @param ptime
+     * @return
+     * @throws ParseException
+     */
+    public static String parsePtime(String ptime) throws ParseException {
+        SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy年MM月dd日 HH:mm");
+        SimpleDateFormat simpleDateFormat1=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date=  simpleDateFormat.parse(ptime);
+        ptime=simpleDateFormat1.format(date);
+        return ptime;
+    }
+
+    /**
+     * 得到所有的信息
+     * @param doc
+     * @param driver
+     * @throws InterruptedException
+     */
     public static void getAllPageURL(org.jsoup.nodes.Document doc,WebDriver driver) throws InterruptedException {
         while(true){
+            getFirstPage(doc,driver);
             Elements elementsHref=doc.select("h3[class=c-title] a");
             for(org.jsoup.nodes.Element elementHrefs:elementsHref){
                 String href=elementHrefs.attr("href");
@@ -887,7 +976,11 @@ public class SpiderKnowledge {
         return doc;
     }
 
-
+    /**
+     * selenium方法翻页
+     * @param driver
+     * @return
+     */
     public static org.jsoup.nodes.Document listSeleniumPage(WebDriver driver){
         JavascriptExecutor executor=(JavascriptExecutor)driver;
         executor.executeScript("document.getElementsByClassName('n')[1].click()");
@@ -923,7 +1016,7 @@ public class SpiderKnowledge {
 //            ergodicUrl("spiderHXW",SpiderContant.PerKnowledgePatternPath);
 //            ergodicUrl(childElement,uuid);
             String name="完美世界";
-            fecthNewsByCompanyName(name,UUID.randomUUID().toString());
+            fecthNewsByCompanyName(name,UUID.randomUUID().toString(),true);
         } catch (Exception e) {
             e.printStackTrace();
         }
