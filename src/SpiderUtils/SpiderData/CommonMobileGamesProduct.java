@@ -1,5 +1,6 @@
 package SpiderUtils.SpiderData;
 
+import GintongameSpider.SpiderLxm.DeleteDistinctDate;
 import JavaBean.BasProGameInfo;
 import JavaBean.ProGamePlatform;
 import JavaBean.ProGameType;
@@ -205,21 +206,26 @@ public class CommonMobileGamesProduct {
                 System.out.println(tag);
                 System.out.println(down_Link_and);
                 System.out.println(source);
-                BasProGameInfo basProGameInfo=new BasProGameInfo();
-                basProGameInfo.setUrl(PageUrl.toString());
-                basProGameInfo.setLogo(logo);
-                basProGameInfo.setG_desc(mains);
-                basProGameInfo.setSource(source);
-                basProGameInfo.setUuid(uuid);
-                basProGameInfo.setPicture(contentPic);
-                basProGameInfo.setDownload_link(down_Link_and);
                 ProGameInfoDaoImpl proGameInfoDaoImpl=new ProGameInfoDaoImpl();
-                proGameInfoDaoImpl.insertGame(basProGameInfo);
-                ProGamePlatform proGamePlatform=new ProGamePlatform();
-                proGamePlatform.setUuid(uuid);
-                proGamePlatform.setPlatform(platfrom);
-                ProGamePlatformDaoImpl proGamePlatformDaoImpl=new ProGamePlatformDaoImpl();
-                proGamePlatformDaoImpl.insertPlatform(proGamePlatform);
+                List<String> lists= proGameInfoDaoImpl.selectAllGame(source);
+               if(!lists.contains(title)){
+                   BasProGameInfo basProGameInfo=new BasProGameInfo();
+                   basProGameInfo.setUrl(PageUrl.toString());
+                   basProGameInfo.setGname(title);
+                   basProGameInfo.setLogo(logo);
+                   basProGameInfo.setG_desc(mains);
+                   basProGameInfo.setSource(source);
+                   basProGameInfo.setUuid(uuid);
+                   basProGameInfo.setPicture(contentPic);
+                   basProGameInfo.setDownload_link(down_Link_and);
+                   proGameInfoDaoImpl.insertGame(basProGameInfo);
+                   ProGamePlatform proGamePlatform=new ProGamePlatform();
+                   proGamePlatform.setUuid(uuid);
+                   proGamePlatform.setPlatform(platfrom);
+                   ProGamePlatformDaoImpl proGamePlatformDaoImpl=new ProGamePlatformDaoImpl();
+                   proGamePlatformDaoImpl.insertPlatform(proGamePlatform);
+                   System.out.println("-------------------------------------");
+               }
                 System.out.println("++++++++++++++-----------这是第" + num + "页的第" + i + "条数据---------------++++++++++++++++++++++");
             }
             doc=listPageJsoup(doc,commonMobileGamesProductConfig);

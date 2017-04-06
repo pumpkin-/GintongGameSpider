@@ -25,7 +25,6 @@
             </url>
         </urls>
     </spiderUrl>
-
     <spider36DSJ>
         <flag>jsoup</flag>
         <ptime></ptime>
@@ -136,4 +135,26 @@
             </url>
         </urls>
     </spiderHR369>
+    <spiderGHR>
+        <flag>jsoup</flag>
+        <ptime></ptime>
+        <childLink join="">//article[@class='item-list']/h2/a/@href</childLink>
+        <nextPage join=""></nextPage>
+        <urls>
+            <url page="491">
+                http://www.ghrlib.com/page/$(page)
+            </url>
+        </urls>
+    </spiderGHR>
+    <SpiderHrsalon>
+        <flag>jsoup</flag>
+        <ptime></ptime>
+        <childLink join="">//div[@class='post-thumbnail']/a/@href</childLink>
+        <nextPage join=""></nextPage>
+        <urls>
+            <url page="2203">
+                http://News.hrsalon.org/page/$(page)
+            </url>
+        </urls>
+    </SpiderHrsalon>
 </BasCommonKnowledgeSpiderPattern>

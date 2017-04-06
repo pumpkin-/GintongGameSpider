@@ -25,6 +25,9 @@ public class SpiderContant {
     public static final String CommonMoilbeGamesProductXml="/SpiderUtils/SpiderData/CommonMobileGamesProductPattern.xml";
     public static final String CommonHTMLGamesProductXml="/SpiderUtils/SpiderData/CommonHTMLGamesProductPattern.xml";
     public static final String CommonPCGamesProductXml="/SpiderUtils/SpiderData/CommonPCGamesProductPattern.xml";
+    public static final String PersonKnowledgeType="10001";
+    public static final String OrgKnowledgeType="10002";
+    public static final String ProductKnowledgeType="10003";
 
 
 }

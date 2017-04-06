@@ -24,5 +24,8 @@
         SELECT * FROM pro_knowledge WHERE ptime BETWEEN #{datepast} AND #{date}
     </select>
 
+    <select id="selectBySource" parameterType="String" resultType="String">
+        SELECT MAX(ptime) FROM pro_knowledge WHERE source=#{source}
+    </select>
 
 </mapper>

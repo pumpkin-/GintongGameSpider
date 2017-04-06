@@ -21,4 +21,5 @@ public interface ProKnowledgeDao extends BaseDao<List> {
     public Map<Integer,List> insertBatchAutoDedup(List<ProKnowledge> proKnowledges,List<BasPersonInfo> basPersonInfos,List<PerKnowledge> perKnowledges) throws ProKnowledgeImpl.FormatEexception, ParseException, SpiderUtils.FormatEexception;
     public List<ProKnowledge> selectList(DateInfo date);
     public List<ProKnowledge> select();
+    public List<String> selectBySource(String source);
 }

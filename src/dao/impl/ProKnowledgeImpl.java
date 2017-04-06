@@ -36,8 +36,6 @@ public class ProKnowledgeImpl extends BaseDaoImpl<List> implements ProKnowledgeD
         this.getSqlSession().insert(this.getNs() + "insertBatch", proKnowledges);
     }
 
-
-
     public class FormatEexception extends Exception
     {
         public FormatEexception(String msg)
@@ -83,6 +81,11 @@ public class ProKnowledgeImpl extends BaseDaoImpl<List> implements ProKnowledgeD
 
     public List<ProKnowledge> select(){
         return this.getSqlSession().selectList(getNs() + "select");
+    }
+
+//    @Override
+    public List<String> selectBySource(String source) {
+        return this.getSqlSession().selectList(this.getNs()+"selectBySource",source);
     }
 
 

@@ -26,4 +26,9 @@ public class ProGameInfoDaoImpl extends BaseDaoImpl implements ProGameInfoDao {
     public List<String> selectGame(BasProGameInfo gname) {
         return this.getSqlSession().selectList(this.getNs() + "selectGame", gname);
     }
+    @Override
+    public List<String> selectAllGame(String source){
+        return this.getSqlSession().selectList(this.getNs()+"selectAllGame",source);
+    }
+
 }
