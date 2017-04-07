@@ -141,8 +141,12 @@ public class SpiderTyc {
         BasOrganizeInfo basOrganizeInfo=null;
         List<String> perUrlList=getPerUrl(driver,ComName);
         for(String url:perUrlList) {
-            basOrganizeInfo = getBusinessDataByUrl(driver, url, true,null);
-            System.out.println(basOrganizeInfo.getOname() + ":数据入库完毕(天眼查)");
+            try {
+                basOrganizeInfo = getBusinessDataByUrl(driver, url, true, null);
+                System.out.println(basOrganizeInfo.getOname() + ":数据入库完毕(天眼查)");
+            }catch (Exception e){
+                e.printStackTrace();
+            }
         }
 
         Thread.sleep(2000);
