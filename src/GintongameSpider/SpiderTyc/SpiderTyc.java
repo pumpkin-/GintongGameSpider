@@ -144,6 +144,7 @@ public class SpiderTyc {
             try {
                 basOrganizeInfo = getBusinessDataByUrl(driver, url, true, null);
                 System.out.println(basOrganizeInfo.getOname() + ":数据入库完毕(天眼查)");
+                Thread.sleep(2000);
             }catch (Exception e){
                 e.printStackTrace();
             }
