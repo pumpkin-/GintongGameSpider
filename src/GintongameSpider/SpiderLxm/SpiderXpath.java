@@ -1,9 +1,7 @@
 package GintongameSpider.SpiderLxm;
 
-import JavaBean.BasPersonInfo;
-import SpiderUtils.*;
+import SpiderUtils.SpiderProduct;
 
-import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -22,7 +20,7 @@ public class SpiderXpath {
 //                    BasCommonKnowledgeSpider.ergodicUrl("SpiderHrsalon",SpiderContant.xmlUrl);
 //                    KnowledgeSpiderConfigMiNi knowledgeSpiderConfigMiNi=BasCommonKnowledgeSpider.ergodicUrl("spiderUrl",SpiderContant.xmlUrl);
 //                    System.out.println(knowledgeSpiderConfigMiNi);
-                    SpiderProduct.ergodicUrl("SpiderYxgcYy", 0, 1);
+                    SpiderProduct.ergodicUrl("SpiderYxgcYy", 0, 0);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
