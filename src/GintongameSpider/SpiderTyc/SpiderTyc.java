@@ -615,44 +615,46 @@ public class SpiderTyc {
                 }
                     Elements elements = doc.select("div[ng-if=dataItemCount.changeCount>0] table[class=table companyInfo-table] tr.ng-scope");
                     for (Element element : elements) {
-                        ComChangInfo comChangInfo = new ComChangInfo();
-                        String change_time = element.select("span[class=ng-binding]").text().split(" ")[0];
-                        String change_item = element.select("span[class=ng-binding]").text().split(" ")[1];
-                        String before_change = element.select("span[ng-bind-html=change.contentBefore | splitNum]").text();
-                        String after_change = element.select("span[ng-bind-html=change.contentAfter | splitNum]").text();
-                        comChangInfo.setBid(Integer.parseInt(bid));
-                        comChangInfo.setUuid(uuid);
-                        comChangInfo.setAfter_change(after_change);
-                        comChangInfo.setChange_time(change_time);
-                        comChangInfo.setChange_item(change_item);
-                        comChangInfo.setBefore_change(before_change);
-                        if(isFirst==true) {
-                            comChangeInfoDao.insertChangeInfo(comChangInfo);
-                        }else {
-                            List<ComChangInfo> comChangInfoList = comChangeInfoDao.selectChangeInfo(uuid);
-                            boolean isExist=false;
-                            for (int j = 0; j < comChangInfoList.size(); j++) {
-                                String investOname=comChangInfoList.get(j).getChange_item();
-                                String investUuid=comChangInfoList.get(j).getUuid();
-                                if(investOname.equals(change_item)&&investUuid.equals(uuid)){
-                                    comChangeInfoDao.updateChangeInfo(comChangInfo);
-                                    isExist=true;
-                                    break;
+                        try {
+                            ComChangInfo comChangInfo = new ComChangInfo();
+                            String change_time = element.select("span[class=ng-binding]").text().split(" ")[0];
+                            String change_item = element.select("span[class=ng-binding]").text().split(" ")[1];
+                            String before_change = element.select("span[ng-bind-html=change.contentBefore | splitNum]").text();
+                            String after_change = element.select("span[ng-bind-html=change.contentAfter | splitNum]").text();
+                            comChangInfo.setBid(Integer.parseInt(bid));
+                            comChangInfo.setUuid(uuid);
+                            comChangInfo.setAfter_change(after_change);
+                            comChangInfo.setChange_time(change_time);
+                            comChangInfo.setChange_item(change_item);
+                            comChangInfo.setBefore_change(before_change);
+                            if (isFirst == true) {
+                                comChangeInfoDao.insertChangeInfo(comChangInfo);
+                            } else {
+                                List<ComChangInfo> comChangInfoList = comChangeInfoDao.selectChangeInfo(uuid);
+                                boolean isExist = false;
+                                for (int j = 0; j < comChangInfoList.size(); j++) {
+                                    String investOname = comChangInfoList.get(j).getChange_item();
+                                    String investUuid = comChangInfoList.get(j).getUuid();
+                                    if (investOname.equals(change_item) && investUuid.equals(uuid)) {
+                                        comChangeInfoDao.updateChangeInfo(comChangInfo);
+                                        isExist = true;
+                                        break;
+                                    }
+                                }
+                                if (isExist == false) {
+                                    comChangeInfoDao.insertChangeInfo(comChangInfo);
                                 }
                             }
-                            if(isExist==false){
-                                comChangeInfoDao.insertChangeInfo(comChangInfo);
-                            }
+                            //System.out.println(change_time + "***" + change_item + "***" + before_change + "***" + after_change);
+                        }catch (Exception e){
+                            e.printStackTrace();
                         }
-                        //System.out.println(change_time + "***" + change_item + "***" + before_change + "***" + after_change);
                     }
                         for(int i=2;i<=page;i++) {
                             doc = listPageSelenium(driver);
                             Elements eles = doc.select("div[ng-if=dataItemCount.changeCount>0] table[class=table companyInfo-table] tr.ng-scope");
                             for (Element ele : eles) {
                                 try {
-
-
                                     ComChangInfo comChangInfo = new ComChangInfo();
                                     String change_time = ele.select("span[class=ng-binding]").text().split(" ")[0];
                                     String change_item = ele.select("span[class=ng-binding]").text().split(" ")[1];
@@ -693,6 +695,7 @@ public class SpiderTyc {
             }else{
                 Elements elements=doc.select("div[ng-if=dataItemCount.changeCount>0] table[class=table companyInfo-table] tr.ng-scope");
                 for(Element element:elements){
+                    try{
                     ComChangInfo comChangInfo=new ComChangInfo();
                     String change_time=element.select("span[class=ng-binding]").text().split(" ")[0];
                     String change_item=element.select("span[class=ng-binding]").text().split(" ")[1];
@@ -723,6 +726,9 @@ public class SpiderTyc {
                         }
                     }
                     //System.out.println(change_time + "***" + change_item + "***" + before_change + "***" + after_change);
+                }catch (Exception e){
+                        e.printStackTrace();
+                    }
                 }
             }
 
