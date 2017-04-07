@@ -25,11 +25,13 @@ public class TycDataBase {
         List<String> nameList=new ArrayList<String>();
         int n=0;
         while(rs.next()){
-            n++;
+
             if(0<=n&&n<=100) {
                 String fullname = rs.getString("fullname");
                 nameList.add(fullname);
+                System.out.println(fullname);
             }
+            n++;
         }
         SpiderTyc spiderTyc=new SpiderTyc();
         for(int i=0;i<nameList.size();i++){
