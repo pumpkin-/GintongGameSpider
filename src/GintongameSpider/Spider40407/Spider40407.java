@@ -1,6 +1,6 @@
 package GintongameSpider.Spider40407;
 
-import JavaBean.ProKnowledge;
+import JavaBean.BasKnowledgeInfo;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -27,13 +27,13 @@ public class Spider40407 {
         System.out.println(str);*/
 
        // System.out.print("aaa");
-        List<ProKnowledge> list = listKnowledge(doc,driver);
+        List<BasKnowledgeInfo> list = listKnowledge(doc,driver);
 
     }
-    public static List<ProKnowledge> listKnowledge(Document doc,WebDriver driver){
+    public static List<BasKnowledgeInfo> listKnowledge(Document doc,WebDriver driver){
         Elements elements = doc.select(".con_left_news dl");
         //System.out.println(elements);
-        List<ProKnowledge> list = new ArrayList<ProKnowledge>();
+        List<BasKnowledgeInfo> list = new ArrayList<BasKnowledgeInfo>();
         for(Element ele:elements){
             String author = ele.select("span").eq(0).text();
             String from = ele.select("span").eq(1).text();

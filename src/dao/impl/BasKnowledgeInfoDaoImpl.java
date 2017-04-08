@@ -7,33 +7,31 @@ import JavaBean.PerKnowledge;
 
 import SpiderUtils.LevenshteinDis;
 import SpiderUtils.SpiderUtils;
-import dao.ProKnowledgeDao;
-import JavaBean.ProKnowledge;
-import org.apache.commons.lang3.StringUtils;
+import JavaBean.BasKnowledgeInfo;
+import dao.BasKnowledgeInfoDao;
 
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
  * Created by lenovo on 2017/2/10.
  */
-public class ProKnowledgeImpl extends BaseDaoImpl<List> implements ProKnowledgeDao {
+public class BasKnowledgeInfoDaoImpl extends BaseDaoImpl<List> implements BasKnowledgeInfoDao {
     private static int fg=0;
 
-    public ProKnowledgeImpl(){
-        this.setNs("com.gintongame.mapping.ProKnowledgeMapper.");
+    public BasKnowledgeInfoDaoImpl(){
+        this.setNs("com.gintongame.mapping.BasKnowledgeInfoMapper.");
     }
 
     /**
      * c
-     * @param proKnowledges
+     * @param basKnowledgeInfos
      */
     @Deprecated
     @Override
-    public void insertBatch(List<ProKnowledge> proKnowledges) {
-        this.getSqlSession().insert(this.getNs() + "insertBatch", proKnowledges);
+    public void insertBatch(List<BasKnowledgeInfo> basKnowledgeInfos) {
+        this.getSqlSession().insert(this.getNs() + "insertBatch", basKnowledgeInfos);
     }
 
     public class FormatEexception extends Exception
@@ -46,12 +44,12 @@ public class ProKnowledgeImpl extends BaseDaoImpl<List> implements ProKnowledgeD
 
 
 
-    public Map<Integer,List> insertBatchAutoDedup(List<ProKnowledge> proKnowledges,List<BasPersonInfo> basPersonInfos,List<PerKnowledge> perKnowledges) throws SpiderUtils.FormatEexception, ParseException, FormatEexception {
+    public Map<Integer,List> insertBatchAutoDedup(List<BasKnowledgeInfo> basKnowledgeInfos,List<BasPersonInfo> basPersonInfos,List<PerKnowledge> perKnowledges) throws SpiderUtils.FormatEexception, ParseException, FormatEexception {
         Map<Integer,List> map= null;
         try {
-            map = LevenshteinDis.isExist(proKnowledges, basPersonInfos, perKnowledges);
+            map = LevenshteinDis.isExist(basKnowledgeInfos, basPersonInfos, perKnowledges);
             if(((List<Integer>) map.get(4)).get(0)!=0) {
-                this.getSqlSession().insert(this.getNs() + "insertBatch", proKnowledges);
+                this.getSqlSession().insert(this.getNs() + "insertBatch", basKnowledgeInfos);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -62,11 +60,11 @@ public class ProKnowledgeImpl extends BaseDaoImpl<List> implements ProKnowledgeD
 
     /**
      * 单条插入数据
-     * @param proKnowledge
+     * @param basKnowledgeInfo
      * @throws FormatEexception
      */
-    public void insert(ProKnowledge proKnowledge) throws FormatEexception {
-        this.getSqlSession().insert(getNs() + "insert", proKnowledge);
+    public void insert(BasKnowledgeInfo basKnowledgeInfo) throws FormatEexception {
+        this.getSqlSession().insert(getNs() + "insert", basKnowledgeInfo);
     }
 
 
@@ -75,11 +73,11 @@ public class ProKnowledgeImpl extends BaseDaoImpl<List> implements ProKnowledgeD
      * @param date
      * @return
      */
-    public List<ProKnowledge> selectList(DateInfo date) {
+    public List<BasKnowledgeInfo> selectList(DateInfo date) {
         return this.getSqlSession().selectList(getNs() + "selectList", date);
     }
 
-    public List<ProKnowledge> select(){
+    public List<BasKnowledgeInfo> select(){
         return this.getSqlSession().selectList(getNs() + "select");
     }
 

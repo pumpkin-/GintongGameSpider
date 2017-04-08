@@ -1,80 +1,75 @@
 package JavaBean;
 
-
 /**
- * Created by lenovo on 2017/2/9.
+ * Created by lenovon on 2017/4/7.
  */
-public class ProKnowledge{
-    public String getUuid() {
-        return uuid;
+public class ProKnowledge {
+    public String puuid;
+    public String kuuid;
+    public String pname;
+    public String kname;
+    public String rp_desc;
+    public String source;
+    public String rtype;
+    public String rgrade;
+    public String getRgrade() {
+        return rgrade;
     }
 
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
+    public void setRgrade(String rgrade) {
+        this.rgrade = rgrade;
     }
 
-    public String getAuthor() {
-        return author;
+
+
+    public String getRtype() {
+        return rtype;
     }
 
-    public void setAuthor(String author) {
-        this.author = author;
+    public void setRtype(String rtype) {
+        this.rtype = rtype;
     }
 
-    public String getTitle() {
-        return title;
+
+
+    public String getPuuid() {
+        return puuid;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setPuuid(String puuid) {
+        this.puuid = puuid;
     }
 
-    public String getCover() {
-        return cover;
+    public String getKuuid() {
+        return kuuid;
     }
 
-    public void setCover(String cover) {
-        this.cover = cover;
+    public void setKuuid(String kuuid) {
+        this.kuuid = kuuid;
     }
 
-    public String getTag() {
-        return tag;
+    public String getPname() {
+        return pname;
     }
 
-    public void setTag(String tag) {
-        this.tag = tag;
+    public void setPname(String pname) {
+        this.pname = pname;
     }
 
-    public String getMain() {
-        return main;
+    public String getKname() {
+        return kname;
     }
 
-    public void setMain(String main) {
-        this.main = main;
+    public void setKname(String kname) {
+        this.kname = kname;
     }
 
-    public String getPtime() {
-        return ptime;
+    public String getRp_desc() {
+        return rp_desc;
     }
 
-    public void setPtime(String ptime) {
-        this.ptime = ptime;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
+    public void setRp_desc(String rp_desc) {
+        this.rp_desc = rp_desc;
     }
 
     public String getSource() {
@@ -85,19 +80,17 @@ public class ProKnowledge{
         this.source = source;
     }
 
-    private String uuid=null;
-    private String author=null;
-    private String title=null;
-    private String cover=null;
-    private String tag=null;
-    private String main=null;
-    private String ptime=null;
-    private String type=null;
-    private String url=null;
-    private String source=null;
-    public String toSting(){
-
-        return null;
+    @Override
+    public String toString() {
+        return "ProKnowledge{" +
+                "puuid='" + puuid + '\'' +
+                ", kuuid='" + kuuid + '\'' +
+                ", pname='" + pname + '\'' +
+                ", kname='" + kname + '\'' +
+                ", rp_desc='" + rp_desc + '\'' +
+                ", source='" + source + '\'' +
+                ", rgrade='" + rgrade + '\'' +
+                ", rtype='" + rtype + '\'' +
+                '}';
     }
-
 }

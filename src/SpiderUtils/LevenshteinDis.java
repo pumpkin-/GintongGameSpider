@@ -2,15 +2,13 @@ package SpiderUtils;
 
 import JavaBean.*;
 import dao.impl.BasPersonInfoImpl;
-import dao.impl.BugDataImpl;
-import dao.impl.ProKnowledgeImpl;
+import dao.impl.BasKnowledgeInfoDaoImpl;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.UnsupportedEncodingException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
@@ -28,7 +26,7 @@ public class LevenshteinDis {
 
     /**
      * 判断当前页面的所有数据重复问题
-     * @param proKnowledges
+     * @param basKnowledgeInfos
      * @param basPersonInfos
      * @param perKnowledges
      * @return
@@ -36,22 +34,22 @@ public class LevenshteinDis {
      * @throws ParseException
      * @throws FormatEexception
      */
-    public static Map<Integer, List> isExist(List<ProKnowledge> proKnowledges, List<BasPersonInfo> basPersonInfos, List<PerKnowledge> perKnowledges) throws SpiderUtils.FormatEexception, ParseException, FormatEexception {
-        ProKnowledgeImpl pro=new ProKnowledgeImpl();
+    public static Map<Integer, List> isExist(List<BasKnowledgeInfo> basKnowledgeInfos, List<BasPersonInfo> basPersonInfos, List<PerKnowledge> perKnowledges) throws SpiderUtils.FormatEexception, ParseException, FormatEexception {
+        BasKnowledgeInfoDaoImpl pro=new BasKnowledgeInfoDaoImpl();
         //System.out.println(pro.selectList(dateformat.format(date).toString()));
         List<Integer> flaglist=new ArrayList<Integer>();
         List<String> bznlist=new ArrayList<String>();
         int flag=0;
         String bzn="true";
         Map<Integer,List> map=new TreeMap<Integer, List>();
-        if(StringUtils.isNotEmpty(proKnowledges.get(0).getPtime())) {
+        if(StringUtils.isNotEmpty(basKnowledgeInfos.get(0).getPtime())) {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            Date date2 = simpleDateFormat.parse(proKnowledges.get(0).getPtime());
-            Date date3 = simpleDateFormat.parse(proKnowledges.get(0).getPtime());
-            for (int i = 0; i < proKnowledges.size(); i++) {
+            Date date2 = simpleDateFormat.parse(basKnowledgeInfos.get(0).getPtime());
+            Date date3 = simpleDateFormat.parse(basKnowledgeInfos.get(0).getPtime());
+            for (int i = 0; i < basKnowledgeInfos.size(); i++) {
                 try {
-                    if (StringUtils.isNotEmpty(proKnowledges.get(i).getPtime())) {
-                        Date date1 = simpleDateFormat.parse(proKnowledges.get(i).getPtime());
+                    if (StringUtils.isNotEmpty(basKnowledgeInfos.get(i).getPtime())) {
+                        Date date1 = simpleDateFormat.parse(basKnowledgeInfos.get(i).getPtime());
                         if (date1.getTime() > date2.getTime()) {
                             date2 = date1;
                         }
@@ -73,19 +71,19 @@ public class LevenshteinDis {
             System.out.println(da.getDate());
             if (day > SpiderContant.insertBatchContant * perKnowledges.size()) {
                 String essay;
-                for (int i = 0; i < proKnowledges.size(); i++) {
+                for (int i = 0; i < basKnowledgeInfos.size(); i++) {
                     DateInfo daa = new DateInfo();
-                    daa.setDate(proKnowledges.get(i).getPtime());
-                    System.out.println(proKnowledges);
-                    Date date5 = new Date((simpleDateFormat.parse(proKnowledges.get(i).getPtime()).getTime()) - (5 * (24 * 60 * 60 * 1000)));
+                    daa.setDate(basKnowledgeInfos.get(i).getPtime());
+                    System.out.println(basKnowledgeInfos);
+                    Date date5 = new Date((simpleDateFormat.parse(basKnowledgeInfos.get(i).getPtime()).getTime()) - (5 * (24 * 60 * 60 * 1000)));
                     dd = simpleDateFormat.format(date5);
                     daa.setDatepast(dd);
-                    List<ProKnowledge> list = pro.selectList(daa);
+                    List<BasKnowledgeInfo> list = pro.selectList(daa);
                     System.out.println("从数据库中抽出：" + list.size() + "条数据做对比");
                     if (list == null || list.size() != 0) {
                         for (int x = 0; x < list.size(); x++) {
                             essay = list.get(x).getMain();
-                            String aticle = proKnowledges.get(i).getMain();
+                            String aticle = basKnowledgeInfos.get(i).getMain();
                             double dis;
                             //修改为错误代码
                             try {
@@ -93,16 +91,16 @@ public class LevenshteinDis {
                             } catch (Exception e) {
                                 dis = 0;
                             }
-                            if (StringUtils.isEmpty(proKnowledges.get(i).getMain())) {
+                            if (StringUtils.isEmpty(basKnowledgeInfos.get(i).getMain())) {
                                 System.out.println("this is the null");
-                                proKnowledges.remove(i);
+                                basKnowledgeInfos.remove(i);
                                 basPersonInfos.remove(i);
                                 perKnowledges.remove(i);
                                 i = i - 1;
                                 break;
                             } else if (dis > 0.95) {
-                                CommonSpiderKnowledge.storeBugdata(essay, aticle, proKnowledges.get(i).getUuid(),proKnowledges.get(i).getSource());
-                                proKnowledges.remove(i);
+                                CommonSpiderKnowledge.storeBugdata(essay, aticle, basKnowledgeInfos.get(i).getUuid(), basKnowledgeInfos.get(i).getSource());
+                                basKnowledgeInfos.remove(i);
                                 basPersonInfos.remove(i);
                                 perKnowledges.remove(i);
                                 i = i - 1;
@@ -135,16 +133,16 @@ public class LevenshteinDis {
                 map.put(3, perKnowledges);
                 map.put(4, flaglist);
                 map.put(2, bznlist);
-                map.put(5, proKnowledges);
+                map.put(5, basKnowledgeInfos);
             } else {
-                List<ProKnowledge> list = pro.selectList(da);
+                List<BasKnowledgeInfo> list = pro.selectList(da);
                 System.out.println("从数据库中抽出：" + list.size() + "条数据做对比");
                 String essay;
                 if (list == null || list.size() != 0) {
-                    for (int i = 0; i < proKnowledges.size(); i++) {
+                    for (int i = 0; i < basKnowledgeInfos.size(); i++) {
                         for (int x = 0; x < list.size(); x++) {
                             essay = list.get(x).getMain();
-                            String aticle = proKnowledges.get(i).getMain();
+                            String aticle = basKnowledgeInfos.get(i).getMain();
                             double dis;
                             //修改为错误代码
                             try {
@@ -152,17 +150,17 @@ public class LevenshteinDis {
                             } catch (Exception e) {
                                 dis = 0;
                             }
-                            if (StringUtils.isEmpty(proKnowledges.get(i).getMain())) {
+                            if (StringUtils.isEmpty(basKnowledgeInfos.get(i).getMain())) {
                                 System.out.println("this is the null");
-                                proKnowledges.remove(i);
+                                basKnowledgeInfos.remove(i);
                                 basPersonInfos.remove(i);
                                 perKnowledges.remove(i);
                                 i = i - 1;
                                 break;
                             } else if (dis > 0.95) {
 
-                                CommonSpiderKnowledge.storeBugdata(essay, aticle, list.get(i).getUuid(),proKnowledges.get(i).getSource());
-                                proKnowledges.remove(i);
+                                CommonSpiderKnowledge.storeBugdata(essay, aticle, list.get(i).getUuid(), basKnowledgeInfos.get(i).getSource());
+                                basKnowledgeInfos.remove(i);
                                 basPersonInfos.remove(i);
                                 perKnowledges.remove(i);
                                 i = i - 1;
@@ -195,7 +193,7 @@ public class LevenshteinDis {
                 map.put(3, perKnowledges);
                 map.put(4, flaglist);
                 map.put(2, bznlist);
-                map.put(5, proKnowledges);
+                map.put(5, basKnowledgeInfos);
             }
         }else{
             flaglist.add(flag);
@@ -204,31 +202,31 @@ public class LevenshteinDis {
             map.put(3, perKnowledges);
             map.put(4, flaglist);
             map.put(2, bznlist);
-            map.put(5, proKnowledges);
+            map.put(5, basKnowledgeInfos);
         }
         return map;
     }
 
     /**
      * 判断单条数据是否重复
-     * @param proKnowledge
+     * @param basKnowledgeInfo
      * @throws SpiderUtils.FormatEexception
      * @throws ParseException
      * @throws FormatEexception
      */
-    public static boolean isExist(ProKnowledge proKnowledge) throws SpiderUtils.FormatEexception, ParseException, FormatEexception {
-        ProKnowledgeImpl pro=new ProKnowledgeImpl();
+    public static boolean isExist(BasKnowledgeInfo basKnowledgeInfo) throws SpiderUtils.FormatEexception, ParseException, FormatEexception {
+        BasKnowledgeInfoDaoImpl pro=new BasKnowledgeInfoDaoImpl();
         String essay = null;
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 //        String  dd = simpleDateFormat.format(proKnowledge.getPtime());
         DateInfo daa = new DateInfo();
-        daa.setDate(simpleDateFormat.format(proKnowledge.getPtime()));
+        daa.setDate(simpleDateFormat.format(basKnowledgeInfo.getPtime()));
 
-        Date date5 = new Date((simpleDateFormat.parse(proKnowledge.getPtime()).getTime()) - (5 * (24 * 60 * 60 * 1000)));
+        Date date5 = new Date((simpleDateFormat.parse(basKnowledgeInfo.getPtime()).getTime()) - (5 * (24 * 60 * 60 * 1000)));
 
 //        dd = simpleDateFormat.format(date5);
 
-        List<ProKnowledge> list = pro.selectList(daa);
+        List<BasKnowledgeInfo> list = pro.selectList(daa);
 
         System.out.println("从数据库中抽出：" + list.size() + "条数据做对比");
         if (list != null && list.size() > 0) {
@@ -237,14 +235,14 @@ public class LevenshteinDis {
                 double dis;
                 //修改为错误代码
                 try {
-                    dis = getSimilarity(essay, proKnowledge.getMain());
+                    dis = getSimilarity(essay, basKnowledgeInfo.getMain());
                 } catch (Exception e) {
                     dis = 0;
                 }
-                if (StringUtils.isEmpty(proKnowledge.getMain())) {
+                if (StringUtils.isEmpty(basKnowledgeInfo.getMain())) {
                     System.out.println("this is the null");
                 } else if (dis > 0.95) {
-                    CommonSpiderKnowledge.storeBugdata(essay, proKnowledge.getMain(), proKnowledge.getUuid(),proKnowledge.getSource());
+                    CommonSpiderKnowledge.storeBugdata(essay, basKnowledgeInfo.getMain(), basKnowledgeInfo.getUuid(), basKnowledgeInfo.getSource());
                     System.out.println("--------------This data should be delete------------------");
                     return false;
                 } else {

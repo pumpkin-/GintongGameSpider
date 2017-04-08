@@ -7,17 +7,14 @@ import cn.wanghaomiao.xpath.model.JXNode;
 import dao.impl.BasPersonInfoImpl;
 import dao.impl.BugDataImpl;
 import dao.impl.PerKnowledgeImpl;
-import dao.impl.ProKnowledgeImpl;
+import dao.impl.BasKnowledgeInfoDaoImpl;
 import org.apache.commons.lang3.StringUtils;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.select.Elements;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.phantomjs.PhantomJSDriver;
 
@@ -38,10 +35,10 @@ public class SpiderUtils {
     private static BugDataImpl bugDataimpl = new BugDataImpl();
     public static BaseKnowLedge baseKnowledge=new BaseKnowLedge();
     private static SAXReader sax=new SAXReader();
-    private static List<ProKnowledge> proKnowledgeList=new ArrayList<ProKnowledge>();
+    private static List<BasKnowledgeInfo> basKnowledgeInfoList =new ArrayList<BasKnowledgeInfo>();
     private static List<BasPersonInfo> basPersonInfoList=new ArrayList<BasPersonInfo>();
     private static List<PerKnowledge> perKnowledgeList=new ArrayList<PerKnowledge>();
-    private static ProKnowledgeImpl proknowimpl = new ProKnowledgeImpl();
+    private static BasKnowledgeInfoDaoImpl proknowimpl = new BasKnowledgeInfoDaoImpl();
     private static BasPersonInfoImpl basperimpl = new BasPersonInfoImpl();
     private static PerKnowledgeImpl perknowimpl = new PerKnowledgeImpl();
     private static SimpleDateFormat simpleDateFormatchange=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -70,8 +67,8 @@ public class SpiderUtils {
     }
 
 
-    public static List<ProKnowledge> getData(OrganizeConfigure organizeConfigure,String orgflag) throws XpathSyntaxErrorException, ParseException, InterruptedException, FormatEexception, ProKnowledgeImpl.FormatEexception {
-        List<ProKnowledge> test=new ArrayList<ProKnowledge>();
+    public static List<BasKnowledgeInfo> getData(OrganizeConfigure organizeConfigure,String orgflag) throws XpathSyntaxErrorException, ParseException, InterruptedException, FormatEexception, BasKnowledgeInfoDaoImpl.FormatEexception {
+        List<BasKnowledgeInfo> test=new ArrayList<BasKnowledgeInfo>();
         for(int i=1;i>0;i++) {
             Thread.sleep(2000);
             if(organizeConfigure.getPage()!=0) {
@@ -388,11 +385,11 @@ public class SpiderUtils {
      * @throws ParserConfigurationException
      * @throws XpathSyntaxErrorException
      * @throws IOException
-     * @throws ProKnowledgeImpl.FormatEexception
+     * @throws dao.impl.BasKnowledgeInfoDaoImpl.FormatEexception
      * @throws InterruptedException
      * @throws ParseException
      */
-    public static void getElements(String flag,String element,int page,String orgflag) throws FormatEexception, DocumentException, ParserConfigurationException, XpathSyntaxErrorException, IOException, ProKnowledgeImpl.FormatEexception, InterruptedException, ParseException {
+    public static void getElements(String flag,String element,int page,String orgflag) throws FormatEexception, DocumentException, ParserConfigurationException, XpathSyntaxErrorException, IOException, BasKnowledgeInfoDaoImpl.FormatEexception, InterruptedException, ParseException {
         InputStream inputStream=new FileInputStream(SpiderUtils.class.getClassLoader().getResource("SpiderUtils/BasKnowledgePattern.xml").getFile());
         baseKnowledge.setDocsax(sax.read(inputStream));
         baseKnowledge.setRoot(baseKnowledge.getDocsax().getRootElement());//获取根元素
@@ -455,7 +452,7 @@ public class SpiderUtils {
         System.exit(0);
     }
 
-    public static void getElementsAdd(String flag,int page,String orgflag) throws ProKnowledgeImpl.FormatEexception, FormatEexception, InterruptedException, XpathSyntaxErrorException, ParseException, FileNotFoundException, DocumentException {
+    public static void getElementsAdd(String flag,int page,String orgflag) throws BasKnowledgeInfoDaoImpl.FormatEexception, FormatEexception, InterruptedException, XpathSyntaxErrorException, ParseException, FileNotFoundException, DocumentException {
         baseKnowledge.setInputStream(new FileInputStream(SpiderUtils.class.getClassLoader().getResource("SpiderUtils/BasKnowledgePattern.xml").getFile()));
         baseKnowledge.setDocsax(sax.read(baseKnowledge.getInputStream()));
         baseKnowledge.setRoot(baseKnowledge.getDocsax().getRootElement());//获取根元素
@@ -511,19 +508,19 @@ public class SpiderUtils {
 
 
 
-    public static void dataClean(String title,String ptime,String type,String cover,String tag,String author,String main,String puuid,String kuuid,String url,String source,String authorurl) throws ProKnowledgeImpl.FormatEexception, FormatEexception {
-        ProKnowledge proKnowledge = new ProKnowledge();
-        proKnowledge.setTitle(title);
-        proKnowledge.setPtime(ptime);
-        proKnowledge.setType(type);
-        proKnowledge.setCover(cover);
-        proKnowledge.setTag(tag);
-        proKnowledge.setAuthor(author);
-        proKnowledge.setMain(main);
-        proKnowledge.setUrl(url);
-        proKnowledge.setSource(source);
-        proKnowledge.setUuid(kuuid);
-        proKnowledgeList.add(proKnowledge);
+    public static void dataClean(String title,String ptime,String type,String cover,String tag,String author,String main,String puuid,String kuuid,String url,String source,String authorurl) throws BasKnowledgeInfoDaoImpl.FormatEexception, FormatEexception {
+        BasKnowledgeInfo basKnowledgeInfo = new BasKnowledgeInfo();
+        basKnowledgeInfo.setTitle(title);
+        basKnowledgeInfo.setPtime(ptime);
+        basKnowledgeInfo.setType(type);
+        basKnowledgeInfo.setCover(cover);
+        basKnowledgeInfo.setTag(tag);
+        basKnowledgeInfo.setAuthor(author);
+        basKnowledgeInfo.setMain(main);
+        basKnowledgeInfo.setUrl(url);
+        basKnowledgeInfo.setSource(source);
+        basKnowledgeInfo.setUuid(kuuid);
+        basKnowledgeInfoList.add(basKnowledgeInfo);
 
         if(StringUtils.isNotEmpty(author)) {
             PerKnowledge perKnow = new PerKnowledge();
@@ -545,22 +542,22 @@ public class SpiderUtils {
 
     }
 
-    public static List storeToDatebase(String flag,String author,String orgflag) throws FormatEexception, ProKnowledgeImpl.FormatEexception, ParseException {
-        List<ProKnowledge> proKnowledgeListq=new ArrayList<ProKnowledge>();
+    public static List storeToDatebase(String flag,String author,String orgflag) throws FormatEexception, BasKnowledgeInfoDaoImpl.FormatEexception, ParseException {
+        List<BasKnowledgeInfo> basKnowledgeInfoListq =new ArrayList<BasKnowledgeInfo>();
         if (flag.equals("windows")) {
-            Map map = proknowimpl.insertBatchAutoDedup(proKnowledgeList, basPersonInfoList, perKnowledgeList);
-            proKnowledgeListq= (List<ProKnowledge>) map.get(5);
+            Map map = proknowimpl.insertBatchAutoDedup(basKnowledgeInfoList, basPersonInfoList, perKnowledgeList);
+            basKnowledgeInfoListq = (List<BasKnowledgeInfo>) map.get(5);
             if (((List<Integer>) map.get(4)).get(0) != 0&&StringUtils.isNotEmpty(author)) {
                 basperimpl.insertBatch((List<BasPersonInfo>) map.get(1));
                 perknowimpl.insertBatch((List<PerKnowledge>) map.get(3));
             }
             if(orgflag.equals("no")) {
-                proKnowledgeList.clear();
+                basKnowledgeInfoList.clear();
             }
             basPersonInfoList.clear();
             perKnowledgeList.clear();
         } else if (flag.equals("linux")) {
-            Map map = proknowimpl.insertBatchAutoDedup(proKnowledgeList, basPersonInfoList, perKnowledgeList);
+            Map map = proknowimpl.insertBatchAutoDedup(basKnowledgeInfoList, basPersonInfoList, perKnowledgeList);
             if (((List<String>) map.get(2)).get(0).equals("false")) {
                 System.exit(0);
             }
@@ -568,13 +565,13 @@ public class SpiderUtils {
                 basperimpl.insertBatch(basPersonInfoList);
                 perknowimpl.insertBatch(perKnowledgeList);
             }
-            proKnowledgeList.clear();
+            basKnowledgeInfoList.clear();
             basPersonInfoList.clear();
             perKnowledgeList.clear();
         } else {
             throw new FormatEexception("You have to choose windows or linux");
         }
-        return proKnowledgeListq;
+        return basKnowledgeInfoListq;
     }
 
     public static void storeBugdata(String key,String value,String uuid){

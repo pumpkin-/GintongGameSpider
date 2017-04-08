@@ -13,16 +13,11 @@ import java.util.concurrent.Executors;
 public class SpiderXpath {
     public static void main(String[] args){
         ExecutorService pool= Executors.newSingleThreadExecutor();
-
         pool.submit(new Runnable() {
             @Override
             public void run() {
                 try {
-//                    BasCommonSpiderKnowledgeSpider.ergodicUrl("spiderYWW", 0, "no");
-//                    BasCommonKnowledgeSpider.ergodicUrl("SpiderHrsalon",SpiderContant.xmlUrl);
-//                    KnowledgeSpiderConfigMiNi knowledgeSpiderConfigMiNi=BasCommonKnowledgeSpider.ergodicUrl("spiderUrl",SpiderContant.xmlUrl);
-//                    System.out.println(knowledgeSpiderConfigMiNi);
-                    SpiderProduct.ergodicUrl("SpiderYxgcYy", 0, 1);
+                    CommonSpiderKnowledge.ergodicUrl("spider",0,"no");
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
