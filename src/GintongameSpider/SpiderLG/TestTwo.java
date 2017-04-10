@@ -7,7 +7,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.Select;
 
 /**
  * Created by admin on 2017/3/28.
@@ -16,12 +15,12 @@ public class TestTwo {
     public static void main(String [] args) throws XpathSyntaxErrorException {
         System.setProperty("webdriver.chrome.driver", SpiderContant.chromeWindowsPath);
         WebDriver driver=new ChromeDriver();
-        driver.get("http://kns.cnki.net/kns/brief/default_result.aspx");
+        driver.get("http://weibo.com/login.php");
         WebElement webElement=driver.findElement(By.xpath("/html"));
         org.jsoup.nodes.Document doc = Jsoup.parse(webElement.getAttribute("outerHTML"));
         System.out.println(doc.outerHtml());
-        Select select=new Select(driver.findElement(By.ById.xpath("//select[@id='txt_1_sel']")));
-        select.selectByValue("AF$%");
+//        Select select=new Select(driver.findElement(By.ById.xpath("//select[@id='txt_1_sel']")));
+//        select.selectByValue("AF$%");
 
 //        JXDocument jxdoc=new JXDocument(doc);
 //        String main=jxdoc.sel("//section[@class='textblock']/allText()").toString();

@@ -131,8 +131,8 @@ public class SpiderWm {
         JavascriptExecutor executornext = (JavascriptExecutor)driver;
         WebElement webElementMain=driver.findElement(By.xpath("/html"));
         Document doc= Jsoup.parse(webElementMain.getAttribute("outerHTML"));
-        driver.findElement(By.xpath("//*[@id=\"loginname\"]")).sendKeys(username);
-        driver.findElement(By.xpath("//*[@id=\"pl_login_form\"]/div/div[3]/div[2]/div/input")).sendKeys(password);
+        executornext.executeScript("document.getElementById(\"loginname\").value = "+username);
+        executornext.executeScript("document.getElementsByName(\"password\")[0].value = '"+password+"'");
         executornext.executeScript("document.getElementsByClassName('W_btn_a btn_32px ')[0].click()");
         String handle = driver.getWindowHandle();
         for (String handles : driver.getWindowHandles()) {
@@ -162,7 +162,7 @@ public class SpiderWm {
      * @param perInfoUrl
      * @throws InterruptedException
      */
-    public static BasPersonInfo getPerInfoDataByUrl(WebDriver driver, String perInfoUrl,String ouuid,String companyName) throws InterruptedException {
+    public static BasPersonInfo getPerInfoDataByUrl(WebDriver driver, String perInfoUrl,String ouuid,String companyName,Boolean isFirst,int count) throws InterruptedException {
         String uuid= UUID.randomUUID().toString();
         String name=null;
         String livePlace=null;
@@ -234,7 +234,28 @@ public class SpiderWm {
         basPersonInfo.setP_desc(summary);
         basPersonInfo.setSex(sex);
         basPersonInfo.setPtag(tag);
-        basPersonInfoDao.insertPerInfo(basPersonInfo);
+
+
+        //数据去重
+        List<BasPersonInfo> basPersonInfoList=basPersonInfoDao.selectPerByUrl(perInfoUrl);
+        Boolean isExist=false;
+        if(basPersonInfoList!=null){
+            if(basPersonInfoList.size()!=0) {
+                isExist = true;
+            }
+        }
+        if(isExist==false) {
+            //TODO if(count%==0){
+            basPersonInfoDao.insertPerInfo(basPersonInfo);
+            System.out.println(name + "：数据入库成功");
+        //}
+        }else {
+            //TODO if(count%==0){
+            basPersonInfoDao.updatePerByUrl(basPersonInfo);
+            System.out.println(name + "：数据修改成功");
+        //}
+        }
+
 
         //System.out.println(name+"-"+livePlace+"-"+sex+"-"+birthday+"-"+bokeUrl+"-"+selfUrl+"-"+summary+"-"+regTime+"-"+tag);
 
@@ -255,7 +276,10 @@ public class SpiderWm {
                     basOrganizeInfo.setUuid(eouuid);
                     basOrganizeInfo.setSource("微博");
                     basOrganizeInfo.setBusiness_plan("测试HelloWorld");
-                    basOrganizeInfoDao.insertSingle(basOrganizeInfo);
+                    if(isExist==false) {
+                        basOrganizeInfoDao.insertSingle(basOrganizeInfo);
+                    }
+
                 }
 
                 //微博人和工作关系入库
@@ -272,7 +296,10 @@ public class SpiderWm {
                 }
                 perWorkInfo.setUuid(uuid);
                 perWorkInfo.setWtype("工作经历");
-                perWorkInfoDao.insertPerWorkInfo(perWorkInfo);
+                if(isExist==false) {
+                    perWorkInfoDao.insertPerWorkInfo(perWorkInfo);
+                }
+
 
 
                 //微博人和组织入库
@@ -296,7 +323,9 @@ public class SpiderWm {
                 }
                 perOrganize.setRgDesc("测试HelloWorld");
                 perOrganize.setRtype("工作经历");
-                perOrganizeDao.insertPerOrgani(perOrganize);
+                if(isExist==false) {
+                    perOrganizeDao.insertPerOrgani(perOrganize);
+                }
             }
         }
         Elements schElements=docMain.select("div.WB_innerwrap div[class=m_wrap clearfix] ul.clearfix");
@@ -313,14 +342,20 @@ public class SpiderWm {
                     basOrganizeInfo.setUuid(souuid);
                     basOrganizeInfo.setTag("学校");
                     basOrganizeInfo.setSource("微博");
-                    basOrganizeInfoDao.insertSingle(basOrganizeInfo);
+                    if(isExist==false) {
+                        basOrganizeInfoDao.insertSingle(basOrganizeInfo);
+                    }
+
 
 
                     //微博人和教育入库
                     perEducationInfo.setUuid(uuid);
                     perEducationInfo.setSchool(school);
                     perEducationInfo.setType((byte)2);
-                    perEducationInfoDao.insertPerEducationInfo(perEducationInfo);
+                    if(isExist==false) {
+                        perEducationInfoDao.insertPerEducationInfo(perEducationInfo);
+                    }
+
 
 
                     //微博人和组织入库
@@ -333,11 +368,13 @@ public class SpiderWm {
                     perOrganize.setOuuid(ouuid);
                     perOrganize.setRtype("教育经历");
                     perOrganize.setJob("学生");
-                    perOrganizeDao.insertPerOrgani(perOrganize);
+                    if(isExist==false) {
+                        perOrganizeDao.insertPerOrgani(perOrganize);
+                    }
+
                 }
             }
         }
-        System.out.println(name+"：数据入库成功");
         return basPersonInfo;
     }
 
@@ -363,7 +400,7 @@ public class SpiderWm {
         if(result.equals("登录成功")) {
             getPerUrl(driver, comName);
             for (String url : urls) {
-                getPerInfoDataByUrl(driver, url,ouuid,companyName);
+                getPerInfoDataByUrl(driver, url,ouuid,companyName,true,1);
                 Thread.sleep(8000);
             }
             closeWebDriver();
@@ -373,7 +410,7 @@ public class SpiderWm {
         }
     }
 
-    public static List<BasPersonInfo> getPerInfoDataByComName(String companyName,String ouuid) throws Exception {
+    public static List<BasPersonInfo> getPerInfoDataByComName(String companyName,String ouuid,Boolean isFirst,int count) throws Exception {
 
         WebDriver driver =getWebDriver();
         String result=loginWeiBo(username, password);
@@ -382,7 +419,7 @@ public class SpiderWm {
             List<String> urlsByComName=getPerUrl(driver, companyName);
             for (String url : urlsByComName) {
                 try{
-                    BasPersonInfo basPersonInfo=getPerInfoDataByUrl(driver, url,ouuid,companyName);
+                    BasPersonInfo basPersonInfo=getPerInfoDataByUrl(driver, url,ouuid,companyName,isFirst,count);
                     basPersonInfoList.add(basPersonInfo);
                     Thread.sleep(8000);
                 }catch (Exception e){
@@ -404,7 +441,7 @@ public class SpiderWm {
         String result=loginWeiBo(username, password);
         if(result.equals("登录成功")) {
             getPerUrl(driver, comName);
-            getPerInfoDataByUrl(driver, url,ouuid,companyName);
+            getPerInfoDataByUrl(driver, url,ouuid,companyName,true,1);
             Thread.sleep(8000);
             closeWebDriver();
         }else{
@@ -418,7 +455,7 @@ public class SpiderWm {
         String result=loginWeiBo(username, password);
         if(result.equals("登录成功")) {
             for (String url : urls) {
-                getPerInfoDataByUrl(driver, url,ouuid,companyName);
+                getPerInfoDataByUrl(driver, url,ouuid,companyName,true,1);
                 Thread.sleep(8000);
             }
             closeWebDriver();

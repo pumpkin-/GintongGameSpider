@@ -94,13 +94,13 @@ public class SpiderMaimai {
         login(usernameOne,passwordOne);
         getPerUrl(driver,comName,count);
         for(String url: urls) {
-            getPerInfoDataByUrl(driver, url,ouuid,companeName);
+            getPerInfoDataByUrl(driver, url,ouuid,companeName,true,0);
             Thread.sleep(8000);
         }
         closeWebDriver();
     }
 
-    public static List<BasPersonInfo> getPerInfoDataByComName(String companyName,String ouuid) throws Exception {
+    public static List<BasPersonInfo> getPerInfoDataByComName(String companyName,String ouuid,Boolean isFirst,int count) throws Exception {
         List<BasPersonInfo> basPersonInfoList=new ArrayList<BasPersonInfo>();
             WebDriver driver =getWebDriver();
             login(usernameOne,passwordOne);
@@ -111,7 +111,7 @@ public class SpiderMaimai {
             for(String url: urlsByComName) {
                 num++;
                 try {
-                    BasPersonInfo basPersonInfo=getPerInfoDataByUrl(driver, url,ouuid,companyName);
+                    BasPersonInfo basPersonInfo=getPerInfoDataByUrl(driver, url,ouuid,companyName,isFirst,count);
                     basPersonInfoList.add(basPersonInfo);
                     System.out.println("第"+index+"个号已经加载了"+num+"个数据");
                     Thread.sleep(8000);
@@ -137,7 +137,7 @@ public class SpiderMaimai {
         WebDriver driver =getWebDriver();
         login(usernameOne,passwordOne);
         //getPerUrl(driver,comName,count);
-        getPerInfoDataByUrl(driver, url,ouuid,companyName);
+        getPerInfoDataByUrl(driver, url,ouuid,companyName,true,0);
         Thread.sleep(8000);
         closeWebDriver();
     }
@@ -149,7 +149,7 @@ public class SpiderMaimai {
         WebDriver driver =getWebDriver();
         login(usernameOne,passwordOne);
         for(String url: urls) {
-            getPerInfoDataByUrl(driver, url,ouuid,comName);
+            getPerInfoDataByUrl(driver, url,ouuid,comName,true,0);
             Thread.sleep(8000);
         }
         closeWebDriver();
@@ -193,7 +193,7 @@ public class SpiderMaimai {
 
 
 
-    public static BasPersonInfo getPerInfoDataByUrl(WebDriver driver, String perInfoUrl,String ouuid,String companyName) throws InterruptedException {
+    public static BasPersonInfo getPerInfoDataByUrl(WebDriver driver, String perInfoUrl,String ouuid,String companyName,Boolean isFirst,int count) throws InterruptedException {
         driver.get(perInfoUrl);
         WebElement webElementMain = driver.findElement(By.xpath("/html"));
         Document docMain = Jsoup.parse(webElementMain.getAttribute("outerHTML"));
@@ -251,8 +251,27 @@ public class SpiderMaimai {
         basPersonInfo.setPtag(ptag);
         basPersonInfo.setProvince(province);
         basPersonInfo.setCity(city);
-        basPersonInfoDao.insertPerInfo(basPersonInfo);
-        System.out.println(name+":数据入库成功！");
+        //数据去重
+        List<BasPersonInfo> basPersonInfoList=basPersonInfoDao.selectPerByUrl(perInfoUrl);
+        Boolean isExist=false;
+        if(basPersonInfoList!=null){
+            if(basPersonInfoList.size()!=0) {
+                isExist = true;
+            }
+        }
+        System.out.println(isExist);
+        if(isExist==false) {
+            //TODO if(count %==0){
+                basPersonInfoDao.insertPerInfo(basPersonInfo);
+                System.out.println(name + ":数据入库成功！");
+            //}
+        }else{
+            //TODO if(count%==0) {
+                basPersonInfoDao.updatePerByUrl(basPersonInfo);
+                System.out.println(name + ":数据重复修改成功！");
+            //}
+        }
+
 
 
 
@@ -277,7 +296,9 @@ public class SpiderMaimai {
                     basOrganizeInfo.setSource("脉脉");
                     basOrganizeInfo.setUuid(eouuid);
                     basOrganizeInfo.setBusiness_plan("测试HelloWorld");
-                    basOrganizeInfoDao.insertSingle(basOrganizeInfo);
+                    if(isExist=false) {
+                        basOrganizeInfoDao.insertSingle(basOrganizeInfo);
+                    }
                 }
 
                 //脉脉人和工作入库
@@ -291,7 +312,10 @@ public class SpiderMaimai {
                     perWorkInfo.setWork_time(com_start + "-"+com_end);
                 }
                 perWorkInfo.setJob(exp_position);
-                perWorkInfoDao.insertPerWorkInfo(perWorkInfo);
+                if(isExist=false) {
+                    perWorkInfoDao.insertPerWorkInfo(perWorkInfo);
+                }
+
 
                 //脉脉人和组织入库
                 PerOrganize perOrganize=new PerOrganize();
@@ -307,7 +331,10 @@ public class SpiderMaimai {
                 perOrganize.setRtype("工作经历");
                 perOrganize.setJob(exp_position);
                 perOrganize.setName(name);
-                perOrganizeDao.insertPerOrgani(perOrganize);
+                if(isExist=false) {
+                    perOrganizeDao.insertPerOrgani(perOrganize);
+                }
+
 
             }
         }
@@ -327,7 +354,10 @@ public class SpiderMaimai {
                 basOrganizeInfo.setSource("脉脉");
                 basOrganizeInfo.setUuid(oouuid);
                 basOrganizeInfo.setBusiness_plan("测试HelloWorld");
-                basOrganizeInfoDao.insertSingle(basOrganizeInfo);
+                if(isExist=false) {
+                    basOrganizeInfoDao.insertSingle(basOrganizeInfo);
+                }
+
 
 
                 //脉脉人和教育入库
@@ -338,7 +368,9 @@ public class SpiderMaimai {
                 perEducationInfo.setEnd_date(edu_end);
                 perEducationInfo.setDiploma(edu_description);
                 perEducationInfo.setMajor(edu_department);
-                perEducationInfoDao.insertPerEducationInfo(perEducationInfo);
+                if(isExist=false) {
+                    perEducationInfoDao.insertPerEducationInfo(perEducationInfo);
+                }
 
 
                 //脉脉人和组织入库
@@ -352,6 +384,9 @@ public class SpiderMaimai {
                 perOrganize.setJob("学生");
                 perOrganize.setName(name);
                 perOrganizeDao.insertPerOrgani(perOrganize);
+                if(isExist=false) {
+                    perOrganizeDao.insertPerOrgani(perOrganize);
+                }
             }
         }
         return basPersonInfo;

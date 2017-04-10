@@ -12,4 +12,6 @@ public interface BasPersonInfoDao extends BaseDao<List>{
     public void insert(BasPersonInfo ts);
     public List<String> selectList(String ts);
     public void insertPerInfo(BasPersonInfo basPersonInfo);
+    public List<BasPersonInfo> selectPerByUrl(String url);
+    public void updatePerByUrl(BasPersonInfo personInfo);
 }

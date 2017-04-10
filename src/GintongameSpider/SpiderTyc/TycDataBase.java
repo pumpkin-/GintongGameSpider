@@ -35,7 +35,12 @@ public class TycDataBase {
         }
         SpiderTyc spiderTyc=new SpiderTyc();
         for(int i=0;i<nameList.size();i++){
-            spiderTyc.getBussinessDataByList(nameList.get(i));
+            try {
+                spiderTyc.getBussinessDataByList(nameList.get(i));
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+
         }
     }
 }

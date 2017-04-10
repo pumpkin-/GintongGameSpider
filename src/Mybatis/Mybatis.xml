@@ -13,7 +13,6 @@
         </environment>
     </environments>
     <mappers>
-
         <mapper resource="com/gintongame/mapping/ProKnowledgeMapper.xml"/>
         <mapper resource="com/gintongame/mapping/BasPersonInfoMapper.xml"/>
         <mapper resource="com/gintongame/mapping/PerKnowledgeMapper.xml"/>

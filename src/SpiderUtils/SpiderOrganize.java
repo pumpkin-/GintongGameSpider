@@ -143,26 +143,25 @@ public class SpiderOrganize {
 //            if(StringUtils.isNotEmpty(organizeSpiderConfig.lgwUrl.getText())) {
 //                SpiderLgw.getBussinessDataByOne(organizeSpiderConfig.lgwUrl.getText(), tycBasOrganizeInfo);
 //            }
+            //微博数据入库
+            SpiderWm.getPerInfoDataByComName(organizeSpiderConfig.oname.getText(), ouuid,isFirst,count);
+            //脉脉数据入库
+            SpiderMaimai.getPerInfoDataByComName(organizeSpiderConfig.oname.getText(),ouuid,isFirst);
             if(count%SpiderContant.ecologyOrgPerTime==0) {
-                //微博数据入库
-                SpiderWm.getPerInfoDataByComName(organizeSpiderConfig.oname.getText(), ouuid);
-                //脉脉数据入库
-                SpiderMaimai.getPerInfoDataByComName(organizeSpiderConfig.oname.getText(),ouuid);
-
                 //开服网产品入库
                 CommonProduct.ergodicUrl(organizeSpiderConfig.oname.getText(), organizeSpiderConfig.kfwDyUrl.getText(),ouuid);
                 CommonProduct.ergodicUrl(organizeSpiderConfig.oname.getText(), organizeSpiderConfig.kfwSyUrl.getText(),ouuid);
                 CommonProduct.ergodicUrl(organizeSpiderConfig.oname.getText(), organizeSpiderConfig.kfwYYUrl.getText(),ouuid);
             }
 
-            //百度知识数据入库 TODO
+            //百度知识数据入库
             if(count%SpiderContant.ecologyOrgKnowledgeTime==0) {
-                SpiderKnowledge.fecthNewsByCompanyName(organizeSpiderConfig.oname.getText(),ouuid, true);
+                SpiderKnowledge.fecthNewsByCompanyName(organizeSpiderConfig.oname.getText(),ouuid, isFirst);
                 if (StringUtils.isNotEmpty(tycBasOrganizeInfo.getEname())) {
-                    SpiderKnowledge.fecthNewsByCompanyName(tycBasOrganizeInfo.getEname(),ouuid, true);
+                    SpiderKnowledge.fecthNewsByCompanyName(tycBasOrganizeInfo.getEname(),ouuid, isFirst);
                 }
                 if (StringUtils.isNotEmpty(tycBasOrganizeInfo.getOname())) {
-                    SpiderKnowledge.fecthNewsByCompanyName(tycBasOrganizeInfo.getOname(),ouuid, true);
+                    SpiderKnowledge.fecthNewsByCompanyName(tycBasOrganizeInfo.getOname(),ouuid,isFirst);
                 }
             }
             //各个框架入库
@@ -254,9 +253,9 @@ public class SpiderOrganize {
 //            }
             if(count%SpiderContant.ecologyOrgPerTime==0) {
                 //微博数据入库
-                SpiderWm.getPerInfoDataByComName(organizeSpiderConfig.oname.getText(), ouuid);
+                SpiderWm.getPerInfoDataByComName(organizeSpiderConfig.oname.getText(), ouuid,isFirst,count);
                 //脉脉数据入库
-                SpiderMaimai.getPerInfoDataByComName(organizeSpiderConfig.oname.getText(),ouuid);
+                SpiderMaimai.getPerInfoDataByComName(organizeSpiderConfig.oname.getText(),ouuid,isFirst);
 
                 //开服网产品入库
                 CommonProduct.ergodicUrl(organizeSpiderConfig.oname.getText(), organizeSpiderConfig.kfwDyUrl.getText(),ouuid);
@@ -264,14 +263,14 @@ public class SpiderOrganize {
                 CommonProduct.ergodicUrl(organizeSpiderConfig.oname.getText(), organizeSpiderConfig.kfwYYUrl.getText(),ouuid);
             }
 
-            //百度知识数据入库 TODO
+            //百度知识数据入库
             if(count%SpiderContant.ecologyOrgKnowledgeTime==0) {
-                SpiderKnowledge.fecthNewsByCompanyName(organizeSpiderConfig.oname.getText(),ouuid,true);
+                SpiderKnowledge.fecthNewsByCompanyName(organizeSpiderConfig.oname.getText(),ouuid,isFirst);
                 if (StringUtils.isNotEmpty(tycBasOrganizeInfo.getEname())) {
-                    SpiderKnowledge.fecthNewsByCompanyName(tycBasOrganizeInfo.getEname(),ouuid, true);
+                    SpiderKnowledge.fecthNewsByCompanyName(tycBasOrganizeInfo.getEname(),ouuid, isFirst);
                 }
                 if (StringUtils.isNotEmpty(tycBasOrganizeInfo.getOname())) {
-                    SpiderKnowledge.fecthNewsByCompanyName(tycBasOrganizeInfo.getOname(),ouuid,true);
+                    SpiderKnowledge.fecthNewsByCompanyName(tycBasOrganizeInfo.getOname(),ouuid,isFirst);
                 }
             }
             //各个框架入库

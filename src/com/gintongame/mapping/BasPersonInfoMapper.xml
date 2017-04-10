@@ -28,4 +28,14 @@
             (#{uuid},#{name},#{enname},#{age},#{alias},#{hometown},#{country},#{nation},#{con_way},#{sex},#{id_number},#{birthday},#{household_register},#{liveplace},#{marital_status},#{employment},#{diploma},#{work_years},#{child_status},#{live_photo},#{occu_photo},#{art_photo},#{ptag},#{p_desc},#{source},#{url},#{type},#{advantage},#{province},#{city})
     </insert>
 
+    <select id="selectPerByUrl" parameterType="java.lang.String" resultType="JavaBean.BasPersonInfo">
+        select * from bas_person_info where url=#{url}
+    </select>
+
+    <update id="updatePerByUrl" parameterType="JavaBean.BasPersonInfo">
+        update bas_person_info set enname=#{enname},age=#{age},alias=#{alias},hometown=#{hometown},country=#{country},nation=#{nation},con_way=#{con_way},sex=#{sex},
+        id_number=#{id_number},birthday=#{birthday},household_register=#{household_register},liveplace=#{liveplace},marital_status=#{marital_status},employment=#{employment},diploma=#{diploma},work_years=#{work_years},
+        child_status=#{child_status},live_photo=#{live_photo},occu_photo=#{occu_photo},art_photo=#{art_photo},ptag=#{ptag},p_desc=#{p_desc},source=#{source},type=#{type},advantage=#{advantage} where url=#{url}
+    </update>
+
         </mapper>
