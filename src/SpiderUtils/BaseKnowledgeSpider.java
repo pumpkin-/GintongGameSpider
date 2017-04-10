@@ -1,12 +1,11 @@
 package SpiderUtils;
 
-import GintongameSpider.SpiderLxm.SpiderUtil;
 import JavaBean.BasPersonInfo;
 import JavaBean.PerKnowledge;
-import JavaBean.ProKnowledge;
+import JavaBean.BasKnowledgeInfo;
 import dao.impl.BasPersonInfoImpl;
 import dao.impl.PerKnowledgeImpl;
-import dao.impl.ProKnowledgeImpl;
+import dao.impl.BasKnowledgeInfoDaoImpl;
 import org.apache.commons.lang3.StringUtils;
 import org.dom4j.Attribute;
 import org.dom4j.DocumentException;
@@ -22,7 +21,6 @@ import org.openqa.selenium.phantomjs.PhantomJSDriver;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -36,13 +34,13 @@ public class BaseKnowledgeSpider {
 
     static List<org.dom4j.Element> books;
 
-    private static List<ProKnowledge> proKnowledgeList=new ArrayList<ProKnowledge>();
+    private static List<BasKnowledgeInfo> basKnowledgeInfoList =new ArrayList<BasKnowledgeInfo>();
     private static List<BasPersonInfo> basPersonInfoList=new ArrayList<BasPersonInfo>();
     private static List<PerKnowledge> perKnowledgeList=new ArrayList<PerKnowledge>();
     private static List<String> ptimeList=new ArrayList<String>();
     private static List<String> authorList=new ArrayList<String>();
     private static int fg=0;
-    public static void main(String args[]) throws IOException, ProKnowledgeImpl.FormatEexception, DocumentException {
+    public static void main(String args[]) throws IOException, BasKnowledgeInfoDaoImpl.FormatEexception, DocumentException {
 
           /* System.setProperty("phantomjs.binary.path", "E:\\phantomjs-2.1.1-windows\\bin\\phantomjs.exe");
         WebDriver driver = new PhantomJSDriver();
@@ -72,9 +70,9 @@ public class BaseKnowledgeSpider {
     /**
      * 抓取网页
      * @throws IOException
-     * @throws ProKnowledgeImpl.FormatEexception
+     * @throws dao.impl.BasKnowledgeInfoDaoImpl.FormatEexception
      */
-    public static void grabWeb() throws IOException, ProKnowledgeImpl.FormatEexception {
+    public static void grabWeb() throws IOException, BasKnowledgeInfoDaoImpl.FormatEexception {
         System.setProperty("phantomjs.binary.path", "/Spider/phantomjs-2.1.1-linux-x86_64/bin/phantomjs");
         WebDriver driver = new PhantomJSDriver();
         int a=1;
@@ -111,7 +109,7 @@ public class BaseKnowledgeSpider {
         }
     }
 
-    public static void dataClean(Document doc,String url,int flag,int a) throws IOException, ProKnowledgeImpl.FormatEexception {
+    public static void dataClean(Document doc,String url,int flag,int a) throws IOException, BasKnowledgeInfoDaoImpl.FormatEexception {
         String tag=null;
         String main=null;
         String type=null;
@@ -252,18 +250,18 @@ public class BaseKnowledgeSpider {
         }
     }
 
-    public static void storeToDatebase(String title,String ptime,String type,String tag,String author,String main,String puuid,String kuuid,String url) throws ProKnowledgeImpl.FormatEexception {
-        ProKnowledge proKnowledge=new ProKnowledge();
-        proKnowledge.setTitle(title);
-        proKnowledge.setPtime(ptime);
-        proKnowledge.setType(type);
-        proKnowledge.setTag(tag);
-        proKnowledge.setAuthor(author);
-        proKnowledge.setMain(main);
-        proKnowledge.setUrl(url);
-        proKnowledge.setSource("17173");
-        proKnowledge.setUuid(kuuid);
-        proKnowledgeList.add(proKnowledge);
+    public static void storeToDatebase(String title,String ptime,String type,String tag,String author,String main,String puuid,String kuuid,String url) throws BasKnowledgeInfoDaoImpl.FormatEexception {
+        BasKnowledgeInfo basKnowledgeInfo =new BasKnowledgeInfo();
+        basKnowledgeInfo.setTitle(title);
+        basKnowledgeInfo.setPtime(ptime);
+        basKnowledgeInfo.setType(type);
+        basKnowledgeInfo.setTag(tag);
+        basKnowledgeInfo.setAuthor(author);
+        basKnowledgeInfo.setMain(main);
+        basKnowledgeInfo.setUrl(url);
+        basKnowledgeInfo.setSource("17173");
+        basKnowledgeInfo.setUuid(kuuid);
+        basKnowledgeInfoList.add(basKnowledgeInfo);
 
         PerKnowledge perKnow=new PerKnowledge();
         perKnow.setName(author);
@@ -281,9 +279,9 @@ public class BaseKnowledgeSpider {
         basPerson.setUrl(url);
         basPersonInfoList.add(basPerson);
 
-        ProKnowledgeImpl proknowimpl = new ProKnowledgeImpl();
+        BasKnowledgeInfoDaoImpl proknowimpl = new BasKnowledgeInfoDaoImpl();
         try {
-            if(proknowimpl.insertBatchAutoDedup(proKnowledgeList,basPersonInfoList,perKnowledgeList).get(2).equals("false")) {
+            if(proknowimpl.insertBatchAutoDedup(basKnowledgeInfoList,basPersonInfoList,perKnowledgeList).get(2).equals("false")) {
                 System.exit(0);
             }
         } catch (Exception e) {
@@ -293,7 +291,7 @@ public class BaseKnowledgeSpider {
         basperimpl.insertBatch(basPersonInfoList);
         PerKnowledgeImpl perknowimpl = new PerKnowledgeImpl();
         perknowimpl.insertBatch(perKnowledgeList);
-        proKnowledgeList.clear();
+        basKnowledgeInfoList.clear();
         basPersonInfoList.clear();
         perKnowledgeList.clear();
     }

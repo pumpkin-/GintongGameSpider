@@ -2,11 +2,11 @@ package GintongameSpider.SpiderNgbjZl;
 
 import JavaBean.BasPersonInfo;
 import JavaBean.PerKnowledge;
-import JavaBean.ProKnowledge;
+import JavaBean.BasKnowledgeInfo;
 import SpiderUtils.SpiderContant;
 import dao.impl.BasPersonInfoImpl;
 import dao.impl.PerKnowledgeImpl;
-import dao.impl.ProKnowledgeImpl;
+import dao.impl.BasKnowledgeInfoDaoImpl;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -30,7 +30,7 @@ import java.util.UUID;
  */
 public class SpiderNgbj {
 
-    private static List<ProKnowledge> proKnowledges = new ArrayList<ProKnowledge>();
+    private static List<BasKnowledgeInfo> basKnowledgeInfos = new ArrayList<BasKnowledgeInfo>();
     private static List<PerKnowledge> perKnowledges = new ArrayList<PerKnowledge>();
     private static List<BasPersonInfo> basPersoninfos = new ArrayList<BasPersonInfo>();
 
@@ -141,7 +141,7 @@ public class SpiderNgbj {
         try {
             try {
                 if(main!=null&&main.length()>0){
-                    ProKnowledge proKnow=new ProKnowledge();
+                    BasKnowledgeInfo proKnow=new BasKnowledgeInfo();
                     proKnow.setUuid(kuuid);
                     proKnow.setAuthor(author);
                     proKnow.setTitle(title);
@@ -151,7 +151,7 @@ public class SpiderNgbj {
                     proKnow.setType(type);
                     proKnow.setUrl(url);
                     proKnow.setSource("鸟哥笔记");
-                    proKnowledges.add(proKnow);
+                    basKnowledgeInfos.add(proKnow);
                     System.out.println("插入数据");
                     System.out.println(url);
 
@@ -182,14 +182,14 @@ public class SpiderNgbj {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        if((proKnowledges.size()>0&&proKnowledges.size()% SpiderContant.insertBatchContant==0)) {
-            ProKnowledgeImpl proknowimpl=new ProKnowledgeImpl();
-            proknowimpl.insertBatch(proKnowledges);
+        if((basKnowledgeInfos.size()>0&& basKnowledgeInfos.size()% SpiderContant.insertBatchContant==0)) {
+            BasKnowledgeInfoDaoImpl proknowimpl=new BasKnowledgeInfoDaoImpl();
+            proknowimpl.insertBatch(basKnowledgeInfos);
             BasPersonInfoImpl basperimpl=new BasPersonInfoImpl();
             basperimpl.insertBatch(basPersoninfos);
             PerKnowledgeImpl perknowimpl=new PerKnowledgeImpl();
             perknowimpl.insertBatch(perKnowledges);
-            proKnowledges.clear();
+            basKnowledgeInfos.clear();
             perKnowledges.clear();
             basPersoninfos.clear();
         }

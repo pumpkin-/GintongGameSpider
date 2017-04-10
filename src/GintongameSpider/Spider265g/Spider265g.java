@@ -1,7 +1,7 @@
 package GintongameSpider.Spider265g;
 
-import JavaBean.ProKnowledge;
-import dao.impl.ProKnowledgeImpl;
+import JavaBean.BasKnowledgeInfo;
+import dao.impl.BasKnowledgeInfoDaoImpl;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -25,17 +25,17 @@ public class Spider265g {
         WebElement webElement = driver.findElement(By.xpath("/html"));
         Document doc = Jsoup.parse(webElement.getAttribute("outerHTML"));
         doc.select("");
-        List<ProKnowledge> list = Spider265g.listPage(doc,driver);
-        ProKnowledgeImpl proKnowledge = new ProKnowledgeImpl();
+        List<BasKnowledgeInfo> list = Spider265g.listPage(doc,driver);
+        BasKnowledgeInfoDaoImpl proKnowledge = new BasKnowledgeInfoDaoImpl();
         proKnowledge.insertBatch(list);
       //  System.out.println("标题："+title+"   日期: "+time+"   作者:  "+author+"  来源："+from+"   更新时间："+publish+"  正文："+article);
     }
-    public  static List<ProKnowledge> listPage(Document doc,WebDriver driver){
+    public  static List<BasKnowledgeInfo> listPage(Document doc,WebDriver driver){
         Elements elements = doc.select(".title-list li");
-        List<ProKnowledge> list = new ArrayList<ProKnowledge>();
+        List<BasKnowledgeInfo> list = new ArrayList<BasKnowledgeInfo>();
 
         for(Element ele : elements) {
-            ProKnowledge pro = new ProKnowledge();
+            BasKnowledgeInfo pro = new BasKnowledgeInfo();
             String title = ele.select("a").text();
             String time = ele.select("em").text();
             String href = ele.select("a").attr("href");

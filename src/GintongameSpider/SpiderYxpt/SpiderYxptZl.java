@@ -2,12 +2,11 @@ package GintongameSpider.SpiderYxpt;
 
 import JavaBean.BasPersonInfo;
 import JavaBean.PerKnowledge;
-import JavaBean.ProKnowledge;
-import SpiderUtils.SpiderContant;
+import JavaBean.BasKnowledgeInfo;
 import SpiderUtils.SpiderUtils;
 import dao.impl.BasPersonInfoImpl;
 import dao.impl.PerKnowledgeImpl;
-import dao.impl.ProKnowledgeImpl;
+import dao.impl.BasKnowledgeInfoDaoImpl;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -24,20 +23,20 @@ import java.util.UUID;
  * Created by lenovo on 2017/2/15.
  */
 public class SpiderYxptZl {
-    private static List<ProKnowledge> proKnowledgeList=new ArrayList<ProKnowledge>();
+    private static List<BasKnowledgeInfo> basKnowledgeInfoList =new ArrayList<BasKnowledgeInfo>();
     private static List<BasPersonInfo> basPersonInfoList=new ArrayList<BasPersonInfo>();
     private static List<PerKnowledge> perKnowledgeList=new ArrayList<PerKnowledge>();
     private static List<String> authorlist=new ArrayList<String>();
     private static int fg=0;
-    private static ProKnowledgeImpl proknowimpl = new ProKnowledgeImpl();
+    private static BasKnowledgeInfoDaoImpl proknowimpl = new BasKnowledgeInfoDaoImpl();
     private static PerKnowledgeImpl perknowimpl = new PerKnowledgeImpl();
     private static BasPersonInfoImpl basperimpl = new BasPersonInfoImpl();
 
-    public static void main(String args[]) throws IOException, ProKnowledgeImpl.FormatEexception {
+    public static void main(String args[]) throws IOException, BasKnowledgeInfoDaoImpl.FormatEexception {
         grabWeb();
     }
 
-    public static void grabWeb() throws IOException, ProKnowledgeImpl.FormatEexception {
+    public static void grabWeb() throws IOException, BasKnowledgeInfoDaoImpl.FormatEexception {
         int a=1;
         for(int i=1;i>0;i++) {
             Document doc = Jsoup.connect("http://youxiputao.com/article/index/page/" + i).get();
@@ -62,7 +61,7 @@ public class SpiderYxptZl {
         }
     }
 
-    public static void dataClean(Document doc,String url,int flag) throws IOException, ProKnowledgeImpl.FormatEexception {
+    public static void dataClean(Document doc,String url,int flag) throws IOException, BasKnowledgeInfoDaoImpl.FormatEexception {
         String tag=null;
         String main=null;
         String cover=null;
@@ -103,19 +102,19 @@ public class SpiderYxptZl {
             e.printStackTrace();
         }
     }
-    public static void storeToDatebase(String title,String ptime,String type,String cover,String tag,String author,String main,String puuid,String kuuid,String url) throws ProKnowledgeImpl.FormatEexception, SpiderUtils.FormatEexception, ParseException {
-        ProKnowledge proKnowledge=new ProKnowledge();
-        proKnowledge.setTitle(title);
-        proKnowledge.setPtime(ptime+" 00:00:00");
-        proKnowledge.setType(type);
-        proKnowledge.setCover(cover);
-        proKnowledge.setTag(tag);
-        proKnowledge.setAuthor(author);
-        proKnowledge.setMain(main);
-        proKnowledge.setUrl(url);
-        proKnowledge.setSource("游戏葡萄");
-        proKnowledge.setUuid(kuuid);
-        proKnowledgeList.add(proKnowledge);
+    public static void storeToDatebase(String title,String ptime,String type,String cover,String tag,String author,String main,String puuid,String kuuid,String url) throws BasKnowledgeInfoDaoImpl.FormatEexception, SpiderUtils.FormatEexception, ParseException {
+        BasKnowledgeInfo basKnowledgeInfo =new BasKnowledgeInfo();
+        basKnowledgeInfo.setTitle(title);
+        basKnowledgeInfo.setPtime(ptime+" 00:00:00");
+        basKnowledgeInfo.setType(type);
+        basKnowledgeInfo.setCover(cover);
+        basKnowledgeInfo.setTag(tag);
+        basKnowledgeInfo.setAuthor(author);
+        basKnowledgeInfo.setMain(main);
+        basKnowledgeInfo.setUrl(url);
+        basKnowledgeInfo.setSource("游戏葡萄");
+        basKnowledgeInfo.setUuid(kuuid);
+        basKnowledgeInfoList.add(basKnowledgeInfo);
 
         PerKnowledge perKnow=new PerKnowledge();
         perKnow.setName(author);
@@ -135,7 +134,7 @@ public class SpiderYxptZl {
 
 
 
-        Map map=proknowimpl.insertBatchAutoDedup(proKnowledgeList,basPersonInfoList,perKnowledgeList);
+        Map map=proknowimpl.insertBatchAutoDedup(basKnowledgeInfoList,basPersonInfoList,perKnowledgeList);
         if(((List<String>)map.get(2)).get(0).equals("false")) {
             System.exit(0);
         }
@@ -143,7 +142,7 @@ public class SpiderYxptZl {
             basperimpl.insertBatch(basPersonInfoList);
             perknowimpl.insertBatch(perKnowledgeList);
         }
-        proKnowledgeList.clear();
+        basKnowledgeInfoList.clear();
         basPersonInfoList.clear();
         perKnowledgeList.clear();
 

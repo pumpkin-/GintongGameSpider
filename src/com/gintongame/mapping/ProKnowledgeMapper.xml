@@ -3,29 +3,9 @@
 
 <mapper namespace="com.gintongame.mapping.ProKnowledgeMapper">
 
-    <!--  该insert函数只能插入pro_knowledge表  -->
-    <insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="true" >
-        insert into pro_knowledge(uuid,author,title,cover,tag,main,ptime,type,url,source)
-        values
-        <foreach collection="list" item="item" index="index" open="" close="" separator=",">
-            (#{item.uuid},#{item.author},#{item.title},#{item.cover},#{item.tag},#{item.main},#{item.ptime},#{item.type},#{item.url},#{item.source})
-        </foreach>
-
-    </insert>
-
 	<insert id="insert" parameterType="JavaBean.ProKnowledge" useGeneratedKeys="true" >
-        insert into pro_knowledge(uuid,author,title,cover,tag,main,ptime,type,url,source)
+        insert into pro_knowledge(pname,kname,rtype,rgrade,rp_desc,puuid,kuuid,source)
         values
-            (#{uuid},#{author},#{title},#{cover},#{tag},#{main},#{ptime},#{type},#{url},#{source})
-
+            (#{pname},#{kname},#{rtype},#{rgrade},#{rp_desc},#{puuid},#{kuuid},#{source})
     </insert>
-	
-    <select id="selectList" parameterType="JavaBean.DateInfo"  resultType="JavaBean.ProKnowledge">
-        SELECT * FROM pro_knowledge WHERE ptime BETWEEN #{datepast} AND #{date}
-    </select>
-
-    <select id="selectBySource" parameterType="String" resultType="String">
-        SELECT MAX(ptime) FROM pro_knowledge WHERE source=#{source}
-    </select>
-
 </mapper>

@@ -1,28 +1,5 @@
 package GintongameSpider.SpiderGameDaily;
 
-import JavaBean.BasPersonInfo;
-import JavaBean.PerKnowledge;
-import JavaBean.ProKnowledge;
-import SpiderUtils.LevenshteinDis;
-import dao.impl.BasPersonInfoImpl;
-import dao.impl.PerKnowledgeImpl;
-import dao.impl.ProKnowledgeImpl;
-import org.apache.commons.lang3.StringUtils;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.phantomjs.PhantomJSDriver;
-
-import java.io.IOException;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-
 /**
  * 游戏日报爬虫
  * Created by 丁全彬 on 2017/2/13.

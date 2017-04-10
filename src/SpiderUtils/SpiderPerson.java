@@ -2,10 +2,12 @@ package SpiderUtils;
 
 import JavaBean.OrgKnowledge;
 import JavaBean.PerKnowledge;
+import JavaBean.BasKnowledgeInfo;
 import JavaBean.ProKnowledge;
 import dao.impl.OrgKnowledgeImpl;
 import dao.impl.PerKnowledgeImpl;
-import dao.impl.ProKnowledgeImpl;
+import dao.impl.BasKnowledgeInfoDaoImpl;
+import dao.impl.ProKnowledgeDaoImpl;
 import org.jsoup.Jsoup;
 import org.jsoup.select.Elements;
 import org.openqa.selenium.By;
@@ -26,7 +28,7 @@ import java.util.regex.Pattern;
 public class SpiderPerson {
     public static List<String> hrefList=new ArrayList<String>();
     public static List<String> ptimeList=new ArrayList<String>();
-    public static ProKnowledgeImpl proKnowledgeImpl=new ProKnowledgeImpl();
+    public static BasKnowledgeInfoDaoImpl basKnowledgeInfoDaoImpl =new BasKnowledgeInfoDaoImpl();
     public static List<String> list=null;
     /**
      * 获取selenium驱动器
@@ -73,7 +75,7 @@ public class SpiderPerson {
     public static String parsePtime(String ptime) throws ParseException {
         SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy年MM月dd日 HH:mm");
         SimpleDateFormat simpleDateFormat1=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Date date=  simpleDateFormat.parse(ptime);
+        Date date= simpleDateFormat.parse(ptime);
         ptime=simpleDateFormat1.format(date);
         return ptime;
     }
@@ -202,29 +204,38 @@ public class SpiderPerson {
                     System.out.println(main);
                 }
                 System.out.println(hrefList.get(j));
-                ProKnowledge proKnowledge = new ProKnowledge();
+                BasKnowledgeInfo basKnowledgeInfo = new BasKnowledgeInfo();
                 String ptime=null;
-                if (ptimeList.get(j).contains("小时")){
+                if (ptimeList.get(j).contains("分钟")){
                     ptime=returnPtime(ptimeList.get(j));
                     ptime=getTimeByMinute(-Integer.parseInt(ptime));
-                }else if (ptimeList.get(j).contains("分钟")){
+                    System.out.println("+++++++++++++------------"+ptime);
+                    basKnowledgeInfo.setPtime(ptime);
+                }else if (ptimeList.get(j).contains("小时")){
                     ptime=returnPtime(ptimeList.get(j));
                     ptime=getTimeByHour(-Integer.parseInt(ptime));
+                    System.out.println("-------------+++++++++++++"+ptime);
+                    basKnowledgeInfo.setPtime(ptime);
                 }else if(ptimeList.get(j).contains("天")){
                     ptime=returnPtime(ptimeList.get(j));
                     ptime=getTimeByDay(-Integer.parseInt(ptime));
+                    System.out.println("+++++++++-------------++++++++"+ptime);
+                    basKnowledgeInfo.setPtime(ptime);
+
+                }else if (ptimeList.get(j).contains("刚刚")){
+                    basKnowledgeInfo.setPtime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()).toString());
+                }else{
+                    System.out.println("***********************"+parsePtime(ptimeList.get(j)));
+                    basKnowledgeInfo.setPtime(parsePtime(ptimeList.get(j)));
                 }
-                System.out.println(ptime);
-//                proKnowledge.setPtime(ptime);
-                System.out.println(ptime);
-                System.out.println(parsePtime(ptimeList.get(j)));
-                proKnowledge.setSource(source);
-                proKnowledge.setUrl(hrefList.get(j));
-                proKnowledge.setTitle(title);
-                proKnowledge.setUuid(uuid);
-                proKnowledge.setMain(main);
-                ProKnowledgeImpl proKnowledgeImpl = new ProKnowledgeImpl();
-//                proKnowledgeImpl.insert(proKnowledge);
+                basKnowledgeInfo.setSource(source);
+                System.out.println(source);
+                basKnowledgeInfo.setUrl(hrefList.get(j));
+                basKnowledgeInfo.setTitle(title);
+                basKnowledgeInfo.setUuid(uuid);
+                basKnowledgeInfo.setMain(main);
+                BasKnowledgeInfoDaoImpl basKnowledgeInfoDaoImpl = new BasKnowledgeInfoDaoImpl();
+                basKnowledgeInfoDaoImpl.insert(basKnowledgeInfo);
                 String kuuid=UUID.randomUUID().toString();
                 if(type==SpiderContant.PersonKnowledgeType){
                     PerKnowledge perKnowledge=new PerKnowledge();
@@ -234,7 +245,7 @@ public class SpiderPerson {
                     perKnowledge.setKname(title);
                     perKnowledge.setName(name);
                     PerKnowledgeImpl perKnowledgeImpl=new PerKnowledgeImpl();
-//                    perKnowledgeImpl.insert(perKnowledge);
+                    perKnowledgeImpl.insert(perKnowledge);
                 }else if (type==SpiderContant.OrgKnowledgeType){
                     OrgKnowledge orgKnowledge=new OrgKnowledge();
                     orgKnowledge.setKuuid(kuuid);
@@ -243,7 +254,16 @@ public class SpiderPerson {
                     orgKnowledge.setSource(source);
                     orgKnowledge.setOname(name);
                     OrgKnowledgeImpl orgKnowledgeImpl=new OrgKnowledgeImpl();
-//                    orgKnowledgeImpl.insert(orgKnowledge);
+                    orgKnowledgeImpl.insert(orgKnowledge);
+                }else if (type==SpiderContant.ProductKnowledgeType){
+                    ProKnowledge proKnowledge=new ProKnowledge();
+                    proKnowledge.setKuuid(UUID.randomUUID().toString());
+                    proKnowledge.setSource(source);
+                    proKnowledge.setPuuid(uuid);
+                    proKnowledge.setKname(title);
+                    proKnowledge.setPname(name);
+                    ProKnowledgeDaoImpl proKnowledgeDaoImpl=new ProKnowledgeDaoImpl();
+                    proKnowledgeDaoImpl.insert(proKnowledge);
                 }
                 System.out.println("---------------------这是第"+i+"条数据----------------------");
             }catch(Exception e){
@@ -252,6 +272,6 @@ public class SpiderPerson {
         }
     }
     public static void main(String[] args){
-        fetchByName("杨幂", UUID.randomUUID().toString(),SpiderContant.PersonKnowledgeType);
+        fetchByName("王者荣耀", UUID.randomUUID().toString(),SpiderContant.ProductKnowledgeType);
     }
 }

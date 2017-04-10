@@ -4,12 +4,11 @@ import GintongameSpider.SpiderLxm.SpiderUtil;
 import cn.wanghaomiao.xpath.exception.XpathSyntaxErrorException;
 import cn.wanghaomiao.xpath.model.JXDocument;
 import cn.wanghaomiao.xpath.model.JXNode;
-import dao.impl.ProKnowledgeImpl;
+import dao.impl.BasKnowledgeInfoDaoImpl;
 import org.apache.commons.lang3.StringUtils;
 import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.DocumentException;
-import org.dom4j.io.SAXReader;
 import org.jsoup.Jsoup;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -17,8 +16,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.phantomjs.PhantomJSDriver;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+
 import java.io.IOException;
 import java.util.*;
 import java.util.regex.Matcher;
@@ -31,7 +29,7 @@ public class BasCommonKnowledgeSpider {
     public static String oldurl=null;
     public static String anthor=null;
 //         1.获取配置文件 xml是什么？怎么写？用处是什么？
-    public static KnowledgeSpiderConfigMiNi praseXmlContentByWebName(String webName,String urlXml) throws IOException, DocumentException, ProKnowledgeImpl.FormatEexception {
+    public static KnowledgeSpiderConfigMiNi praseXmlContentByWebName(String webName,String urlXml) throws IOException, DocumentException, BasKnowledgeInfoDaoImpl.FormatEexception {
 //      2.解析配置文件  dom4j -> SAXReader
         KnowledgeSpiderConfigMiNi knowledgeSpiderConfigMiNi=new KnowledgeSpiderConfigMiNi();
         knowledgeSpiderConfigMiNi.webUrls = new ArrayList<Element>();

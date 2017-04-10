@@ -2,12 +2,12 @@ package GintongameSpider.SpiderYxdg;
 
 import JavaBean.BasPersonInfo;
 import JavaBean.PerKnowledge;
-import JavaBean.ProKnowledge;
+import JavaBean.BasKnowledgeInfo;
 import SpiderUtils.SpiderContant;
 import SpiderUtils.SpiderUtils;
 import dao.impl.BasPersonInfoImpl;
 import dao.impl.PerKnowledgeImpl;
-import dao.impl.ProKnowledgeImpl;
+import dao.impl.BasKnowledgeInfoDaoImpl;
 import org.apache.commons.lang3.StringUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -17,7 +17,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.phantomjs.PhantomJSDriver;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -32,20 +31,20 @@ import java.util.regex.Pattern;
  * Created by lenovo on 2017/2/16.
  */
 public class SpiderYxdg {
-    private static List<ProKnowledge> proKnowledgeList=new ArrayList<ProKnowledge>();
+    private static List<BasKnowledgeInfo> basKnowledgeInfoList =new ArrayList<BasKnowledgeInfo>();
     private static List<BasPersonInfo> basPersonInfoList=new ArrayList<BasPersonInfo>();
     private static List<PerKnowledge> perKnowledgeList=new ArrayList<PerKnowledge>();
     private static List<String> coverlist=new ArrayList<String>();
-    private static ProKnowledgeImpl proknowimpl = new ProKnowledgeImpl();
+    private static BasKnowledgeInfoDaoImpl proknowimpl = new BasKnowledgeInfoDaoImpl();
     private static BasPersonInfoImpl basperimpl = new BasPersonInfoImpl();
     private static PerKnowledgeImpl perknowimpl = new PerKnowledgeImpl();
     private static String[] link=new String[]{"http://www.gamelook.com.cn/category/news","http://www.gamelook.com.cn/category/%E6%B8%B8%E6%88%8F%E8%BF%90%E8%90%A5","http://www.gamelook.com.cn/category/%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91","http://www.gamelook.com.cn/category/%E4%BA%BA%E5%8A%9B%E8%B5%84%E6%BA%90","http://www.gamelook.com.cn/category/%E7%BD%91%E9%A1%B5%E6%B8%B8%E6%88%8F-2","http://www.gamelook.com.cn/category/%E2%98%85%E6%89%8B%E6%9C%BA%E6%B8%B8%E6%88%8F","http://www.gamelook.com.cn/category/%E8%B5%84%E6%9C%AC%E5%B8%82%E5%9C%BA%E5%88%9B%E4%B8%9A","http://www.gamelook.com.cn/category/%E6%8A%95%E8%B5%84%E5%88%9B%E4%B8%9A","http://www.gamelook.com.cn/category/wiixboxps3","http://www.gamelook.com.cn/category/%E8%A7%82%E7%82%B9%E5%88%86%E6%9E%90%E8%AF%84%E6%B5%8B","http://www.gamelook.com.cn/category/%E8%B5%84%E6%9C%AC%E5%B8%82%E5%9C%BA","http://www.gamelook.com.cn/category/vrar%E6%B8%B8%E6%88%8F"};
 
-    public static void main(String args[]) throws IOException, ProKnowledgeImpl.FormatEexception {
+    public static void main(String args[]) throws IOException, BasKnowledgeInfoDaoImpl.FormatEexception {
         grabWeb();
     }
 
-    public static void grabWeb() throws IOException, ProKnowledgeImpl.FormatEexception {
+    public static void grabWeb() throws IOException, BasKnowledgeInfoDaoImpl.FormatEexception {
         System.setProperty("webdriver.chrome.driver", SpiderContant.chromeWindowsPath);
         WebDriver driver = new ChromeDriver();
         int a=1;
@@ -88,7 +87,7 @@ public class SpiderYxdg {
         }
     }
 
-    public static void dataClean(int flag,Document doc,String url) throws IOException, ProKnowledgeImpl.FormatEexception {
+    public static void dataClean(int flag,Document doc,String url) throws IOException, BasKnowledgeInfoDaoImpl.FormatEexception {
         String main=null;
         String tag=null;
         System.out.println(url);
@@ -121,19 +120,19 @@ public class SpiderYxdg {
         }
     }
 
-    public static void storeToDatebase(String title,String ptime,String type,String cover,String tag,String author,String main,String puuid,String kuuid,String url,String authorurl) throws ProKnowledgeImpl.FormatEexception, SpiderUtils.FormatEexception, ParseException {
-        ProKnowledge proKnowledge=new ProKnowledge();
-        proKnowledge.setTitle(title);
-        proKnowledge.setPtime(ptime);
-        proKnowledge.setType(type);
-        proKnowledge.setCover(cover);
-        proKnowledge.setTag(tag);
-        proKnowledge.setAuthor(author);
-        proKnowledge.setMain(main);
-        proKnowledge.setUrl(url);
-        proKnowledge.setSource("游戏大观");
-        proKnowledge.setUuid(kuuid);
-        proKnowledgeList.add(proKnowledge);
+    public static void storeToDatebase(String title,String ptime,String type,String cover,String tag,String author,String main,String puuid,String kuuid,String url,String authorurl) throws BasKnowledgeInfoDaoImpl.FormatEexception, SpiderUtils.FormatEexception, ParseException {
+        BasKnowledgeInfo basKnowledgeInfo =new BasKnowledgeInfo();
+        basKnowledgeInfo.setTitle(title);
+        basKnowledgeInfo.setPtime(ptime);
+        basKnowledgeInfo.setType(type);
+        basKnowledgeInfo.setCover(cover);
+        basKnowledgeInfo.setTag(tag);
+        basKnowledgeInfo.setAuthor(author);
+        basKnowledgeInfo.setMain(main);
+        basKnowledgeInfo.setUrl(url);
+        basKnowledgeInfo.setSource("游戏大观");
+        basKnowledgeInfo.setUuid(kuuid);
+        basKnowledgeInfoList.add(basKnowledgeInfo);
 
         PerKnowledge perKnow=new PerKnowledge();
         perKnow.setName(author);
@@ -152,13 +151,13 @@ public class SpiderYxdg {
         basPerson.setUrl(url);
         basPersonInfoList.add(basPerson);
 
-        if((proKnowledgeList.size()>0&&proKnowledgeList.size()% SpiderContant.insertBatchContant==0)) {
-            Map map=proknowimpl.insertBatchAutoDedup(proKnowledgeList, basPersonInfoList, perKnowledgeList);
+        if((basKnowledgeInfoList.size()>0&& basKnowledgeInfoList.size()% SpiderContant.insertBatchContant==0)) {
+            Map map=proknowimpl.insertBatchAutoDedup(basKnowledgeInfoList, basPersonInfoList, perKnowledgeList);
             if(((List<Integer>) map.get(4)).get(0)!=0) {
                 basperimpl.insertBatch((List<BasPersonInfo>) map.get(1));
                 perknowimpl.insertBatch((List<PerKnowledge>) map.get(3));
             }
-            proKnowledgeList.clear();
+            basKnowledgeInfoList.clear();
             basPersonInfoList.clear();
             perKnowledgeList.clear();
         }

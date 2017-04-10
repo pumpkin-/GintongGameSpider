@@ -2,12 +2,12 @@ package SpiderUtils;
 
 
 import JavaBean.OrgKnowledge;
-import JavaBean.ProKnowledge;
+import JavaBean.BasKnowledgeInfo;
 import cn.wanghaomiao.xpath.exception.XpathSyntaxErrorException;
 import cn.wanghaomiao.xpath.model.JXDocument;
 import cn.wanghaomiao.xpath.model.JXNode;
 import dao.impl.OrgKnowledgeImpl;
-import dao.impl.ProKnowledgeImpl;
+import dao.impl.BasKnowledgeInfoDaoImpl;
 import org.apache.commons.lang3.StringUtils;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
@@ -39,7 +39,7 @@ public class SpiderKnowledge {
     static SimpleDateFormat simpleDateFormatchange=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     public static  List<String> hrefList=new ArrayList<String>();
     public static List<String> ptimeList=new ArrayList<String>();
-    public static ProKnowledgeImpl proKnowledgeImpl=new ProKnowledgeImpl();
+    public static BasKnowledgeInfoDaoImpl basKnowledgeInfoDaoImpl =new BasKnowledgeInfoDaoImpl();
     public static List<String> list=null;
     /**
      * 1、获取xml
@@ -377,7 +377,7 @@ public class SpiderKnowledge {
                             clearMain(childDocumet,knowledgeSpiderConfig);
 //                            TODO
                             String knowledgeUUID=UUID.randomUUID().toString();
-                            ProKnowledge perKnowledge=depositJavabean(knowledgeUUID,title,ptime, type,cover,tag,author,main,childLink,source,authorurl);
+                            BasKnowledgeInfo perKnowledge=depositJavabean(knowledgeUUID,title,ptime, type,cover,tag,author,main,childLink,source,authorurl);
                             storeToDatabase(perKnowledge,uuid);
                             OrgKnowledge orgKnowledge=new OrgKnowledge();
                             orgKnowledge.setOuuid(uuid);
@@ -418,7 +418,7 @@ public class SpiderKnowledge {
                             clearMain(childDocumet,knowledgeSpiderConfig);
 //                            TODO
                             String knowledgeUUID=UUID.randomUUID().toString();
-                            ProKnowledge perKnowledge=depositJavabean(knowledgeUUID,title,ptime, type,cover,tag,author,main,childLink,source,authorurl);
+                            BasKnowledgeInfo perKnowledge=depositJavabean(knowledgeUUID,title,ptime, type,cover,tag,author,main,childLink,source,authorurl);
                             storeToDatabase(perKnowledge,uuid);
                             OrgKnowledge orgKnowledge=new OrgKnowledge();
                             orgKnowledge.setOuuid(uuid);
@@ -793,19 +793,19 @@ public class SpiderKnowledge {
      * @param authorurl
      * @return
      */
-    public static ProKnowledge depositJavabean(String knowledgeUUID,String title, String ptime, String type, String cover, String tag, String author, String main,String childLink, String source, String authorurl) throws ParseException, SpiderUtils.FormatEexception, LevenshteinDis.FormatEexception, SpiderUtils.FormatEexception,LevenshteinDis.FormatEexception {
-        ProKnowledge proKnowledge = new ProKnowledge();
-        proKnowledge.setTitle(title);
-        proKnowledge.setPtime(ptime);
-        proKnowledge.setType(type);
-        proKnowledge.setCover(cover);
-        proKnowledge.setTag(tag);
-        proKnowledge.setAuthor(author);
-        proKnowledge.setMain(main);
-        proKnowledge.setUrl(childLink);
-        proKnowledge.setSource(source);
-        proKnowledge.setUuid(knowledgeUUID);
-        return proKnowledge;
+    public static BasKnowledgeInfo depositJavabean(String knowledgeUUID,String title, String ptime, String type, String cover, String tag, String author, String main,String childLink, String source, String authorurl) throws ParseException, SpiderUtils.FormatEexception, LevenshteinDis.FormatEexception, SpiderUtils.FormatEexception,LevenshteinDis.FormatEexception {
+        BasKnowledgeInfo basKnowledgeInfo = new BasKnowledgeInfo();
+        basKnowledgeInfo.setTitle(title);
+        basKnowledgeInfo.setPtime(ptime);
+        basKnowledgeInfo.setType(type);
+        basKnowledgeInfo.setCover(cover);
+        basKnowledgeInfo.setTag(tag);
+        basKnowledgeInfo.setAuthor(author);
+        basKnowledgeInfo.setMain(main);
+        basKnowledgeInfo.setUrl(childLink);
+        basKnowledgeInfo.setSource(source);
+        basKnowledgeInfo.setUuid(knowledgeUUID);
+        return basKnowledgeInfo;
     }
 
     /**
@@ -813,8 +813,8 @@ public class SpiderKnowledge {
      * @param perKnowledge
      * @throws Exception
      */
-    public static void storeToDatabase(ProKnowledge perKnowledge,String uuid) throws Exception {
-        ProKnowledgeImpl perKnowledgeImpl=new ProKnowledgeImpl();
+    public static void storeToDatabase(BasKnowledgeInfo perKnowledge,String uuid) throws Exception {
+        BasKnowledgeInfoDaoImpl perKnowledgeImpl=new BasKnowledgeInfoDaoImpl();
         perKnowledgeImpl.insert(perKnowledge);
     }
 
@@ -868,30 +868,30 @@ public class SpiderKnowledge {
                     }
                 System.out.println(hrefList.get(j));
                if(isTrue==true){
-                       ProKnowledge proKnowledge = new ProKnowledge();
-                       proKnowledge.setPtime(ptimeList.get(j));
+                       BasKnowledgeInfo basKnowledgeInfo = new BasKnowledgeInfo();
+                       basKnowledgeInfo.setPtime(ptimeList.get(j));
                        System.out.println(ptimeList.get(j));
-                       proKnowledge.setSource(source);
-                       proKnowledge.setUrl(hrefList.get(j));
-                       proKnowledge.setTitle(title);
-                       proKnowledge.setUuid(uuid);
-                       proKnowledge.setMain(main);
-                       ProKnowledgeImpl proKnowledgeImpl = new ProKnowledgeImpl();
-                       proKnowledgeImpl.insert(proKnowledge);
+                       basKnowledgeInfo.setSource(source);
+                       basKnowledgeInfo.setUrl(hrefList.get(j));
+                       basKnowledgeInfo.setTitle(title);
+                       basKnowledgeInfo.setUuid(uuid);
+                       basKnowledgeInfo.setMain(main);
+                       BasKnowledgeInfoDaoImpl basKnowledgeInfoDaoImpl = new BasKnowledgeInfoDaoImpl();
+                       basKnowledgeInfoDaoImpl.insert(basKnowledgeInfo);
                }else {
-                   list=proKnowledgeImpl.selectBySource(source);
+                   list= basKnowledgeInfoDaoImpl.selectBySource(source);
                    for(String ptimelist:ptimeList){
                        int result=ptimelist.compareTo(list.toString());
                        if(result>0){
-                           ProKnowledge proKnowledge=new ProKnowledge();
-                           proKnowledge.setPtime(parsePtime(ptimelist));
-                           proKnowledge.setSource(source);
-                           proKnowledge.setUrl(hrefList.get(j));
-                           proKnowledge.setTitle(title);
-                           proKnowledge.setUuid(uuid);
-                           proKnowledge.setMain(main);
-                           ProKnowledgeImpl proKnowledgeImpl=new ProKnowledgeImpl();
-                           proKnowledgeImpl.insert(proKnowledge);
+                           BasKnowledgeInfo basKnowledgeInfo =new BasKnowledgeInfo();
+                           basKnowledgeInfo.setPtime(parsePtime(ptimelist));
+                           basKnowledgeInfo.setSource(source);
+                           basKnowledgeInfo.setUrl(hrefList.get(j));
+                           basKnowledgeInfo.setTitle(title);
+                           basKnowledgeInfo.setUuid(uuid);
+                           basKnowledgeInfo.setMain(main);
+                           BasKnowledgeInfoDaoImpl basKnowledgeInfoDaoImpl =new BasKnowledgeInfoDaoImpl();
+                           basKnowledgeInfoDaoImpl.insert(basKnowledgeInfo);
                            System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++");
                        }
                    }

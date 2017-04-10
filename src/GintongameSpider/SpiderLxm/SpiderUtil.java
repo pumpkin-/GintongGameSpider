@@ -1,15 +1,8 @@
 package GintongameSpider.SpiderLxm;
 
-import JavaBean.PerKnowledge;
-import JavaBean.ProKnowledge;
-import SpiderUtils.BaseKnowledgeSpider;
-import SpiderUtils.LevenshteinDis;
+import JavaBean.BasKnowledgeInfo;
 import SpiderUtils.SpiderUtils;
-import cn.wanghaomiao.xpath.exception.XpathSyntaxErrorException;
-import cn.wanghaomiao.xpath.model.JXDocument;
-import cn.wanghaomiao.xpath.model.JXNode;
-import dao.impl.ProKnowledgeImpl;
-import org.dom4j.Attribute;
+import dao.impl.BasKnowledgeInfoDaoImpl;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.io.SAXReader;
@@ -17,13 +10,10 @@ import org.jsoup.Jsoup;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Created by 刘雪明 on 2017/3/13.
@@ -58,27 +48,27 @@ public class SpiderUtil {
      * @param main
      * @param source
      */
-    public static ProKnowledge depositJavabean(String title, String ptime, String main, String source,String anthor ){
-        ProKnowledge proKnowledge = new ProKnowledge();
-        proKnowledge.setTitle(title);
-        proKnowledge.setPtime(ptime);
-        proKnowledge.setMain(main);
-        proKnowledge.setSource(source);
-        proKnowledge.setAuthor(anthor);
-        proKnowledge.setUuid(UUID.randomUUID().toString());
-        return proKnowledge;
+    public static BasKnowledgeInfo depositJavabean(String title, String ptime, String main, String source,String anthor ){
+        BasKnowledgeInfo basKnowledgeInfo = new BasKnowledgeInfo();
+        basKnowledgeInfo.setTitle(title);
+        basKnowledgeInfo.setPtime(ptime);
+        basKnowledgeInfo.setMain(main);
+        basKnowledgeInfo.setSource(source);
+        basKnowledgeInfo.setAuthor(anthor);
+        basKnowledgeInfo.setUuid(UUID.randomUUID().toString());
+        return basKnowledgeInfo;
     }
     /**
      * 写入数据库
      * @param knowledge
-     * @throws ProKnowledgeImpl.FormatEexception
+     * @throws dao.impl.BasKnowledgeInfoDaoImpl.FormatEexception
      */
-    public static void storeToDatabase(ProKnowledge knowledge) throws Exception {
-           ProKnowledgeImpl proImpl = new ProKnowledgeImpl();
+    public static void storeToDatabase(BasKnowledgeInfo knowledge) throws Exception {
+           BasKnowledgeInfoDaoImpl proImpl = new BasKnowledgeInfoDaoImpl();
            proImpl.insert(knowledge);
     }
     static List<org.dom4j.Element> books;
- public static Document getContent(String url) throws DocumentException, IOException, ProKnowledgeImpl.FormatEexception {
+ public static Document getContent(String url) throws DocumentException, IOException, BasKnowledgeInfoDaoImpl.FormatEexception {
      SAXReader saxReader=new SAXReader();
      Document doc=saxReader.read(new FileInputStream(SpiderUtils.class.getClassLoader().getResource(url).getFile()));
      return doc;

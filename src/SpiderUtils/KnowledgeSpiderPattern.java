@@ -3,13 +3,13 @@ package SpiderUtils;
 import JavaBean.BasPersonInfo;
 import JavaBean.BaseKnowLedge;
 import JavaBean.PerKnowledge;
-import JavaBean.ProKnowledge;
+import JavaBean.BasKnowledgeInfo;
 import cn.wanghaomiao.xpath.exception.XpathSyntaxErrorException;
 import cn.wanghaomiao.xpath.model.JXDocument;
 import cn.wanghaomiao.xpath.model.JXNode;
 import dao.impl.BasPersonInfoImpl;
 import dao.impl.PerKnowledgeImpl;
-import dao.impl.ProKnowledgeImpl;
+import dao.impl.BasKnowledgeInfoDaoImpl;
 import org.apache.commons.lang3.StringUtils;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
@@ -37,10 +37,10 @@ import java.util.UUID;
 public class KnowledgeSpiderPattern {
     private static BaseKnowLedge baseKnowledge=new BaseKnowLedge();
     private static SAXReader sax=new SAXReader();
-    private static List<ProKnowledge> proKnowledgeList=new ArrayList<ProKnowledge>();
+    private static List<BasKnowledgeInfo> basKnowledgeInfoList =new ArrayList<BasKnowledgeInfo>();
     private static List<BasPersonInfo> basPersonInfoList=new ArrayList<BasPersonInfo>();
     private static List<PerKnowledge> perKnowledgeList=new ArrayList<PerKnowledge>();
-    private static ProKnowledgeImpl proknowimpl = new ProKnowledgeImpl();
+    private static BasKnowledgeInfoDaoImpl proknowimpl = new BasKnowledgeInfoDaoImpl();
     private static BasPersonInfoImpl basperimpl = new BasPersonInfoImpl();
     private static PerKnowledgeImpl perknowimpl = new PerKnowledgeImpl();
     private static SimpleDateFormat simpleDateFormatchange=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -72,7 +72,7 @@ public class KnowledgeSpiderPattern {
     }
 
 
-    public static void getElements(String flag,String element) throws FormatEexception, DocumentException, ParserConfigurationException, XpathSyntaxErrorException, FileNotFoundException, ProKnowledgeImpl.FormatEexception, InterruptedException, ParseException {
+    public static void getElements(String flag,String element) throws FormatEexception, DocumentException, ParserConfigurationException, XpathSyntaxErrorException, FileNotFoundException, BasKnowledgeInfoDaoImpl.FormatEexception, InterruptedException, ParseException {
         baseKnowledge.setInputStream(new FileInputStream(KnowledgeSpiderPattern.class.getClassLoader().getResource("SpiderUtils/BasKnowledgePattern.xml").getFile()));
         baseKnowledge.setDocsax(sax.read(baseKnowledge.getInputStream()));
         baseKnowledge.setRoot(baseKnowledge.getDocsax().getRootElement());//获取根元素
@@ -197,19 +197,19 @@ public class KnowledgeSpiderPattern {
         }
     }
 
-    public static void storeToDatebase(String title,String ptime,String type,String cover,String tag,String author,String main,String puuid,String kuuid,String url,String source,String flag) throws ProKnowledgeImpl.FormatEexception, FormatEexception {
-        ProKnowledge proKnowledge=new ProKnowledge();
-        proKnowledge.setTitle(title);
-        proKnowledge.setPtime(ptime);
-        proKnowledge.setType(type);
-        proKnowledge.setCover(cover);
-        proKnowledge.setTag(tag);
-        proKnowledge.setAuthor(author);
-        proKnowledge.setMain(main);
-        proKnowledge.setUrl(url);
-        proKnowledge.setSource(source);
-        proKnowledge.setUuid(kuuid);
-        proKnowledgeList.add(proKnowledge);
+    public static void storeToDatebase(String title,String ptime,String type,String cover,String tag,String author,String main,String puuid,String kuuid,String url,String source,String flag) throws BasKnowledgeInfoDaoImpl.FormatEexception, FormatEexception {
+        BasKnowledgeInfo basKnowledgeInfo =new BasKnowledgeInfo();
+        basKnowledgeInfo.setTitle(title);
+        basKnowledgeInfo.setPtime(ptime);
+        basKnowledgeInfo.setType(type);
+        basKnowledgeInfo.setCover(cover);
+        basKnowledgeInfo.setTag(tag);
+        basKnowledgeInfo.setAuthor(author);
+        basKnowledgeInfo.setMain(main);
+        basKnowledgeInfo.setUrl(url);
+        basKnowledgeInfo.setSource(source);
+        basKnowledgeInfo.setUuid(kuuid);
+        basKnowledgeInfoList.add(basKnowledgeInfo);
 
         PerKnowledge perKnow=new PerKnowledge();
         perKnow.setName(author);

@@ -13,6 +13,7 @@
         </environment>
     </environments>
     <mappers>
+
         <mapper resource="com/gintongame/mapping/ProKnowledgeMapper.xml"/>
         <mapper resource="com/gintongame/mapping/BasPersonInfoMapper.xml"/>
         <mapper resource="com/gintongame/mapping/PerKnowledgeMapper.xml"/>
@@ -36,5 +37,7 @@
         <mapper resource="com/gintongame/mapping/PerWorkInfoMapper.xml"/>
         <mapper resource="com/gintongame/mapping/PerEducationInfoMapper.xml"/>
         <mapper resource="com/gintongame/mapping/ComChangeInfoMapper.xml"/>
+        <mapper resource="com/gintongame/mapping/BasKnowledgeInfoMapper.xml"/>
+        <mapper resource="com/gintongame/mapping/ProKnowledgeMapper.xml"/>
     </mappers>
 </configuration>

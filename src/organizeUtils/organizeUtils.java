@@ -1,20 +1,16 @@
 package organizeUtils;
 
 import JavaBean.*;
-import SpiderUtils.LevenshteinDis;
 import SpiderUtils.SpiderUtils;
 import cn.wanghaomiao.xpath.exception.XpathSyntaxErrorException;
 import dao.impl.BasOrganizeInfoImpl;
 import dao.impl.OrgKnowledgeImpl;
-import dao.impl.ProKnowledgeImpl;
+import dao.impl.BasKnowledgeInfoDaoImpl;
 import org.apache.commons.lang3.StringUtils;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
-import org.dom4j.io.OutputFormat;
 import org.dom4j.io.SAXReader;
-import org.dom4j.io.XMLWriter;
-import org.xml.sax.SAXException;
 
 import java.io.*;
 import java.text.ParseException;
@@ -28,9 +24,9 @@ import java.util.UUID;
 public class organizeUtils {
     private static BasOrganizeInfoImpl basOrganizeInfo=new BasOrganizeInfoImpl();
     private static OrgKnowledgeImpl orgKnowledgeimpl=new OrgKnowledgeImpl();
-    private static List<ProKnowledge> proKnowledgeList=new ArrayList<ProKnowledge>();
+    private static List<BasKnowledgeInfo> basKnowledgeInfoList =new ArrayList<BasKnowledgeInfo>();
 
-    public static void getElement(String flag,String element,int page,String orgflag) throws IOException, DocumentException, SpiderUtils.FormatEexception, InterruptedException, XpathSyntaxErrorException, ProKnowledgeImpl.FormatEexception, ParseException {
+    public static void getElement(String flag,String element,int page,String orgflag) throws IOException, DocumentException, SpiderUtils.FormatEexception, InterruptedException, XpathSyntaxErrorException, BasKnowledgeInfoDaoImpl.FormatEexception, ParseException {
         SAXReader saxReader = new SAXReader();
         InputStream fileInputStream=new FileInputStream("C:\\Users\\lenovo\\Desktop\\GintongGameSpider\\src\\organizeUtils\\BasKnowledgePattern.xml");
         Document docsax=saxReader.read(fileInputStream);
@@ -92,14 +88,14 @@ public class organizeUtils {
 
         for(Element ele:classifiedlist){
             SpiderUtils.getDocument(flag, ele.getText().trim());
-            proKnowledgeList=SpiderUtils.getData(organizeConfigure,orgflag);
+            basKnowledgeInfoList =SpiderUtils.getData(organizeConfigure,orgflag);
         }
-        storeOrg(uuidi.getText(),onamei.getText(),proKnowledgeList);
+        storeOrg(uuidi.getText(),onamei.getText(), basKnowledgeInfoList);
         SpiderUtils.baseKnowledge.getDriver().close();
         System.exit(0);
     }
 
-    public static void storeOrg(String uuid,String oname,List<ProKnowledge> proKnowledgeListq) throws FileNotFoundException, DocumentException {
+    public static void storeOrg(String uuid,String oname,List<BasKnowledgeInfo> basKnowledgeInfoListq) throws FileNotFoundException, DocumentException {
         if(StringUtils.isEmpty(uuid)){
             String ouuid= UUID.randomUUID().toString();
             BasOrganizeInfo basOrganizeInfos=new BasOrganizeInfo();
@@ -107,12 +103,12 @@ public class organizeUtils {
             basOrganizeInfos.setUuid(ouuid);
             basOrganizeInfos.setCompany_nature("gintong");
             basOrganizeInfo.insertSingle(basOrganizeInfos);
-            for(int x=0;x<proKnowledgeListq.size();x++) {
+            for(int x=0;x< basKnowledgeInfoListq.size();x++) {
                 OrgKnowledge orgKnowledge = new OrgKnowledge();
                 orgKnowledge.setOname(oname);
                 orgKnowledge.setOuuid(ouuid);
-                orgKnowledge.setKuuid(proKnowledgeListq.get(x).getUuid());
-                orgKnowledge.setTitle(proKnowledgeListq.get(x).getTitle());
+                orgKnowledge.setKuuid(basKnowledgeInfoListq.get(x).getUuid());
+                orgKnowledge.setTitle(basKnowledgeInfoListq.get(x).getTitle());
                 orgKnowledgeimpl.insert(orgKnowledge);
             }
         }
