@@ -25,7 +25,7 @@ import java.util.regex.Pattern;
  * Created by lenovo on 2017/2/21.
  */
 public class SpiderTyc {
-    private static List<String> perUrlList=new ArrayList<String>();
+    private  List<String> perUrlList=new ArrayList<String>();
     private  WebDriver driver = null;
 
     public static void main(String [] args) throws Exception {
@@ -108,7 +108,8 @@ public class SpiderTyc {
 
 
         SpiderTyc spiderTyc=new SpiderTyc();
-        spiderTyc.getBussinessDataByList("腾讯");
+        //spiderTyc.getBussinessDataByList("腾讯");
+        spiderTyc.getBussinessDataByOne("http://www.tianyancha.com/company/713808677",true,null);
     }
 
     /**
@@ -162,7 +163,7 @@ public class SpiderTyc {
      * @param comName
      * @throws Exception
      */
-    public static List<String> getPerUrl(WebDriver driver,String comName) throws Exception {
+    public  List<String> getPerUrl(WebDriver driver,String comName) throws Exception {
         int page=0;
         String comUrl="http://www.tianyancha.com/search?key="+comName+"&checkFrom=searchBox";
         driver.get(comUrl);
@@ -534,7 +535,17 @@ public class SpiderTyc {
                             //股东人名字
                             String partnerName = partner.select("a[event-name=company-detail-investment]").text();
                             //股东投资金额
-                            String partnerMoney = partner.select("span[ng-class=item.amomon?'':'c-none']").text();
+                            String partnerMoney = partner.select("span[ng-class=item.amomon?'':'c-none']").text().split(" ")[0];
+                            //股东投资人 出资比例
+                            String investment_rate=partner.select("span[class=c-money-y ng-binding]").text();
+                            //股东投资人的 认缴时间
+                            String subscription_time=partner.select("span[ng-if=item.time]").text().split("：")[1];
+
+//                            System.out.println(investment_rate);
+//                            System.out.println(subscription_time);
+
+                            comShareholder.setSubscription_time(subscription_time);
+                            comShareholder.setInvestment_rate(investment_rate);
                             comShareholder.setBid(Integer.parseInt(bid));
                             comShareholder.setUuid(uuid);
                             comShareholder.setName(partnerName);
@@ -573,7 +584,17 @@ public class SpiderTyc {
                             //String partnerState = partner.select("span.ng-binding").get(2).text();
                             //股东投资金额
                             String partnerComMoney = partner.select("span[ng-class=item.amomon?'':'c-none']").text();
+                            //股东投资比例
+                            String investment_rate=partner.select("span[class=c-money-y ng-binding]").text();
+                            //股东投资 认缴时间
+                            String subscription_time=partner.select("span[ng-if=item.time]").text().split("：")[1];
 
+//                            System.out.println(investment_rate);
+//                            System.out.println(subscription_time);
+
+
+                            comShareholderTeam.setSubscription_time(subscription_time);
+                            comShareholderTeam.setInvestment_rate(investment_rate);
                             comShareholderTeam.setBid(Integer.parseInt(bid));
                             comShareholderTeam.setUuid(uuid);
                             comShareholderTeam.setOname(partnerComName);

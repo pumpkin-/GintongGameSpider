@@ -1,5 +1,7 @@
 package GintongameSpider.SpiderTyc;
 
+import GintongameSpider.SpiderLG.TycTwo;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -33,10 +35,10 @@ public class TycDataBase {
             }
             n++;
         }
-        SpiderTyc spiderTyc=new SpiderTyc();
+        TycTwo tycTwo=new TycTwo();
         for(int i=0;i<nameList.size();i++){
             try {
-                spiderTyc.getBussinessDataByList(nameList.get(i));
+                tycTwo.getBussinessDataByList(nameList.get(i),i);
             }catch (Exception e){
                 e.printStackTrace();
             }

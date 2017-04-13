@@ -15,6 +15,7 @@ public class TestTwo {
     public static void main(String [] args) throws XpathSyntaxErrorException {
         System.setProperty("webdriver.chrome.driver", SpiderContant.chromeWindowsPath);
         WebDriver driver=new ChromeDriver();
+
         driver.get("http://weibo.com/login.php");
         WebElement webElement=driver.findElement(By.xpath("/html"));
         org.jsoup.nodes.Document doc = Jsoup.parse(webElement.getAttribute("outerHTML"));
