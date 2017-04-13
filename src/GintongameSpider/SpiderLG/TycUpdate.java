@@ -115,8 +115,8 @@ public class TycUpdate {
 
 
         TycUpdate tycUpdate=new TycUpdate();
-        //tycUpdate.getBussinessDataByList("蓝帆医疗股份有限公司");
-        tycUpdate.getBussinessDataByOne("http://www.tianyancha.com/company/1600645095",true,null);
+        tycUpdate.getBussinessDataByList("蓝帆医疗股份有限公司");
+        //tycUpdate.getBussinessDataByOne("http://www.tianyancha.com/company/1600645095",true,null);
     }
 
     /**
@@ -147,7 +147,7 @@ public class TycUpdate {
     public  BasOrganizeInfo getBussinessDataByList(String ComName) throws Exception {
         WebDriver driver = getWebDriver();
         BasOrganizeInfo basOrganizeInfo=null;
-        List<String> perUrlList=getPerUrl(driver,ComName);
+        perUrlList=getPerUrl(driver,ComName);
         if(perUrlList.size()!=0) {
             for (String url : perUrlList) {
                 try {
@@ -159,8 +159,9 @@ public class TycUpdate {
                 }
             }
         }
+        perUrlList.clear();
         Thread.sleep(2000);
-        closeWebDriver();
+        //closeWebDriver();
         return basOrganizeInfo;
     }
 
@@ -175,6 +176,7 @@ public class TycUpdate {
         int page=0;
         String comUrl="http://www.tianyancha.com/search?key="+comName+"&checkFrom=searchBox";
         driver.get(comUrl);
+        Thread.sleep(1000);
         WebElement webElementMain = driver.findElement(By.xpath("/html"));
         Document docMain = Jsoup.parse(webElementMain.getAttribute("outerHTML"));
 //        Elements elements=docMain.select("a[class=query_name search-new-color]");
@@ -184,6 +186,7 @@ public class TycUpdate {
 //        }
         Elements elements=docMain.select("div[class=search_result_single search-2017 pb20 pt20 pl30 pr30 ng-scope]");
         for(Element element:elements){
+            System.out.println("走我了么？");
             String href=element.select("a[class=query_name search-new-color ng-isolate-scope]").attr("href");
             String gupiao=element.select("div p[ng-if=node.bondType]").text();
             System.out.println(href);
@@ -208,7 +211,7 @@ public class TycUpdate {
                 try{
                     String url="http://www.tianyancha.com/search/p"+i+"?key="+comName;
                     docMain=getDocumentBySelenium(driver,url);
-                    Elements eles=docMain.select("div[class=search_result_single search-2017 pb15 ng-scope]");
+                    Elements eles=docMain.select("div[class=search_result_single search-2017 pb20 pt20 pl30 pr30 ng-scope]");
                     for(Element element:eles){
                         String href=element.select("a[class=query_name search-new-color]").attr("href");
                         String gupiao=element.select("div p[ng-if=node.bondType]").text();
@@ -363,8 +366,8 @@ public class TycUpdate {
 //        System.out.println("地址:"+address);
 //        System.out.println("网址:"+web);
 //        System.out.println("公司简介:---->"+oname+"-"+con_way+"-"+email+"-"+address+"-"+web);
-        System.out.println("公司基本信息:--->"+ztime+"-"+boss+"-"+bossUrl+"-"+zmoney+"-"+state+"-"+industry+"-"+businessNo+"-"+
-               companyStyle+"-"+orgNo+"-"+businessTime+"-"+registDePart+"-"+approvalDate+"-"+uniformCode+"-"+registAddress+"-"+businessScope);
+//        System.out.println("公司基本信息:--->"+ztime+"-"+boss+"-"+bossUrl+"-"+zmoney+"-"+state+"-"+industry+"-"+businessNo+"-"+
+//               companyStyle+"-"+orgNo+"-"+businessTime+"-"+registDePart+"-"+approvalDate+"-"+uniformCode+"-"+registAddress+"-"+businessScope);
 
         //组织数据入库
         //basOrgan.setTag("西奥中心AB座");
