@@ -72,15 +72,17 @@ public class ExtremeVerification {
         System.out.println("fulljudge:"+fulljudge);
         int left=findXDiffRectangeOfTwoImage("E://极验图片/1_dg.webp","E://极验图片/1_full.webp");
         System.out.println(left);
-        javascriptExecutor.executeScript("");
-        WebElement element = driver.findElement(By.className("gt_slider_knob gt_show"));//(".gt_slider_knob"));
+        WebElement element = driver.findElement(By.cssSelector(".gt_slider_knob.gt_show"));//(".gt_slider_knob"));
         Point location = element.getLocation();
         element.getSize();
         Actions action = new Actions(driver);
-        action.clickAndHold().perform();// 鼠标在当前位置点击后不释放
         action.clickAndHold(element).perform();// 鼠标在 onElement 元素的位置点击后不释放
-        Thread.sleep(2000);
-        action.clickAndHold(element).moveByOffset(location.x+left,location.y).release().perform(); //选中source元素->拖放到（xOffset,yOffset）位置->释放左键
+        System.out.println(location.x + "----" + location.y);
+        action.clickAndHold(element).moveByOffset((left - 8) / 3, location.y).perform();
+        Thread.sleep(1000);
+        action.clickAndHold(element).moveByOffset((left-8)/2,location.y).perform();
+        Thread.sleep(1000);
+        action.clickAndHold(element).moveByOffset(left-8,location.y).release().perform(); //选中source元素->拖放到（xOffset,yOffset）位置->释放左键
 
 
 

@@ -4,6 +4,7 @@ import JavaBean.*;
 import SpiderUtils.SpiderContant;
 import dao.*;
 import dao.impl.*;
+import org.apache.commons.lang3.StringUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -261,12 +262,6 @@ public class TycTwo {
 
 
 
-    /**
-     * 获取一家公司的工商数据
-     * @param driver
-     * @param CompanyUrl
-     * @throws InterruptedException
-     */
     public  BasOrganizeInfo  getBusinessDataByUrl(WebDriver driver, String CompanyUrl,Boolean isFirst,String ouuid) throws Exception {
         String oname=null;
         String uuid=null;
@@ -285,34 +280,49 @@ public class TycTwo {
         String bid = null;
         //System.out.println(doc.outerHtml());
         //组织名
-        oname = doc.select("div[class=in-block ml10 f18 mb5 ng-binding]").text();
+        oname = doc.select("span[   class=f18 in-block vertival-middle ng-binding]").text();
+        // System.out.println(oname);
         //联系方式
-        String con_way = doc.select("div.company_info_text span.ng-binding:contains(电话)").text().split(":")[1].trim();
+        String con_way = doc.select("div[class=in-block vertical-top overflow-width mr20]:contains(电话) span.ng-binding").text();
+        // System.out.println(con_way);
         //邮箱
-        String email = doc.select("div.company_info_text span.ng-binding:contains(邮箱)").text().split(":")[1].trim();
+        String email = doc.select("span[class=in-block vertical-top overflow-width emailWidth ng-binding]").text();
+        // System.out.println(email);
         //地址
-        String address = doc.select("div.company_info_text span.ng-binding:contains(地址)").text().split(":")[1].trim();
+        String address = doc.select("span[class=in-block overflow-width vertical-top emailWidth ng-binding]").text();
+        //System.out.println(address);
         //网址
-        String web = doc.select("div.company_info_text span[style=margin-left:0px]").text();
+        String web = doc.select("span[ng-hide=company.websiteList]").text();
+        //System.out.println(web);
         //股票代码
-        String stockCode = doc.select("span[style=font-size:16px]").text();
+        String stockCode = doc.select("span[class=f16 ng-binding]").text();
         stockCode = stockCode.replaceAll("（([0-9]{1,})）", "$1");
+        //System.out.println(stockCode);
         //股票代码类型
-        String stockCodeType = doc.select("span[style=background-color: #009bae;color:white;padding: 2px 5px;font-size: 14px;border-radius: 3px]").text();
+        String stockCodeType = doc.select("span[class=border-radio2 f13 pl5 pr5 pt3 pb3 ng-binding]").text();
+        //System.out.println(stockCodeType);
         //曾用名
         String usedName = null;
-        usedName = doc.select("span[class=history-last ng-binding]").text();
+        usedName = doc.select("div[class=historyName45Bottom position-abs new-border pl8 pr8 pt4 pb4 ng-binding]").text();
+        // System.out.println(usedName);
         //注册时间
-        String ztime = doc.select("div.baseinfo-module-item:contains(注册时间) div[class=baseinfo-module-content-value ng-binding]").text();
+        String ztime = doc.select("div[class=baseinfo-module-content-value ng-binding]").text().split(" ")[1];
+        // System.out.println(ztime);
 
         //法定代表人
-        String boss = doc.select("a[ng-if=company.legalPersonName]").text();
+        String boss = doc.select("a[class=in-block vertival-middle overflow-width f14 mr20 ng-binding ng-scope]").text();
+        //System.out.println(boss);
         //法定代表人连接
-        String bossUrl = "http://www.tianyancha.com" + doc.select("a[ng-if=company.legalPersonName]").attr("href");
+        String bossUrl = "http://www.tianyancha.com" + doc.select("a[class=in-block vertival-middle overflow-width f14 mr20 ng-binding ng-scope]").attr("href");
+        //System.out.println(bossUrl);
         //注册资本
-        String zmoney = doc.select("div.baseinfo-module-item:contains(注册资本) div[class=baseinfo-module-content-value ng-binding]").text();
+        String zmoney = doc.select("div[class=baseinfo-module-content-value ng-binding]").text().split(" ")[0];
+        // System.out.println(zmoney);
         //状态
-        String state = doc.select("div.baseinfo-module-item:contains(状态) div[class=baseinfo-module-content-value ng-binding]").text();
+        String state = doc.select("div[class=baseinfo-module-content-value ng-binding]").text().split(" ")[2];
+        //System.out.println(state);
+
+
         //行业
         String industry = doc.select("div.c8:contains(行业) span.ng-binding").text();
         //工商注册号
@@ -333,7 +343,7 @@ public class TycTwo {
         String registAddress = doc.select("div.c8:contains(注册地址) span.ng-binding").text();
         //经营范围
 
-        String businessScope = doc.select("div[class=c8 align-justify break-word] span.ng-binding").text();
+        String businessScope = doc.select("span[ng-if=!showDetail]").text();
 //        System.out.println("公司名字："+oname);
 //        System.out.println("公司曾用名:"+usedName);
 //        System.out.println("联系方式:"+con_way);
@@ -341,8 +351,8 @@ public class TycTwo {
 //        System.out.println("地址:"+address);
 //        System.out.println("网址:"+web);
 //        System.out.println("公司简介:---->"+oname+"-"+con_way+"-"+email+"-"+address+"-"+web);
-//        System.out.println("公司基本信息:--->"+ztime+"-"+boss+"-"+bossUrl+"-"+zmoney+"-"+state+"-"+industry+"-"+businessNo+"-"+
-//                companyStyle+"-"+orgNo+"-"+businessTime+"-"+registDePart+"-"+approvalDate+"-"+uniformCode+"-"+registAddress+"-"+businessScope);
+        System.out.println("公司基本信息:--->"+ztime+"-"+boss+"-"+bossUrl+"-"+zmoney+"-"+state+"-"+industry+"-"+businessNo+"-"+
+                companyStyle+"-"+orgNo+"-"+businessTime+"-"+registDePart+"-"+approvalDate+"-"+uniformCode+"-"+registAddress+"-"+businessScope);
 
         //组织数据入库
         //basOrgan.setTag("西奥中心AB座");
@@ -461,9 +471,9 @@ public class TycTwo {
         String pid = null;
         //人物的puuid
         String puuid = null;
-        String[] leaderName=doc.select("div[ng-class=($last&&getStaffByGroupIndex(staffList.result,staff).length>1) ?'end-item':''] div.staffinfo-module-content-title").text().split(" ");
-        Elements leaderUrl=doc.select("div[ng-class=($last&&getStaffByGroupIndex(staffList.result,staff).length>1) ?'end-item':''] div.staffinfo-module-content-title a");
-        String[] leaderDuty=doc.select("div[ng-class=($last&&getStaffByGroupIndex(staffList.result,staff).length>1) ?'end-item':''] div.staffinfo-module-content-value").text().split(" ");
+        String[] leaderName=doc.select("a[event-name=company-detail-staff]").text().split(" ");
+        Elements leaderUrl=doc.select("a[event-name=company-detail-staff]");
+        String[] leaderDuty=doc.select("span[ng-repeat=join in s.typeJoin track by $index]").text().split(" ");
         for(int i=0;i<leaderName.length;i++){
             try {
                 leaderNamelist.add(leaderName[i]);
@@ -552,11 +562,14 @@ public class TycTwo {
                     //股东人名字
                     String partnerName = partner.select("a[event-name=company-detail-investment]").text();
                     //股东投资金额
-                    String partnerMoney = partner.select("span[ng-class=item.amomon?'':'c-none']").text().split(" ")[0];
+                    String partnerMoney = partner.select("span[ng-class=item.amomon?'':'c-none']").text();
                     //股东投资人 出资比例
                     String investment_rate=partner.select("span[class=c-money-y ng-binding]").text();
                     //股东投资人的 认缴时间
-                    String subscription_time=partner.select("span[ng-if=item.time]").text().split("：")[1];
+                    String subscription_time=null;
+                    if (StringUtils.isNotEmpty(partner.select("span[ng-if=item.time]").text())) {
+                        subscription_time = partner.select("span[ng-if=item.time]").text().split("：")[1];
+                    }
 
 //                            System.out.println(investment_rate);
 //                            System.out.println(subscription_time);
@@ -604,7 +617,11 @@ public class TycTwo {
                     //股东投资比例
                     String investment_rate=partner.select("span[class=c-money-y ng-binding]").text();
                     //股东投资 认缴时间
-                    String subscription_time=partner.select("span[ng-if=item.time]").text().split("：")[1];
+                    String subscription_time=null;
+                    //System.out.println("fjaknfkjasf----------"+partner.select("span[ng-if=item.time]").text());
+                    if(StringUtils.isNotEmpty(partner.select("span[ng-if=item.time]").text())) {
+                        subscription_time = partner.select("span[ng-if=item.time]").text().split("：")[1];
+                    }
 
 //                            System.out.println(investment_rate);
 //                            System.out.println(subscription_time);
@@ -660,10 +677,10 @@ public class TycTwo {
             for (Element element : elements) {
                 try {
                     ComChangInfo comChangInfo = new ComChangInfo();
-                    String change_time = element.select("span[class=ng-binding]").text().split(" ")[0];
-                    String change_item = element.select("span[class=ng-binding]").text().split(" ")[1];
-                    String before_change = element.select("span[ng-bind-html=change.contentBefore | splitNum]").text();
-                    String after_change = element.select("span[ng-bind-html=change.contentAfter | splitNum]").text();
+                    String change_time = element.select("div[class=ng-binding]").text().split(" ")[0];
+                    String change_item = element.select("div[class=ng-binding]").text().split(" ")[1];
+                    String before_change = element.select("div[ng-bind-html=change.contentBefore]").text();
+                    String after_change = element.select("div[ng-bind-html=change.contentAfter]").text();
                     comChangInfo.setBid(Integer.parseInt(bid));
                     comChangInfo.setUuid(uuid);
                     comChangInfo.setAfter_change(after_change);
@@ -699,10 +716,10 @@ public class TycTwo {
                 for (Element ele : eles) {
                     try {
                         ComChangInfo comChangInfo = new ComChangInfo();
-                        String change_time = ele.select("span[class=ng-binding]").text().split(" ")[0];
-                        String change_item = ele.select("span[class=ng-binding]").text().split(" ")[1];
-                        String before_change = ele.select("span[ng-bind-html=change.contentBefore | splitNum]").text();
-                        String after_change = ele.select("span[ng-bind-html=change.contentAfter | splitNum]").text();
+                        String change_time = ele.select("div[class=ng-binding]").text().split(" ")[0];
+                        String change_item = ele.select("div[class=ng-binding]").text().split(" ")[1];
+                        String before_change = ele.select("div[ng-bind-html=change.contentBefore]").text();
+                        String after_change = ele.select("div[ng-bind-html=change.contentAfter]").text();
                         comChangInfo.setBid(Integer.parseInt(bid));
                         comChangInfo.setUuid(uuid);
                         comChangInfo.setAfter_change(after_change);
@@ -740,10 +757,10 @@ public class TycTwo {
             for(Element element:elements){
                 try{
                     ComChangInfo comChangInfo=new ComChangInfo();
-                    String change_time=element.select("span[class=ng-binding]").text().split(" ")[0];
-                    String change_item=element.select("span[class=ng-binding]").text().split(" ")[1];
-                    String before_change=element.select("span[ng-bind-html=change.contentBefore | splitNum]").text();
-                    String after_change=element.select("span[ng-bind-html=change.contentAfter | splitNum]").text();
+                    String change_time=element.select("div[class=ng-binding]").text().split(" ")[0];
+                    String change_item=element.select("div[class=ng-binding]").text().split(" ")[1];
+                    String before_change=element.select("div[ng-bind-html=change.contentBefore]").text();
+                    String after_change=element.select("div[ng-bind-html=change.contentAfter]").text();
                     comChangInfo.setBid(Integer.parseInt(bid));
                     comChangInfo.setUuid(uuid);
                     comChangInfo.setAfter_change(after_change);
@@ -774,8 +791,6 @@ public class TycTwo {
                 }
             }
         }
-
-
         return basOrgan;
     }
 
