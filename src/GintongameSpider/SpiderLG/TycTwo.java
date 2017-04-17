@@ -10,6 +10,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.openqa.selenium.*;
+import org.openqa.selenium.Proxy;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -17,6 +18,7 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.net.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -26,10 +28,29 @@ import java.util.regex.Pattern;
 /**
  * Created by admin on 2017/4/12.
  */
+class ProxyAuthenticator extends Authenticator {
+    private String user, password;
+
+    public ProxyAuthenticator(String user, String password) {
+        this.user     = user;
+        this.password = password;
+    }
+
+    protected PasswordAuthentication getPasswordAuthentication() {
+        return new PasswordAuthentication(user, password.toCharArray());
+    }
+}
+
 public class TycTwo {
     private List<String> perUrlList=new ArrayList<String>();
-    private WebDriver driver = null;
+    private static WebDriver driver = null;
     private List<String> ipList=new ArrayList<String>();
+    // 代理隧道验证信息
+    private String proxyUser  = "H6R954181A3XJ74D";
+    private String proxyPass  = "4162E8691ED2C6F3";
+    // 代理服务器
+    String proxyServer = "proxy.abuyun.com";
+    int proxyPort      = 9020;
 
     public static void main(String [] args) throws Exception {
         //公司网址
@@ -110,11 +131,11 @@ public class TycTwo {
 //        spiderTyc.getBussinessDataByList(urls);
 
 
-//        SpiderTyc spiderTyc=new SpiderTyc();
-//        //spiderTyc.getBussinessDataByList("腾讯");
+        TycTwo spiderTyc=new TycTwo();
+        spiderTyc.getBussinessDataByList("腾讯",0);
 //        spiderTyc.getBussinessDataByOne("http://www.tianyancha.com/company/713808677",true,null);
-        TycTwo tycTwo=new TycTwo();
-        tycTwo.addIp();
+       // TycTwo tycTwo=new TycTwo();
+       // tycTwo.addIp();
     }
 
     /**
@@ -157,6 +178,7 @@ public class TycTwo {
     public  BasOrganizeInfo getBussinessDataByList(String ComName,int num) throws Exception {
         addIp();
         driver = getWebDriver(num);
+        //getAbuYunDriver();
         BasOrganizeInfo basOrganizeInfo=null;
         List<String> perUrlList=getPerUrl(driver,ComName);
         for(String url:perUrlList) {
@@ -185,6 +207,8 @@ public class TycTwo {
         int page=0;
         String comUrl="http://www.tianyancha.com/search?key="+comName+"&checkFrom=searchBox";
         driver.get(comUrl);
+        Thread.sleep(10000);
+        Authenticator.setDefault(new ProxyAuthenticator(proxyUser, proxyPass));
         WebElement webElementMain = driver.findElement(By.xpath("/html"));
         Document docMain = Jsoup.parse(webElementMain.getAttribute("outerHTML"));
         Elements elements=docMain.select("a[class=query_name search-new-color]");
@@ -267,6 +291,7 @@ public class TycTwo {
         String uuid=null;
         BasOrganizeInfo basOrgan = new BasOrganizeInfo();
         driver.get(CompanyUrl);
+        Authenticator.setDefault(new ProxyAuthenticator(proxyUser, proxyPass));
         Thread.sleep(2000);
         WebElement webElement = driver.findElement(By.xpath("/html"));
         Document doc = Jsoup.parse(webElement.getAttribute("outerHTML"));
@@ -812,6 +837,21 @@ public class TycTwo {
         cap.setCapability(CapabilityType.PROXY, proxy);
         WebDriver driver=new ChromeDriver(cap);
         return driver;
+    }
+
+    public  void getAbuYunDriver() {
+        System.setProperty("webdriver.chrome.driver", SpiderContant.chromeWindowsPath);
+        DesiredCapabilities cap = new DesiredCapabilities();
+        Proxy proxy=new Proxy();
+        proxy.setHttpProxy(proxyServer+":"+proxyPort).setFtpProxy(proxyServer+":"+proxyPort).setSslProxy(proxyServer+":"+proxyPort);
+//        proxy.setSocksUsername(proxyUser);
+//        proxy.setSocksPassword(proxyPass);
+        cap.setCapability(CapabilityType.ForSeleniumServer.AVOIDING_PROXY, true);
+        cap.setCapability(CapabilityType.ForSeleniumServer.ONLY_PROXYING_SELENIUM_TRAFFIC, true);
+        System.setProperty("http.nonProxyHosts", proxyServer);
+        cap.setCapability(CapabilityType.PROXY, proxy);
+        driver=new ChromeDriver(cap);
+
     }
 
     /**

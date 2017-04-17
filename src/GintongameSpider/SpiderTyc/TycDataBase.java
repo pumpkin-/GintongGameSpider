@@ -1,6 +1,6 @@
 package GintongameSpider.SpiderTyc;
 
-import GintongameSpider.SpiderLG.TycUpdate;
+import GintongameSpider.SpiderLG.TycTwo;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -27,7 +27,6 @@ public class TycDataBase {
         List<String> nameList=new ArrayList<String>();
         int n=0;
         while(rs.next()){
-
             if(0<=n&&n<=100) {
                 String fullname = rs.getString("fullname");
                 nameList.add(fullname);
@@ -35,14 +34,15 @@ public class TycDataBase {
             }
             n++;
         }
-        TycUpdate tycUpdate=new TycUpdate();
+        //TycUpdate tycUpdate=new TycUpdate();
+        TycTwo tycTwo=new TycTwo();
         for(int i=0;i<nameList.size();i++){
             try {
-                tycUpdate.getBussinessDataByList(nameList.get(i));
+                tycTwo.getBussinessDataByList(nameList.get(i),i);
+               // tycUpdate.getBussinessDataByList(nameList.get(i));
             }catch (Exception e){
                 e.printStackTrace();
             }
-
         }
     }
 }
