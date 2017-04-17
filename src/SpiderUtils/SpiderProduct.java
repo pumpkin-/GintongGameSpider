@@ -127,7 +127,7 @@ public class SpiderProduct {
         List<String>list=new ArrayList<String>();
         int pages=Integer.parseInt(allpage);
         String page;
-        if(fromPageNum==0){
+        if(fromPageNum==37){
             fromPageNum=fromPageNum+1;
         }
         for(int i=fromPageNum;i<pages+1;i++) {
@@ -546,8 +546,7 @@ class Spider{
         try{
             document = Jsoup.connect(url)
                     .userAgent("Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; .NET CLR 2.0.50727)")
-                    .get();
-
+                    .ignoreContentType(true).ignoreHttpErrors(true).timeout(100000).get();
         }catch (Exception e){
             e.printStackTrace();
             System.out.println("======== 获取网页详情页失败 ==========");

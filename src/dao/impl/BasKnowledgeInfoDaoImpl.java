@@ -86,5 +86,20 @@ public class BasKnowledgeInfoDaoImpl extends BaseDaoImpl<List> implements BasKno
         return this.getSqlSession().selectList(this.getNs()+"selectBySource",source);
     }
 
+    @Override
+    public List<BasKnowledgeInfo> selectByMain(String name) {
+        return this.getSqlSession().selectList(this.getNs()+"selectByMain",name);
+    }
+
+    @Override
+    public List<BasKnowledgeInfo> selectByID(String uuid) {
+        return this.getSqlSession().selectList(this.getNs() + "selectByID", uuid);
+    }
+
+    @Override
+    public List<BasKnowledgeInfo> selectByTime() {
+        return this.getSqlSession().selectList(this.getNs()+"selectByTime");
+    }
+
 
 }

@@ -1,7 +1,9 @@
 package GintongameSpider.SpiderLxm;
 
+import SpiderUtils.CommonSpiderKnowledge;
 import SpiderUtils.SpiderContant;
 
+import SpiderUtils.SpiderProduct;
 import cn.wanghaomiao.xpath.exception.XpathSyntaxErrorException;
 import cn.wanghaomiao.xpath.model.JXDocument;
 import cn.wanghaomiao.xpath.model.JXNode;
@@ -28,9 +30,13 @@ import java.util.Objects;
  * Created by lenovon on 2017/3/3.
  */
 public class HW {
-    String url="";
-
     public static void main(String[] args){
+        try {
+//            SpiderProduct.ergodicUrl("spiderYXCYW", 0, 0);
+            CommonSpiderKnowledge.ergodicUrl("spiderYXGK",8,"no");
 
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

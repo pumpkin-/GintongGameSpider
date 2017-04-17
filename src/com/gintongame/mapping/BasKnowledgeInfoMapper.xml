@@ -27,5 +27,18 @@
     <select id="selectBySource" parameterType="String" resultType="String">
         SELECT MAX(ptime) FROM bas_knowledge_info WHERE source=#{source}
     </select>
+    <select id="selectByMain" parameterType="String" resultType="JavaBean.BasKnowledgeInfo">
+        SELECT uuid,main,title FROM bas_knowledge_info WHERE main=#{main}
+    </select>
 
+    <select id="select" parameterType="JavaBean.BasKnowledgeInfo" resultType="JavaBean.BasKnowledgeInfo">
+        SELECT * FROM  bas_knowledge_info
+    </select>
+    <select id="selectByID" parameterType="JavaBean.BasKnowledgeInfo" resultType="JavaBean.BasKnowledgeInfo">
+         SELECT uuid,main,title FROM bas_knowledge_info WHERE uuid=#{uuid}
+    </select>
+
+    <select id="selectByTime" resultType="JavaBean.BasKnowledgeInfo">
+        SELECT * FROM bas_knowledge_info WHERE DATE_SUB(CURDATE(), INTERVAL 7 DAY) &lt;= DATE(ctime)
+    </select>
 </mapper>
