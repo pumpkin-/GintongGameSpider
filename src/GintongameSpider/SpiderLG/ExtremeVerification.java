@@ -15,22 +15,21 @@ import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 
 /**
  * Created by admin on 2017/4/12.
  */
 public class ExtremeVerification {
+
     public void mainProcess() throws Exception {
         System.setProperty("webdriver.chrome.driver", SpiderContant.chromeWindowsPath);
         WebDriver driver=new ChromeDriver();
         driver.get("http://www.gsxt.gov.cn/index.html");
         WebElement webElement=driver.findElement(By.xpath("/html"));
         org.jsoup.nodes.Document doc = Jsoup.parse(webElement.getAttribute("outerHTML"));
-        // System.out.println(doc.outerHtml());
         JavascriptExecutor javascriptExecutor=(JavascriptExecutor)driver;
-//        javascriptExecutor.executeAsyncScript("document.getElementById('keyword').value='完美世界'");
-//        javascriptExecutor.executeAsyncScript("$('#btn_query').click()");
         javascriptExecutor.executeScript("document.getElementById('keyword').value='完美世界'");
         Thread.sleep(1000);
         javascriptExecutor.executeScript("$('#btn_query').click()");
@@ -46,13 +45,8 @@ public class ExtremeVerification {
             String[] dgImgTopLeftPoint=new String[2];
             dgImgTopLeftPoint[0]=imgSize.split(" ")[0].replace("px","");
             dgImgTopLeftPoint[1]=imgSize.split(" ")[1].replace("px","");
-            System.out.println(dgImgTopLeftPoint[0]+"-"+dgImgTopLeftPoint[1]);
             dgImgTopLeftPointList.add(dgImgTopLeftPoint);
         }
-//        for(int i=0;i<dgImgUrl.size();i++){
-//            System.out.println(dgImgUrl.get(i)+"-----"+dgImgTopLeftPointList.get(i));
-//        }
-        System.out.println("------------------------------------------------------------");
         List<String> fullImgUrl=new ArrayList<String>();
         List<String[]> fullImgTopLeftPointList=new ArrayList<String[]>();
         Elements eles=doc.select("div[class=gt_cut_fullbg gt_show] div[class=gt_cut_fullbg_slice]");
@@ -63,7 +57,6 @@ public class ExtremeVerification {
             String[] fullImgTopLeftPoint=new String[2];
             fullImgTopLeftPoint[0]=imgSize.split(" ")[0].replace("px","");
             fullImgTopLeftPoint[1]=imgSize.split(" ")[1].replace("px","");
-            System.out.println(fullImgTopLeftPoint[0]+"-"+ fullImgTopLeftPoint[1]);
             fullImgTopLeftPointList.add(fullImgTopLeftPoint);
         }
         Boolean dgjudge=combineImages(dgImgUrl,dgImgTopLeftPointList,26,10,58,"E://极验图片/1_dg.webp","webp");
@@ -72,23 +65,134 @@ public class ExtremeVerification {
         System.out.println("fulljudge:"+fulljudge);
         int left=findXDiffRectangeOfTwoImage("E://极验图片/1_dg.webp","E://极验图片/1_full.webp");
         System.out.println(left);
-        WebElement element = driver.findElement(By.cssSelector(".gt_slider_knob.gt_show"));//(".gt_slider_knob"));
+        Boolean isBreak = breakIdentifyingCode(left, driver);
+        System.out.println("1.isBreak:"+isBreak);
+        while(isBreak==false) {
+            left=findXDiffRectangeOfTwoImage("E://极验图片/1_dg.webp","E://极验图片/1_full.webp");
+            System.out.println(left);
+            isBreak = breakIdentifyingCode(left, driver);
+            System.out.println("2.isBreak:"+isBreak);
+            if(isBreak==true){
+                break;
+            }
+        }
+
+
+
+    }
+
+
+    public void getPicture(WebDriver driver) throws Exception {
+        Element doc=getCode(driver);
+        Elements elements=doc.select("div[class=gt_cut_bg gt_show] div[class=gt_cut_bg_slice]");
+        List<String> dgImgUrl=new ArrayList<String>();
+        List<String[]> dgImgTopLeftPointList=new ArrayList<String[]>();
+        for(Element element:elements){
+            String dgImg=element.attr("style");
+            dgImgUrl.add(dgImg.split("\\(\"")[1].split("\"\\);")[0]);
+            String imgSize=dgImg.split("background-position:")[1].split(";")[0].trim();
+            String[] dgImgTopLeftPoint=new String[2];
+            dgImgTopLeftPoint[0]=imgSize.split(" ")[0].replace("px","");
+            dgImgTopLeftPoint[1]=imgSize.split(" ")[1].replace("px","");
+            //System.out.println(dgImgTopLeftPoint[0]+"-"+dgImgTopLeftPoint[1]);
+            dgImgTopLeftPointList.add(dgImgTopLeftPoint);
+        }
+//        for(int i=0;i<dgImgUrl.size();i++){
+//            System.out.println(dgImgUrl.get(i)+"-----"+dgImgTopLeftPointList.get(i));
+//        }
+        //System.out.println("------------------------------------------------------------");
+        List<String> fullImgUrl=new ArrayList<String>();
+        List<String[]> fullImgTopLeftPointList=new ArrayList<String[]>();
+        Elements eles=doc.select("div[class=gt_cut_fullbg gt_show] div[class=gt_cut_fullbg_slice]");
+        for(Element element:eles){
+            String fullImg=element.attr("style");
+            fullImgUrl.add(fullImg.split("\\(\"")[1].split("\"\\);")[0]);
+            String imgSize=fullImg.split("background-position:")[1].split(";")[0].trim();
+            String[] fullImgTopLeftPoint=new String[2];
+            fullImgTopLeftPoint[0]=imgSize.split(" ")[0].replace("px","");
+            fullImgTopLeftPoint[1]=imgSize.split(" ")[1].replace("px","");
+            //System.out.println(fullImgTopLeftPoint[0]+"-"+ fullImgTopLeftPoint[1]);
+            fullImgTopLeftPointList.add(fullImgTopLeftPoint);
+        }
+        Boolean dgjudge=combineImages(dgImgUrl,dgImgTopLeftPointList,26,10,58,"E://极验图片/1_dg.webp","webp");
+        Boolean fulljudge=combineImages(fullImgUrl,fullImgTopLeftPointList,26,10,58,"E://极验图片/1_full.webp","webp");
+        System.out.println("dgjudge:"+dgjudge);
+        System.out.println("fulljudge:"+fulljudge);
+        int left=findXDiffRectangeOfTwoImage("E://极验图片/1_dg.webp","E://极验图片/1_full.webp");
+    }
+
+
+    public List<Integer> clearLeft(int left){
+        List<Integer> leftList=new ArrayList<Integer>();
+        int x=(int)(Math.random()*2+1);
+        while(left-x>5){
+            leftList.add(x);
+            left=left-x;
+            x=(int)(Math.random()*2+1);
+        }
+        for(int i=0;i<left;i++) {
+            leftList.add(1);
+        }
+        return leftList;
+    }
+
+
+    public Boolean breakIdentifyingCode(int left,WebDriver driver) throws Exception {
+        Boolean isBreak=false;
+        WebElement element = driver.findElement(By.cssSelector(".gt_slider_knob.gt_show"));
         Point location = element.getLocation();
+        int y=location.y;
         element.getSize();
         Actions action = new Actions(driver);
-        action.clickAndHold(element).perform();// 鼠标在 onElement 元素的位置点击后不释放
-        System.out.println(location.x + "----" + location.y);
-        action.clickAndHold(element).moveByOffset((left - 8) / 3, location.y).perform();
-        Thread.sleep(1000);
-        action.clickAndHold(element).moveByOffset((left-8)/2,location.y).perform();
-        Thread.sleep(1000);
-        action.clickAndHold(element).moveByOffset(left-8,location.y).release().perform(); //选中source元素->拖放到（xOffset,yOffset）位置->释放左键
-
-
-
-
-
-
+        action.clickAndHold(element).perform();
+        List<Integer> leftList=clearLeft(left);
+        int num=0;
+        action.moveToElement(element).clickAndHold(element).perform();
+        Thread.sleep(150);
+        int x1=22;
+        for(int i=0;i<leftList.size();i++){
+            action.moveToElement(element,22+leftList.get(i),location.y-445).perform();
+       }
+        Thread.sleep(200);
+        for(int i=0;i<7;i++){
+            action.moveToElement(element,21,location.y-445).perform();
+            Thread.sleep(200);
+        }
+        int[] xx={4,10};
+        int sum=0;
+        for(int i=0;i<5;i++){
+            int xx1=new Random().nextInt(xx[0]);
+            int xx2=new Random().nextInt(xx[0]);
+            sum=sum+(xx1*2)-(xx2*2);
+            action.moveToElement(element,22+xx1,location.y-445).perform();
+            Thread.sleep(((int)Math.random()*2+1)*100);
+            action.moveToElement(element,22-xx2,location.y-445).perform();
+            Thread.sleep(((int)Math.random()*2+1)*100);
+            action.moveToElement(element,22+xx2,location.y-445).perform();
+            Thread.sleep(((int)Math.random()*2+1)*100);
+            action.moveToElement(element,22-xx1,location.y-445).perform();
+            Thread.sleep(((int)Math.random()*2+1)*100);
+            xx[0]-=0;
+        }
+        action.release().perform();
+        String handle = driver.getWindowHandle();
+        for (String handles : driver.getWindowHandles()) {
+            if (handles.equals(handle)) {
+                continue;
+            }else {
+                driver.close();
+                driver.switchTo().window(handles);
+            }
+        }
+        Thread.sleep(5000);
+        WebElement webMainElement=driver.findElement(By.xpath("/html"));
+        Document document=Jsoup.parse(webMainElement.getAttribute("outerHTML"));
+        getPicture(driver);
+        if(!document.toString().contains("移动到此开始验证")){
+            isBreak=true;
+        }
+        System.out.println("First.isBreak:"+isBreak);
+        return isBreak;
     }
 
     public Document getCode(WebDriver driver) throws InterruptedException {
@@ -192,10 +296,11 @@ public class ExtremeVerification {
         rgb2[1] = (pixel2 & 0xff00) >> 8;
         rgb2[2] = (pixel2 & 0xff);
 
-        for (int k = 0; k < 3; k++)
-            if (Math.abs(rgb1[k] - rgb2[k]) > 50)//因为背景图会有一些像素差异
-                return true;
 
+        for (int k = 0; k < 3; k++) {
+            if (Math.abs(rgb1[k] - rgb2[k]) > 120)//因为背景图会有一些像素差异
+                return true;
+        }
         return false;
     }
 
