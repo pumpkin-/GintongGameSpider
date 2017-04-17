@@ -1,4 +1,4 @@
-package GintongameSpider.SpiderTyc;
+package GintongameSpider.SpiderLG;
 
 import JavaBean.*;
 import SpiderUtils.SpiderContant;
@@ -15,22 +15,28 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-
 /**
- * Created by lenovo on 2017/2/21.
+ * Created by admin on 2017/4/11.
  */
-public class SpiderTyc {
-    private  List<String> perUrlList=new ArrayList<String>();
-    private  WebDriver driver = null;
+public class TycUpdate {
+    private List<String> perUrlList=new ArrayList<String>();
+    private WebDriver driver = null;
 
     public static void main(String [] args) throws Exception {
-            //公司网址
+        //公司网址
 //        SpiderTyc spiderTyc=new SpiderTyc();
 //        List<String> urls = new ArrayList<String>();
 //        urls.add("http://www.tianyancha.com/company/2347469001");
@@ -108,9 +114,9 @@ public class SpiderTyc {
 //        spiderTyc.getBussinessDataByList(urls);
 
 
-        SpiderTyc spiderTyc=new SpiderTyc();
-        //spiderTyc.getBussinessDataByList("腾讯");
-        spiderTyc.getBussinessDataByOne("http://www.tianyancha.com/company/713808677",true,null);
+        TycUpdate tycUpdate=new TycUpdate();
+        tycUpdate.getBussinessDataByList("蓝帆医疗股份有限公司");
+        //tycUpdate.getBussinessDataByOne("http://www.tianyancha.com/company/1600645095",true,null);
     }
 
     /**
@@ -128,7 +134,7 @@ public class SpiderTyc {
 //        closeWebDriver();
 //    }
 
-    public  BasOrganizeInfo getBussinessDataByOne(String url,Boolean isFirst,String ouuid) throws Exception {
+    public BasOrganizeInfo getBussinessDataByOne(String url,Boolean isFirst,String ouuid) throws Exception {
         WebDriver driver = getWebDriver();
         BasOrganizeInfo basOrganizeInfo=null;
         basOrganizeInfo = getBusinessDataByUrl(driver, url, isFirst,ouuid);
@@ -141,19 +147,21 @@ public class SpiderTyc {
     public  BasOrganizeInfo getBussinessDataByList(String ComName) throws Exception {
         WebDriver driver = getWebDriver();
         BasOrganizeInfo basOrganizeInfo=null;
-        List<String> perUrlList=getPerUrl(driver,ComName);
-        for(String url:perUrlList) {
-            try {
-                basOrganizeInfo = getBusinessDataByUrl(driver, url, true, null);
-                System.out.println(basOrganizeInfo.getOname() + ":数据入库完毕(天眼查)");
-                Thread.sleep(2000);
-            }catch (Exception e){
-                e.printStackTrace();
+        perUrlList=getPerUrl(driver,ComName);
+        if(perUrlList.size()!=0) {
+            for (String url : perUrlList) {
+                try {
+                    basOrganizeInfo = getBusinessDataByUrl(driver, url, true, null);
+                    System.out.println(basOrganizeInfo.getOname() + ":数据入库完毕(天眼查)");
+                    Thread.sleep(2000);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         }
-
+        perUrlList.clear();
         Thread.sleep(2000);
-        closeWebDriver();
+        //closeWebDriver();
         return basOrganizeInfo;
     }
 
@@ -168,12 +176,26 @@ public class SpiderTyc {
         int page=0;
         String comUrl="http://www.tianyancha.com/search?key="+comName+"&checkFrom=searchBox";
         driver.get(comUrl);
+        Thread.sleep(1000);
         WebElement webElementMain = driver.findElement(By.xpath("/html"));
         Document docMain = Jsoup.parse(webElementMain.getAttribute("outerHTML"));
-        Elements elements=docMain.select("a[class=query_name search-new-color]");
+//        Elements elements=docMain.select("a[class=query_name search-new-color]");
+//        for(Element element:elements){
+//            perUrlList.add(element.attr("href"));
+//            System.out.println(element.attr("href"));
+//        }
+        Elements elements=docMain.select("div[class=search_result_single search-2017 pb20 pt20 pl30 pr30 ng-scope]");
         for(Element element:elements){
-            perUrlList.add(element.attr("href"));
-            System.out.println(element.attr("href"));
+            System.out.println("走我了么？");
+            String href=element.select("a[class=query_name search-new-color ng-isolate-scope]").attr("href");
+            String gupiao=element.select("div p[ng-if=node.bondType]").text();
+            System.out.println(href);
+            System.out.println(gupiao);
+            if(StringUtils.isNotEmpty(gupiao)){
+                perUrlList.add(href);
+                return perUrlList;
+            }
+            System.out.println("---------------------------------");
         }
         System.out.println("第1页数据已经跑完");
         Element elementsPage=docMain.select("div[class=total ng-binding]").last();
@@ -189,10 +211,14 @@ public class SpiderTyc {
                 try{
                     String url="http://www.tianyancha.com/search/p"+i+"?key="+comName;
                     docMain=getDocumentBySelenium(driver,url);
-                    Elements elementsMain=docMain.select("a[class=query_name search-new-color]");
-                    for(Element element:elementsMain){
-                        System.out.println(element.attr("href"));
-                        perUrlList.add(element.attr("href"));
+                    Elements eles=docMain.select("div[class=search_result_single search-2017 pb20 pt20 pl30 pr30 ng-scope]");
+                    for(Element element:eles){
+                        String href=element.select("a[class=query_name search-new-color]").attr("href");
+                        String gupiao=element.select("div p[ng-if=node.bondType]").text();
+                        if(StringUtils.isNotEmpty(gupiao)){
+                            perUrlList.add(href);
+                            return perUrlList;
+                        }
                     }
                     System.out.println("第"+i+"页数据已经跑完");
                     Thread.sleep(5000);
@@ -225,8 +251,8 @@ public class SpiderTyc {
      */
     public static Document listPageSelenium(WebDriver driver) throws InterruptedException {
         JavascriptExecutor executornext = (JavascriptExecutor) driver;
-        executornext.executeScript("$(\"#ng-view > div.ng-scope > div > div > div > div.col-9.company-main.pl0.pr20.pt18.company_new_2017 > div > div:nth-child(11) " +
-                "> div.ng-scope > div.company_pager.ng-scope > ul > li.pagination-next.ng-scope > a\").click()");
+        executornext.executeScript("$(\"#ng-view > div.ng-scope > div > div > div > div.col-9.company-main.pl0.pr10.company_new_2017 > " +
+                "div > div.pl30.pr30.pt25 > div:nth-child(7) > div.ng-scope > div.company_pager.ng-scope > ul > li.pagination-next.ng-scope > a\").click()");
         String handle = driver.getWindowHandle();
         for (String handles : driver.getWindowHandles()) {
             if (handles.equals(handle)) {
@@ -245,11 +271,17 @@ public class SpiderTyc {
 
 
 
+    /**
+     * 获取一家公司的工商数据
+     * @param driver
+     * @param CompanyUrl
+     * @throws InterruptedException
+     */
     public  BasOrganizeInfo  getBusinessDataByUrl(WebDriver driver, String CompanyUrl,Boolean isFirst,String ouuid) throws Exception {
         String oname=null;
         String uuid=null;
         BasOrganizeInfo basOrgan = new BasOrganizeInfo();
-        driver.get(CompanyUrl);
+            driver.get(CompanyUrl);
         Thread.sleep(2000);
         WebElement webElement = driver.findElement(By.xpath("/html"));
         Document doc = Jsoup.parse(webElement.getAttribute("outerHTML"));
@@ -264,13 +296,13 @@ public class SpiderTyc {
         //System.out.println(doc.outerHtml());
         //组织名
         oname = doc.select("span[   class=f18 in-block vertival-middle ng-binding]").text();
-        // System.out.println(oname);
+       // System.out.println(oname);
         //联系方式
         String con_way = doc.select("div[class=in-block vertical-top overflow-width mr20]:contains(电话) span.ng-binding").text();
-        // System.out.println(con_way);
+       // System.out.println(con_way);
         //邮箱
         String email = doc.select("span[class=in-block vertical-top overflow-width emailWidth ng-binding]").text();
-        // System.out.println(email);
+       // System.out.println(email);
         //地址
         String address = doc.select("span[class=in-block overflow-width vertical-top emailWidth ng-binding]").text();
         //System.out.println(address);
@@ -287,10 +319,10 @@ public class SpiderTyc {
         //曾用名
         String usedName = null;
         usedName = doc.select("div[class=historyName45Bottom position-abs new-border pl8 pr8 pt4 pb4 ng-binding]").text();
-        // System.out.println(usedName);
+       // System.out.println(usedName);
         //注册时间
         String ztime = doc.select("div[class=baseinfo-module-content-value ng-binding]").text().split(" ")[1];
-        // System.out.println(ztime);
+       // System.out.println(ztime);
 
         //法定代表人
         String boss = doc.select("a[class=in-block vertival-middle overflow-width f14 mr20 ng-binding ng-scope]").text();
@@ -300,7 +332,7 @@ public class SpiderTyc {
         //System.out.println(bossUrl);
         //注册资本
         String zmoney = doc.select("div[class=baseinfo-module-content-value ng-binding]").text().split(" ")[0];
-        // System.out.println(zmoney);
+       // System.out.println(zmoney);
         //状态
         String state = doc.select("div[class=baseinfo-module-content-value ng-binding]").text().split(" ")[2];
         //System.out.println(state);
@@ -335,7 +367,7 @@ public class SpiderTyc {
 //        System.out.println("网址:"+web);
 //        System.out.println("公司简介:---->"+oname+"-"+con_way+"-"+email+"-"+address+"-"+web);
 //        System.out.println("公司基本信息:--->"+ztime+"-"+boss+"-"+bossUrl+"-"+zmoney+"-"+state+"-"+industry+"-"+businessNo+"-"+
-//                companyStyle+"-"+orgNo+"-"+businessTime+"-"+registDePart+"-"+approvalDate+"-"+uniformCode+"-"+registAddress+"-"+businessScope);
+//               companyStyle+"-"+orgNo+"-"+businessTime+"-"+registDePart+"-"+approvalDate+"-"+uniformCode+"-"+registAddress+"-"+businessScope);
 
         //组织数据入库
         //basOrgan.setTag("西奥中心AB座");
@@ -774,6 +806,8 @@ public class SpiderTyc {
                 }
             }
         }
+
+
         return basOrgan;
     }
 
@@ -799,4 +833,130 @@ public class SpiderTyc {
     }
 
 
+
+
+    public static String sendGet(String url, String param) {
+        String result = "";
+        BufferedReader in = null;
+        try {
+            String urlNameString = url + "?" + param;
+            URL realUrl = new URL(urlNameString);
+            // 打开和URL之间的连接
+            URLConnection connection = realUrl.openConnection();
+            // 设置通用的请求属性
+            connection.setRequestProperty("accept", "*/*");
+            connection.setRequestProperty("connection", "Keep-Alive");
+            connection.setRequestProperty("user-agent",
+                    "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
+            // 建立实际的连接
+            connection.connect();
+            // 获取所有响应头字段
+            Map<String, List<String>> map = connection.getHeaderFields();
+            // 遍历所有的响应头字段
+            for (String key : map.keySet()) {
+                System.out.println(key + "--->" + map.get(key));
+            }
+            // 定义 BufferedReader输入流来读取URL的响应
+            in = new BufferedReader(new InputStreamReader(
+                    connection.getInputStream()));
+            String line;
+            while ((line = in.readLine()) != null) {
+                result += line;
+            }
+        } catch (Exception e) {
+            System.out.println("发送GET请求出现异常！" + e);
+            e.printStackTrace();
+        }
+        // 使用finally块来关闭输入流
+        finally {
+            try {
+                if (in != null) {
+                    in.close();
+                }
+            } catch (Exception e2) {
+                e2.printStackTrace();
+            }
+        }
+        return result;
+    }
+
+    /**
+     * 向指定 URL 发送POST方法的请求
+     *
+     * @param url
+     *            发送请求的 URL
+     * @param param
+     *            请求参数，请求参数应该是 name1=value1&name2=value2 的形式。
+     * @return 所代表远程资源的响应结果
+     */
+    public static String sendPost(String url, String param) {
+        PrintWriter out = null;
+        BufferedReader in = null;
+        String result = "";
+        try {
+            URL realUrl = new URL(url);
+            // 打开和URL之间的连接
+            URLConnection conn = realUrl.openConnection();
+            // 设置通用的请求属性
+            conn.setRequestProperty("accept", "*/*");
+            conn.setRequestProperty("connection", "Keep-Alive");
+            conn.setRequestProperty("user-agent",
+                    "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
+            // 发送POST请求必须设置如下两行
+            conn.setDoOutput(true);
+            conn.setDoInput(true);
+            // 获取URLConnection对象对应的输出流
+            out = new PrintWriter(conn.getOutputStream());
+            // 发送请求参数
+            out.print(param);
+            // flush输出流的缓冲
+            out.flush();
+            // 定义BufferedReader输入流来读取URL的响应
+            in = new BufferedReader(
+                    new InputStreamReader(conn.getInputStream()));
+            String line;
+            while ((line = in.readLine()) != null) {
+                result += line;
+            }
+        } catch (Exception e) {
+            System.out.println("发送 POST 请求出现异常！" + e);
+            e.printStackTrace();
+        }
+        // 使用finally块来关闭输出流、输入流
+        finally {
+            try {
+                if (out != null) {
+                    out.close();
+                }
+                if (in != null) {
+                    in.close();
+                }
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+        return result;
+    }
+    public static String escape(String src) {
+        int i;
+        char j;
+        StringBuffer tmp = new StringBuffer();
+        tmp.ensureCapacity(src.length() * 6);
+        for (i = 0; i < src.length(); i++) {
+            j = src.charAt(i);
+            if (Character.isDigit(j) || Character.isLowerCase(j)
+                    || Character.isUpperCase(j))
+                tmp.append(j);
+            else if (j < 256) {
+                tmp.append("%");
+                if (j < 16)
+                    tmp.append("0");
+                tmp.append(Integer.toString(j, 16));
+            } else {
+                tmp.append("%u");
+                tmp.append(Integer.toString(j, 16));
+            }
+        }
+        return tmp.toString();
+    }
 }

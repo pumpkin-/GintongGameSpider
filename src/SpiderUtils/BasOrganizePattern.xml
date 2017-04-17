@@ -171,9 +171,7 @@
     <!--开服网端游Url-->  
     <kfwDyUrl/>  
     <!--开服网手游Url-->  
-    <kfwSyUrl/>  
-    <ouuid>ada70b55-13a8-4e57-b846-c160a31652e8</ouuid>  
-    <count>10</count> 
+    <kfwSyUrl/>
   </SpiderWmsj>  
   <!--360游戏-->  
   <Spider360Yx> 
@@ -9432,8 +9430,6 @@
     <!--拉钩网Url-->  
     <lgwUrl/>  
     <!--选择所需要的驱动器-->  
-    <flag>jsoup</flag>  
-    <ouuid>7bd193b2-c3fd-40ee-9a67-bd8106722479</ouuid>  
-    <count>3</count>
+    <flag>jsoup</flag>
   </SpiderSqsd> 
 </EcologyOrganizePattern>

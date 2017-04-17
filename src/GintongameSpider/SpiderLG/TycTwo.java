@@ -1,4 +1,4 @@
-package GintongameSpider.SpiderTyc;
+package GintongameSpider.SpiderLG;
 
 import JavaBean.*;
 import SpiderUtils.SpiderContant;
@@ -9,28 +9,30 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.remote.CapabilityType;
+import org.openqa.selenium.remote.DesiredCapabilities;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-
 /**
- * Created by lenovo on 2017/2/21.
+ * Created by admin on 2017/4/12.
  */
-public class SpiderTyc {
-    private  List<String> perUrlList=new ArrayList<String>();
-    private  WebDriver driver = null;
+public class TycTwo {
+    private List<String> perUrlList=new ArrayList<String>();
+    private WebDriver driver = null;
+    private List<String> ipList=new ArrayList<String>();
 
     public static void main(String [] args) throws Exception {
-            //公司网址
+        //公司网址
 //        SpiderTyc spiderTyc=new SpiderTyc();
 //        List<String> urls = new ArrayList<String>();
 //        urls.add("http://www.tianyancha.com/company/2347469001");
@@ -108,9 +110,11 @@ public class SpiderTyc {
 //        spiderTyc.getBussinessDataByList(urls);
 
 
-        SpiderTyc spiderTyc=new SpiderTyc();
-        //spiderTyc.getBussinessDataByList("腾讯");
-        spiderTyc.getBussinessDataByOne("http://www.tianyancha.com/company/713808677",true,null);
+//        SpiderTyc spiderTyc=new SpiderTyc();
+//        //spiderTyc.getBussinessDataByList("腾讯");
+//        spiderTyc.getBussinessDataByOne("http://www.tianyancha.com/company/713808677",true,null);
+        TycTwo tycTwo=new TycTwo();
+        tycTwo.addIp();
     }
 
     /**
@@ -128,8 +132,20 @@ public class SpiderTyc {
 //        closeWebDriver();
 //    }
 
-    public  BasOrganizeInfo getBussinessDataByOne(String url,Boolean isFirst,String ouuid) throws Exception {
-        WebDriver driver = getWebDriver();
+    public void addIp() throws Exception {
+        File file=new File("E://可用IP.txt");
+        BufferedReader bufferedReader=new BufferedReader(new FileReader(file));
+        String line=bufferedReader.readLine();
+        while(line!=null){
+            ipList.add(line);
+            //System.out.println(line);
+            line=bufferedReader.readLine();
+        }
+        System.out.println("ip加载完成");
+    }
+
+    public BasOrganizeInfo getBussinessDataByOne(String url,Boolean isFirst,String ouuid) throws Exception {
+        WebDriver driver = getWebDriver(0);
         BasOrganizeInfo basOrganizeInfo=null;
         basOrganizeInfo = getBusinessDataByUrl(driver, url, isFirst,ouuid);
         System.out.println(basOrganizeInfo.getOname() + ":数据入库完毕(天眼查)");
@@ -138,8 +154,9 @@ public class SpiderTyc {
         return basOrganizeInfo;
     }
 
-    public  BasOrganizeInfo getBussinessDataByList(String ComName) throws Exception {
-        WebDriver driver = getWebDriver();
+    public  BasOrganizeInfo getBussinessDataByList(String ComName,int num) throws Exception {
+        addIp();
+        driver = getWebDriver(num);
         BasOrganizeInfo basOrganizeInfo=null;
         List<String> perUrlList=getPerUrl(driver,ComName);
         for(String url:perUrlList) {
@@ -151,7 +168,7 @@ public class SpiderTyc {
                 e.printStackTrace();
             }
         }
-
+        perUrlList.clear();
         Thread.sleep(2000);
         closeWebDriver();
         return basOrganizeInfo;
@@ -782,11 +799,18 @@ public class SpiderTyc {
      * 获取webDriver
      * @return
      */
-    public  WebDriver getWebDriver() {
+    public  WebDriver getWebDriver(int num) {
+        String ipAndport=ipList.get(num);
         System.setProperty("webdriver.chrome.driver", SpiderContant.chromeWindowsPath);
-        if(driver == null) {
-            driver = new ChromeDriver();
-        }
+        String proxyIpAndPort= ipAndport;
+        DesiredCapabilities cap = new DesiredCapabilities();
+        Proxy proxy=new Proxy();
+        proxy.setHttpProxy(proxyIpAndPort).setFtpProxy(proxyIpAndPort).setSslProxy(proxyIpAndPort);
+        cap.setCapability(CapabilityType.ForSeleniumServer.AVOIDING_PROXY, true);
+        cap.setCapability(CapabilityType.ForSeleniumServer.ONLY_PROXYING_SELENIUM_TRAFFIC, true);
+        System.setProperty("http.nonProxyHosts", ipAndport.split(":")[0]);
+        cap.setCapability(CapabilityType.PROXY, proxy);
+        WebDriver driver=new ChromeDriver(cap);
         return driver;
     }
 
@@ -797,6 +821,4 @@ public class SpiderTyc {
         driver.close();
         //System.exit(0);
     }
-
-
 }

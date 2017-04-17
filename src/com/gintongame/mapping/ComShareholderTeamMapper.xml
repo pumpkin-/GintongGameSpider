@@ -3,9 +3,9 @@
 <mapper namespace="com.gintongame.mapping.ComShareholderTeamMapper">
     <insert id="insertComShareholderTeam" parameterType="JavaBean.ComShareholderTeam" useGeneratedKeys="true">
         insert into com_shareholder_team
-        (bid,uuid,oname,legal_persen,industry,state,investment,web)
+        (bid,uuid,oname,legal_persen,industry,state,investment,web,investment_rate,subscription_time)
         VALUES
-        (#{bid},#{uuid},#{oname},#{legal_persen},#{industry},#{state},#{investment},#{web})
+        (#{bid},#{uuid},#{oname},#{legal_persen},#{industry},#{state},#{investment},#{web},#{investment_rate},#{subscription_time})
     </insert>
 
     <select id="selectComShareholderTeam" parameterType="java.lang.String" resultType="JavaBean.ComShareholderTeam">
@@ -13,7 +13,8 @@
     </select>
 
     <update id="updateComShareholderTeam" parameterType="JavaBean.ComShareholderTeam">
-        update com_shareholder_team set legal_persen=#{legal_persen},industry=#{industry},state=#{state},investment=#{investment}
+        update com_shareholder_team set legal_persen=#{legal_persen},industry=#{industry},state=#{state},investment=#{investment},
+        investment_rate=#{investment_rate},subscription_time=#{subscription_time}
         ,web=#{web} where uuid=#{uuid} and oname=#{oname}
     </update>
 </mapper>

@@ -128,5 +128,6 @@ public class Ye {
 
         //SpiderWm.getPerInfoDataByComName("多益", "228ea1c4-e1c0-4a0a-91d6-7366a0a4a006", true);
 //        SpiderMaimai.getPerInfoDataByComName("多益", "228ea1c4-e1c1-4a0a-91d6-7366a0a4a006", true);
+        SpiderMaimai.getPerInfoDataByComName("多益", "228ea1c4-e1c1-4a0a-91d6-7366a0a4a006", true,1);
     }
 }

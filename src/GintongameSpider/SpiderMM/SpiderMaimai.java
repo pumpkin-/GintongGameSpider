@@ -261,15 +261,15 @@ public class SpiderMaimai {
         }
         System.out.println(isExist);
         if(isExist==false) {
-            //TODO if(count %==0){
+            if(count %SpiderContant.ecologyOrgInsertPer==0){
                 basPersonInfoDao.insertPerInfo(basPersonInfo);
                 System.out.println(name + ":数据入库成功！");
-            //}
+            }
         }else{
-            //TODO if(count%==0) {
+            if(count%SpiderContant.ecologyOrgUpdatePer==0) {
                 basPersonInfoDao.updatePerByUrl(basPersonInfo);
                 System.out.println(name + ":数据重复修改成功！");
-            //}
+            }
         }
 
 

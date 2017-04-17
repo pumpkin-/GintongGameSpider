@@ -127,9 +127,6 @@ public class SpiderOrganize {
             }
             //增量计数器
             count=countNum(ouuid,companyName,filepath);
-            if(count!=1){
-                isFirst=false;
-            }
             if(isFirst==false){
                 System.out.println("第"+count+"次");
                 tycBasOrganizeInfo = spiderTyc.getBussinessDataByOne(organizeSpiderConfig.tycUrl.getText(), isFirst, ouuid);
@@ -147,15 +144,15 @@ public class SpiderOrganize {
             SpiderWm.getPerInfoDataByComName(organizeSpiderConfig.oname.getText(), ouuid,isFirst,count);
             //脉脉数据入库
             SpiderMaimai.getPerInfoDataByComName(organizeSpiderConfig.oname.getText(),ouuid,isFirst,count);
-            if(count%SpiderContant.ecologyOrgPerTime==0) {
+
+            if(count%SpiderContant.ecologyOrgKnowledgeTime==0) {
                 //开服网产品入库
                 CommonProduct.ergodicUrl(organizeSpiderConfig.oname.getText(), organizeSpiderConfig.kfwDyUrl.getText(),ouuid);
                 CommonProduct.ergodicUrl(organizeSpiderConfig.oname.getText(), organizeSpiderConfig.kfwSyUrl.getText(),ouuid);
                 CommonProduct.ergodicUrl(organizeSpiderConfig.oname.getText(), organizeSpiderConfig.kfwYYUrl.getText(),ouuid);
-            }
+
 
             //百度知识数据入库
-            if(count%SpiderContant.ecologyOrgKnowledgeTime==0) {
                 SpiderKnowledge.fecthNewsByCompanyName(organizeSpiderConfig.oname.getText(),ouuid, isFirst);
                 if (StringUtils.isNotEmpty(tycBasOrganizeInfo.getEname())) {
                     SpiderKnowledge.fecthNewsByCompanyName(tycBasOrganizeInfo.getEname(),ouuid, isFirst);
@@ -166,9 +163,9 @@ public class SpiderOrganize {
             }
             //各个框架入库
             if(count%SpiderContant.ecologyOrgKnowledgeTime==0) {
-                for (Element ele : knowLedgeList) {
-                    SpiderKnowledge.ergodicUrl(ele,ouuid);
-                }
+//                for (Element ele : knowLedgeList) {
+//                    SpiderKnowledge.ergodicUrl(ele,ouuid);
+//                }
             }
             for(Element ele:proGameInfoList){
                 //TODO 缺少产品接口
@@ -251,20 +248,17 @@ public class SpiderOrganize {
 //            if(StringUtils.isNotEmpty(organizeSpiderConfig.lgwUrl.getText())) {
 //                SpiderLgw.getBussinessDataByOne(organizeSpiderConfig.lgwUrl.getText(), tycBasOrganizeInfo);
 //            }
-            if(count%SpiderContant.ecologyOrgPerTime==0) {
-                //微博数据入库
-                SpiderWm.getPerInfoDataByComName(organizeSpiderConfig.oname.getText(), ouuid,isFirst,count);
-                //脉脉数据入库
-                SpiderMaimai.getPerInfoDataByComName(organizeSpiderConfig.oname.getText(),ouuid,isFirst,count);
-
+            //微博数据入库
+            SpiderWm.getPerInfoDataByComName(organizeSpiderConfig.oname.getText(), ouuid,isFirst,count);
+            //脉脉数据入库
+            SpiderMaimai.getPerInfoDataByComName(organizeSpiderConfig.oname.getText(),ouuid,isFirst,count);
+            if(count%SpiderContant.ecologyOrgKnowledgeTime==0) {
                 //开服网产品入库
                 CommonProduct.ergodicUrl(organizeSpiderConfig.oname.getText(), organizeSpiderConfig.kfwDyUrl.getText(),ouuid);
                 CommonProduct.ergodicUrl(organizeSpiderConfig.oname.getText(), organizeSpiderConfig.kfwSyUrl.getText(),ouuid);
                 CommonProduct.ergodicUrl(organizeSpiderConfig.oname.getText(), organizeSpiderConfig.kfwYYUrl.getText(),ouuid);
-            }
 
             //百度知识数据入库
-            if(count%SpiderContant.ecologyOrgKnowledgeTime==0) {
                 SpiderKnowledge.fecthNewsByCompanyName(organizeSpiderConfig.oname.getText(),ouuid,isFirst);
                 if (StringUtils.isNotEmpty(tycBasOrganizeInfo.getEname())) {
                     SpiderKnowledge.fecthNewsByCompanyName(tycBasOrganizeInfo.getEname(),ouuid, isFirst);
@@ -275,9 +269,9 @@ public class SpiderOrganize {
             }
             //各个框架入库
             if(count%SpiderContant.ecologyOrgKnowledgeTime==0) {
-                for (Element ele : knowLedgeList) {
-                    SpiderKnowledge.ergodicUrl(ele,ouuid);
-                }
+//                for (Element ele : knowLedgeList) {
+//                    SpiderKnowledge.ergodicUrl(ele,ouuid);
+//                }
             }
             for(Element ele:proGameInfoList){
                 //TODO 缺少产品接口

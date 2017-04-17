@@ -17,6 +17,26 @@ public class ComShareholderTeam {
 
     private String web;
 
+    private String investment_rate;
+
+    private String subscription_time;
+
+    public String getInvestment_rate() {
+        return investment_rate;
+    }
+
+    public void setInvestment_rate(String investment_rate) {
+        this.investment_rate = investment_rate;
+    }
+
+    public String getSubscription_time() {
+        return subscription_time;
+    }
+
+    public void setSubscription_time(String subscription_time) {
+        this.subscription_time = subscription_time;
+    }
+
     public Integer getBid() {
         return bid;
     }
