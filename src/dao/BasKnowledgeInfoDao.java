@@ -22,4 +22,7 @@ public interface BasKnowledgeInfoDao extends BaseDao<List> {
     public List<BasKnowledgeInfo> selectList(DateInfo date);
     public List<BasKnowledgeInfo> select();
     public List<String> selectBySource(String source);
+    public List<BasKnowledgeInfo> selectByMain(String main);
+    public List<BasKnowledgeInfo> selectByID(String uuid);
+    public List<BasKnowledgeInfo> selectByTime();
 }

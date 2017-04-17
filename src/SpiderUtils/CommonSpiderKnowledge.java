@@ -68,7 +68,7 @@ public class CommonSpiderKnowledge {
             @Override
             public void run() {
                 try {
-                    ergodicUrl("spiderZOL", 0, "no", SpiderContant.urlXml);
+//                    ergodicUrl("spiderZOL", 0, "no", SpiderContant.urlXml);
                 }catch (Exception e){
                     e.printStackTrace();
                 }
@@ -179,7 +179,8 @@ public class CommonSpiderKnowledge {
                 if(a==100){
                     break;
                 }
-                jxDocument = new JXDocument(Jsoup.connect(url).userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36").ignoreContentType(true).ignoreHttpErrors(true).timeout(100000).get());
+                org.jsoup.nodes.Document doc=Jsoup.connect(url.trim()).userAgent("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36").ignoreContentType(true).ignoreHttpErrors(true).timeout(100000).get();
+                jxDocument = new JXDocument(doc);
             } catch (Exception e) {
                 System.out.println("read time out");
             }
@@ -458,32 +459,11 @@ public class CommonSpiderKnowledge {
         KnowledgeSpiderConfig knowledgeSpiderConfig=parseConfigXmlByWebName(webname);
         for(Element url:knowledgeSpiderConfig.webUrls){
             if(knowledgeSpiderConfig.flag.getText().equals("jsoup")) {
-                System.out.println("Get details page");
+                System.out.println("Get details1 page");
                 ergodicDetails(knowledgeSpiderConfig, url.getText().trim(), orgflag, fromPageNum);
                 fromPageNum=0;
             }else if(knowledgeSpiderConfig.flag.getText().equals("selenium")){
-                System.out.println("Get details page");
-                WebDriver driver=getChromeDriver();
-                ergodicDetails(knowledgeSpiderConfig, orgflag, fromPageNum,driver,url.getText().trim());
-                fromPageNum=0;
-
-                driver.close();
-            }else{
-                throw new XpathSyntaxErrorException("you shuould chose jsoup or selenium");
-            }
-        }
-    }
-
-    public static void ergodicUrl(String webname,int fromPageNum,String orgflag,String urlXml) throws Exception {
-        System.out.println("Start parsing XML file");
-        KnowledgeSpiderConfig knowledgeSpiderConfig=parseConfigXmlByWebName(webname,urlXml);
-        for(Element url:knowledgeSpiderConfig.webUrls){
-            if(knowledgeSpiderConfig.flag.getText().equals("jsoup")) {
-                System.out.println("Get details page");
-                ergodicDetails(knowledgeSpiderConfig, url.getText().trim(), orgflag, fromPageNum);
-                fromPageNum=0;
-            }else if(knowledgeSpiderConfig.flag.getText().equals("selenium")){
-                System.out.println("Get details page");
+                System.out.println("Get details2 page");
                 WebDriver driver=getChromeDriver();
                 ergodicDetails(knowledgeSpiderConfig, orgflag, fromPageNum,driver,url.getText().trim());
                 fromPageNum=0;
@@ -493,6 +473,26 @@ public class CommonSpiderKnowledge {
             }
         }
     }
+
+//    public static void ergodicUrl(String webname,int fromPageNum,String orgflag,String urlXml) throws Exception {
+//        System.out.println("Start parsing XML file");
+//        KnowledgeSpiderConfig knowledgeSpiderConfig=parseConfigXmlByWebName(webname,urlXml);
+//        for(Element url:knowledgeSpiderConfig.webUrls){
+//            if(knowledgeSpiderConfig.flag.getText().equals("jsoup")) {
+//                System.out.println("Get details page");
+//                ergodicDetails(knowledgeSpiderConfig, url.getText().trim(), orgflag, fromPageNum);
+//                fromPageNum=0;
+//            }else if(knowledgeSpiderConfig.flag.getText().equals("selenium")){
+//                System.out.println("Get details page");
+//                WebDriver driver=getChromeDriver();
+//                ergodicDetails(knowledgeSpiderConfig, orgflag, fromPageNum,driver,url.getText().trim());
+//                fromPageNum=0;
+//                driver.close();
+//            }else{
+//                throw new XpathSyntaxErrorException("you shuould chose jsoup or selenium");
+//            }
+//        }
+//    }
 
     /**
      * 通过url获取详情页 Jsoup
@@ -503,6 +503,7 @@ public class CommonSpiderKnowledge {
         Map<String,List<Object>> map=new HashMap<String, List<Object>>();
         System.out.println("Start getting starturl's DOM tree");
         doc=getJXDocument(startUrl);
+        System.out.println("解析成功");
         //条数
         int a=1;
         //页数
@@ -599,8 +600,9 @@ public class CommonSpiderKnowledge {
         JXDocument doc=null;
         String childLink=null;
         Map<String,List<Object>> map=new HashMap<String, List<Object>>();
-        System.out.println("Start getting starturl's DOM tree");
+        System.out.println("");
         doc=getJXDocument(driver,startUrl);
+
         //页数
         int i=1;
         //条数
@@ -895,10 +897,17 @@ public class CommonSpiderKnowledge {
         if(StringUtils.isNotEmpty(knowledgeSpiderConfig.ptime.getText())) {
             if (map.get("ptime")==null||map.get("ptime").size()<=1) {
                 ptimetest = getTag(childDocumet, knowledgeSpiderConfig.ptime.getText()).toString().replaceAll("\\D", " ").trim();
+                if (ptimetest.contains("  ")){
+                    ptimetest=ptimetest.split("  ")[0];
+                    System.out.println("------+++++++++++-----"+ptimetest+"-----------");
+                }
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat(knowledgeSpiderConfig.ptime.attributeValue("timeFormat"));
                 if(StringUtils.isNotEmpty(ptimetest)) {
+                    System.out.println(ptimetest);
                     Date date = simpleDateFormat.parse(ptimetest);
+                    System.out.println(date);
                     ptime = simpleDateFormatchange.format(date);
+                    System.out.println(ptime);
                 }
             } else {
                 try {
@@ -960,8 +969,8 @@ public class CommonSpiderKnowledge {
         //正文
         if(StringUtils.isEmpty(knowledgeSpiderConfig.childnext.getText())) {
             List<JXNode> mainlist = getTagN(childDocumet,knowledgeSpiderConfig.main.getText());
-            System.out.println(mainlist);
             for (JXNode objmain : mainlist) {
+
                 if (StringUtils.isNotEmpty(objmain.getElement().text())) {
                     main = (main + "\r\n<p>" + objmain.getElement().text() + "</p>").replace("null\r\n", "").replace(Jsoup.parse("&nbsp;").text(), "");
                 }
@@ -1056,6 +1065,7 @@ public class CommonSpiderKnowledge {
     public static void depositJavabean(String title, String ptime, String type, String cover, String tag, String author, String main, String puuid, String kuuid, String childLink, String source, String authorurl){
         BasKnowledgeInfo basKnowledgeInfo = new BasKnowledgeInfo();
         basKnowledgeInfo.setTitle(title);
+        System.out.println("********************************"+ptime);
         basKnowledgeInfo.setPtime(ptime);
         basKnowledgeInfo.setType(type);
         basKnowledgeInfo.setCover(cover);

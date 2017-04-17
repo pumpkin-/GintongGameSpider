@@ -5,6 +5,7 @@ import dao.impl.BasPersonInfoImpl;
 import dao.impl.BasKnowledgeInfoDaoImpl;
 import org.apache.commons.lang3.StringUtils;
 
+import javax.naming.NameNotFoundException;
 import java.io.UnsupportedEncodingException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -255,6 +256,51 @@ public class LevenshteinDis {
     }
 
     /**
+     *
+     * @param basKnowledgeInfo
+     * @return
+     */
+    public static boolean isExistBasKnowledgeInfo(BasKnowledgeInfo basKnowledgeInfo){
+        System.out.println("-----------------------------------------");
+        String essay = null;
+        BasKnowledgeInfoDaoImpl basKnowledgeInfoDaoImpl=new BasKnowledgeInfoDaoImpl();
+        System.out.println("++++++++++++++++++++++++++++++++++++++");
+        List<BasKnowledgeInfo> list=basKnowledgeInfoDaoImpl.select();
+        System.out.println("-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+");
+        if(list.size()>0 || list!=null){
+            System.out.println("从数据库抽出"+list.size()+"条数据作对比");
+            for (int i=0;i<list.size();i++){
+                essay = list.get(i).getMain();
+                System.out.println("essay+++++"+essay);
+                double dis=0;
+                //修改为错误代码
+                try {
+                    System.out.println("------------getSimilarity-----------");
+                    dis = getSimilarity(essay, basKnowledgeInfo.getMain());
+                    System.out.println(dis);
+                } catch (Exception e) {
+                    dis = 0;
+                }
+                if (StringUtils.isEmpty(basKnowledgeInfo.getMain())) {
+                    System.out.println("this is the null");
+                } else if (dis > 0.95) {
+                    System.out.println("************************************************");
+                    CommonSpiderKnowledge.storeBugdata(essay, basKnowledgeInfo.getMain(), basKnowledgeInfo.getUuid(), basKnowledgeInfo.getSource());
+                   List<BasKnowledgeInfo> listMain= basKnowledgeInfoDaoImpl.selectByMain(essay);
+                    for (int j=0;j<listMain.size();j++){
+                        System.out.println("++++++++++++++++++++++++++++++++"+listMain.get(j).getUuid());
+                    }
+                    System.out.println("--------------This data should be delete------------------");
+                    return false;
+                } else {
+                    fg = 0;
+                }
+
+            }
+        }
+        return true;
+    }
+    /**
      * 判断作者是否重复
      * @param source
      * @param name
@@ -355,6 +401,7 @@ public class LevenshteinDis {
             //将两个字符串中的中文字符以及出现的总数封装到，AlgorithmMap中
             for (int i = 0; i < doc1.length(); i++) {
                 char d1 = doc1.charAt(i);
+                System.out.println();
                 if (isHanZi(d1)) {
                     int charIndex = getGB2312Id(d1);
                     if (charIndex != -1) {

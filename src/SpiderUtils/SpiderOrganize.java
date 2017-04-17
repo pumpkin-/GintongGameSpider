@@ -146,7 +146,7 @@ public class SpiderOrganize {
             //微博数据入库
             SpiderWm.getPerInfoDataByComName(organizeSpiderConfig.oname.getText(), ouuid,isFirst,count);
             //脉脉数据入库
-            SpiderMaimai.getPerInfoDataByComName(organizeSpiderConfig.oname.getText(),ouuid,isFirst);
+            SpiderMaimai.getPerInfoDataByComName(organizeSpiderConfig.oname.getText(),ouuid,isFirst,count);
             if(count%SpiderContant.ecologyOrgPerTime==0) {
                 //开服网产品入库
                 CommonProduct.ergodicUrl(organizeSpiderConfig.oname.getText(), organizeSpiderConfig.kfwDyUrl.getText(),ouuid);
@@ -255,7 +255,7 @@ public class SpiderOrganize {
                 //微博数据入库
                 SpiderWm.getPerInfoDataByComName(organizeSpiderConfig.oname.getText(), ouuid,isFirst,count);
                 //脉脉数据入库
-                SpiderMaimai.getPerInfoDataByComName(organizeSpiderConfig.oname.getText(),ouuid,isFirst);
+                SpiderMaimai.getPerInfoDataByComName(organizeSpiderConfig.oname.getText(),ouuid,isFirst,count);
 
                 //开服网产品入库
                 CommonProduct.ergodicUrl(organizeSpiderConfig.oname.getText(), organizeSpiderConfig.kfwDyUrl.getText(),ouuid);

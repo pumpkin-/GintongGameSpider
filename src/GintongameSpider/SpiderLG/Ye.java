@@ -127,6 +127,6 @@ public class Ye {
 //        spiderTyc.getBussinessDataByOne("http://www.tianyancha.com/company/2358815206",false,"87777405-7027-49c5-a938-92a8a0874eb9");
 
         //SpiderWm.getPerInfoDataByComName("多益", "228ea1c4-e1c0-4a0a-91d6-7366a0a4a006", true);
-        SpiderMaimai.getPerInfoDataByComName("多益", "228ea1c4-e1c1-4a0a-91d6-7366a0a4a006", true);
+//        SpiderMaimai.getPerInfoDataByComName("多益", "228ea1c4-e1c1-4a0a-91d6-7366a0a4a006", true);
     }
 }
