@@ -7,6 +7,9 @@ import SpiderUtils.SpiderPerson;
 import dao.impl.BasKnowledgeInfoDaoImpl;
 import org.apache.commons.lang3.StringUtils;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -66,9 +69,12 @@ public class DeleteDistinctDate {
     }
 
     public static void main(String[] args) throws BasKnowledgeInfoDaoImpl.FormatEexception {
-//        BasKnowledgeInfoDaoImpl basKnowledgeInfoDaoImpl=new BasKnowledgeInfoDaoImpl();
-//        List<BasKnowledgeInfo> list=basKnowledgeInfoDaoImpl.selectByTime();
-
+        try {
+            System.setOut(new PrintStream(new File("D:/logs/outLog.txt")));
+            System.out.println("System.out.println******************");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
 
