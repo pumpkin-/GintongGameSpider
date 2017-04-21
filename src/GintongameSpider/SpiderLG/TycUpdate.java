@@ -115,7 +115,7 @@ public class TycUpdate {
 
 
         TycUpdate tycUpdate=new TycUpdate();
-        tycUpdate.getBussinessDataByList("蓝帆医疗股份有限公司");
+        tycUpdate.getBussinessDataByList("浙江梧斯源通信科技股份有限公司");
         //tycUpdate.getBussinessDataByOne("http://www.tianyancha.com/company/1600645095",true,null);
     }
 
@@ -320,9 +320,35 @@ public class TycUpdate {
         String usedName = null;
         usedName = doc.select("div[class=historyName45Bottom position-abs new-border pl8 pr8 pt4 pb4 ng-binding]").text();
        // System.out.println(usedName);
-        //注册时间
-        String ztime = doc.select("div[class=baseinfo-module-content-value ng-binding]").text().split(" ")[1];
-       // System.out.println(ztime);
+        String zmoney=null;
+        String ztime=null;
+        String state=null;
+        int num=0;
+
+        Elements eless=doc.select("div.baseInfo_model2017 tbody tr td div");
+        for(Element element:eless){
+            if(num==1){
+                zmoney=element.text();
+            }
+            if(num==2){
+                ztime=element.text();
+            }
+            if(num==3){
+                state=element.text();
+            }
+            num++;
+        }
+        //System.out.println(zmoney+"--"+ztime+"--"+state);
+
+//        //注册时间
+//        String ztime = doc.select("div[class=baseinfo-module-content-value ng-binding]").text().split(" ")[1];
+//       // System.out.println(ztime);
+//        //状态
+//        String state = doc.select("div[class=baseinfo-module-content-value ng-binding]").text().split(" ")[2];
+//        //System.out.println(state);
+//        //注册资本
+//        String zmoney = doc.select("div[class=baseinfo-module-content-value ng-binding]").text().split(" ")[0];
+//        // System.out.println(zmoney);
 
         //法定代表人
         String boss = doc.select("a[class=in-block vertival-middle overflow-width f14 mr20 ng-binding ng-scope]").text();
@@ -330,13 +356,6 @@ public class TycUpdate {
         //法定代表人连接
         String bossUrl = "http://www.tianyancha.com" + doc.select("a[class=in-block vertival-middle overflow-width f14 mr20 ng-binding ng-scope]").attr("href");
         //System.out.println(bossUrl);
-        //注册资本
-        String zmoney = doc.select("div[class=baseinfo-module-content-value ng-binding]").text().split(" ")[0];
-       // System.out.println(zmoney);
-        //状态
-        String state = doc.select("div[class=baseinfo-module-content-value ng-binding]").text().split(" ")[2];
-        //System.out.println(state);
-
 
         //行业
         String industry = doc.select("div.c8:contains(行业) span.ng-binding").text();

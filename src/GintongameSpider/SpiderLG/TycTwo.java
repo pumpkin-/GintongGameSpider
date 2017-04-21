@@ -131,8 +131,8 @@ public class TycTwo {
 //        spiderTyc.getBussinessDataByList(urls);
 
 
-        TycTwo spiderTyc=new TycTwo();
-        spiderTyc.getBussinessDataByList("腾讯",0);
+//        TycTwo spiderTyc=new TycTwo();
+//        spiderTyc.getBussinessDataByList("腾讯",0);
 //        spiderTyc.getBussinessDataByOne("http://www.tianyancha.com/company/713808677",true,null);
        // TycTwo tycTwo=new TycTwo();
        // tycTwo.addIp();
@@ -166,7 +166,7 @@ public class TycTwo {
     }
 
     public BasOrganizeInfo getBussinessDataByOne(String url,Boolean isFirst,String ouuid) throws Exception {
-        WebDriver driver = getWebDriver(0);
+        WebDriver driver = getWebDriver(null);
         BasOrganizeInfo basOrganizeInfo=null;
         basOrganizeInfo = getBusinessDataByUrl(driver, url, isFirst,ouuid);
         System.out.println(basOrganizeInfo.getOname() + ":数据入库完毕(天眼查)");
@@ -175,9 +175,9 @@ public class TycTwo {
         return basOrganizeInfo;
     }
 
-    public  BasOrganizeInfo getBussinessDataByList(String ComName,int num) throws Exception {
+    public  BasOrganizeInfo getBussinessDataByList(String ComName,String ip) throws Exception {
         addIp();
-        driver = getWebDriver(num);
+        driver = getWebDriver(ip);
         //getAbuYunDriver();
         BasOrganizeInfo basOrganizeInfo=null;
         List<String> perUrlList=getPerUrl(driver,ComName);
@@ -207,14 +207,26 @@ public class TycTwo {
         int page=0;
         String comUrl="http://www.tianyancha.com/search?key="+comName+"&checkFrom=searchBox";
         driver.get(comUrl);
-        Thread.sleep(10000);
-        Authenticator.setDefault(new ProxyAuthenticator(proxyUser, proxyPass));
+        Thread.sleep(1000);
         WebElement webElementMain = driver.findElement(By.xpath("/html"));
         Document docMain = Jsoup.parse(webElementMain.getAttribute("outerHTML"));
-        Elements elements=docMain.select("a[class=query_name search-new-color]");
+//        Elements elements=docMain.select("a[class=query_name search-new-color]");
+//        for(Element element:elements){
+//            perUrlList.add(element.attr("href"));
+//            System.out.println(element.attr("href"));
+//        }
+        Elements elements=docMain.select("div[class=search_result_single search-2017 pb20 pt20 pl30 pr30 ng-scope]");
         for(Element element:elements){
-            perUrlList.add(element.attr("href"));
-            System.out.println(element.attr("href"));
+            System.out.println("走我了么？");
+            String href=element.select("a[class=query_name search-new-color ng-isolate-scope]").attr("href");
+            String gupiao=element.select("div p[ng-if=node.bondType]").text();
+            System.out.println(href);
+            System.out.println(gupiao);
+            if(StringUtils.isNotEmpty(gupiao)){
+                perUrlList.add(href);
+                return perUrlList;
+            }
+            System.out.println("---------------------------------");
         }
         System.out.println("第1页数据已经跑完");
         Element elementsPage=docMain.select("div[class=total ng-binding]").last();
@@ -230,10 +242,14 @@ public class TycTwo {
                 try{
                     String url="http://www.tianyancha.com/search/p"+i+"?key="+comName;
                     docMain=getDocumentBySelenium(driver,url);
-                    Elements elementsMain=docMain.select("a[class=query_name search-new-color]");
-                    for(Element element:elementsMain){
-                        System.out.println(element.attr("href"));
-                        perUrlList.add(element.attr("href"));
+                    Elements eles=docMain.select("div[class=search_result_single search-2017 pb20 pt20 pl30 pr30 ng-scope]");
+                    for(Element element:eles){
+                        String href=element.select("a[class=query_name search-new-color]").attr("href");
+                        String gupiao=element.select("div p[ng-if=node.bondType]").text();
+                        if(StringUtils.isNotEmpty(gupiao)){
+                            perUrlList.add(href);
+                            return perUrlList;
+                        }
                     }
                     System.out.println("第"+i+"页数据已经跑完");
                     Thread.sleep(5000);
@@ -331,8 +347,26 @@ public class TycTwo {
         usedName = doc.select("div[class=historyName45Bottom position-abs new-border pl8 pr8 pt4 pb4 ng-binding]").text();
         // System.out.println(usedName);
         //注册时间
-        String ztime = doc.select("div[class=baseinfo-module-content-value ng-binding]").text().split(" ")[1];
+//        String ztime = doc.select("div[class=baseinfo-module-content-value ng-binding]").text().split(" ")[1];
         // System.out.println(ztime);
+
+        String zmoney=null;
+        String ztime=null;
+        String state=null;
+        int num=0;
+        Elements eless=doc.select("div.baseInfo_model2017 tbody tr td div");
+        for(Element element:eless){
+            if(num==1){
+                zmoney=element.text();
+            }
+            if(num==2){
+                ztime=element.text();
+            }
+            if(num==3){
+                state=element.text();
+            }
+            num++;
+        }
 
         //法定代表人
         String boss = doc.select("a[class=in-block vertival-middle overflow-width f14 mr20 ng-binding ng-scope]").text();
@@ -341,10 +375,10 @@ public class TycTwo {
         String bossUrl = "http://www.tianyancha.com" + doc.select("a[class=in-block vertival-middle overflow-width f14 mr20 ng-binding ng-scope]").attr("href");
         //System.out.println(bossUrl);
         //注册资本
-        String zmoney = doc.select("div[class=baseinfo-module-content-value ng-binding]").text().split(" ")[0];
+//        String zmoney = doc.select("div[class=baseinfo-module-content-value ng-binding]").text().split(" ")[0];
         // System.out.println(zmoney);
         //状态
-        String state = doc.select("div[class=baseinfo-module-content-value ng-binding]").text().split(" ")[2];
+//        String state = doc.select("div[class=baseinfo-module-content-value ng-binding]").text().split(" ")[2];
         //System.out.println(state);
 
 
@@ -824,16 +858,17 @@ public class TycTwo {
      * 获取webDriver
      * @return
      */
-    public  WebDriver getWebDriver(int num) {
-        String ipAndport=ipList.get(num);
+    public  WebDriver getWebDriver(String ip) {
+        //String ipAndport=ipList.get(num);
         System.setProperty("webdriver.chrome.driver", SpiderContant.chromeWindowsPath);
-        String proxyIpAndPort= ipAndport;
+        String proxyIpAndPort= ip;
+        System.out.println(ip);
         DesiredCapabilities cap = new DesiredCapabilities();
         Proxy proxy=new Proxy();
         proxy.setHttpProxy(proxyIpAndPort).setFtpProxy(proxyIpAndPort).setSslProxy(proxyIpAndPort);
         cap.setCapability(CapabilityType.ForSeleniumServer.AVOIDING_PROXY, true);
         cap.setCapability(CapabilityType.ForSeleniumServer.ONLY_PROXYING_SELENIUM_TRAFFIC, true);
-        System.setProperty("http.nonProxyHosts", ipAndport.split(":")[0]);
+        System.setProperty("http.nonProxyHosts", ip.split(":")[0]);
         cap.setCapability(CapabilityType.PROXY, proxy);
         WebDriver driver=new ChromeDriver(cap);
         return driver;
