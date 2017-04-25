@@ -25,9 +25,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Created by admin on 2017/4/11.
+ * Created by admin on 2017/4/24.
  */
-public class TycUpdate {
+public class TycOne {
     private List<String> perUrlList=new ArrayList<String>();
     private WebDriver driver = null;
 
@@ -110,8 +110,8 @@ public class TycUpdate {
 //        spiderTyc.getBussinessDataByList(urls);
 
 
-        TycUpdate tycUpdate=new TycUpdate();
-        tycUpdate.getBussinessDataByList("浙江梧斯源通信科技股份有限公司");
+        TycOne tycOne=new TycOne();
+        tycOne.getBussinessDataByList("多益");
         //tycUpdate.getBussinessDataByOne("http://www.tianyancha.com/company/1600645095",true,null);
     }
 
@@ -182,7 +182,7 @@ public class TycUpdate {
 //        }
         Thread.sleep(3000);
         Boolean isBreak=false;
-            if(docMain.outerHtml().contains("移动到此开始验证")){
+        if(docMain.outerHtml().contains("移动到此开始验证")){
             isBreak=mainProcess(docMain);
         }else{
             isBreak=true;
@@ -196,14 +196,8 @@ public class TycUpdate {
             for (Element element : elements) {
                 System.out.println("走我了么？");
                 String href = element.select("a[class=query_name search-new-color ng-isolate-scope]").attr("href");
-                String gupiao = element.select("div p[ng-if=node.bondType]").text();
-                System.out.println(href);
-                System.out.println(gupiao);
-                if (StringUtils.isNotEmpty(gupiao)) {
-                    perUrlList.add(href);
-                    return perUrlList;
-                }
-                System.out.println("---------------------------------");
+                perUrlList.add(href);
+                return perUrlList;
             }
             System.out.println("第1页数据已经跑完");
             Element elementsPage = docMain.select("div[class=total ng-binding]").last();
@@ -290,7 +284,7 @@ public class TycUpdate {
         String oname=null;
         String uuid=null;
         BasOrganizeInfo basOrgan = new BasOrganizeInfo();
-            driver.get(CompanyUrl);
+        driver.get(CompanyUrl);
         Thread.sleep(2000);
         WebElement webElement = driver.findElement(By.xpath("/html"));
         Document doc = Jsoup.parse(webElement.getAttribute("outerHTML"));
@@ -305,13 +299,13 @@ public class TycUpdate {
         //System.out.println(doc.outerHtml());
         //组织名
         oname = doc.select("span[   class=f18 in-block vertival-middle ng-binding]").text();
-       // System.out.println(oname);
+        // System.out.println(oname);
         //联系方式
         String con_way = doc.select("div[class=in-block vertical-top overflow-width mr20]:contains(电话) span.ng-binding").text();
-       // System.out.println(con_way);
+        // System.out.println(con_way);
         //邮箱
         String email = doc.select("span[class=in-block vertical-top overflow-width emailWidth ng-binding]").text();
-       // System.out.println(email);
+        // System.out.println(email);
         //地址
         String address = doc.select("span[class=in-block overflow-width vertical-top emailWidth ng-binding]").text();
         //System.out.println(address);
@@ -328,7 +322,7 @@ public class TycUpdate {
         //曾用名
         String usedName = null;
         usedName = doc.select("div[class=historyName45Bottom position-abs new-border pl8 pr8 pt4 pb4 ng-binding]").text();
-       // System.out.println(usedName);
+        // System.out.println(usedName);
         String zmoney=null;
         String ztime=null;
         String state=null;
@@ -1130,6 +1124,7 @@ public class TycUpdate {
         }
         return false;
     }
+
 
 
 

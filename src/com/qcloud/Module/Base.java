@@ -1,6 +1,6 @@
 package com.qcloud.Module;
 
-import com.qcloud.Common.*;
+import com.qcloud.Common.Request;
 
 import java.util.TreeMap;
 
@@ -88,4 +88,5 @@ public abstract class Base {
 		String response = Request.send(params, secretId, secretKey, requestMethod, serverHost, serverUri, fileName);
 		return response;
 	}
+
 }

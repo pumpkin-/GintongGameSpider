@@ -1,6 +1,6 @@
 package GintongameSpider.SpiderTyc;
 
-import GintongameSpider.SpiderLG.TycUpdate;
+import GintongameSpider.SpiderLG.TycOne;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -15,25 +15,43 @@ import java.util.List;
 public class TycDataBase {
     public static void main(String [] args) throws Exception {
         String driver1 = "com.mysql.jdbc.Driver";
-        String url = "jdbc:mysql://123.59.74.132:3306/big_data?useUnicode=true&useCursorFetch=true&defaultFetchSize=100&characterEncoding=utf-8";
+        String url = "jdbc:mysql://123.59.74.132:3306/game_db?useUnicode=true&useCursorFetch=true&defaultFetchSize=100&characterEncoding=utf-8";
         String username = "gtcom";
         String password = "admin@gt.com1";
         Class.forName(driver1).newInstance();
         Connection con = DriverManager.getConnection(url, username, password);
-        String selectSql="select * from finance_info_huangda";
+        String selectSql="select DISTINCT (name) from qiyecha";
+        String busSql="select distinct(cname) from bas_business_info";
         System.out.println(selectSql);
         Statement sta = con.createStatement();
+        Statement sta1=con.createStatement();
         ResultSet rs = sta.executeQuery(selectSql);
+        ResultSet busRs=sta1.executeQuery(busSql);
         List<String> nameList=new ArrayList<String>();
+        List<String> busNameList=new ArrayList<String>();
+        while(busRs.next()){
+            String cname=busRs.getString("cname");
+            busNameList.add(cname);
+        }
+
         int n=0;
         while(rs.next()){
-            if(18110<=n&&n<=18200) {
-                String fullname = rs.getString("fullname");
-                nameList.add(fullname);
-                System.out.println(fullname);
-            }
-            n++;
+                Boolean isExist=false;
+            //if(0<=n&&n<=100) {
+                String name = rs.getString("name");
+                for(int i=0;i<busNameList.size();i++){
+                    if(busNameList.get(i).equals(name)){
+                        isExist=true;
+                    }
+                }
+                if(isExist==false){
+                    nameList.add(name);
+                    n++;
+                    System.out.println(name+"--"+n);
+                }
+            //}
         }
+        System.out.println(n);
 //        List<String> ipList=new ArrayList<String>();
 //        String useIp=null;
 //        org.jsoup.nodes.Document doc1=Jsoup.connect("http://www.xdaili.cn/ipagent//privateProxy/getDynamicIP/MF20174182996HjChgo/d0d4ced0f83211e6942200163e1a31c0?returnType=1")
@@ -48,12 +66,12 @@ public class TycDataBase {
 //            useIp=ip;
 //        }
 
-        TycUpdate tycUpdate=new TycUpdate();
+        TycOne tycOne=new TycOne();
         //TycTwo tycTwo=new TycTwo();
         for(int i=0;i<nameList.size();i++){
             try {
                 //tycTwo.getBussinessDataByList(nameList.get(i),useIp);
-                tycUpdate.getBussinessDataByList(nameList.get(i));
+                tycOne.getBussinessDataByList(nameList.get(i));
             }catch (Exception e){
                 e.printStackTrace();
             }

@@ -8,12 +8,13 @@ public class Demo {
 	public static void main(String[] args) {
 		/* 如果是循环调用下面举例的接口，需要从此处开始你的循环语句。切记！ */
 		TreeMap<String, Object> config = new TreeMap<String, Object>();
-		config.put("SecretId", "AKIDUrU3WoPeKo7HLJbmJfpofMsRBk8L4I1Z");
-		config.put("SecretKey", "YwDJF4iBTbYK5khaKuKZcb3LSN9oNm3L");
+		config.put("SecretId", "AKIDzXJA0vffBWfswxty34Qi09NSuTuXmSq4");
+		config.put("SecretKey", "CF73JoLwfitv6JnFWcXIvNtVyFMXkx1D");
+		//config.put("SecretKey", "YwDJF4iBTbYK5khaKuKZcb3LSN9oNm3L");
 		/* 请求方法类型 POST、GET */
 		config.put("RequestMethod", "GET");
 		/* 区域参数，可选: gz:广州; sh:上海; hk:香港; ca:北美;等。 */
-		config.put("DefaultRegion", "bj");
+		config.put("DefaultRegion", "gz");
 
 		/*
 		 * 你将要使用接口所在的模块，可以从 官网->云api文档->XXXX接口->接口描述->域名
@@ -30,9 +31,8 @@ public class Demo {
 		/* 将需要输入的参数都放入 params 里面，必选参数是必填的。 */
 		/* DescribeInstances 接口的部分可选参数如下 */
 		params.put("content", "李亚鹏挺王菲：加油！孩儿他娘。");
-		//params.put("limit", 3);
 		/*在这里指定所要用的签名算法，不指定默认为HmacSHA1*/
-		//params.put("SignatureMethod", "HmacSHA256");
+		params.put("SignatureMethod", "HmacSHA256");
 		
 		/* generateUrl方法生成请求串,可用于调试使用 */
 		System.out.println(module.generateUrl("TextClassify", params));

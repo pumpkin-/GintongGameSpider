@@ -38,5 +38,6 @@
         <mapper resource="com/gintongame/mapping/ComChangeInfoMapper.xml"/>
         <mapper resource="com/gintongame/mapping/BasKnowledgeInfoMapper.xml"/>
         <mapper resource="com/gintongame/mapping/ProKnowledgeMapper.xml"/>
+        <mapper resource="com/gintongame/mapping/QiYeChaMapper.xml"/>
     </mappers>
 </configuration>
