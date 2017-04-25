@@ -1,4 +1,4 @@
-package GintongameSpider.SpiderTyc;
+package GintongameSpider.SpiderLG;
 
 import JavaBean.*;
 import SpiderUtils.SpiderContant;
@@ -9,28 +9,30 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-
 /**
- * Created by lenovo on 2017/2/21.
+ * Created by admin on 2017/4/24.
  */
-public class SpiderTyc {
-    private  List<String> perUrlList=new ArrayList<String>();
-    private  WebDriver driver = null;
+public class TycOne {
+    private List<String> perUrlList=new ArrayList<String>();
+    private WebDriver driver = null;
 
     public static void main(String [] args) throws Exception {
-            //公司网址
+        //公司网址
 //        SpiderTyc spiderTyc=new SpiderTyc();
 //        List<String> urls = new ArrayList<String>();
 //        urls.add("http://www.tianyancha.com/company/2347469001");
@@ -108,9 +110,9 @@ public class SpiderTyc {
 //        spiderTyc.getBussinessDataByList(urls);
 
 
-        SpiderTyc spiderTyc=new SpiderTyc();
-        //spiderTyc.getBussinessDataByList("腾讯");
-        spiderTyc.getBussinessDataByOne("http://www.tianyancha.com/company/713808677",true,null);
+        TycOne tycOne=new TycOne();
+        tycOne.getBussinessDataByList("多益");
+        //tycUpdate.getBussinessDataByOne("http://www.tianyancha.com/company/1600645095",true,null);
     }
 
     /**
@@ -128,7 +130,7 @@ public class SpiderTyc {
 //        closeWebDriver();
 //    }
 
-    public  BasOrganizeInfo getBussinessDataByOne(String url,Boolean isFirst,String ouuid) throws Exception {
+    public BasOrganizeInfo getBussinessDataByOne(String url,Boolean isFirst,String ouuid) throws Exception {
         WebDriver driver = getWebDriver();
         BasOrganizeInfo basOrganizeInfo=null;
         basOrganizeInfo = getBusinessDataByUrl(driver, url, isFirst,ouuid);
@@ -141,19 +143,21 @@ public class SpiderTyc {
     public  BasOrganizeInfo getBussinessDataByList(String ComName) throws Exception {
         WebDriver driver = getWebDriver();
         BasOrganizeInfo basOrganizeInfo=null;
-        List<String> perUrlList=getPerUrl(driver,ComName);
-        for(String url:perUrlList) {
-            try {
-                basOrganizeInfo = getBusinessDataByUrl(driver, url, true, null);
-                System.out.println(basOrganizeInfo.getOname() + ":数据入库完毕(天眼查)");
-                Thread.sleep(2000);
-            }catch (Exception e){
-                e.printStackTrace();
+        perUrlList=getPerUrl(driver,ComName);
+        if(perUrlList.size()!=0) {
+            for (String url : perUrlList) {
+                try {
+                    basOrganizeInfo = getBusinessDataByUrl(driver, url, true, null);
+                    System.out.println(basOrganizeInfo.getOname() + ":数据入库完毕(天眼查)");
+                    Thread.sleep(2000);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         }
-
+        perUrlList.clear();
         Thread.sleep(2000);
-        closeWebDriver();
+        //closeWebDriver();
         return basOrganizeInfo;
     }
 
@@ -168,38 +172,63 @@ public class SpiderTyc {
         int page=0;
         String comUrl="http://www.tianyancha.com/search?key="+comName+"&checkFrom=searchBox";
         driver.get(comUrl);
+        Thread.sleep(1000);
         WebElement webElementMain = driver.findElement(By.xpath("/html"));
         Document docMain = Jsoup.parse(webElementMain.getAttribute("outerHTML"));
-        Elements elements=docMain.select("a[class=query_name search-new-color]");
-        for(Element element:elements){
-            perUrlList.add(element.attr("href"));
-            System.out.println(element.attr("href"));
+//        Elements elements=docMain.select("a[class=query_name search-new-color]");
+//        for(Element element:elements){
+//            perUrlList.add(element.attr("href"));
+//            System.out.println(element.attr("href"));
+//        }
+        Thread.sleep(3000);
+        Boolean isBreak=false;
+        if(docMain.outerHtml().contains("移动到此开始验证")){
+            isBreak=mainProcess(docMain);
+        }else{
+            isBreak=true;
         }
-        System.out.println("第1页数据已经跑完");
-        Element elementsPage=docMain.select("div[class=total ng-binding]").last();
-        if(elementsPage!=null) {
-            String pages = elementsPage.text();
-            Pattern pattern = Pattern.compile("[0-9]{1,}");
-            Matcher matcher = pattern.matcher(pages);
-            while (matcher.find()) {
-                page = Integer.parseInt(matcher.group(0));
-                System.out.println("page----:"+page);
+        if(isBreak==true) {
+            driver.get(comUrl);
+            Thread.sleep(1000);
+            WebElement webElementMains = driver.findElement(By.xpath("/html"));
+            Document docMains = Jsoup.parse(webElementMains.getAttribute("outerHTML"));
+            Elements elements = docMain.select("div[class=search_result_single search-2017 pb20 pt20 pl30 pr30 ng-scope]");
+            for (Element element : elements) {
+                System.out.println("走我了么？");
+                String href = element.select("a[class=query_name search-new-color ng-isolate-scope]").attr("href");
+                perUrlList.add(href);
+                return perUrlList;
             }
-            for(int i=2;i<page;i++){
-                try{
-                    String url="http://www.tianyancha.com/search/p"+i+"?key="+comName;
-                    docMain=getDocumentBySelenium(driver,url);
-                    Elements elementsMain=docMain.select("a[class=query_name search-new-color]");
-                    for(Element element:elementsMain){
-                        System.out.println(element.attr("href"));
-                        perUrlList.add(element.attr("href"));
-                    }
-                    System.out.println("第"+i+"页数据已经跑完");
-                    Thread.sleep(5000);
-                }catch (Exception e){
-                    e.printStackTrace();
+            System.out.println("第1页数据已经跑完");
+            Element elementsPage = docMain.select("div[class=total ng-binding]").last();
+            if (elementsPage != null) {
+                String pages = elementsPage.text();
+                Pattern pattern = Pattern.compile("[0-9]{1,}");
+                Matcher matcher = pattern.matcher(pages);
+                while (matcher.find()) {
+                    page = Integer.parseInt(matcher.group(0));
+                    System.out.println("page----:" + page);
                 }
+                for (int i = 2; i < page; i++) {
+                    try {
+                        String url = "http://www.tianyancha.com/search/p" + i + "?key=" + comName;
+                        docMain = getDocumentBySelenium(driver, url);
+                        Elements eles = docMain.select("div[class=search_result_single search-2017 pb20 pt20 pl30 pr30 ng-scope]");
+                        for (Element element : eles) {
+                            String href = element.select("a[class=query_name search-new-color]").attr("href");
+                            String gupiao = element.select("div p[ng-if=node.bondType]").text();
+                            if (StringUtils.isNotEmpty(gupiao)) {
+                                perUrlList.add(href);
+                                return perUrlList;
+                            }
+                        }
+                        System.out.println("第" + i + "页数据已经跑完");
+                        Thread.sleep(5000);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
 
+                }
             }
         }
         return perUrlList;
@@ -225,8 +254,8 @@ public class SpiderTyc {
      */
     public static Document listPageSelenium(WebDriver driver) throws InterruptedException {
         JavascriptExecutor executornext = (JavascriptExecutor) driver;
-        executornext.executeScript("$(\"#ng-view > div.ng-scope > div > div > div > div.col-9.company-main.pl0.pr20.pt18.company_new_2017 > div > div:nth-child(11) " +
-                "> div.ng-scope > div.company_pager.ng-scope > ul > li.pagination-next.ng-scope > a\").click()");
+        executornext.executeScript("$(\"#ng-view > div.ng-scope > div > div > div > div.col-9.company-main.pl0.pr10.company_new_2017 > " +
+                "div > div.pl30.pr30.pt25 > div:nth-child(7) > div.ng-scope > div.company_pager.ng-scope > ul > li.pagination-next.ng-scope > a\").click()");
         String handle = driver.getWindowHandle();
         for (String handles : driver.getWindowHandles()) {
             if (handles.equals(handle)) {
@@ -245,6 +274,12 @@ public class SpiderTyc {
 
 
 
+    /**
+     * 获取一家公司的工商数据
+     * @param driver
+     * @param CompanyUrl
+     * @throws InterruptedException
+     */
     public  BasOrganizeInfo  getBusinessDataByUrl(WebDriver driver, String CompanyUrl,Boolean isFirst,String ouuid) throws Exception {
         String oname=null;
         String uuid=null;
@@ -288,13 +323,11 @@ public class SpiderTyc {
         String usedName = null;
         usedName = doc.select("div[class=historyName45Bottom position-abs new-border pl8 pr8 pt4 pb4 ng-binding]").text();
         // System.out.println(usedName);
-        //注册时间
-//        String ztime = doc.select("div[class=baseinfo-module-content-value ng-binding]").text().split(" ")[1];
-        // System.out.println(ztime);
         String zmoney=null;
         String ztime=null;
         String state=null;
         int num=0;
+
         Elements eless=doc.select("div.baseInfo_model2017 tbody tr td div");
         for(Element element:eless){
             if(num==1){
@@ -308,6 +341,17 @@ public class SpiderTyc {
             }
             num++;
         }
+        //System.out.println(zmoney+"--"+ztime+"--"+state);
+
+//        //注册时间
+//        String ztime = doc.select("div[class=baseinfo-module-content-value ng-binding]").text().split(" ")[1];
+//       // System.out.println(ztime);
+//        //状态
+//        String state = doc.select("div[class=baseinfo-module-content-value ng-binding]").text().split(" ")[2];
+//        //System.out.println(state);
+//        //注册资本
+//        String zmoney = doc.select("div[class=baseinfo-module-content-value ng-binding]").text().split(" ")[0];
+//        // System.out.println(zmoney);
 
         //法定代表人
         String boss = doc.select("a[class=in-block vertival-middle overflow-width f14 mr20 ng-binding ng-scope]").text();
@@ -315,13 +359,6 @@ public class SpiderTyc {
         //法定代表人连接
         String bossUrl = "http://www.tianyancha.com" + doc.select("a[class=in-block vertival-middle overflow-width f14 mr20 ng-binding ng-scope]").attr("href");
         //System.out.println(bossUrl);
-        //注册资本
-//        String zmoney = doc.select("div[class=baseinfo-module-content-value ng-binding]").text().split(" ")[0];
-        // System.out.println(zmoney);
-        //状态
-//        String state = doc.select("div[class=baseinfo-module-content-value ng-binding]").text().split(" ")[2];
-        //System.out.println(state);
-
 
         //行业
         String industry = doc.select("div.c8:contains(行业) span.ng-binding").text();
@@ -352,7 +389,7 @@ public class SpiderTyc {
 //        System.out.println("网址:"+web);
 //        System.out.println("公司简介:---->"+oname+"-"+con_way+"-"+email+"-"+address+"-"+web);
 //        System.out.println("公司基本信息:--->"+ztime+"-"+boss+"-"+bossUrl+"-"+zmoney+"-"+state+"-"+industry+"-"+businessNo+"-"+
-//                companyStyle+"-"+orgNo+"-"+businessTime+"-"+registDePart+"-"+approvalDate+"-"+uniformCode+"-"+registAddress+"-"+businessScope);
+//               companyStyle+"-"+orgNo+"-"+businessTime+"-"+registDePart+"-"+approvalDate+"-"+uniformCode+"-"+registAddress+"-"+businessScope);
 
         //组织数据入库
         //basOrgan.setTag("西奥中心AB座");
@@ -791,6 +828,8 @@ public class SpiderTyc {
                 }
             }
         }
+
+
         return basOrgan;
     }
 
@@ -814,6 +853,280 @@ public class SpiderTyc {
         driver.close();
         //System.exit(0);
     }
+
+    public Boolean mainProcess(Document doc) throws Exception {
+        Elements elements=doc.select("div[class=gt_cut_bg gt_show] div[class=gt_cut_bg_slice]");
+        List<String> dgImgUrl=new ArrayList<String>();
+        List<String[]> dgImgTopLeftPointList=new ArrayList<String[]>();
+        for(Element element:elements){
+            String dgImg=element.attr("style");
+            dgImgUrl.add(dgImg.split("\\(\"")[1].split("\"\\);")[0]);
+            String imgSize=dgImg.split("background-position:")[1].split(";")[0].trim();
+            String[] dgImgTopLeftPoint=new String[2];
+            dgImgTopLeftPoint[0]=imgSize.split(" ")[0].replace("px","");
+            dgImgTopLeftPoint[1]=imgSize.split(" ")[1].replace("px","");
+            dgImgTopLeftPointList.add(dgImgTopLeftPoint);
+        }
+        List<String> fullImgUrl=new ArrayList<String>();
+        List<String[]> fullImgTopLeftPointList=new ArrayList<String[]>();
+        Elements eles=doc.select("div[class=gt_cut_fullbg gt_show] div[class=gt_cut_fullbg_slice]");
+        for(Element element:eles){
+            String fullImg=element.attr("style");
+            fullImgUrl.add(fullImg.split("\\(\"")[1].split("\"\\);")[0]);
+            String imgSize=fullImg.split("background-position:")[1].split(";")[0].trim();
+            String[] fullImgTopLeftPoint=new String[2];
+            fullImgTopLeftPoint[0]=imgSize.split(" ")[0].replace("px","");
+            fullImgTopLeftPoint[1]=imgSize.split(" ")[1].replace("px","");
+            fullImgTopLeftPointList.add(fullImgTopLeftPoint);
+        }
+        Boolean dgjudge=combineImages(dgImgUrl,dgImgTopLeftPointList,26,10,58,"E://极验图片/tyc_dg.webp","webp");
+        Boolean fulljudge=combineImages(fullImgUrl,fullImgTopLeftPointList,26,10,58,"E://极验图片/tyc_full.webp","webp");
+        System.out.println("dgjudge:"+dgjudge);
+        System.out.println("fulljudge:"+fulljudge);
+        int left=findXDiffRectangeOfTwoImage("E://极验图片/tyc_dg.webp","E://极验图片/tyc_full.webp");
+        System.out.println(left);
+        Boolean isBreak = breakIdentifyingCode(left, driver);
+        while(isBreak==false) {
+            left=findXDiffRectangeOfTwoImage("E://极验图片/tyc_dg.webp","E://极验图片/tyc_full.webp");
+            System.out.println(left);
+            isBreak = breakIdentifyingCode(left, driver);
+            if(isBreak==true){
+                break;
+            }
+        }
+        return isBreak;
+    }
+
+
+    public void getPicture(WebDriver driver) throws Exception {
+        Element doc=getCode(driver);
+        Elements elements=doc.select("div[class=gt_cut_bg gt_show] div[class=gt_cut_bg_slice]");
+        List<String> dgImgUrl=new ArrayList<String>();
+        List<String[]> dgImgTopLeftPointList=new ArrayList<String[]>();
+        for(Element element:elements){
+            String dgImg=element.attr("style");
+            dgImgUrl.add(dgImg.split("\\(\"")[1].split("\"\\);")[0]);
+            String imgSize=dgImg.split("background-position:")[1].split(";")[0].trim();
+            String[] dgImgTopLeftPoint=new String[2];
+            dgImgTopLeftPoint[0]=imgSize.split(" ")[0].replace("px","");
+            dgImgTopLeftPoint[1]=imgSize.split(" ")[1].replace("px","");
+            //System.out.println(dgImgTopLeftPoint[0]+"-"+dgImgTopLeftPoint[1]);
+            dgImgTopLeftPointList.add(dgImgTopLeftPoint);
+        }
+//        for(int i=0;i<dgImgUrl.size();i++){
+//            System.out.println(dgImgUrl.get(i)+"-----"+dgImgTopLeftPointList.get(i));
+//        }
+        //System.out.println("------------------------------------------------------------");
+        List<String> fullImgUrl=new ArrayList<String>();
+        List<String[]> fullImgTopLeftPointList=new ArrayList<String[]>();
+        Elements eles=doc.select("div[class=gt_cut_fullbg gt_show] div[class=gt_cut_fullbg_slice]");
+        for(Element element:eles){
+            String fullImg=element.attr("style");
+            fullImgUrl.add(fullImg.split("\\(\"")[1].split("\"\\);")[0]);
+            String imgSize=fullImg.split("background-position:")[1].split(";")[0].trim();
+            String[] fullImgTopLeftPoint=new String[2];
+            fullImgTopLeftPoint[0]=imgSize.split(" ")[0].replace("px","");
+            fullImgTopLeftPoint[1]=imgSize.split(" ")[1].replace("px","");
+            //System.out.println(fullImgTopLeftPoint[0]+"-"+ fullImgTopLeftPoint[1]);
+            fullImgTopLeftPointList.add(fullImgTopLeftPoint);
+        }
+        Boolean dgjudge=combineImages(dgImgUrl,dgImgTopLeftPointList,26,10,58,"E://极验图片/tyc_dg.webp","webp");
+        Boolean fulljudge=combineImages(fullImgUrl,fullImgTopLeftPointList,26,10,58,"E://极验图片/tyc_full.webp","webp");
+        System.out.println("dgjudge:"+dgjudge);
+        System.out.println("fulljudge:"+fulljudge);
+        int left=findXDiffRectangeOfTwoImage("E://极验图片/tyc_dg.webp","E://极验图片/tyc_full.webp");
+    }
+
+
+    public List<Integer> clearLeft(int left){
+        List<Integer> leftList=new ArrayList<Integer>();
+        int x=(int)(Math.random()*2+1);
+        while(left-x>5){
+            leftList.add(x);
+            left=left-x;
+            x=(int)(Math.random()*2+1);
+        }
+        for(int i=0;i<left;i++) {
+            leftList.add(1);
+        }
+        return leftList;
+    }
+
+
+    public Boolean breakIdentifyingCode(int left,WebDriver driver) throws Exception {
+        Boolean isBreak=false;
+        WebElement element = driver.findElement(By.cssSelector(".gt_slider_knob.gt_show"));
+        Point location = element.getLocation();
+        int y=location.y;
+        element.getSize();
+        Actions action = new Actions(driver);
+        action.clickAndHold(element).perform();
+        List<Integer> leftList=clearLeft(left);
+        int num=0;
+        action.moveToElement(element).clickAndHold(element).perform();
+        Thread.sleep(150);
+        int x1=22;
+        for(int i=0;i<leftList.size();i++){
+            action.moveToElement(element,22+leftList.get(i),location.y-445).perform();
+        }
+        Thread.sleep(200);
+        for(int i=0;i<7;i++){
+            action.moveToElement(element,21,location.y-445).perform();
+            Thread.sleep(200);
+        }
+        int[] xx={4,10};
+        int sum=0;
+        for(int i=0;i<2;i++){
+            int xx1=new Random().nextInt(xx[0]);
+            int xx2=new Random().nextInt(xx[0]);
+            sum=sum+(xx1*2)-(xx2*2);
+            action.moveToElement(element,22+xx1,location.y-445).perform();
+            Thread.sleep(((int)Math.random()*2+1)*100);
+            action.moveToElement(element,22-xx2,location.y-445).perform();
+            Thread.sleep(((int)Math.random()*2+1)*100);
+            action.moveToElement(element,22+xx2,location.y-445).perform();
+            Thread.sleep(((int)Math.random()*2+1)*100);
+            action.moveToElement(element,22-xx1,location.y-445).perform();
+            Thread.sleep(((int)Math.random()*2+1)*100);
+            xx[0]-=0;
+        }
+        action.release().perform();
+        Thread.sleep(1500);
+        JavascriptExecutor javascriptExecutor=(JavascriptExecutor)driver;
+        javascriptExecutor.executeScript("document.getElementsByClassName(\"btn btn-block btn-info\")[0].click()");
+        String handle = driver.getWindowHandle();
+        for (String handles : driver.getWindowHandles()) {
+            if (handles.equals(handle)) {
+                continue;
+            }else {
+                driver.close();
+                driver.switchTo().window(handles);
+            }
+        }
+        Thread.sleep(5000);
+        WebElement webMainElement=driver.findElement(By.xpath("/html"));
+        Document document=Jsoup.parse(webMainElement.getAttribute("outerHTML"));
+        getPicture(driver);
+        System.out.println("position-abs:"+document.select("div.position-abs").text());
+        if(StringUtils.isNotEmpty(document.select("div.position-abs").text())){
+            isBreak=true;
+        }
+        System.out.println("First.isBreak:"+isBreak);
+        return isBreak;
+    }
+
+    public Document getCode(WebDriver driver) throws InterruptedException {
+        String handle = driver.getWindowHandle();
+        for (String handles : driver.getWindowHandles()) {
+            if (handles.equals(handle)) {
+                continue;
+            }else {
+                driver.close();
+                driver.switchTo().window(handles);
+            }
+        }
+        Thread.sleep(5000);
+        WebElement webMainElement=driver.findElement(By.xpath("/html"));
+        Document document=Jsoup.parse(webMainElement.getAttribute("outerHTML"));
+        return document;
+    }
+
+
+    public static boolean combineImages(List<String> imgSrcList, List<String[]> topLeftPointList, int countOfLine, int cutWidth, int cutHeight, String savePath, String subfix) {
+        if (imgSrcList == null || savePath == null || savePath.trim().length() == 0) return false;
+        BufferedImage lastImage = new BufferedImage(cutWidth * countOfLine, cutHeight * ((int) (Math.floor(imgSrcList.size() / countOfLine))), BufferedImage.TYPE_INT_RGB);
+        String prevSrc = "";
+        BufferedImage prevImage = null;
+        try {
+            for (int i = 0; i < imgSrcList.size(); i++) {
+                String src = imgSrcList.get(i);
+                BufferedImage image;
+                if (src.equals(prevSrc)) image = prevImage;
+                else {
+                    if (src.trim().toLowerCase().startsWith("http"))
+                        image = ImageIO.read(new URL(src));
+                    else
+                        image = ImageIO.read(new File(src));
+                    prevSrc = src;
+                    prevImage = image;
+
+                }
+                if (image == null) continue;
+                String[] topLeftPoint = topLeftPointList.get(i);
+                int[] pixArray = image.getRGB(0 - Integer.parseInt(topLeftPoint[0].trim()), 0 - Integer.parseInt(topLeftPoint[1].trim()), cutWidth, cutHeight, null, 0, cutWidth);
+                int startX = ((i) % countOfLine) * cutWidth;
+                int startY = ((i) / countOfLine) * cutHeight;
+
+                lastImage.setRGB(startX, startY, cutWidth, cutHeight, pixArray, 0, cutWidth);
+            }
+            File file = new File(savePath);
+            System.out.println(lastImage+"---"+subfix+"---"+file);
+            return ImageIO.write(lastImage, subfix, file);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
+
+    public static int findXDiffRectangeOfTwoImage(String imgSrc1, String imgSrc2) {
+        try {
+            BufferedImage image1 = ImageIO.read(new File(imgSrc1));
+            BufferedImage image2 = ImageIO.read(new File(imgSrc2));
+            int width1 = image1.getWidth();
+            int height1 = image1.getHeight();
+            int width2 = image2.getWidth();
+            int height2 = image2.getHeight();
+
+            if (width1 != width2) return -1;
+            if (height1 != height2) return -1;
+
+            int left = 0;
+            /**
+             * 从左至右扫描
+             */
+            boolean flag = false;
+            for (int i = 0; i < width1; i++) {
+                for (int j = 0; j < height1; j++)
+                    if (isPixelNotEqual(image1, image2, i, j)) {
+                        left = i;
+                        flag = true;
+                        break;
+                    }
+                if (flag) break;
+            }
+            return left;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return -1;
+        }
+    }
+
+    private static boolean isPixelNotEqual(BufferedImage image1, BufferedImage image2, int i, int j) {
+        int pixel1 = image1.getRGB(i, j);
+        int pixel2 = image2.getRGB(i, j);
+
+        int[] rgb1 = new int[3];
+        rgb1[0] = (pixel1 & 0xff0000) >> 16;
+        rgb1[1] = (pixel1 & 0xff00) >> 8;
+        rgb1[2] = (pixel1 & 0xff);
+
+        int[] rgb2 = new int[3];
+        rgb2[0] = (pixel2 & 0xff0000) >> 16;
+        rgb2[1] = (pixel2 & 0xff00) >> 8;
+        rgb2[2] = (pixel2 & 0xff);
+
+
+        for (int k = 0; k < 3; k++) {
+            //System.out.println(Math.abs(rgb1[k])+"---------------"+Math.abs(rgb2[k]));
+            if (Math.abs(rgb1[k] - rgb2[k]) > 50)//因为背景图会有一些像素差异
+                return true;
+        }
+        return false;
+    }
+
+
+
 
 
 }

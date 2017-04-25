@@ -1,6 +1,7 @@
 package GintongameSpider.SpiderLG;
 
 import SpiderUtils.SpiderContant;
+import org.apache.commons.lang3.StringUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -66,16 +67,15 @@ public class ExtremeVerification {
         int left=findXDiffRectangeOfTwoImage("E://极验图片/1_dg.webp","E://极验图片/1_full.webp");
         System.out.println(left);
         Boolean isBreak = breakIdentifyingCode(left, driver);
-        System.out.println("1.isBreak:"+isBreak);
         while(isBreak==false) {
             left=findXDiffRectangeOfTwoImage("E://极验图片/1_dg.webp","E://极验图片/1_full.webp");
             System.out.println(left);
             isBreak = breakIdentifyingCode(left, driver);
-            System.out.println("2.isBreak:"+isBreak);
             if(isBreak==true){
                 break;
             }
         }
+
 
 
 
@@ -188,7 +188,8 @@ public class ExtremeVerification {
         WebElement webMainElement=driver.findElement(By.xpath("/html"));
         Document document=Jsoup.parse(webMainElement.getAttribute("outerHTML"));
         getPicture(driver);
-        if(!document.toString().contains("移动到此开始验证")){
+        System.out.println("container:"+document.select("div.container").text());
+        if(StringUtils.isNotEmpty(document.select("div.container").text())){
             isBreak=true;
         }
         System.out.println("First.isBreak:"+isBreak);
