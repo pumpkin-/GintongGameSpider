@@ -773,12 +773,14 @@ class Spider{
                         if(list1!=null&&list1.size()>0) {
                             list1.get(x).setGame_size(list.get(x).toString());
                         }
-                        StringBuffer sb=new StringBuffer(list.get(x).toString().split("：")[1]);
-                        if(!list.get(x).toString().split("：")[1].contains("B")){
-                            sb=sb.append("B");
-                            System.out.println(sb.toString());
+                        if(list.get(x).toString().contains("：")){
+                            StringBuffer sb=new StringBuffer(list.get(x).toString().split("：")[1]);
+                            if(!list.get(x).toString().split("：")[1].contains("B")){
+                                sb=sb.append("B");
+                                System.out.println(sb.toString());
+                            }
+                            gameInfo.setGame_size(sb.toString());
                         }
-                        gameInfo.setGame_size(sb.toString());
                     }
                 }
             }

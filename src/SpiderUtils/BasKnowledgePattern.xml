@@ -66,7 +66,7 @@
         <author></author>
         <authorurl></authorurl>>
         <cover join="">//div[@class='inf clearfix']/a[@class='img_box']/img/@src</cover>>
-        <ptime timeFormat="yyyy MM dd HH mm">//div[@class='info']/em[1]/text()</ptime>>
+        <ptime timeFormat="yyyy MM dd">//div[@class='info']/em[1]/text()</ptime>>
         <tag></tag>>
         <main>//div[@class='detail_c']/p</main>>
         <mainpic join="">//img/@src</mainpic>>
@@ -2186,13 +2186,13 @@
 
 
 
-    <!--CoCoaChina-->
+    <!--CoCoaChina   不可用-->
     <spiderCoCoaChina>
         <title>//div[@class='detail-main']/h2/text()</title>
         <author>//div[@class='p-ico clearfix']/div/span[2]/a/text()</author>
         <authorurl></authorurl>
         <cover join="">//div[@class='clearfix']/a/img/@src</cover>
-        <ptime timeFormat="yyyy MM dd HH mm ss">//div[@class='p-ico clearfix']/div/span[1]/text()</ptime>>
+        <ptime timeFormat="yyyy MM dd HH mm ss">//span[@id='pubtime_baidu']/text()</ptime>>
         <tag></tag>
         <main>//p</main>>
         <mainpic>//img/@src</mainpic>>
@@ -2220,7 +2220,7 @@
 
     </spiderCoCoaChina>
 
-    <!--天翼空间-->
+    <!--天翼空间  不可用-->
     <spiderTYKJ>
         <title>//h3/text()</title>
         <author></author>
@@ -2345,7 +2345,7 @@
             <main>//div[@class='t_fsz']/table/tbody/tr/td[@class='t_f']</main>>
             <mainpic join="http://www.gameres.com/">//ignore_js_op/img/@file</mainpic>>
             <type></type>>
-            <source></source>
+            <source>游资网</source>
             <childLink join="">//tbody/tr/td[2]/a/@href</childLink>>
             <nextpage join="http://news.yxrb.net">//div[@id='pages']/a[last()]/@href</nextpage>
             <flag>selenium</flag>>
@@ -2511,9 +2511,9 @@
             <url>
                 http://www.cgigc.com.cn/news/index.html
             </url>
-            <!--<url>-->
-                <!--http://www.cgigc.com.cn/hot/index.html-->
-            <!--</url>-->
+            <url>
+                http://www.cgigc.com.cn/hot/index.html
+            </url>
         </urls>
     </spiderYXCYW>
     <!--游戏港口 刘雪明-->
@@ -2563,4 +2563,5 @@
             </url>
         </urls>
     </spiderYXGK>
+
 </BasKnowledgeSpiderPattern>

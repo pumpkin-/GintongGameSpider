@@ -37,7 +37,6 @@ public class LevenshteinDis {
      */
     public static Map<Integer, List> isExist(List<BasKnowledgeInfo> basKnowledgeInfos, List<BasPersonInfo> basPersonInfos, List<PerKnowledge> perKnowledges) throws SpiderUtils.FormatEexception, ParseException, FormatEexception {
         BasKnowledgeInfoDaoImpl pro=new BasKnowledgeInfoDaoImpl();
-        //System.out.println(pro.selectList(dateformat.format(date).toString()));
         List<Integer> flaglist=new ArrayList<Integer>();
         List<String> bznlist=new ArrayList<String>();
         int flag=0;

@@ -3,7 +3,7 @@
 
 <mapper namespace="com.gintongame.mapping.BasKnowledgeInfoMapper">
 
-    <!--  该insert函数只能插入pro_knowledge表  -->
+    <!--  该insert函数只能插入bas_knowledge_info表  -->
     <insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="true" >
         insert into bas_knowledge_info(uuid,author,title,cover,tag,main,ptime,type,url,source)
         values

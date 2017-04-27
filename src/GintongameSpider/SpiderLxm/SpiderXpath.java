@@ -15,7 +15,7 @@ public class SpiderXpath {
     public static void main(String[] args)  {
         try {
 //            System.setOut(new PrintStream(new File("D:/logs/outLog.txt")));
-            CommonSpiderKnowledge.ergodicUrl("spiderYXDG", 0, "no");
+            CommonSpiderKnowledge.ergodicUrl("spiderYZW", 0, "no");
         } catch (Exception e) {
             e.printStackTrace();
         }

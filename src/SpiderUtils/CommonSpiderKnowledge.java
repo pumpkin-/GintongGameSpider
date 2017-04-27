@@ -53,17 +53,6 @@ public class CommonSpiderKnowledge {
 
     public static void main(String[] args) throws Exception {
         ExecutorService pool= Executors.newFixedThreadPool(5);
-        /*pool.submit(new Runnable() {
-
-            @Override
-            public void run() {
-                try {
-                    ergodicUrl("spiderSfw",1231, "no");
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });*/
         pool.submit(new Runnable() {
             @Override
             public void run() {
@@ -74,37 +63,6 @@ public class CommonSpiderKnowledge {
                 }
             }
         });
-//        pool.submit(new Runnable() {
-//            @Override
-//            public void run() {
-//                try {
-//                    ergodicUrl("spiderMJW", 0, "no",SpiderContant.PerKnowledgePatternPath);
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        });
-//        pool.submit(new Runnable() {
-//            @Override
-//            public void run() {
-//                try {
-//                    ergodicUrl("spiderHXW", 0, "no",SpiderContant.PerKnowledgePatternPath);
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        });
-//        pool.submit(new Runnable() {
-//            @Override
-//            public void run() {
-//                try {
-//                    ergodicUrl("spiderHMW", 0, "no",SpiderContant.PerKnowledgePatternPath);
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        });
-
     }
 
     /**
@@ -994,6 +952,7 @@ public class CommonSpiderKnowledge {
             }
         }else{
             for(int x=1;x>0;x++) {
+                System.out.println("-------------------"+knowledgeSpiderConfig.main.getText());
                 List<JXNode> mainlist =getTagN(childDocumet, knowledgeSpiderConfig.main.getText());
                 for (JXNode objmain : mainlist) {
                     if (StringUtils.isNotEmpty(objmain.getElement().text())) {
@@ -1185,7 +1144,7 @@ public class CommonSpiderKnowledge {
      * @return
      */
     public static WebDriver getChromeDriver() {
-        System.setProperty("webdriver.chrome.driver",SpiderContant.chromeWindowsPath );
+        System.setProperty("webdriver.chrome.driver",SpiderContant.chromeWindowsPath);
         return new ChromeDriver();
     }
 
