@@ -96,7 +96,7 @@ public class JSONArray {
      *
      * @param x
      *            A JSONTokener
-     * @throws JSONException
+     * @throws com.qcloud.Utilities.Json.JSONException
      *             If there is a syntax error.
      */
     public JSONArray(JSONTokener x) throws JSONException {
@@ -137,7 +137,7 @@ public class JSONArray {
      *            A string that begins with <code>[</code>&nbsp;<small>(left
      *            bracket)</small> and ends with <code>]</code>
      *            &nbsp;<small>(right bracket)</small>.
-     * @throws JSONException
+     * @throws com.qcloud.Utilities.Json.JSONException
      *             If there is a syntax error.
      */
     public JSONArray(String source) throws JSONException {
@@ -163,7 +163,7 @@ public class JSONArray {
     /**
      * Construct a JSONArray from an array
      *
-     * @throws JSONException
+     * @throws com.qcloud.Utilities.Json.JSONException
      *             If not an array.
      */
     public JSONArray(Object array) throws JSONException {
@@ -185,7 +185,7 @@ public class JSONArray {
      * @param index
      *            The index must be between 0 and length() - 1.
      * @return An object value.
-     * @throws JSONException
+     * @throws com.qcloud.Utilities.Json.JSONException
      *             If there is no value for the index.
      */
     public Object get(int index) throws JSONException {
@@ -203,7 +203,7 @@ public class JSONArray {
      * @param index
      *            The index must be between 0 and length() - 1.
      * @return The truth.
-     * @throws JSONException
+     * @throws com.qcloud.Utilities.Json.JSONException
      *             If there is no value for the index or if the value is not
      *             convertible to boolean.
      */
@@ -227,7 +227,7 @@ public class JSONArray {
      * @param index
      *            The index must be between 0 and length() - 1.
      * @return The value.
-     * @throws JSONException
+     * @throws com.qcloud.Utilities.Json.JSONException
      *             If the key is not found or if the value cannot be converted
      *             to a number.
      */
@@ -247,7 +247,7 @@ public class JSONArray {
      * @param index
      *            The index must be between 0 and length() - 1.
      * @return The value.
-     * @throws JSONException
+     * @throws com.qcloud.Utilities.Json.JSONException
      *             If the key is not found or if the value is not a number.
      */
     public int getInt(int index) throws JSONException {
@@ -266,7 +266,7 @@ public class JSONArray {
      * @param index
      *            The index must be between 0 and length() - 1.
      * @return A JSONArray value.
-     * @throws JSONException
+     * @throws com.qcloud.Utilities.Json.JSONException
      *             If there is no value for the index. or if the value is not a
      *             JSONArray
      */
@@ -284,7 +284,7 @@ public class JSONArray {
      * @param index
      *            subscript
      * @return A JSONObject value.
-     * @throws JSONException
+     * @throws com.qcloud.Utilities.Json.JSONException
      *             If there is no value for the index or if the value is not a
      *             JSONObject
      */
@@ -302,7 +302,7 @@ public class JSONArray {
      * @param index
      *            The index must be between 0 and length() - 1.
      * @return The value.
-     * @throws JSONException
+     * @throws com.qcloud.Utilities.Json.JSONException
      *             If the key is not found or if the value cannot be converted
      *             to a number.
      */
@@ -322,7 +322,7 @@ public class JSONArray {
      * @param index
      *            The index must be between 0 and length() - 1.
      * @return A string value.
-     * @throws JSONException
+     * @throws com.qcloud.Utilities.Json.JSONException
      *             If there is no string value for the index.
      */
     public String getString(int index) throws JSONException {
@@ -352,7 +352,7 @@ public class JSONArray {
      * @param separator
      *            A string that will be inserted between the elements.
      * @return a string.
-     * @throws JSONException
+     * @throws com.qcloud.Utilities.Json.JSONException
      *             If the array contains an invalid number.
      */
     public String join(String separator) throws JSONException {
@@ -603,7 +603,7 @@ public class JSONArray {
      *
      * @param value
      *            A double value.
-     * @throws JSONException
+     * @throws com.qcloud.Utilities.Json.JSONException
      *             if the value is not finite.
      * @return this.
      */
@@ -675,7 +675,7 @@ public class JSONArray {
      * @param value
      *            A boolean value.
      * @return this.
-     * @throws JSONException
+     * @throws com.qcloud.Utilities.Json.JSONException
      *             If the index is negative.
      */
     public JSONArray put(int index, boolean value) throws JSONException {
@@ -692,7 +692,7 @@ public class JSONArray {
      * @param value
      *            A Collection value.
      * @return this.
-     * @throws JSONException
+     * @throws com.qcloud.Utilities.Json.JSONException
      *             If the index is negative or if the value is not finite.
      */
     public JSONArray put(int index, Collection<Object> value) throws JSONException {
@@ -710,7 +710,7 @@ public class JSONArray {
      * @param value
      *            A double value.
      * @return this.
-     * @throws JSONException
+     * @throws com.qcloud.Utilities.Json.JSONException
      *             If the index is negative or if the value is not finite.
      */
     public JSONArray put(int index, double value) throws JSONException {
@@ -728,7 +728,7 @@ public class JSONArray {
      * @param value
      *            An int value.
      * @return this.
-     * @throws JSONException
+     * @throws com.qcloud.Utilities.Json.JSONException
      *             If the index is negative.
      */
     public JSONArray put(int index, int value) throws JSONException {
@@ -746,7 +746,7 @@ public class JSONArray {
      * @param value
      *            A long value.
      * @return this.
-     * @throws JSONException
+     * @throws com.qcloud.Utilities.Json.JSONException
      *             If the index is negative.
      */
     public JSONArray put(int index, long value) throws JSONException {
@@ -763,7 +763,7 @@ public class JSONArray {
      * @param value
      *            The Map value.
      * @return this.
-     * @throws JSONException
+     * @throws com.qcloud.Utilities.Json.JSONException
      *             If the index is negative or if the the value is an invalid
      *             number.
      */
@@ -784,7 +784,7 @@ public class JSONArray {
      *            Boolean, Double, Integer, JSONArray, JSONObject, Long, or
      *            String, or the JSONObject.NULL object.
      * @return this.
-     * @throws JSONException
+     * @throws com.qcloud.Utilities.Json.JSONException
      *             If the index is negative or if the the value is an invalid
      *             number.
      */
@@ -860,7 +860,7 @@ public class JSONArray {
      *            paired with the values.
      * @return A JSONObject, or null if there are no names or if this JSONArray
      *         has no values.
-     * @throws JSONException
+     * @throws com.qcloud.Utilities.Json.JSONException
      *             If any of the names are null.
      */
     public JSONObject toJSONObject(JSONArray names) throws JSONException {
@@ -903,7 +903,7 @@ public class JSONArray {
      *         object, beginning with <code>[</code>&nbsp;<small>(left
      *         bracket)</small> and ending with <code>]</code>
      *         &nbsp;<small>(right bracket)</small>.
-     * @throws JSONException
+     * @throws com.qcloud.Utilities.Json.JSONException
      */
     public String toString(int indentFactor) throws JSONException {
         StringWriter sw = new StringWriter();
@@ -919,7 +919,7 @@ public class JSONArray {
      * Warning: This method assumes that the data structure is acyclical.
      *
      * @return The writer.
-     * @throws JSONException
+     * @throws com.qcloud.Utilities.Json.JSONException
      */
     public Writer write(Writer writer) throws JSONException {
         return this.write(writer, 0, 0);
@@ -936,7 +936,7 @@ public class JSONArray {
      * @param indent
      *            The indention of the top level.
      * @return The writer.
-     * @throws JSONException
+     * @throws com.qcloud.Utilities.Json.JSONException
      */
     Writer write(Writer writer, int indentFactor, int indent)
             throws JSONException {
