@@ -52,17 +52,17 @@ public class CommonSpiderKnowledge {
     private static String oldurl=null;
 
     public static void main(String[] args) throws Exception {
-        ExecutorService pool= Executors.newFixedThreadPool(5);
-        pool.submit(new Runnable() {
-            @Override
-            public void run() {
-                try {
-//                    ergodicUrl("spiderZOL", 0, "no", SpiderContant.urlXml);
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
-            }
-        });
+//        ExecutorService pool= Executors.newFixedThreadPool(5);
+//        pool.submit(new Runnable() {
+//            @Override
+//            public void run() {
+//                try {
+////                    ergodicUrl("spiderZOL", 0, "no", SpiderContant.urlXml);
+//                }catch (Exception e){
+//                    e.printStackTrace();
+//                }
+//            }
+//        });
     }
 
     /**
@@ -418,6 +418,7 @@ public class CommonSpiderKnowledge {
         for(Element url:knowledgeSpiderConfig.webUrls){
             if(knowledgeSpiderConfig.flag.getText().equals("jsoup")) {
                 System.out.println("Get details1 page");
+                System.out.println("111111111111111111111"+url.getText().trim());
                 ergodicDetails(knowledgeSpiderConfig, url.getText().trim(), orgflag, fromPageNum);
                 fromPageNum=0;
             }else if(knowledgeSpiderConfig.flag.getText().equals("selenium")){

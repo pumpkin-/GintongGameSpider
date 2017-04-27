@@ -215,7 +215,7 @@
 
 
 
-<!--逗游爬虫 刘雪明2.25-->
+<!--逗游爬虫 刘雪明2.25  不可用  被禁-->
     <spiderDY>
         <!--详情页标题-->
         <title>//div[@class='title']/h1/text()</title>
@@ -1893,8 +1893,6 @@
             <url>
                 http://news.52pk.com/shtml/dlnews/list_10_1.shtml
             </url>>
-
-
         </urls>>
 
     </spider52PKDL>
@@ -2186,20 +2184,20 @@
 
 
 
-    <!--CoCoaChina   不可用-->
+    <!--CoCoaChina-->
     <spiderCoCoaChina>
-        <title>//div[@class='detail-main']/h2/text()</title>
-        <author>//div[@class='p-ico clearfix']/div/span[2]/a/text()</author>
+        <title>//h1/text()</title>
+        <author>//div[@class='editor']/a[1]/text()</author>
         <authorurl></authorurl>
-        <cover join="">//div[@class='clearfix']/a/img/@src</cover>
+        <cover join="">//div[@class='info-mod clearfix']/a/img/@src</cover>
         <ptime timeFormat="yyyy MM dd HH mm ss">//span[@id='pubtime_baidu']/text()</ptime>>
         <tag></tag>
-        <main>//p</main>>
+        <main>//div[@class='article-cont clearfix']/p</main>>
         <mainpic>//img/@src</mainpic>>
         <type></type>>
         <source>CoCoaChina</source>
-        <childLink join="http://www.cocoachina.com">//div[@class='clearfix newstitle']/a/@href</childLink>>
-        <nextpage join="http://game.zol.com.cn">//a[text()*='下一页']/@href</nextpage>
+        <childLink join="">//div[@class='info-head']/a/@href</childLink>>
+        <nextpage join="http://game.zol.com.cn">//a[@class='next']/@href</nextpage>
         <flag>jsoup</flag>>
         <childnext join=""></childnext>>
         <chose demand=""></chose>>
@@ -2232,9 +2230,9 @@
         <mainpic>//img/@src</mainpic>>
         <type></type>>
         <source>天翼空间</source>
-        <childLink join="https://www.189store.com">//div[@class='d-cny']/ul/li/a/@href</childLink>>
-        <nextpage>//a[text()*='下一页']/@href</nextpage>
-        <flag>jsoup</flag>>
+        <childLink join="https://www.189store.com">//li[@id='company']/a/@href</childLink>>
+        <nextpage></nextpage>
+        <flag>selenium</flag>>
         <childnext join=""></childnext>>
         <chose demand=""></chose>>
         <urls>

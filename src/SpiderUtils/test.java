@@ -24,7 +24,7 @@ public class test {
                           .userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36")
                          .get();
         JXDocument doc=new JXDocument(doc1);
-        System.out.println( doc.sel("//span[@id='pubtime_baidu']/text()"));
+        System.out.println( doc.sel("//a[@class='next']/@href"));
 
 
 

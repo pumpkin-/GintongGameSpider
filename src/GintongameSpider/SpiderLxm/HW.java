@@ -23,7 +23,7 @@ public class HW {
         basKnowledgeInfo.setMain("我们有太多的东西日用而不知，它们累积起来变成我们的肌肉记忆和本能反应，这些日用而不知的认知假设，像黑洞一样把信息时代的光芒掠夺殆尽。");
         basKnowledgeInfo.setCover("http://www.baidu.com");
         basKnowledgeInfo.setUrl("http://ww.baidu.com");
-        basKnowledgeInfo.setPtime("2017-04-25 10:34:47");
+        basKnowledgeInfo.setPtime("2017-02-25 10:34:47");
         basKnowledgeInfo.setSource("测试数据");
         String kuuid1=UUID.randomUUID().toString();
         basKnowledgeInfo1.setUuid(kuuid1);
@@ -31,7 +31,7 @@ public class HW {
         basKnowledgeInfo1.setMain("时代纷繁复杂，忙碌的人们，终要面对自己的内心，而这种面对，在今天，变得更难，却也更急迫。我们都需要答案。");
         basKnowledgeInfo1.setCover("http://www.baidu.com1");
         basKnowledgeInfo1.setUrl("http://ww.baidu.com1");
-        basKnowledgeInfo1.setPtime("2017-04-25 14:47:47");
+        basKnowledgeInfo1.setPtime("2017-02-25 14:47:47");
         basKnowledgeInfo1.setSource("测试数据");
         list.add(basKnowledgeInfo);
         list.add(basKnowledgeInfo1);
@@ -73,16 +73,5 @@ public class HW {
         } catch (BasKnowledgeInfoDaoImpl.FormatEexception formatEexception) {
             formatEexception.printStackTrace();
         }
-//        try {
-//          for(int i=0;i<list.size();i++){
-//              Map<Integer,List> map= LevenshteinDis.isExist(list,list1,list2);
-//              System.out.println("111111111111111111111111111111111111");
-//              System.out.println(map);
-//              System.out.println("222222222222222222222222222222222222");
-//          }
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
     }
 }
