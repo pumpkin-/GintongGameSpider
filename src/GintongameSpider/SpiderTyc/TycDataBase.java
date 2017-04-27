@@ -37,7 +37,7 @@ public class TycDataBase {
         int n=0;
         while(rs.next()){
                 Boolean isExist=false;
-            //if(0<=n&&n<=100) {
+            if(5301<=n&&n<=5400) {
                 String name = rs.getString("name");
                 for(int i=0;i<busNameList.size();i++){
                     if(busNameList.get(i).equals(name)){
@@ -46,10 +46,10 @@ public class TycDataBase {
                 }
                 if(isExist==false){
                     nameList.add(name);
-                    n++;
                     System.out.println(name+"--"+n);
                 }
-            //}
+            }
+            n++;
         }
         System.out.println(n);
 //        List<String> ipList=new ArrayList<String>();

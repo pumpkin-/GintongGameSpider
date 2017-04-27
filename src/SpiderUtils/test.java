@@ -27,12 +27,6 @@ public class test {
         System.out.println( doc.sel("//a[@class='next']/@href"));
 
 
-
-
-
-
-
-
 //selenium查看网页源码
 //////
 

@@ -256,7 +256,6 @@ public class TycTwo {
                 }catch (Exception e){
                     e.printStackTrace();
                 }
-
             }
         }
         return perUrlList;

@@ -42,8 +42,11 @@ public class SignTest {
         Random rand = new Random();
         requestParams.put("Nonce", rand.nextInt(Integer.MAX_VALUE));
 
-        requestParams.put("Action", "ContentGrab");
-        requestParams.put("url", "http://www.wanmei.com/zh/intro.html");
+        //requestParams.put("channel", "CHnews_news_game");
+        requestParams.put("type", "1");
+        requestParams.put("Action", "TextSensitivity");
+        requestParams.put("content","据新华社报道，2017年4月26日上午，中国第二艘航空母舰在中国船舶重工集团公司大连造船厂举行下水仪式，中共中央政治局委员、中央军委副主席范长龙出席仪式并致辞。9时许，仪式在雄壮的国歌声中开始。按照国际惯例，剪彩后进行“掷瓶礼”。随着一瓶香槟酒摔碎舰艏，两舷喷射绚丽彩带，周边船舶一起鸣响");
+
 
         String requestMethod = "POST";
         String requestHost = "wenzhi.api.qcloud.com";
